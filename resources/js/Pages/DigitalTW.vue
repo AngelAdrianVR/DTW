@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
     <Head title="DigitalTW" />
-    <div>
+    <div class="lg:ml-24">
         <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader loaded">
     <div class="preloader-inner">
@@ -48,8 +48,8 @@ onMounted(() => {
               <li><a href="#servicios">Servicios</a></li>
               <li><a href="#nosotros">Nosotros</a></li>
               <li><a href="#contact">Contacto</a></li>
-              <li><a href="packages.html">Paquetes de Desarrollo</a></li>
-              <li><a href="profile.html">Perfil <i class="fa-solid fa-user mx-2"></i></a></li>
+              <!-- <li><a href="packages.html">Paquetes de Desarrollo</a></li> -->
+              <li><a href="#">Perfil <i class="fa-solid fa-user mx-2"></i></a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -235,7 +235,7 @@ onMounted(() => {
               </div>
               <div class="row">
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-indigo-500/100">
+                  <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
                     <i class="fa-solid fa-compass-drafting text-indigo-400 text-3xl"></i>
                     <h4>Diseño Web</h4>
                     <p>Diseño de páginas web profesionales para dar a conocer tu negocio, productos y/o servicios
@@ -243,7 +243,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-indigo-500/100">
+                  <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
                     <i class="fa-solid fa-store text-indigo-400 text-3xl"></i>
                     <h4>Desarrollo de tiendas en linea</h4>
                     <p>Comienza a vender en línea con una tienda online auto administrable,
@@ -251,7 +251,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-indigo-500/100">
+                  <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
                     <i class="fa-solid fa-bullhorn text-indigo-400 text-3xl"></i>
                     <h4>Publicidad en redes sociales</h4>
                     <p>Incrementa tus ventas y consigue más clientes con una campaña publicitaria en Redes Sociales, lo más usado en la actualidad.</p>
@@ -273,7 +273,7 @@ onMounted(() => {
               </div>
               <div class="row">
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-blue-600/100">
+                  <div class="item hover:shadow-md hover:shadow-blue-600/100 my-4">
                     <i class="fa-brands fa-facebook text-blue-900 text-5xl"></i>
                     <h4>Facebook</h4>
                     <p>DigitalTW se encarga del manejo de tus redes sociales. Creamos campañas y estrategias eficaces
@@ -281,7 +281,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-orange-500/100">
+                  <div class="item hover:shadow-md hover:shadow-orange-500/100 my-4">
                     <i class="fa-brands fa-instagram text-orange-700 text-5xl"></i>
                     <h4>Instagram</h4>
                     <p>De la mano de Facebook dirigimos tus anuncios a usuarios específicos y creamos contenido de alto
@@ -289,7 +289,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="col-lg-4">
-                  <div class="item hover:shadow-md hover:shadow-green-500/100">
+                  <div class="item hover:shadow-md hover:shadow-green-500/100 my-4">
                     <i class="fa-brands fa-whatsapp text-green-700 text-5xl"></i>
                     <h4>WhatsApp</h4>
                     <p>Conectamos tu sitio y redes sociales con WhatsApp que es el medio más usado este año. Creamos sistemas de entrega de mensajes a bandeja de entrada de WhatsApp.</p>
@@ -363,7 +363,7 @@ onMounted(() => {
           <!-- ***** Details End ***** -->
 
           <!-- ***** packages Start ***** -->
-          <div class="gaming-library">
+          <!-- <div class="gaming-library">
             <div class="col-lg-12">
               <div class="heading-section">
                 <h4><em>Paquetes</em> de desarrollo</h4>
@@ -434,7 +434,7 @@ onMounted(() => {
                 <a href="packages.html">Ver todos los paquetes</a>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- ***** packages End ***** -->
 
 
