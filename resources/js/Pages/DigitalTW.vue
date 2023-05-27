@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
     <Head title="DigitalTW" />
-    <div class="lg:ml-24">
+    <div>
         <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader loaded">
     <div class="preloader-inner">
@@ -31,7 +31,7 @@ onMounted(() => {
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <header id="inicio" class="header-area header-sticky">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -44,7 +44,7 @@ onMounted(() => {
 
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="index.html">Inicio</a></li>
+              <li><a href="#inicio">Inicio</a></li>
               <li><a href="#servicios">Servicios</a></li>
               <li><a href="#nosotros">Nosotros</a></li>
               <li><a href="#contact">Contacto</a></li>
@@ -311,7 +311,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="left-info">
-                        <i class="fas fa-users text-red-400 text-3xl mb-1"></i>
+                        <i class="fas fa-users text-gray-400 text-3xl mb-1"></i>
                         <div class="center">
                           <h4>Equipo multidisciplinario</h4>
                           <span>Contamos con personal experto en diferentes ramas, todos comprometidos con tu proyecto.</span>
@@ -320,7 +320,7 @@ onMounted(() => {
                     </div>
                     <div class="col-lg-4">
                       <div class="left-info">
-                        <i class="fas fa-laptop text-red-400 text-3xl mb-1"></i>
+                        <i class="fas fa-laptop text-gray-400 text-3xl mb-1"></i>
                         <div class="center">
                           <h4>Tecnología de vanguardia</h4>
                           <span>Contamos con herramientas digitales que nos ayudan a conseguir mejores resultados para tu negocio.</span>
@@ -329,7 +329,7 @@ onMounted(() => {
                     </div>
                     <div class="col-lg-4">
                       <div class="left-info">
-                        <i class="fas fa-chart-bar text-red-400 text-3xl mb-1"></i>
+                        <i class="fas fa-chart-bar text-gray-400 text-3xl mb-1"></i>
                         <div class="center">
                           <h4>Estrategia de resultados</h4>
                           <span>Nos caracterizamos por comprometernos con los proyectos y trabajos en equipo contigo.</span>
@@ -337,17 +337,17 @@ onMounted(() => {
                       </div>
                     </div>
                     <div class="col-lg-12">
-                      <p class="text-gray-300 text-lg">En DigitalTW, nos apasiona ayudar a nuestros clientes a alcanzar sus metas de
+                      <p class="text-gray-300 text-xl">En DigitalTW nos apasiona ayudar a nuestros clientes a alcanzar sus metas de
                         negocio a través de soluciones digitales efectivas.</p>
                         
-                       <p class="text-gray-300 text-lg">Somos un equipo de expertos en diseño y desarrollo web, marketing digital con años de experiencia en la industria.
+                       <p class="text-gray-300 text-xl mt-4">Somos un equipo de expertos en diseño y desarrollo web, marketing digital con años de experiencia en la industria.
                         Creemos que el éxito en línea se logra mediante una combinación de estrategias creativas y
                         técnicas sólidas. Es por eso que trabajamos estrechamente con nuestros clientes para entender
                         sus objetivos y necesidades, y así ofrecer soluciones personalizadas que se adapten a su
                         negocio.</p>
 
                         
-                        <p class="text-gray-300 text-lg mt-3">Confíe en DigitalTW para llevar su negocio al siguiente nivel en línea. ¡Estamos
+                        <p class="text-gray-300 text-xl mt-3">Confíe en DigitalTW para llevar su negocio al siguiente nivel en línea. ¡Estamos
                           emocionados de trabajar con usted!.</p>
                     </div>
                     <div class="col-lg-12">

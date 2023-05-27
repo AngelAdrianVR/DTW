@@ -227,7 +227,6 @@ section {
 .heading-section h4 em {
   color: #fff;
   font-style: normal;
-  text-decoration: underline;
 }
 
 /* 
@@ -981,7 +980,7 @@ Featured Games Style
   border-color: #b33243;
   border-width: 1px;
   border-style: solid;
-  box-shadow: 0 10px 25px -5px #b33243, 0 10px 10px -5px #b33243;
+  box-shadow: 0 7px 20px -5px #b33243, 0 7px 7px -5px #b33243;
 }
 
 .featured-games .item .thumb {
@@ -1188,13 +1187,14 @@ Live Stream Style
 
 .live-stream {
   margin-top: 60px;
+  margin-bottom: 60px;
   border-radius: 23px;
   background-color: #1f2122;
   padding: 30px;
   border-color: #b33243;
   border-width: 1px;
   border-style: solid;
-  box-shadow: 0 10px 25px -5px #b33243, 0 10px 10px -5px #b33243;
+  box-shadow: 0 7px 20px -5px #b33243, 0 7px 7px -5px #b33243;
 }
 
 .live-stream .item {
@@ -1335,7 +1335,7 @@ Game Details Style
   border-color: #b33243;
   border-width: 1px;
   border-style: solid;
-  box-shadow: 0 10px 25px -5px #b33243, 0 10px 10px -5px #b33243;
+  box-shadow: 0 7px 20px -5px #b33243, 0 7px 7px -5px #b33243;
 }
 
 .game-details .content .left-info {
