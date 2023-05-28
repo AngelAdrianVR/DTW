@@ -463,11 +463,11 @@ Header Style
   letter-spacing: .3px;
 }
 
-.header-area .main-nav .nav li:last-child a {
+/* .header-area .main-nav .nav li:last-child a {
   background-color: #27292a;
   padding: 8px 10px 8px 20px;
   border-radius: 23px;
-}
+} */
 
 .header-area .main-nav .nav li:last-child a img {
   max-width: 30px;
@@ -485,11 +485,11 @@ Header Style
   color: #028c9e !important;
 }
 
-.header-area .main-nav .nav li:last-child:hover a,
+/* .header-area .main-nav .nav li:last-child:hover a,
 .header-area .main-nav .nav li:last-child a.active {
   color: #fff !important;
   background-color: #028c9e !important;
-}
+} */
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {

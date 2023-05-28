@@ -12,6 +12,17 @@ onMounted(() => {
   custom(window.jQuery);
 });
 
+function scrollToTop() {
+  const scrollStep = -window.scrollY / (700 / 15); // Velocidad y suavidad del desplazamiento (500ms)
+  const scrollInterval = setInterval(() => {
+    if (window.scrollY !== 0) {
+      window.scrollBy(0, scrollStep);
+    } else {
+      clearInterval(scrollInterval);
+    }
+  }, 15); // Intervalo de tiempo del desplazamiento (15ms)
+}
+
 </script>
 
 <template>
@@ -44,12 +55,12 @@ onMounted(() => {
 
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="#inicio">Inicio</a></li>
+              <li><a @click="scrollToTop">Inicio</a></li>
               <li><a href="#servicios">Servicios</a></li>
               <li><a href="#nosotros">Nosotros</a></li>
               <li><a href="#contact">Contacto</a></li>
               <!-- <li><a href="packages.html">Paquetes de Desarrollo</a></li> -->
-              <li><a href="#">Perfil <i class="fa-solid fa-user mx-2"></i></a></li>
+              <!-- <li><a href="#">Perfil <i class="fa-solid fa-user mx-2"></i></a></li> -->
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -267,7 +278,7 @@ onMounted(() => {
             <div class="col-lg-12">
               <div class="heading-section">
                 <h4><em>Gestión de</em> Redes Sociales</h4>
-                <h5>Tener presencia en redes sociales hoy en día es necesario para que tu negocio sea reconocido, somos
+                <h5>Tener presencia en redes sociales hoy en día es necesario para que tu negocio sea reconocido. Somos
                   tus mejores aliados y ayudamos a que tu publicidad en redes sociales consiga los mejores resultados en
                   las plataformas digitales más utilizadas.</h5>
               </div>
@@ -292,7 +303,7 @@ onMounted(() => {
                   <div class="item hover:shadow-md hover:shadow-green-500/100 my-4">
                     <i class="fa-brands fa-whatsapp text-green-700 text-5xl"></i>
                     <h4>WhatsApp</h4>
-                    <p>Conectamos tu sitio y redes sociales con WhatsApp que es el medio más usado este año. Creamos sistemas de entrega de mensajes a bandeja de entrada de WhatsApp.</p>
+                    <p>Conectamos tu sitio y redes sociales con WhatsApp que es el medio más usado en la actualidad. Creamos sistemas de entrega de mensajes a bandeja de entrada de WhatsApp.</p>
                   </div>
                 </div>
               </div>
