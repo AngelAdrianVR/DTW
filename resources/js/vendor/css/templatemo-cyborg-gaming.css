@@ -160,7 +160,7 @@ p {
 	border-radius: 23px;
 }
 
-.main-button a {
+.main-button a, button {
   font-size: 14px;
   color: #fff;
   background-color: #028c9e;
