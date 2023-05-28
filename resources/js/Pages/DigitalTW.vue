@@ -486,7 +486,9 @@ function scrollToTop() {
                 <div class="item">
                   <p><i class="fa-solid fa-envelope text-xl text-gray-400"></i> angelvazquez470@gmail.com</p>
                   <p><i class="fa-solid fa-phone text-xl text-gray-400"></i> 33-12-15-57-31</p>
-                  <p><i class="fa-brands fa-whatsapp text-xl text-gray-400"></i> 33-12-15-57-31</p>
+                  <a href="https://api.whatsapp.com/send?phone=523312155731&text=Hola%20me%20interesa%20su%20servicio" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp text-xl text-gray-400"></i>
+                  </a>
                 </div>
               </div>
               <div class="col-lg-12">
