@@ -2,6 +2,8 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 import { custom } from '@/vendor/js/custom';
+import { useForm } from '@inertiajs/vue3'
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
     canLogin: Boolean,
@@ -11,6 +13,18 @@ defineProps({
 onMounted(() => {
   custom(window.jQuery);
 });
+
+const form = useForm({
+  name: null,
+  email: null,
+  company: null,
+  phone: null,
+  message: null,
+});
+
+function store(){
+  this.form.post(this.route('messages.store'));
+};
 
 </script>
 
@@ -32,7 +46,7 @@ onMounted(() => {
 
   <!-- ***** Header Area Start ***** -->
   <header id="inicio" class="header-area header-sticky">
-    <div class="container">
+    <div class="container mx-auto">
       <div class="row">
         <div class="col-12">
           <nav class="main-nav">
@@ -62,7 +76,7 @@ onMounted(() => {
   </header>
   <!-- ***** Header Area End ***** -->
 
-  <div class="container">
+  <div class="container mx-auto">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
@@ -439,48 +453,46 @@ onMounted(() => {
 
 
           <!-- ***** Contact Start ***** -->
-          <div id="contact" class="live-stream">
+          <div id="contact" class="live-stream text-center">
             <div class="grid-cols-3">
               <div class="heading-section">
                 <h4><em>Ponte en</em> Contacto</h4>
               </div>
             </div>
-            <form>
+            <form @submit.prevent="form.post(route('messages.store'));">
               <div>
                 <div class="item">
-                  <input placeholder="Nombre*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400" type="text">
+                  <input v-model="form.name" placeholder="Nombre*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text"  required>
+                  <InputError :message="$page.props?.errors.name" />
                 </div>
               </div>
               <div class="col-start-2">
                 <div class="item">
-                  <input placeholder="E-mail*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400">
+                  <input v-model="form.email" placeholder="E-mail*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="email"  required>
+                  <InputError :message="$page.props?.errors.email" />
                 </div>
               </div>
               <div class="col-start-1">
                 <div class="item">
-                  <input placeholder="Empresa*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400">
+                  <input v-model="form.company" placeholder="Empresa" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text">
+                  <InputError :message="$page.props?.errors.ncompanyame" />
                 </div>
               </div>
               <div class="col-start-2">
                 <div class="item">
-                  <input placeholder="Teléfono*" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400">
+                  <input v-model="form.phone" placeholder="Teléfono" class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text">
+                  <InputError :message="$page.props?.errors.phone" />
                 </div>
               </div>
               <div class="col-start-1 col-span-2">
                 <div class="item">
-                  <textarea placeholder="Mensaje*" class="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-400"></textarea>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="item">
-                  <p><i class="fa-solid fa-envelope text-xl text-gray-400"></i> angelvazquez470@gmail.com</p>
-                  <p><i class="fa-solid fa-phone text-xl text-gray-400"></i> 33-12-15-57-31</p>
-                  <p><i class="fa-brands fa-whatsapp text-xl text-gray-400"></i> 33-12-15-57-31</p>
+                  <textarea v-model="form.message" placeholder="Mensaje*" class="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-400 md:w-1/2 w-full"  required></textarea>
+                  <InputError :message="$page.props?.errors.message" />
                 </div>
               </div>
               <div class="col-lg-12">
                 <div class="main-button">
-                  <a href="streams.html">Enviar</a>
+                  <button>Enviar</button>
                 </div>
               </div>
             </form>
@@ -492,7 +504,7 @@ onMounted(() => {
   </div>
 
   <footer>
-    <div class="container">
+    <div class="container mx-auto">
       <div class="row">
         <div class="col-lg-12">
           <p>Copyright © 2023 <a href="#">DigitalTW</a> Company. Todos los derechos reservados.
