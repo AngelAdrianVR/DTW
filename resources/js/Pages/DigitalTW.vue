@@ -4,6 +4,7 @@ import { onMounted } from "vue";
 import { custom } from "@/vendor/js/custom";
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import { useToast } from "vue-toastification";
 
 defineProps({
   canLogin: Boolean,
@@ -14,6 +15,8 @@ onMounted(() => {
   custom(window.jQuery);
 });
 
+const toast = useToast();
+
 const form = useForm({
   name: null,
   email: null,
@@ -23,8 +26,17 @@ const form = useForm({
 });
 
 function store() {
-  this.form.post(this.route("messages.store"));
+  form.post(route("messages.store"), {
+    onSuccess: () => {
+      toast.success("Mensaje enviado correctamente", {
+        timeout: 3000
+      });
+
+      form.reset();
+    }
+  });
 }
+
 function scrollToTop() {
   const scrollStep = -window.scrollY / (700 / 15); // Velocidad y suavidad del desplazamiento (500ms)
   const scrollInterval = setInterval(() => {
@@ -40,13 +52,10 @@ function scrollToTop() {
 <template>
   <Head title="DigitalTW" />
   <div class="">
-  <!-- whatsapp button -->
-    <a
-      class="z-20 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-      href="https://api.whatsapp.com/send?phone=523312155731&text=Hola%20me%20interesa%20su%20servicio"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <!-- whatsapp button -->
+    <a class="z-20 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
+      href="https://api.whatsapp.com/send?phone=523312155731&text=Hola%20me%20interesa%20su%20servicio" target="_blank"
+      rel="noopener noreferrer">
       <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
     </a>
     <!-- ***** Preloader Start ***** -->
@@ -135,10 +144,8 @@ function scrollToTop() {
                         </div>
                       </div>
                       <h4>
-                        Freeze<br /><span
-                          >Reparación e Instalación de Equipo de enfriamiento y
-                          refrigeración</span
-                        >
+                        Freeze<br /><span>Reparación e Instalación de Equipo de enfriamiento y
+                          refrigeración</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -151,10 +158,8 @@ function scrollToTop() {
                         </div>
                       </div>
                       <h4>
-                        Emblems3d USA<br /><span
-                          >Negocio de articulos publicitarios de la rama
-                          automotriz</span
-                        >
+                        Emblems3d USA<br /><span>Negocio de articulos publicitarios de la rama
+                          automotriz</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -167,10 +172,8 @@ function scrollToTop() {
                         </div>
                       </div>
                       <h4>
-                        SigmaSolutionsMx<br /><span
-                          >Empresa sorteadora que ofrece servicios de calidad a
-                          manufactureras de cualquier rama</span
-                        >
+                        SigmaSolutionsMx<br /><span>Empresa sorteadora que ofrece servicios de calidad a
+                          manufactureras de cualquier rama</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -181,10 +184,8 @@ function scrollToTop() {
                         </div>
                       </div>
                       <h4>
-                        Serviflex<br /><span
-                          >Empresa que ofrece servicios flexibles y venta de
-                          maquinaria específica</span
-                        >
+                        Serviflex<br /><span>Empresa que ofrece servicios flexibles y venta de
+                          maquinaria específica</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -197,10 +198,8 @@ function scrollToTop() {
                         </div>
                       </div>
                       <h4>
-                        YouPartner<br /><span
-                          >Plataforma estudiantil de apoyo académico y
-                          asesorías</span
-                        >
+                        YouPartner<br /><span>Plataforma estudiantil de apoyo académico y
+                          asesorías</span>
                       </h4>
                       <!-- <ul>
                       <li><i class="fa-solid fa-mobile-screen-button"></i> Responsivo</li>
@@ -237,10 +236,8 @@ function scrollToTop() {
                         <img src="assets/images/e3d_vip.png" alt="" />
                       </div>
                       <h4>
-                        Emblems3d USA Vip<br /><span
-                          >Sitio vip de emblemas3d para clientes
-                          destacados.</span
-                        >
+                        Emblems3d USA Vip<br /><span>Sitio vip de emblemas3d para clientes
+                          destacados.</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -248,8 +245,7 @@ function scrollToTop() {
                         <img src="assets/images/intranet_e3d.png" alt="" />
                       </div>
                       <h4>
-                        Emblems3d USA Intranet<br /><span
-                          >Intranet de emblemas3d USA que lleva control interno
+                        Emblems3d USA Intranet<br /><span>Intranet de emblemas3d USA que lleva control interno
                           administrativo, produccion, inventario, creativo, etc.
                         </span>
                       </h4>
@@ -259,10 +255,8 @@ function scrollToTop() {
                         <img src="assets/images/Profibra.png" alt="" />
                       </div>
                       <h4>
-                        Profibra<br /><span
-                          >Inventario y gestion interna de producción de la
-                          empresa</span
-                        >
+                        Profibra<br /><span>Inventario y gestion interna de producción de la
+                          empresa</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -270,10 +264,8 @@ function scrollToTop() {
                         <img src="assets/images/xphere.png" alt="" />
                       </div>
                       <h4>
-                        Xphere<br /><span
-                          >Sistema de gestión y administración de
-                          fraccionamientos</span
-                        >
+                        Xphere<br /><span>Sistema de gestión y administración de
+                          fraccionamientos</span>
                       </h4>
                     </div>
                     <div class="item">
@@ -281,10 +273,8 @@ function scrollToTop() {
                         <img src="assets/images/YouPartner_admin.png" alt="" />
                       </div>
                       <h4>
-                        YouPartner<br /><span
-                          >Administración de la plataforma académica
-                          YouPartner</span
-                        >
+                        YouPartner<br /><span>Administración de la plataforma académica
+                          YouPartner</span>
                       </h4>
                       <!-- <ul>
                       <li><i class="fa-solid fa-mobile-screen-button"></i> Responsivo</li>
@@ -296,10 +286,8 @@ function scrollToTop() {
                         <img src="assets/images/purochurro.png" alt="" />
                       </div>
                       <h4>
-                        purochurro<br /><span
-                          >gestión administrativa, inventario y empleados de una
-                          franquicia de churros rellenos</span
-                        >
+                        purochurro<br /><span>gestión administrativa, inventario y empleados de una
+                          franquicia de churros rellenos</span>
                       </h4>
                     </div>
                   </div>
@@ -321,12 +309,8 @@ function scrollToTop() {
                 </div>
                 <div class="row">
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-indigo-500/100 my-4"
-                    >
-                      <i
-                        class="fa-solid fa-compass-drafting text-indigo-400 text-3xl"
-                      ></i>
+                    <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
+                      <i class="fa-solid fa-compass-drafting text-indigo-400 text-3xl"></i>
                       <h4>Diseño Web</h4>
                       <p>
                         Diseño de páginas web profesionales para dar a conocer
@@ -336,9 +320,7 @@ function scrollToTop() {
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-indigo-500/100 my-4"
-                    >
+                    <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
                       <i class="fa-solid fa-store text-indigo-400 text-3xl"></i>
                       <h4>Desarrollo de tiendas en linea</h4>
                       <p>
@@ -349,12 +331,8 @@ function scrollToTop() {
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-indigo-500/100 my-4"
-                    >
-                      <i
-                        class="fa-solid fa-bullhorn text-indigo-400 text-3xl"
-                      ></i>
+                    <div class="item hover:shadow-md hover:shadow-indigo-500/100 my-4">
+                      <i class="fa-solid fa-bullhorn text-indigo-400 text-3xl"></i>
                       <h4>Publicidad en redes sociales</h4>
                       <p>
                         Incrementa tus ventas y consigue más clientes con una
@@ -383,12 +361,8 @@ function scrollToTop() {
                 </div>
                 <div class="row">
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-blue-600/100 my-4"
-                    >
-                      <i
-                        class="fa-brands fa-facebook text-blue-900 text-5xl"
-                      ></i>
+                    <div class="item hover:shadow-md hover:shadow-blue-600/100 my-4">
+                      <i class="fa-brands fa-facebook text-blue-900 text-5xl"></i>
                       <h4>Facebook</h4>
                       <p>
                         DigitalTW se encarga del manejo de tus redes sociales.
@@ -398,12 +372,8 @@ function scrollToTop() {
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-orange-500/100 my-4"
-                    >
-                      <i
-                        class="fa-brands fa-instagram text-orange-700 text-5xl"
-                      ></i>
+                    <div class="item hover:shadow-md hover:shadow-orange-500/100 my-4">
+                      <i class="fa-brands fa-instagram text-orange-700 text-5xl"></i>
                       <h4>Instagram</h4>
                       <p>
                         De la mano de Facebook dirigimos tus anuncios a usuarios
@@ -414,12 +384,8 @@ function scrollToTop() {
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div
-                      class="item hover:shadow-md hover:shadow-green-500/100 my-4"
-                    >
-                      <i
-                        class="fa-brands fa-whatsapp text-green-700 text-5xl"
-                      ></i>
+                    <div class="item hover:shadow-md hover:shadow-green-500/100 my-4">
+                      <i class="fa-brands fa-whatsapp text-green-700 text-5xl"></i>
                       <h4>WhatsApp</h4>
                       <p>
                         Conectamos tu sitio y redes sociales con WhatsApp que es
@@ -444,44 +410,32 @@ function scrollToTop() {
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="left-info">
-                          <i
-                            class="fas fa-users text-gray-400 text-3xl mb-1"
-                          ></i>
+                          <i class="fas fa-users text-gray-400 text-3xl mb-1"></i>
                           <div class="center">
                             <h4>Equipo multidisciplinario</h4>
-                            <span
-                              >Contamos con personal experto en diferentes
-                              ramas, todos comprometidos con tu proyecto.</span
-                            >
+                            <span>Contamos con personal experto en diferentes
+                              ramas, todos comprometidos con tu proyecto.</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="left-info">
-                          <i
-                            class="fas fa-laptop text-gray-400 text-3xl mb-1"
-                          ></i>
+                          <i class="fas fa-laptop text-gray-400 text-3xl mb-1"></i>
                           <div class="center">
                             <h4>Tecnología de vanguardia</h4>
-                            <span
-                              >Contamos con herramientas digitales que nos
+                            <span>Contamos con herramientas digitales que nos
                               ayudan a conseguir mejores resultados para tu
-                              negocio.</span
-                            >
+                              negocio.</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="left-info">
-                          <i
-                            class="fas fa-chart-bar text-gray-400 text-3xl mb-1"
-                          ></i>
+                          <i class="fas fa-chart-bar text-gray-400 text-3xl mb-1"></i>
                           <div class="center">
                             <h4>Estrategia de resultados</h4>
-                            <span
-                              >Nos caracterizamos por comprometernos con los
-                              proyectos y trabajos en equipo contigo.</span
-                            >
+                            <span>Nos caracterizamos por comprometernos con los
+                              proyectos y trabajos en equipo contigo.</span>
                           </div>
                         </div>
                       </div>
@@ -603,61 +557,39 @@ function scrollToTop() {
                   <h4><em>Ponte en</em> Contacto</h4>
                 </div>
               </div>
-              <form @submit.prevent="form.post(route('messages.store'))">
+              <form @submit.prevent="store">
                 <div>
                   <div class="item">
-                    <input
-                      v-model="form.name"
-                      placeholder="Nombre*"
-                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full"
-                      type="text"
-                      required
-                    />
+                    <input v-model="form.name" placeholder="Nombre*"
+                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text" required />
                     <InputError :message="$page.props?.errors.name" />
                   </div>
                 </div>
                 <div class="col-start-2">
                   <div class="item">
-                    <input
-                      v-model="form.email"
-                      placeholder="E-mail*"
-                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full"
-                      type="email"
-                      required
-                    />
+                    <input v-model="form.email" placeholder="E-mail*"
+                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="email" required />
                     <InputError :message="$page.props?.errors.email" />
                   </div>
                 </div>
                 <div class="col-start-1">
                   <div class="item">
-                    <input
-                      v-model="form.company"
-                      placeholder="Empresa"
-                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full"
-                      type="text"
-                    />
+                    <input v-model="form.company" placeholder="Empresa"
+                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text" />
                     <InputError :message="$page.props?.errors.ncompanyame" />
                   </div>
                 </div>
                 <div class="col-start-2">
                   <div class="item">
-                    <input
-                      v-model="form.phone"
-                      placeholder="Teléfono"
-                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full"
-                      type="text"
-                    />
+                    <input v-model="form.phone" placeholder="Teléfono"
+                      class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-400 md:w-1/2 w-full" type="text" />
                     <InputError :message="$page.props?.errors.phone" />
                   </div>
                 </div>
                 <div class="col-start-1 col-span-2">
                   <div class="item">
-                    <textarea
-                      v-model="form.message"
-                      placeholder="Mensaje*"
-                      class="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-400 md:w-1/2 w-full"
-                      required
-                    ></textarea>
+                    <textarea v-model="form.message" placeholder="Mensaje*"
+                      class="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-400 md:w-1/2 w-full" required></textarea>
                     <InputError :message="$page.props?.errors.message" />
                   </div>
                 </div>

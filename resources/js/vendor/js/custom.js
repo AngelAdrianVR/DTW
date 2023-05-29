@@ -4,7 +4,6 @@ export function custom($) {
 
 	// Page loading animation
 	$(window).on('load', function() {
-		console.log("event-triggered");
         $('#js-preloader').addClass('loaded');
 
     });

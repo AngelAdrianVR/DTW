@@ -18,6 +18,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "jquery": "^3.7.0"
+        "jquery": "^3.7.0",
+        "vue-toastification": "^2.0.0-rc.5"
     }
 }
