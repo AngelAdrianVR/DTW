@@ -3,7 +3,6 @@ import '../css/app.css';
 
 import './vendor/css/animate.css';
 import './vendor/css/flex-slider.css';
-// import './vendor/css/fontawesome.css';
 import './vendor/css/owl.css';
 import './vendor/css/templatemo-cyborg-gaming.css';
 
@@ -13,16 +12,18 @@ import './vendor/js/isotope';
 import './vendor/js/owl-carousel';
 import './vendor/js/popup';
 import './vendor/js/tabs';
-// import './vendor/js/custom';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
-// import $ from 'jquery';
-// window.jQuery = $;
-// window.$ = $;
+const options = {
+    timeout: 4000,
+};
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -33,6 +34,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(Toast, options)
             .mount(el);
     },
     progress: {

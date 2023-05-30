@@ -160,7 +160,7 @@ p {
 	border-radius: 23px;
 }
 
-.main-button a {
+.main-button a, button {
   font-size: 14px;
   color: #fff;
   background-color: #028c9e;
@@ -418,7 +418,7 @@ Header Style
 }
 
 .background-header .main-nav .logo {
-  margin-top: 8px;
+  margin-top: -3px;
 }
 
 .background-header .main-nav .logo img {
@@ -463,11 +463,11 @@ Header Style
   letter-spacing: .3px;
 }
 
-.header-area .main-nav .nav li:last-child a {
+/* .header-area .main-nav .nav li:last-child a {
   background-color: #27292a;
   padding: 8px 10px 8px 20px;
   border-radius: 23px;
-}
+} */
 
 .header-area .main-nav .nav li:last-child a img {
   max-width: 30px;
@@ -485,11 +485,11 @@ Header Style
   color: #028c9e !important;
 }
 
-.header-area .main-nav .nav li:last-child:hover a,
+/* .header-area .main-nav .nav li:last-child:hover a,
 .header-area .main-nav .nav li:last-child a.active {
   color: #fff !important;
   background-color: #028c9e !important;
-}
+} */
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {
@@ -775,13 +775,21 @@ Banner Style
 --------------------------------------------- 
 */
 
+@keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
+
 .main-banner {
-  background-image: url(assets/images/banner-bg.jpg);
-  background-position: center center;
-  background-size: cover;
-  min-height: 380px;
-  border-radius: 23px;
-  padding: 80px 60px;
+    border-radius: 23px;
+    padding: 80px 60px;
+    min-height: 380px;
+    background-position: center center;
+    background-size: cover;
+    background: linear-gradient(45deg,#F17C58, #E94584, #24AADB , #27DBB1, #FF3706);
+    background-size: 600% 100%;
+    animation: gradient 16s linear infinite;
+    animation-direction: alternate;
 }
 
 .main-banner h6 {
