@@ -418,7 +418,7 @@ Header Style
 }
 
 .background-header .main-nav .logo {
-  margin-top: 8px;
+  margin-top: -3px;
 }
 
 .background-header .main-nav .logo img {
@@ -775,13 +775,21 @@ Banner Style
 --------------------------------------------- 
 */
 
+@keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
+
 .main-banner {
-  background-image: url(assets/images/banner-bg.jpg);
-  background-position: center center;
-  background-size: cover;
-  min-height: 380px;
-  border-radius: 23px;
-  padding: 80px 60px;
+    border-radius: 23px;
+    padding: 80px 60px;
+    min-height: 380px;
+    background-position: center center;
+    background-size: cover;
+    background: linear-gradient(45deg,#F17C58, #E94584, #24AADB , #27DBB1, #FF3706);
+    background-size: 600% 100%;
+    animation: gradient 16s linear infinite;
+    animation-direction: alternate;
 }
 
 .main-banner h6 {
