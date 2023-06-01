@@ -51,10 +51,10 @@ function scrollToTop() {
 
 <template>
   <Head title="DigitalTW" />
-  <div class="">
+  <div class="px-2">
     <!-- whatsapp button -->
     <a class="z-20 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-      href="https://api.whatsapp.com/send?phone=523312155731&text=Hola%20me%20interesa%20su%20servicio" target="_blank"
+      href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!" target="_blank"
       rel="noopener noreferrer">
       <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
     </a>
@@ -78,7 +78,7 @@ function scrollToTop() {
           <div class="col-12">
             <nav class="main-nav">
               <!-- ***** Logo Start ***** -->
-              <a href="index.html" class="logo -mt-5">
+              <a :href="route('dtw')" class="logo -mt-5">
                 <img width="70%" src="assets/images/Logo_dtw.svg" alt="" />
               </a>
               <!-- ***** Logo End ***** -->
@@ -108,7 +108,7 @@ function scrollToTop() {
         <div class="col-lg-12">
           <div class="page-content">
             <!-- ***** Banner Start ***** -->
-            <div class="main-banner mt-3">
+            <div class="main-banner shadow-lg shadow-gray-500/100 mt-3">
               <div class="row">
                 <div class="col-lg-7">
                   <div class="header-text">
@@ -150,11 +150,11 @@ function scrollToTop() {
                     </div>
                     <div class="item">
                       <div class="thumb">
-                        <a href="https://emblemas3d.com/">
                           <img src="assets/images/Emblems3dUSA.png" alt="" />
-                        </a>
                         <div class="hover-effect">
+                          <a href="https://emblemas3d.com/" target="_blank">
                           <h6>Visitar</h6>
+                          </a>
                         </div>
                       </div>
                       <h4>
@@ -164,11 +164,11 @@ function scrollToTop() {
                     </div>
                     <div class="item">
                       <div class="thumb">
-                        <a href="https://sigmasolutionsmx.com/">
                           <img src="assets/images/SigmaSolutions.png" alt="" />
-                        </a>
                         <div class="hover-effect">
+                          <a href="https://sigmasolutionsmx.com/" target="_blank">
                           <h6>Visitar</h6>
+                          </a>
                         </div>
                       </div>
                       <h4>
@@ -190,11 +190,11 @@ function scrollToTop() {
                     </div>
                     <div class="item">
                       <div class="thumb">
-                        <a href="https://youpartner.xphere.com.mx/">
                           <img src="assets/images/Youpartner.png" alt="" />
-                        </a>
                         <div class="hover-effect">
+                        <a href="https://youpartner.xphere.com.mx/" target="_blank">
                           <h6>Visitar</h6>
+                        </a>
                         </div>
                       </div>
                       <h4>
@@ -595,7 +595,7 @@ function scrollToTop() {
                 </div>
                 <div class="col-lg-12">
                   <div class="main-button">
-                    <button>Enviar</button>
+                    <button class="bg-[#028c9e] text-white active:bg-white active:text-[#028c9e] p-3">Enviar</button>
                   </div>
                 </div>
               </form>

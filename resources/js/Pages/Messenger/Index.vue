@@ -1,6 +1,9 @@
 
 <template>
-
+<AppLayout title="Mensajería">
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Buzón de entrada</h2>
+    </template>
     <div>
         <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
             <ApplicationLogo class="block h-12 w-auto" />
@@ -8,13 +11,6 @@
             <h1 class="mt-8 text-2xl font-medium text-gray-900">
                {{ $page.props.auth.user.name }} Bienvenido al panel de administración
             </h1>
-
-            <p class="mt-6 text-gray-500 leading-relaxed">
-                Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed
-                to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe
-                you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel
-                ecosystem to be a breath of fresh air. We hope you love it.
-            </p>
         </div>
 
         <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
@@ -27,9 +23,18 @@
                     
                 </div>
 
-                <div class="mt-4 text-gray-500 text-sm leading-relaxed overflow-y-auto max-h-56">
-                    <p class="hover:bg-gray-200 px-2">
-                    {{ messages }}
+                <div v-for="message in messages" :key="message.id" class="hover:bg-zinc-300 mt-4 text-gray-500 text-sm leading-relaxed overflow-auto max-h-56 flex space-x-2">
+                    <p class="">
+                  <strong> Nombre:</strong> {{ message.name }}
+                    </p>
+                    <p class="">
+                     <strong> Correo:</strong> {{ message.email }}
+                    </p>
+                    <p class="">
+                     <strong> Tel:</strong> {{ message.phone }}
+                    </p>
+                    <p class="">
+                     <strong> Mensaje:</strong> {{ message.message }}
                     </p>
                 </div>
 
@@ -102,10 +107,12 @@
             </div>
         </div>
     </div>
+    </AppLayout>
 </template>
 
 <script>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
 
 export default {
     data(){
@@ -115,6 +122,7 @@ export default {
     },
     components:{
         ApplicationLogo,
+        AppLayout,
     },
     props:{
         messages: Array,
