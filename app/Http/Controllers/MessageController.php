@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class MessageController extends Controller
 {
+
+    public function index()
+    {
+        $messages = Message::latest()->get();
+        return inertia('Messenger/Index', compact('messages'));
+    }
+
     public function store(Request $request)
     {   
         $request->validate([

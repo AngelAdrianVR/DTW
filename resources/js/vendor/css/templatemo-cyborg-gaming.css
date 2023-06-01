@@ -788,7 +788,7 @@ Banner Style
     background-size: cover;
     background: linear-gradient(45deg,#F17C58, #E94584, #24AADB , #27DBB1, #FF3706);
     background-size: 600% 100%;
-    animation: gradient 16s linear infinite;
+    animation: gradient 8s linear infinite;
     animation-direction: alternate;
 }
 
