@@ -21,6 +21,9 @@ import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 const options = {
     timeout: 4000,
 };
@@ -35,6 +38,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(Toast, options)
+            .use(ElementPlus)
             .mount(el);
     },
     progress: {
