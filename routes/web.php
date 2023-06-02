@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessengerController;
+use App\Http\Controllers\ProjectController;
 use App\Models\Message;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +40,6 @@ Route::middleware([
 
 Route::post('/messages-create', [MessageController::class, 'store'])->name('messages.store');
 Route::get('/messages-index', [MessageController::class, 'index'])->name('messages.index');
+
+Route::resource('projects', ProjectController::class);
 
