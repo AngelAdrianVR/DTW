@@ -21,7 +21,7 @@
                 <el-table-column prop="hours_work" label="Horas de trabajo" width="180" />
                 <el-table-column prop="cuote" label="Cotización" width="180" />
                 <el-table-column prop="promisse_finish_date" label="Fecha de entrega" width="180" />
-                <el-table-column prop="created_at" label="Enviado el" />
+                <el-table-column prop="created_at" label="Creado el" />
             </el-table>
         </div>
     </AppLayout>

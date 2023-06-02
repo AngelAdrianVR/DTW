@@ -10,78 +10,88 @@
         </h2>
       </div>
     </template>
-    <div class="lg:w-3/6 mx-auto mt-6 shadow-md py-4 px-3 bg-white rounded-lg">
+    <div class="lg:w-1/3 mx-auto mt-6 shadow-md py-4 px-5 bg-white rounded-lg">
       <form @submit.prevent="store">
         <div class="mt-4">
-          <TextInput
-            v-model="form.name"
-            type="text"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Nombre del proyecto"
-          />
+          <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.client_info.name"
-            type="text"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Nombre del cliente"
-          />
+        <el-input v-model="form.client_info.name" class="w-50 m-2" placeholder="Nombre del cliente" clearable>
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.client_info.email"
-            type="text"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Email del cliente"
-          />
+        <el-input v-model="form.client_info.email" class="w-50 m-2" placeholder="Correo" clearable type="email">
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.client_info.company"
-            type="text"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Compañía"
-          />
+        <el-input v-model="form.client_info.company" class="w-50 m-2" placeholder="Empresa" clearable>
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.client_info.phone"
-            type="text"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Teléfono"
-          />
+        <el-input v-model="form.client_info.phone" class="w-50 m-2" placeholder="Teléfono de contacto" clearable>
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.hours_work"
-            type="number"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Horas de trabajo"
-          />
+        <el-input v-model="form.hours_work" class="w-50 m-2" placeholder="Horas de trabajo" clearable type="number">
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-clock"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
+
         <div class="mt-4">
-          <TextInput
-            v-model="form.cuote"
-            type="number"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-            placeholder="Cotización"
-          />
+          <el-input v-model="form.cuote" class="w-50 m-2" placeholder="Cotización" clearable>
+            <template #prefix>
+              <el-icon class="el-input__icon"><i class="fa-solid fa-dollar-sign"></i></el-icon>
+            </template>
+          </el-input>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
-        <div class="mt-4">
-          <label class="text-gray-600 md:ml-48">Fecha de entrega</label>
-          <TextInput
-            v-model="form.promisse_finish_date"
-            type="date"
-            class="mt-1 block w-3/4 md:w-1/2 md:mx-auto"
-          />
+
+        <div>
+          <div class="demo-date-picker">
+            <div class="block">
+              <span class="demonstration">Fecha de entrega</span>
+              <el-date-picker
+                v-model="form.promisse_finish_date"
+                type="date"
+                placeholder="Selecciona una fecha"
+                :default-value="new Date()"
+                value-format="YYYY-MM-DD"
+              />
+            </div>
+          </div>
+
           <!-- <InputError :message="form.error" class="mt-2" /> -->
         </div>
 
@@ -123,15 +133,39 @@ export default {
     SecondaryButton,
     Link,
     TextInput,
-    PrimaryButton
+    PrimaryButton,
   },
   props: {
     projects: Array,
   },
-  methods:{
-    store(){
-        this.form.post(route('projects.store'));
-    }
+  methods: {
+    store() {
+      this.form.post(route("projects.store"));
+    },
   },
 };
 </script>
+
+<style scoped>
+.demo-date-picker {
+  display: flex;
+  width: 100%;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.demo-date-picker .block {
+  padding: 30px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  flex: 1;
+}
+.demo-date-picker .block:last-child {
+  border-right: none;
+}
+.demo-date-picker .demonstration {
+  display: block;
+  color: var(--el-text-color-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+</style>
