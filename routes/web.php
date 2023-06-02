@@ -37,6 +37,3 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/messages-create', [MessageController::class, 'store'])->name('messages.store');
-Route::get('/messages-index', [MessageController::class, 'index'])->name('messages.index');
-

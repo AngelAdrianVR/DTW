@@ -9,11 +9,15 @@ class Message extends Model
 {
     use HasFactory;
 
+    const IN_PROCESS = 0;
+    const DISPATCHED = 1;
+
     protected $fillable = [
         'name',
         'email',
         'company',
         'phone',
         'message',
+        'status',
     ];
 }
