@@ -103,7 +103,7 @@ function scrollToTop() {
     </header>
     <!-- ***** Header Area End ***** -->
 
-    <div class="container mx-auto">
+    <div id="banner" class="container mx-auto">
       <div class="row">
         <div class="col-lg-12">
           <div class="page-content">
@@ -595,7 +595,7 @@ function scrollToTop() {
                 </div>
                 <div class="col-lg-12">
                   <div class="main-button">
-                    <button class="bg-[#028c9e] text-white active:bg-white active:text-[#028c9e]">Enviar</button>
+                    <button class="bg-[#028c9e] text-white active:bg-white active:text-[#028c9e] p-3">Enviar</button>
                   </div>
                 </div>
               </form>

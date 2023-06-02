@@ -33,15 +33,15 @@ const logout = () => {
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-zinc-200">
+            <nav class="bg-zinc-200 border-b-2 border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('dtw')">
                                     <ApplicationMark class="block h-9 w-auto" />
                                 </Link>
                             </div>
@@ -49,7 +49,13 @@ const logout = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Inicio
+                                </NavLink>
+                                <NavLink :href="route('messages.index')" :active="route().current('messages.*')">
+                                    Mensajería
+                                </NavLink>
+                                <NavLink :href="route('projects.index')" :active="route().current('projects.*')">
+                                    Proyectos
                                 </NavLink>
                             </div>
                         </div>
@@ -194,7 +200,13 @@ const logout = () => {
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Inicio
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('messages.index')" :active="route().current('messages.*')">
+                            Mensajería
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('projects.index')" :active="route().current('projects.*')">
+                            Proyectos
                         </ResponsiveNavLink>
                     </div>
 

@@ -16,4 +16,9 @@ class Message extends Model
         'phone',
         'message',
     ];
+
+    //relationships
+    public function project(){
+        return $this->hasOne(Project::class);
+    }
 }

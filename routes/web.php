@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\MessengerController;
+use App\Http\Controllers\ProjectController;
+use App\Models\Message;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,8 +32,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        // $messages = Message::latest()->get();
+        $messages = ['hoola', 'jsjsjs'];
+        return inertia('Dashboard', compact('messages'));
     })->name('dashboard');
 });
 
-Route::post('/message-create', [MessageController::class, 'store'])->name('messages.store');
+Route::post('/messages-create', [MessageController::class, 'store'])->name('messages.store');
+Route::get('/messages-index', [MessageController::class, 'index'])->name('messages.index');
+
+Route::resource('projects', ProjectController::class);
+
