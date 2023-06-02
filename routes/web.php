@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessengerController;
+use App\Http\Controllers\ProjectController;
 use App\Models\Message;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,6 @@ Route::middleware([
         return inertia('Dashboard', compact('messages'));
     })->name('dashboard');
 });
+
+Route::resource('projects', ProjectController::class);
 

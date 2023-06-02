@@ -20,4 +20,9 @@ class Message extends Model
         'message',
         'status',
     ];
+
+    //relationships
+    public function project(){
+        return $this->hasOne(Project::class);
+    }
 }
