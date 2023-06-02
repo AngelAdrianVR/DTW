@@ -774,6 +774,13 @@ Header Style
 Banner Style
 --------------------------------------------- 
 */
+/* Crea la animación */
+@keyframes changeColor {
+  0% { border-color: blue; }
+  33% { border-color: red; }
+  66% { border-color: green; }
+  100% { border-color: blue; }
+}
 
 @keyframes gradient {
     0% {background-position: 0%}
@@ -786,10 +793,13 @@ Banner Style
     min-height: 380px;
     background-position: center center;
     background-size: cover;
-    background: linear-gradient(45deg,#F17C58, #E94584, #24AADB , #27DBB1, #FF3706);
-    background-size: 600% 100%;
-    animation: gradient 8s linear infinite;
-    animation-direction: alternate;
+    /* background: linear-gradient(45deg,#F17C58, #E94584, #24AADB , #27DBB1, #FF3706);
+    background-size: 600% 100%; */
+    /* animation: gradient 8s linear infinite; */
+    /* animation-direction: alternate; */
+    animation: changeColor 6s infinite;
+    border: 4px solid blue;
+    
 }
 
 .main-banner h6 {
