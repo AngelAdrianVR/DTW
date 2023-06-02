@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('hours_work');
             $table->unsignedInteger('cuote');
             $table->date('promisse_finish_date')->nullable();
-            $table->foreignId('message_id')->constrained()->onDelete('cascade');
+            $table->foreignId('message_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
