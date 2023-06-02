@@ -28,9 +28,10 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
             'cuote' => 'required|numeric|min:1',
-            'promisse_finish_date' => 'required|date',
+            'promisse_finish_date' => 'required|date|after:tomorrow',
         ]);
 
         Project::create($request->all() + ['user_id' => auth()->user()->id]);
@@ -47,13 +48,23 @@ class ProjectController extends Controller
     
     public function edit(Project $project)
     {
-        //
+        return inertia('Project/Edit', compact('project'));
     }
 
     
     public function update(Request $request, Project $project)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'client_info.phone' => 'nullable|min:10|max:10',
+            'hours_work' => 'required|numeric|min:1',
+            'cuote' => 'required|numeric|min:1',
+            'promisse_finish_date' => 'required|date|after:tomorrow',
+        ]);
+
+        $project->update($request->all());
+
+        return to_route('projects.index');
     }
 
     

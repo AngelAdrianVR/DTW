@@ -1,21 +1,21 @@
 <template>
-  <AppLayout title="Proyectos-crear">
+  <AppLayout title="Proyectos-Editar">
     <template #header>
       <div class="flex justify-between">
         <Link :href="route('projects.index')">
           <i class="fa-solid fa-chevron-left hover:bg-gray-300/50 rounded-full p-2"></i>
         </Link>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Crear un Proyecto
+          Editar Proyecto  <strong> {{ project.name }} </strong>
         </h2>
       </div>
     </template>
     <div class="lg:w-1/3 mx-auto mt-6 shadow-md py-4 px-5 bg-white rounded-lg">
-      <form @submit.prevent="store">
+      <form @submit.prevent="update">
         <div class="mt-4">
           <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+         <InputError :message="$page.props?.errors.name" class="mb-3" />
         </div>
 
         <div class="mt-4">
@@ -25,7 +25,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.name']" class="mb-3" />
         </div>
 
         <div class="mt-4">
@@ -35,7 +35,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.email']" class="mb-3" /> 
         </div>
 
         <div class="mt-4">
@@ -45,7 +45,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.company']" class="mb-3" /> 
         </div>
 
         <div class="mt-4">
@@ -55,8 +55,8 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
-        </div>
+        <InputError :message="$page.props?.errors['client_info.phone']" class="mb-3" /> 
+       </div>
 
         <div class="mt-4">
         <el-input v-model="form.hours_work" class="w-50 m-2" placeholder="Horas de trabajo" clearable type="number">
@@ -65,7 +65,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.hours_work" class="mb-1" />
         </div>
 
         <div class="mt-4">
@@ -75,7 +75,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.cuote" class="mb-1" />
         </div>
 
         <div>
@@ -92,10 +92,10 @@
             </div>
           </div>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.promisse_finish_date" class="mb-3" />
         </div>
 
-        <PrimaryButton> Crear </PrimaryButton>
+        <PrimaryButton> Actualizar </PrimaryButton>
       </form>
     </div>
   </AppLayout>
@@ -105,6 +105,7 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
@@ -112,16 +113,16 @@ import { Link, useForm } from "@inertiajs/vue3";
 export default {
   data() {
     const form = useForm({
-      name: null,
+      name: this.project.name,
       client_info: {
-        name: null,
-        email: null,
-        company: null,
-        phone: null,
+        name: this.project.client_info?.name,
+        email: this.project.client_info?.email,
+        company: this.project.client_info?.company,
+        phone: this.project.client_info?.phone,
       },
-      hours_work: null,
-      cuote: null,
-      promisse_finish_date: null,
+      hours_work: this.project.hours_work,
+      cuote: this.project.cuote,
+      promisse_finish_date: this.project.promisse_finish_date,
     });
     return {
       form,
@@ -134,12 +135,14 @@ export default {
     Link,
     TextInput,
     PrimaryButton,
+    InputError
   },
   props: {
+    project: Object,
   },
   methods: {
-    store() {
-      this.form.post(route("projects.store"));
+    update() {
+      this.form.put(route("projects.update", this.project));
     },
   },
 };
@@ -153,7 +156,7 @@ export default {
   flex-wrap: wrap;
 }
 .demo-date-picker .block {
-  padding: 30px 0;
+  padding: 10px 0;
   text-align: center;
   border-right: solid 1px var(--el-border-color);
   flex: 1;
