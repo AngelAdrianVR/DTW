@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Message;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('company')->nullable();
             $table->string('phone')->nullable();
             $table->text('message');
+            $table->enum('status', [Message::IN_PROCESS, Message::DISPATCHED])->default(Message::IN_PROCESS);
             $table->timestamps();
         });
     }
