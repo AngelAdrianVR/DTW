@@ -10,8 +10,12 @@
             <div class="flex space-x-2 justify-end">
                 <el-button @click="markAsDispatched" type="success" plain class="mb-3"
                     :disabled="disableMassiveActions">Marcar como atendidos</el-button>
-                <el-button @click="deleteSelections" type="danger" plain class="mb-3"
-                    :disabled="disableMassiveActions">Eliminar</el-button>
+                <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
+                    title="Continuar con la eliminacion?" @confirm="deleteSelections">
+                    <template #reference>
+                        <el-button type="danger" plain class="mb-3" :disabled="disableMassiveActions">Eliminar</el-button>
+                    </template>
+                </el-popconfirm>
             </div>
             <el-table :data="messages" max-height="450" style="width: 100%" @selection-change="handleSelectionChange"
                 ref="multipleTableRef" :row-class-name="tableRowClassName">
@@ -45,7 +49,10 @@ export default {
         AppLayout,
     },
     props: {
-        messages: Array,
+        messages: {
+            type: Array,
+            default: []
+        },
     },
     methods: {
         async markAsDispatched() {
@@ -54,26 +61,22 @@ export default {
                     messages: this.$refs.multipleTableRef.value
                 }));
 
-                console.log(response.data.message);
                 if (response.status == 200) {
                     this.toast.success(response.data.message);
 
                     // change status to selected items
                     this.$refs.multipleTableRef.value.forEach(element => {
-                        element.status = 1
+                        element.status = 1;
                     });
-                    // const selectedMessages = this.messages.filter(item => this.$refs.multipleTableRef.value.id == item.id);
-                    // selectedMessages.forEach(item => item.status = 1);
 
                 } else {
                     this.toast.error(response.data.message);
                 }
 
             } catch (err) {
-                // this.toast.error(err);
+                this.toast.error(err);
                 console.log(err);
             }
-
         },
         handleSelectionChange(val) {
             this.$refs.multipleTableRef.value = val;
@@ -84,8 +87,40 @@ export default {
                 this.disableMassiveActions = false;
             }
         },
-        deleteSelections() {
-            console.log('Eliminando elementos')
+        async deleteSelections() {
+            try {
+                const response = await axios.post(route('messages.massive-delete', {
+                    messages: this.$refs.multipleTableRef.value
+                }));
+
+                if (response.status == 200) {
+                    // let indexes = [];
+                    this.toast.success(response.data.message);
+
+                    // update list of messages
+                    let deletedIndexes = [];
+                    this.messages.forEach((message, index) => {
+                        if (this.$refs.multipleTableRef.value.includes(message)) {
+                            deletedIndexes.push(index);
+                        }
+                    });
+                    
+                    // Ordenar los índices de forma descendente para evitar problemas de desplazamiento al eliminar elementos
+                    deletedIndexes.sort((a, b) => b - a);
+
+                    // Eliminar mensajes por índice
+                    for (const index of deletedIndexes) {
+                        this.messages.splice(index, 1);
+                    }
+
+                } else {
+                    this.toast.error(response.data.message);
+                }
+
+            } catch (err) {
+                this.toast.error(err);
+                console.log(err);
+            }
         },
         tableRowClassName({ row, rowIndex }) {
             if (row.status === 1) {
@@ -95,7 +130,6 @@ export default {
             return '';
         },
     },
-
     mounted() {
         this.toast = useToast();
     }

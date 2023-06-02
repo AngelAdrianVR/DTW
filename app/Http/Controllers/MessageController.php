@@ -40,4 +40,14 @@ class MessageController extends Controller
 
         return response()->json(['message' => 'mensajes marcados como despachados']);
     }
+
+    public function massiveDelete(Request $request)
+    {
+        foreach ($request->messages as $message) {
+            $message = Message::find($message['id']);
+            $message->delete();
+        }
+
+        return response()->json(['message' => 'mensaje(s) eliminado(s)']);
+    }
 }
