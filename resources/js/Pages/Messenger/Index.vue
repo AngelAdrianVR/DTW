@@ -26,6 +26,12 @@
                 <el-table-column prop="phone" label="Telefono" />
                 <el-table-column prop="message" label="Mensaje" />
                 <el-table-column prop="created_at" label="Enviado el" />
+                <el-table-column label="Acciones" fixed="right">
+                    <template #default="scope">
+                        <el-button size="small" type="primary"
+                            @click="createQuote(scope.$index, scope.row)">Cotizar</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </AppLayout>
@@ -104,7 +110,7 @@ export default {
                             deletedIndexes.push(index);
                         }
                     });
-                    
+
                     // Ordenar los índices de forma descendente para evitar problemas de desplazamiento al eliminar elementos
                     deletedIndexes.sort((a, b) => b - a);
 
@@ -129,6 +135,9 @@ export default {
 
             return '';
         },
+        createQuote(index, message) {
+            console.log(message)
+        }
     },
     mounted() {
         this.toast = useToast();

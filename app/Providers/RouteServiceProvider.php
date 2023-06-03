@@ -40,6 +40,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/messages.php'));
 
             Route::middleware('web')
+                ->group(base_path('routes/quotes.php'));
+          
+           Route::middleware('web')
                 ->group(base_path('routes/projectsRoutes.php'));
         });
     }
