@@ -15,7 +15,7 @@
         <div class="mt-4">
           <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+         <InputError :message="$page.props?.errors.name" class="mb-3" />
         </div>
 
         <div class="mt-4">
@@ -25,7 +25,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.name']" class="mb-3" />
         </div>
 
         <div class="mt-4">
@@ -35,7 +35,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.email']" class="mb-3" /> 
         </div>
 
         <div class="mt-4">
@@ -45,7 +45,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors['client_info.company']" class="mb-3" /> 
         </div>
 
         <div class="mt-4">
@@ -55,8 +55,8 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
-        </div>
+        <InputError :message="$page.props?.errors['client_info.phone']" class="mb-3" /> 
+       </div>
 
         <div class="mt-4">
         <el-input v-model="form.hours_work" class="w-50 m-2" placeholder="Horas de trabajo" clearable type="number">
@@ -65,7 +65,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.hours_work" class="mb-1" />
         </div>
 
         <div class="mt-4">
@@ -75,7 +75,7 @@
             </template>
           </el-input>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.cuote" class="mb-1" />
         </div>
 
         <div>
@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <!-- <InputError :message="form.error" class="mt-2" /> -->
+          <InputError :message="$page.props?.errors.promisse_finish_date" class="mb-3" />
         </div>
 
         <PrimaryButton> Crear </PrimaryButton>
@@ -108,6 +108,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
+import InputError from "@/Components/InputError.vue";
 
 export default {
   data() {
@@ -134,6 +135,7 @@ export default {
     Link,
     TextInput,
     PrimaryButton,
+    InputError
   },
   props: {
   },
