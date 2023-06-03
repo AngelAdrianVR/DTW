@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\MessengerController;
+
 use App\Http\Controllers\ProjectController;
-use App\Models\Message;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,11 +32,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        // $messages = Message::latest()->get();
-        $messages = ['hoola', 'jsjsjs'];
-        return inertia('Dashboard', compact('messages'));
+        return inertia('Dashboard');
     })->name('dashboard');
 });
 
-Route::resource('projects', ProjectController::class);
+Route::resource('settings', SettingController::class);
+
+Route::resource('resources', ResourceController::class);
+
+
 
