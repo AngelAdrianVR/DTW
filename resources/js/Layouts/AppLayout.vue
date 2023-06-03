@@ -57,6 +57,12 @@ const logout = () => {
                                 <NavLink :href="route('projects.index')" :active="route().current('projects.*')">
                                     Proyectos
                                 </NavLink>
+                                <NavLink :href="route('resources.index')" :active="route().current('resources.*')">
+                                    Administrador de recursos
+                                </NavLink>
+                                <NavLink :href="route('settings.index')" :active="route().current('settings.*')">
+                                    Configuraciones
+                                </NavLink>
                             </div>
                         </div>
 
@@ -207,6 +213,12 @@ const logout = () => {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('projects.index')" :active="route().current('projects.*')">
                             Proyectos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('resources.index')" :active="route().current('resources.*')">
+                            Administrador de recursos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('settings.index')" :active="route().current('settings.*')">
+                            Configuraciones
                         </ResponsiveNavLink>
                     </div>
 
