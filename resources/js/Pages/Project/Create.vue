@@ -2,8 +2,8 @@
   <AppLayout title="Proyectos-crear">
     <template #header>
       <div class="flex justify-between">
-        <Link :href="route('projects.index')">
-          <i class="fa-solid fa-chevron-left hover:bg-gray-300/50 rounded-full p-2"></i>
+        <Link :href="route('projects.index')" class="hover:bg-gray-300/50 rounded-full w-10 h-10 flex justify-center items-center">
+          <i class="fa-solid fa-chevron-left"></i>
         </Link>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           Crear un Proyecto
