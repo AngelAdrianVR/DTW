@@ -57,17 +57,15 @@ const logout = () => {
                                 <NavLink :href="route('projects.index')" :active="route().current('projects.*')">
                                     Proyectos
                                 </NavLink>
+                                <NavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
+                                    Cotizaciones
+                                </NavLink>
                                 <NavLink :href="route('resources.index')" :active="route().current('resources.*')">
                                     Administrador de recursos
                                 </NavLink>
                                 <NavLink :href="route('settings.index')" :active="route().current('settings.*')">
                                     Configuraciones
                                 </NavLink>
-                                <NavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
-                                    Cotizaciones
-                                </NavLink>
-                            </div>
-                        </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <div class="ml-3 relative">
@@ -217,17 +215,15 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('projects.index')" :active="route().current('projects.*')">
                             Proyectos
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
+                            Cotizaciones
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('resources.index')" :active="route().current('resources.*')">
                             Administrador de recursos
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('settings.index')" :active="route().current('settings.*')">
                             Configuraciones
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
-                            Cotizaciones
-                        </ResponsiveNavLink>
-                    </div>
-
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
