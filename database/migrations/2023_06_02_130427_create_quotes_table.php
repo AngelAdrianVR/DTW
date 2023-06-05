@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('discounts')->nullable();
             $table->unsignedTinyInteger('advance_payment_percentage')->default(50);
             $table->unsignedMediumInteger('total_cost');
+            $table->unsignedSmallInteger('total_hours');
             $table->date('promised_end_date');
             $table->unsignedTinyInteger('offer_validity_days')->default(30);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();

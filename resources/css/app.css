@@ -5,3 +5,15 @@
 [x-cloak] {
     display: none;
 }
+
+/* @layer utilities {
+    .is-customized {
+        color: white;
+        background-color: #7F659C;
+    }
+
+    .el-popper.is-customized .el-popper__arrow::before {
+        background-color: #7F659C;
+        right: 0;
+      }
+} */
