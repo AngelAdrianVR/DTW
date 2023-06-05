@@ -5,3 +5,9 @@
 [x-cloak] {
     display: none;
 }
+
+@layer utilities{
+    .input {
+        @apply rounded-lg h-7 w-24 border-gray-500 my-1 mx-2;
+    }
+}
