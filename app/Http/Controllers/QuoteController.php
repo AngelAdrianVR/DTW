@@ -13,19 +13,31 @@ class QuoteController extends Controller
         return inertia('Quote/Index', compact('quotes'));
     }
 
-    public function store(Request $request)
-    {   
-        // $request->validate([
-        //     'name' => 'required|string|max:30',
-        //     'email' => 'required|email',
-        //     'company' => 'nullable|string',
-        //     'phone' => 'nullable|string|min:10|max:10',
-        //     'message' => 'required',
-        // ]); 
+    public function create()
+    {
+        return inertia('Quote/Create');
+    }
 
-        // Quote::create($request->all());
+    public function store(Request $request)
+    {
+        $request->validate([
+            'customer_name' => 'required|string|max:191',
+            'company' => 'nullable|string|max:191',
+            'email' => 'nullable',
+            'included_features' => 'nullable',
+            'suggested_features' => 'nullable',
+            'discounts' => 'nullable',
+            'advance_payment_percentage' => 'required|numeric',
+            'total_hours' => 'required|numeric',
+            'promised_end_date' => 'date',
+            'offer_validity_days' => 'required|numeric',
+        ]);
+
+        Quote::create($request->all() + [
+            'user_id' => auth()->id(), 
+            'total_cost' => 101.5 * $request->total_hours,
+        ]);
 
         return back();
-
     }
 }

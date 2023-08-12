@@ -6,6 +6,17 @@
     display: none;
 }
 
+/* @layer utilities {
+    .is-customized {
+        color: white;
+        background-color: #7F659C;
+    }
+
+    .el-popper.is-customized .el-popper__arrow::before {
+        background-color: #7F659C;
+        right: 0;
+      }
+} */
 @layer utilities{
     .input {
         @apply rounded-lg h-7 w-24 border-gray-500 my-1 mx-2;

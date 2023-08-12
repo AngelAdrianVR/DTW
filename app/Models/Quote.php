@@ -17,6 +17,7 @@ class Quote extends Model
         'suggested_features',
         'discounts',
         'advance_payment_percentage',
+        'total_hours',
         'total_cost',
         'promised_end_date',
         'offer_validity_days',
