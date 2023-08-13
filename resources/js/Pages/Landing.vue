@@ -1,42 +1,64 @@
 <template>
-    <div class="mt-1 relative">
+    <div class="relative">
         <!-- whatsapp button -->
-        <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 lg:right-3 right-16 hover:scale-105"
+        <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
             href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
         <!-- navbar -->
-        <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]" class="flex items-center justify-between py-4 lg:mx-10">
+        <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
+            class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
                 <img src="../../../public/assets/images/dtw_logo.png" class="h-10" alt="logo" />
                 <span>Digital TW</span>
             </div>
-            <div class="mr-12">
-                <a class="mx-2 hover:text-[#7F659C]" href="#Inicio">Inicio</a> |
-                <a class="mx-2 hover:text-[#7F659C]" href="#Servicios">Servicios</a> |
-                <a class="mx-2 hover:text-[#7F659C]" href="#Contacto">Contacto</a>
+            <button class="lg:hidden">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <div class="mr-12 hidden lg:inline">
+                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Inicio')">Inicio</button> |
+                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> |
+                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button>
             </div>
         </nav>
 
-        <main class="mt-16">
-            <section class="lg:grid grid-cols-2 gap-x-10 h-96 mx-14" id="Inicio">
+        <main class="pt-20">
+            <!-- first section desktop -->
+            <section class="hidden lg:grid grid-cols-2 gap-x-10 h-96 mx-14" id="Inicio">
                 <figure>
                     <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing1.png" alt="computer" />
                 </figure>
                 <div class="flex-col justify-center py-14">
-                    <h1 class="font-bold text-7xl text-center">Diseño web a la medida</h1>
+                    <h1 class="font-bold lg:text-7xl text-lg text-center">Diseño web a la medida</h1>
                     <p class="mt-9">
                         Creamos sitios web a la medida, único y personalizado según tus
                         necesidades, desde sitios corporativos, tiendas en línea,
                         informativos.
                     </p>
                     <button
-                        class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
+                        class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Cotizar mi sitio
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
                 </div>
+            </section>
+            <!-- first section mobile -->
+            <section class="h-96 mx-14 mb-24" id="Inicio">
+                <h1 class="font-bold lg:text-7xl text-lg text-center">Diseño web a la medida</h1>
+                <figure>
+                    <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing1.png" alt="computer" />
+                </figure>
+                <button
+                    class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
+                    Cotizar mi sitio
+                    <i class="fa-solid fa-chevron-right ml-6"></i>
+                </button>
+                <p class="mt-9 text-justify">
+                    Creamos sitios web a la medida, único y personalizado según tus
+                    necesidades, desde sitios corporativos, tiendas en línea,
+                    informativos.
+                </p>
             </section>
             <section class="mt-10">
                 <h1 class="text-center text-white text-3xl py-6 bg-[#1A1A1A]">Proyectos</h1>
@@ -62,8 +84,7 @@
             <section class="lg:mx-24 mx-1 mt-9 relative">
                 <!-- bg decorations -->
                 <img class="absolute top-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png" />
-                <img class="absolute top-72 -right-14 -z-10 rotate-180"
-                    src="../../../public/assets/images/decoration.png" />
+                <img class="absolute top-72 -right-0 -z-10 rotate-180" src="../../../public/assets/images/decoration.png" />
                 <img class="absolute bottom-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png" />
                 <!-- end decorations -->
 
@@ -133,7 +154,7 @@
                 <div class="text-center">
                     <h3>Una web a la medida, con garantía de funcionamiento</h3>
                     <button
-                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
+                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Solicita tu cotizacion sin compromiso
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
@@ -157,7 +178,7 @@
                         </p>
                     </div>
                 </div>
-                <h1 class="w-full text-center text-white text-3xl py-6 bg-[#1A1A1A]">
+                <h1 class="w-full text-center text-white lg:text-3xl text-sm py-6 bg-[#1A1A1A]">
                     Dejanos saber que necesitas y lo haremos posible
                 </h1>
             </section>
@@ -238,7 +259,7 @@
                             </label>
                         </div>
                         <button type="submit"
-                            class="mx-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
+                            class="mx-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                             Enviar
                             <i class="fa-solid fa-chevron-right ml-6"></i>
                         </button>
@@ -325,12 +346,12 @@ export default {
                 {
                     imgPath: e3dtest,
                     name: 'J. Sherman',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
+                    text: 'El sistema ERP desarrollado por DTW ha transformado por completo la forma en que gestionamos nuestro negocio. La solución personalizada se adaptó perfectamente a nuestras operaciones y nos ha permitido optimizar nuestros procesos, mejorar la visibilidad y tomar decisiones informadas en tiempo real.'
                 },
                 {
                     imgPath: churrotest,
                     name: 'Rocio R.',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
+                    text: 'Quiero agradecer al equipo de DTW por su creatividad y profesionalismo al crear mi sitio web. Han logrado plasmar perfectamente la visión que tenía en mente y han superado mis expectativas.'
                 },
                 {
                     imgPath: profibratest,
@@ -340,12 +361,9 @@ export default {
             ],
         };
     },
-    props: {
-        InputError,
-        useToast
-    },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
+        this.toast = useToast();
     },
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -364,8 +382,11 @@ export default {
 
             this.lastScrollY = currentScrollY;
         },
+        scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        },
         store() {
-
             this.form.post(route("messages.store"), {
                 onSuccess: () => {
                     this.toast.success("Mensaje enviado correctamente", {
@@ -375,7 +396,7 @@ export default {
                     form.reset();
                 }
             });
-        }
+        },
     }
 };
 </script>
@@ -385,15 +406,17 @@ export default {
 .navbar {
     position: absolute;
     top: 0;
-    width: 100%;
     background-color: #ffffff;
-    /* Otros estilos de diseño */
+    opacity: 0.9;
 }
 
 .fixed-navbar {
     position: fixed;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
-    /* Otros estilos para la barra de navegación fija */
+}
+
+html {
+    scroll-behavior: smooth;
 }
 </style>
