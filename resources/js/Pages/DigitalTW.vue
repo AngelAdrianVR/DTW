@@ -476,7 +476,7 @@ function scrollToTop() {
             <!-- ***** Details End ***** -->
 
             <!-- ***** packages Start ***** -->
-            <!-- <div class="gaming-library">
+            <div class="gaming-library">
             <div class="col-lg-12">
               <div class="heading-section">
                 <h4><em>Paquetes</em> de desarrollo</h4>
@@ -547,7 +547,7 @@ function scrollToTop() {
                 <a href="packages.html">Ver todos los paquetes</a>
               </div>
             </div>
-          </div> -->
+          </div>
             <!-- ***** packages End ***** -->
 
             <!-- ***** Contact Start ***** -->

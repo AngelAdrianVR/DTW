@@ -17,6 +17,8 @@ class Message extends Model
         'email',
         'company',
         'phone',
+        'service',
+        'info',
         'message',
         'status',
     ];

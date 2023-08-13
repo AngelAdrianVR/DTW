@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('company')->nullable();
             $table->string('phone')->nullable();
+            $table->string('service')->nullable();
+            $table->boolean('info')->default(false);
             $table->text('message');
             $table->enum('status', [Message::IN_PROCESS, Message::DISPATCHED])->default(Message::IN_PROCESS);
             $table->timestamps();

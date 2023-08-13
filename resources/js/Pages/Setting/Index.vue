@@ -34,8 +34,8 @@
               <li class="text-gray-900 mt-4">Gastos mensuales: $ {{month_outcomes}}</li>
               <li class="text-gray-900 font-bold">Costos anuales: $ {{month_outcomes * 12}}</li>
             </ul>
-            <h2 class="text-green-600 font-bold">Tarifa por hora: $</h2>
-          </div>
+            <h2 class="text-green-600 font-bold">Tarifa por hora: ${{ month_outcomes / (week_hours_work[0]?.value * 4 * 3)}} </h2>
+          </div> 
         </div>
       </el-tab-pane>
       <el-tab-pane label="Configuraciones" name="configs"
@@ -58,8 +58,6 @@
         </div></el-tab-pane
       >
     </el-tabs>
-    <!-- {{ array_settings_filtered }} -->
-    {{week_hours_work}}
     <!-- tabs section ends -->
   </AppLayout>
 </template>

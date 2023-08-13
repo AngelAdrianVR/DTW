@@ -1,259 +1,503 @@
 <template>
-    <div class="mt-1 relative">
-        <!-- whatsapp button -->
-        <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 lg:right-3 right-16 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
-            target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
-        </a>
-        <!-- navbar -->
-        <nav class="flex items-center justify-between py-4 lg:mx-10">
-            <div class="flex space-x-2 items-center">
-                <img src="../../../public/assets/images/dtw_logo.png" class="h-10" alt="logo">
-                <span>Digital TW</span>
-            </div>
-            <div>
-                <a class="mx-2 hover:text-[#7F659C]" href="/">Inicio</a> |
-                <a class="mx-2 hover:text-[#7F659C]" href="/">Servicios</a> |
-                <a class="mx-2 hover:text-[#7F659C]" href="/">Contacto</a>
-            </div>
-        </nav>
+  <div class="mt-1 relative">
+    <!-- whatsapp button -->
+    <a
+      class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 lg:right-3 right-16 hover:scale-105"
+      href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i
+        class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"
+      ></i>
+    </a>
+    <!-- navbar -->
+    <nav
+      :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
+      class="flex items-center justify-between py-4 lg:mx-10"
+    >
+      <div class="flex space-x-2 items-center">
+        <img
+          src="../../../public/assets/images/dtw_logo.png"
+          class="h-10"
+          alt="logo"
+        />
+        <span>Digital TW</span>
+      </div>
+      <div class="mr-12">
+        <a class="mx-2 hover:text-[#7F659C]" href="#Inicio">Inicio</a> |
+        <a class="mx-2 hover:text-[#7F659C]" href="#Servicios">Servicios</a> |
+        <a class="mx-2 hover:text-[#7F659C]" href="#Contacto">Contacto</a>
+      </div>
+    </nav>
 
-        <main>
-            <section class="lg:grid grid-cols-2 gap-x-10 h-96 mx-14">
-                <figure>
-                    <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing1.png" alt="computer">
+    <main class="mt-16">
+      <section class="lg:grid grid-cols-2 gap-x-10 h-96 mx-14" id="Inicio">
+        <figure>
+          <img
+            class="h-5/6 mx-auto"
+            src="../../../public/assets/images/landing1.png"
+            alt="computer"
+          />
+        </figure>
+        <div class="flex-col justify-center py-14">
+          <h1 class="font-bold text-7xl text-center">Diseño web a la medida</h1>
+          <p class="mt-9">
+            Creamos sitios web a la medida, único y personalizado según tus
+            necesidades, desde sitios corporativos, tiendas en línea,
+            informativos.
+          </p>
+          <button
+            class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5"
+          >
+            Cotizar mi sitio
+            <i class="fa-solid fa-chevron-right ml-6"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="mt-32">
+        <h1 class="text-center text-white text-3xl py-6 bg-[#1A1A1A]">
+          Proyectos
+        </h1>
+        <div class="bg-[#262626] py-12 flex">
+          <div class="w-8 flex justify-center items-center">
+            <button class="text-white">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+          </div>
+          <div class="w-full lg:grid grid-cols-3 gap-x-2">
+            <img
+              class="h-60 mx-auto"
+              src="../../../public/assets/images/PC-01.png"
+            />
+            <img
+              class="h-60 mx-auto"
+              src="../../../public/assets/images/PC-02.png"
+            />
+            <img
+              class="h-60 mx-auto"
+              src="../../../public/assets/images/PC-03.png"
+            />
+          </div>
+          <div class="w-8 flex justify-center items-center">
+            <button class="text-white">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lg:mx-24 mx-1 mt-9 relative">
+        <!-- bg decorations -->
+        <img
+          class="absolute top-0 -left-14 -z-10"
+          src="../../../public/assets/images/decoration.png"
+        />
+        <img
+          class="absolute top-72 -right-14 -z-10 rotate-180"
+          src="../../../public/assets/images/decoration.png"
+        />
+        <img
+          class="absolute bottom-0 -left-14 -z-10"
+          src="../../../public/assets/images/decoration.png"
+        />
+        <!-- end decorations -->
+
+        <div class="text-center" id="Servicios">
+          <h2 class="font-bold mb-3 text-xl">SERVICIOS</h2>
+          <p>
+            Creamos diseños, programación y funcionalidad única para tu marca.
+          </p>
+        </div>
+
+        <div class="lg:grid grid-cols-2 gap-x-10">
+          <figure>
+            <img
+              class="h-5/6 mx-auto"
+              src="../../../public/assets/images/landing2.png"
+              alt="computer"
+            />
+          </figure>
+          <div class="flex-col justify-center py-14">
+            <h1 class="font-bold text-lg text-center">
+              Diseño y desarrollo de página web a la medida
+            </h1>
+            <p class="mt-9 text-center">
+              Creamos diseños únicos y exclusivos para cada cliente, experiencia
+              de usuario (UI/UX), responsividad y compatibilidad en diferentes
+              dispositivos, desarrollo de código fuente (SEO) para un
+              posicionamiento adecuado en buscadores y mucho más...
+            </p>
+          </div>
+
+          <div class="flex-col justify-center py-14">
+            <h1 class="font-bold text-lg text-center">
+              Mantenimiento y actualización de páginas web
+            </h1>
+            <p class="mt-9 text-center">
+              Actualización de contenido y sofware, mejoras del diseño de la
+              página, soporte técnico, optimización de rendimiento,
+              mantenimiento de rutina sobre el front y back end y más...
+            </p>
+          </div>
+          <figure>
+            <img
+              class="h-5/6 mx-auto"
+              src="../../../public/assets/images/landing3.png"
+              alt="computer"
+            />
+          </figure>
+
+          <figure>
+            <img
+              class="h-5/6 mx-auto"
+              src="../../../public/assets/images/landing4.png"
+              alt="computer"
+            />
+          </figure>
+          <div class="flex-col justify-center py-14">
+            <h1 class="font-bold text-lg text-center">
+              Desarrollo Back end - Front end
+            </h1>
+            <p class="mt-9 text-center">
+              Implementamos tecnología para eficientizar procesos, como ERP, CRM
+              CMS y mucho más...
+            </p>
+          </div>
+
+          <div class="flex-col justify-center py-14">
+            <h1 class="font-bold text-lg text-center">Marketing digital</h1>
+            <p class="mt-9 text-center">
+              Incrementa tus ventas, amplia tu mercado y potencializa tu
+              negocio. Creamos publicidad digital mediante redes sociales y
+              más...
+            </p>
+          </div>
+          <figure>
+            <img
+              class="h-5/6 mx-auto"
+              src="../../../public/assets/images/landing5.png"
+              alt="computer"
+            />
+          </figure>
+        </div>
+
+        <div class="text-center">
+          <h3>Una web a la medida, con garantía de funcionamiento</h3>
+          <button
+            class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5"
+          >
+            Solicita tu cotizacion sin compromiso
+            <i class="fa-solid fa-chevron-right ml-6"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="mt-10">
+        <div
+          class="bg-[#262626] lg:grid grid-cols-2 items-center justify-center px-14 py-2"
+        >
+          <figure class="h-72">
+            <img
+              class="h-full"
+              src="../../../public/assets/images/landing6.png"
+            />
+          </figure>
+          <div class="text-center text-white">
+            <h2 class="font-bold">
+              Sitios web responsivos que se ven perfecto en cualquier
+              dispositivo
+            </h2>
+            <p>
+              Desde smartphones y tables, hasta computadoras de escritorio,
+              nuestros diseños se ajustan perfectamente para brindar una
+              experiencia de usuario óptima en cualquier pantalla.
+            </p>
+          </div>
+        </div>
+        <h1 class="w-full text-center text-white text-3xl py-6 bg-[#1A1A1A]">
+          Dejanos saber que necesitas y lo haremos posible
+        </h1>
+      </section>
+
+      <section class="lg:mx-24 mx-1 mt-9 relative">
+        <h2 class="font-bold mb-3 text-xl text-center">
+          Nuestros clientes hablan por nosotros
+        </h2>
+
+        <div class="lg:grid grid-cols-2 gap-9">
+          <div
+            v-for="(testimony, index) in testimonies"
+            :key="index"
+            class="bg-[#262626] rounded-[30px] px-8 py-16 mt-2"
+          >
+            <div class="grid grid-cols-4 gap-x-2 text-white">
+              <div class="flex-col space-y-2 items-center justify-center">
+                <figure class="rounded-full w-16 h-16">
+                  <img :src="testimony.imgPath" />
                 </figure>
-                <div class="flex-col justify-center py-14">
-                    <h1 class="font-bold text-7xl text-center">Diseño web a la medida</h1>
-                    <p class="mt-9">
-                        Creamos sitios web a la medida, único y personalizado según tus necesidades, desde sitios
-                        corporativos, tiendas en línea, informativos.
-                    </p>
-                    <button
-                        class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
-                        Cotizar mi sitio
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
-                </div>
-            </section>
+                <span>{{ testimony.name }}</span>
+              </div>
+              <div class="col-span-3">
+                <p>{{ testimony.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <section class="mt-32">
-                <h1 class="text-center text-white text-3xl py-6 bg-[#1A1A1A]">Proyectos</h1>
-                <div class="bg-[#262626] py-12 flex">
-                    <div class="w-8 flex justify-center items-center">
-                        <button class="text-white">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                    </div>
-                    <div class="w-full lg:grid grid-cols-3 gap-x-2">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-01.png">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-02.png">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-03.png">
-                    </div>
-                    <div class="w-8 flex justify-center items-center">
-                        <button class="text-white">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </section>
+      <section class="lg:mx-24 mx-1 mt-9 relative" id="Contacto">
+        <h2 class="font-bold mb-3 text-xl text-center">Cuentanos tu idea</h2>
 
-            <section class="lg:mx-24 mx-1 mt-9 relative">
-                <!-- bg decorations -->
-                <img class="absolute top-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png">
-                <img class="absolute top-72 -right-14 -z-10 rotate-180" src="../../../public/assets/images/decoration.png">
-                <img class="absolute bottom-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png">
-                <!-- end decorations -->
+        <div class="lg:grid grid-cols-2 gap-9 mb-6">
+          <form @submit.prevent="store">
+            <div class="mb-5">
+              <label for="name"
+                >Nombre <span class="text-red-500">*</span></label
+              >
+              <input v-model="form.name"
+                type="text"
+                id="name"
+                required
+                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
+                placeholder="Escribe tu nombre"
+              />
+              <p class="text-red-600 text-xs" v-if="form.errors?.name">{{form.errors?.name}}</p>
+            </div>
+            <div class="mb-5">
+              <label for="email"
+                >Correo <span class="text-red-500">*</span></label
+              >
+              <input v-model="form.email"
+                type="email"
+                id="email"
+                required
+                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
+                placeholder="Escribe tu correo"
+              />
+              <p class="text-red-600 text-xs" v-if="form.errors?.mail">{{form.errors?.mail}}</p>
+            </div>
+            <div class="mb-5">
+              <label for="phone"
+                >Teléfono</label
+              >
+              <input v-model="form.phone"
+                type="text"
+                id="phone"
+                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
+                placeholder="Escribe tu telefono"
+              />
+              <p class="text-red-600 text-xs" v-if="form.errors?.phone">{{form.errors?.phone}}</p>
+            </div>
+            <div class="mb-5">
+              <label for="service">Servicio</label>
+              <select v-model="form.service"
+                id="service"
+                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
+                placeholder="Selecciona el servicio"
+              >
+                <option value="Tienda en linea">Tienda en linea</option>
+                <option value="Marketing digital">Marketing digital</option>
+                <option value="Landing page">Landing page</option>
+                <option value="ERP">ERP</option>
+                <option value="CRM">CRM</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="mb-5">
+              <textarea v-model="form.message"
+                rows="5"
+                required
+                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px]"
+                placeholder="Mensaje"
+              ></textarea>
+           <p class="text-red-600 text-xs" v-if="form.errors?.message">{{form.errors?.message}}</p>
+            </div>
+            <div class="mb-5">
+              <label for="terms" class="flex items-center">
+                <input v-model="form.info"
+                  type="checkbox"
+                  id="terms"
+                  class="mr-2 active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] text-[#7F659C] rounded-[10px]"
+                />
+                Acepto recibir información sobre el servicio
+              </label>
+            </div>
+            <button
+              type="submit"
+              class="mx-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5"
+            >
+              Enviar
+              <i class="fa-solid fa-chevron-right ml-6"></i>
+            </button>
+          </form>
+          <figure class="rounded-[20px] hidden lg:block">
+            <img
+              class="rounded-[20px]"
+              src="../../../public/assets/images/contact.png"
+            />
+          </figure>
+        </div>
+      </section>
 
-                <div class="text-center">
-                    <h2 class="font-bold mb-3 text-xl">SERVICIOS</h2>
-                    <p>Creamos diseños, programación y funcionalidad única para tu marca.</p>
-                </div>
+      <footer
+        class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative"
+      >
+        <figure>
+          <img
+            class="md:w-[3%] w-[7%]"
+            src="../../../public/assets/images/dtw_logo.png"
+            alt=""
+          />
+        </figure>
+        <div class="md:grid grid-cols-3 h-28">
+          <div class="border-r border-white flex justify-center items-cente">
+            <p class="text-lg">"Liberando tu potencial en linea"</p>
+          </div>
 
-                <div class="lg:grid grid-cols-2 gap-x-10">
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing2.png" alt="computer">
-                    </figure>
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">Diseño y desarrollo de página web a la medida</h1>
-                        <p class="mt-9 text-center">
-                            Creamos diseños únicos y exclusivos para cada cliente, experiencia de usuario (UI/UX),
-                            responsividad y compatibilidad en diferentes dispositivos, desarrollo de código fuente (SEO)
-                            para un posicionamiento adecuado en buscadores y mucho más...
-                        </p>
-                    </div>
+          <div class="border-r border-white flex justify-center items-center">
+            <div class="flex flex-col">
+              <h2 class="text-center mb-5 text-xl">Contacto</h2>
+              <div>
+                <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
+                <p>
+                  <i class="fa-solid fa-envelope mr-2"></i>contacto@dtw.com.mx
+                </p>
+              </div>
+            </div>
+          </div>
 
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">Mantenimiento y actualización de páginas web </h1>
-                        <p class="mt-9 text-center">
-                            Actualización de contenido y sofware, mejoras del diseño de la página, soporte técnico,
-                            optimización de rendimiento, mantenimiento de rutina sobre el front y back end y más...
-                        </p>
-                    </div>
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing3.png" alt="computer">
-                    </figure>
-
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing4.png" alt="computer">
-                    </figure>
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">Desarrollo Back end - Front end</h1>
-                        <p class="mt-9 text-center">
-                            Implementamos tecnología para eficientizar procesos, como ERP, CRM CMS y mucho más...
-                        </p>
-                    </div>
-
-
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">Marketing digital</h1>
-                        <p class="mt-9 text-center">
-                            Incrementa tus ventas, amplia tu mercado y potencializa tu negocio.
-                            Creamos publicidad digital mediante redes sociales y más...
-                        </p>
-                    </div>
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing5.png" alt="computer">
-                    </figure>
-                </div>
-
-                <div class="text-center">
-                    <h3>Una web a la medida, con garantía de funcionamiento</h3>
-                    <button
-                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
-                        Solicita tu cotizacion sin compromiso
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
-                </div>
-            </section>
-
-            <section class="mt-10">
-                <div class="bg-[#262626] lg:grid grid-cols-2 items-center justify-center px-14 py-2">
-                    <figure class="h-96">
-                        <img class="h-full" src="../../../public/assets/images/landing6.png">
-                    </figure>
-                    <div class="text-center text-white">
-                        <h2 class="font-bold">Sitios web responsivos que se ven perfecto en cualquier dispositivo</h2>
-                        <p>
-                            Desde smartphones y tables, hasta computadoras de escritorio, nuestros diseños se ajustan
-                            perfectamente para brindar una experiencia de usuario óptima en cualquier pantalla.
-                        </p>
-                    </div>
-                </div>
-                <h1 class="w-full text-center text-white text-3xl py-6 bg-[#1A1A1A]">Dejanos saber que necesitas y lo
-                    haremos posible</h1>
-            </section>
-
-            <section class="lg:mx-24 mx-1 mt-9 relative">
-                <h2 class="font-bold mb-3 text-xl text-center">Nuestros clientes hablan por nosotros</h2>
-
-                <div class="lg:grid grid-cols-2 gap-9">
-                    <div v-for="(testimony, index) in testimonies" :key="index"
-                        class="bg-[#262626] rounded-[30px] px-8 py-16">
-                        <div class="grid grid-cols-4 gap-x-2 text-white">
-                            <div class="flex-col space-y-2 items-center justify-center">
-                                <figure class="rounded-full w-16 h-16">
-                                    <img :src="testimony.imgPath">
-                                </figure>
-                                <span>{{ testimony.name }}</span>
-                            </div>
-                            <div class="col-span-3">
-                                <p>{{ testimony.text }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="lg:mx-24 mx-1 mt-9 relative">
-                <h2 class="font-bold mb-3 text-xl text-center">Cuentanos tu idea</h2>
-
-                <div class="lg:grid grid-cols-2 gap-9 mb-6">
-                    <form>
-                        <div class="mb-5">
-                            <label for="name">Nombre <span class="text-red-500">*</span></label>
-                            <input type="text" id="name"
-                                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
-                                placeholder="Escribe tu nombre">
-                        </div>
-                        <div class="mb-5">
-                            <label for="email">Correo <span class="text-red-500">*</span></label>
-                            <input type="email" id="email"
-                                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
-                                placeholder="Escribe tu correo">
-                        </div>
-                        <div class="mb-5">
-                            <label for="phone">Teléfono<span class="text-red-500">*</span></label>
-                            <input type="text" id="phone"
-                                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
-                                placeholder="Escribe tu telefono">
-                        </div>
-                        <div class="mb-5">
-                            <label for="service">Servicio</label>
-                            <select id="service"
-                                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
-                                placeholder="Selecciona el servicio">
-                                <option value="1">Tienda en linea</option>
-                                <option value="2">Marketing digital</option>
-                                <option value="3">Landing page</option>
-                                <option value="4">ERP</option>
-                                <option value="5">CRM</option>
-                                <option value="6">Otro</option>
-                            </select>
-                        </div>
-                        <div class="mb-5">
-                            <textarea rows="5"
-                                class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px]"
-                                placeholder="Mensaje"></textarea>
-                        </div>
-                        <div class="mb-5">
-                            <label for="terms" class="flex items-center">
-                                <input type="checkbox" id="terms"
-                                class="mr-2 active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] text-[#7F659C] rounded-[10px]">
-                                Acepto recibir información sobre el servicio
-                            </label>
-                        </div>
-                        <button type="submit"
-                            class="mx-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5">
-                            Enviar
-                            <i class="fa-solid fa-chevron-right ml-6"></i>
-                        </button>
-                    </form>
-                    <figure class="rounded-[20px] hidden lg:block">
-                        <img class="rounded-[20px]" src="../../../public/assets/images/contact.png">
-                    </figure>
-                </div>
-            </section>
-
-        </main>
-    </div>
+          <div class="flex justify-center items-center">
+            <div class="flex flex-col justify-center items-center">
+              <h2 class="text-center mb-5 text-xl">Síguenos</h2>
+              <div>
+                <a
+                  href="https://www.facebook.com/profile.php?id=100094614796876"
+                  target="_blank"
+                  ><i
+                    class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"
+                  ></i
+                ></a>
+                <a
+                  href="https://instagram.com/digital_tw?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
+                  target="_blank"
+                  ><i
+                    class="fa-brands fa-instagram text-2xl border border-white rounded-full px-3 py-2 cursor-pointer"
+                  ></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="hidden md:block" href=""
+          ><p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
+            Política de privacidad - Plítica de cookies
+          </p></a
+        >
+        <a class="hidden md:block" href=""
+          ><p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
+            Copyright | 2023 | Todos los derechos reservados por Digital TW S.A
+            de C.V.
+          </p></a
+        >
+      </footer>
+    </main>
+  </div>
 </template>
 
 <script>
+import { useForm } from "@inertiajs/vue3";
+import { useToast } from "vue-toastification";
+import InputError from "@/Components/InputError.vue";
 
 export default {
-    data() {
-        return {
-            testimonies: [
-                {
-                    imgPath: '../../../public/assets/images/e3dtest.png',
-                    name: 'J. Sherman',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
-                },
-                {
-                    imgPath: '../../../public/assets/images/churrotest.png',
-                    name: 'Rocio R.',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
-                },
-                {
-                    imgPath: '../../../public/assets/images/profibratest.png',
-                    name: 'Jose Ricardo',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
-                },
-            ]
-        };
+  data() {
+    const form = useForm({
+  name: null,
+  email: null,
+  phone: null,
+  service: null,
+  message: null,
+  info: false,
+});
+    return {
+        form,
+         isNavbarFixed: false,
+      lastScrollY: 0,
+      testimonies: [
+        {
+          imgPath: "../../../public/assets/images/e3dtest.png",
+          name: "J. Sherman",
+          text: "Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.",
+        },
+        {
+          imgPath: "../../../public/assets/images/churrotest.png",
+          name: "Rocio R.",
+          text: "Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.",
+        },
+        {
+          imgPath: "../../../public/assets/images/profibratest.png",
+          name: "Jose Ricardo",
+          text: "Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.",
+        },
+      ],
+    };
+  },
+  props:{
+    InputError,
+    useToast
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > this.lastScrollY && currentScrollY > window.innerHeight) {
+        // Si se hace scroll hacia abajo y se ha pasado el alto de la pantalla
+        this.isNavbarFixed = false;
+      } else {
+        // Si se hace scroll hacia arriba
+        this.isNavbarFixed = true;
+      }
+
+      this.lastScrollY = currentScrollY;
     },
+    store() {
+        
+  this.form.post(route("messages.store"), {
+    onSuccess: () => {
+      this.toast.success("Mensaje enviado correctamente", {
+        timeout: 3000
+      });
+
+      form.reset();
+    }
+  });
+}
+  }
+};
+</script>
+
+<style>
+/* Estilos para la barra de navegación */
+.navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  /* Otros estilos de diseño */
 }
 
-</script>
+.fixed-navbar {
+  position: fixed;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  /* Otros estilos para la barra de navegación fija */
+}
+</style>

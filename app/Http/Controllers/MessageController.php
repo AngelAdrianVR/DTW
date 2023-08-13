@@ -17,11 +17,12 @@ class MessageController extends Controller
     public function store(Request $request)
     {   
         $request->validate([
-            'name' => 'required|string|max:30',
+            'name' => 'required|string',
             'email' => 'required|email',
-            'company' => 'nullable|string',
             'phone' => 'nullable|string|min:10|max:10',
             'message' => 'required',
+            'service' => 'nullable|string',
+            'info' => 'boolean',
         ]); 
 
         Message::create($request->all());
