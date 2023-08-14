@@ -6,6 +6,15 @@
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
+
+        <!-- mobile menu (hamburger) -->
+        <div v-if="showMobileMenu"
+            class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
+            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Inicio')">Inicio</button>
+            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button>
+            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button>
+        </div>
+
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
@@ -13,7 +22,7 @@
                 <img src="../../../public/assets/images/dtw_logo.png" class="h-10" alt="logo" />
                 <span>Digital TW</span>
             </div>
-            <button class="lg:hidden">
+            <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
             <div class="mr-12 hidden lg:inline">
@@ -44,7 +53,7 @@
                 </div>
             </section>
             <!-- first section mobile -->
-            <section class="h-96 mx-14 mb-24" id="Inicio">
+            <section class="h-96 mx-14 mb-24 lg:hidden" id="Inicio">
                 <h1 class="font-bold lg:text-7xl text-lg text-center">Diseño web a la medida</h1>
                 <figure>
                     <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing1.png" alt="computer" />
@@ -60,28 +69,39 @@
                     informativos.
                 </p>
             </section>
+
             <section class="mt-10">
-                <h1 class="text-center text-white text-3xl py-6 bg-[#1A1A1A]">Proyectos</h1>
+                <h1 class="text-center text-white text-3xl py-6 bg-[#1A1A1A]">Algunos de nuestros proyectos</h1>
                 <div class="bg-[#262626] py-12 flex">
-                    <div class="w-8 flex justify-center items-center">
+                    <!-- <div class="w-8 flex justify-center items-center">
                         <button class="text-white">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
+                    </div> -->
+                    <div class="w-full lg:grid grid-cols-3">
+                        <a href="https://www.emblemas3d.com" target="_blank">
+                            <img class="h-[334px] mx-auto cursor-pointer" src="../../../public/assets/images/PC-01.png">
+                        </a>
+                        <!-- <img class="h-60 mx-auto cursor-pointer" src="../../../public/assets/images/PC-02.png"> -->
+                        <a href="https://youpartner.xphere.com.mx" target="_blank">
+                            <img class="h-[334px] mx-auto cursor-pointer" src="../../../public/assets/images/PC-03.png">
+                        </a>
+                        <!-- <img class="h-60 mx-auto cursor-pointer" src="../../../public/assets/images/PC-04.png"> -->
+                        <a href="https://sigmasolutionsmx.com" target="_blank">
+                            <img class="h-[334px] mx-auto cursor-pointer" src="../../../public/assets/images/PC-05.png">
+                        </a>
+                        <!-- <img class="h-60 mx-auto cursor-pointer" src="../../../public/assets/images/PC-06.png"> -->
                     </div>
-                    <div class="w-full lg:grid grid-cols-3 gap-x-2">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-01.png">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-02.png">
-                        <img class="h-60 mx-auto" src="../../../public/assets/images/PC-03.png">
-                    </div>
-                    <div class="w-8 flex justify-center items-center">
+                    <!-- <div class="w-8 flex justify-center items-center">
                         <button class="text-white">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </section>
 
-            <section class="lg:mx-24 mx-1 mt-9 relative">
+            <!-- landing 3 desktop -->
+            <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
                 <!-- bg decorations -->
                 <img class="absolute top-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png" />
                 <img class="absolute top-72 -right-0 -z-10 rotate-180" src="../../../public/assets/images/decoration.png" />
@@ -161,6 +181,89 @@
                 </div>
             </section>
 
+            <!-- landing 3 mobile -->
+            <section class="lg:hidden lg:mx-24 mx-1 mt-9 relative">
+                <!-- bg decorations -->
+                <img class="absolute top-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png" />
+                <img class="absolute top-72 -right-0 -z-10 rotate-180" src="../../../public/assets/images/decoration.png" />
+                <img class="absolute bottom-0 -left-14 -z-10" src="../../../public/assets/images/decoration.png" />
+                <!-- end decorations -->
+
+                <div class="text-center" id="Servicios">
+                    <h2 class="font-bold mb-3 text-xl">SERVICIOS</h2>
+                    <p>
+                        Creamos diseños, programación y funcionalidad única para tu marca.
+                    </p>
+                </div>
+
+                <div class="lg:grid grid-cols-2 gap-x-10">
+                    <article class="mt-6 mx-8">
+                        <h1 class="font-bold text-lg text-center">
+                            Diseño y desarrollo de página web a la medida
+                        </h1>
+                        <figure>
+                            <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing2.png" alt="computer" />
+                        </figure>
+                        <p class="mt-6 text-justify">
+                            Creamos diseños únicos y exclusivos para cada cliente, experiencia
+                            de usuario (UI/UX), responsividad y compatibilidad en diferentes
+                            dispositivos, desarrollo de código fuente (SEO) para un
+                            posicionamiento adecuado en buscadores y mucho más...
+                        </p>
+                    </article>
+
+                    <article class="mt-6 mx-8">
+                        <h1 class="font-bold text-lg text-center">
+                            Mantenimiento y actualización de páginas web
+                        </h1>
+                        <figure>
+                            <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing3.png" alt="computer" />
+                        </figure>
+                        <p class="mt-6 text-justify">
+                            Actualización de contenido y sofware, mejoras del diseño de la
+                            página, soporte técnico, optimización de rendimiento,
+                            mantenimiento de rutina sobre el front y back end y más...
+                        </p>
+                    </article>
+
+                    <article class="mt-6 mx-8">
+                        <h1 class="font-bold text-lg text-center">
+                            Desarrollo Back end - Front end
+                        </h1>
+                        <figure>
+                            <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing4.png" alt="computer" />
+                        </figure>
+                        <p class="mt-6 text-justify">
+                            Implementamos tecnología para eficientizar procesos, como ERP, CRM
+                            CMS y mucho más...
+                        </p>
+                    </article>
+
+                    <article class="mt-6 mx-8">
+                        <h1 class="font-bold text-lg text-center">
+                            Marketing digital
+                        </h1>
+                        <figure>
+                            <img class="h-5/6 mx-auto" src="../../../public/assets/images/landing5.png" alt="computer" />
+                        </figure>
+                        <p class="mt-6 text-justify">
+                            Incrementa tus ventas, amplia tu mercado y potencializa tu
+                            negocio. Creamos publicidad digital mediante redes sociales y
+                            más...
+                        </p>
+                    </article>
+                </div>
+
+                <div class="text-center">
+                    <h3>Una web a la medida, con garantía de funcionamiento</h3>
+                    <button
+                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
+                        Solicita tu cotizacion sin compromiso
+                        <i class="fa-solid fa-chevron-right ml-6"></i>
+                    </button>
+                </div>
+            </section>
+
             <section class="mt-10">
                 <div class="bg-[#262626] lg:grid grid-cols-2 items-center justify-center px-14 py-2">
                     <figure class="h-72">
@@ -183,7 +286,8 @@
                 </h1>
             </section>
 
-            <section class="lg:mx-24 mx-1 mt-9 relative">
+            <!-- testimonies desktop -->
+            <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
                 <h2 class="font-bold mb-3 text-xl text-center">
                     Nuestros clientes hablan por nosotros
                 </h2>
@@ -201,6 +305,41 @@
                             <div class="col-span-3">
                                 <p>{{ testimony.text }}</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- testimonies mobil -->
+            <section class="lg:hidden lg:mx-24 mx-1 mt-9 relative">
+                <h2 class="font-bold mb-3 text-xl text-center">
+                    Nuestros clientes hablan por nosotros
+                </h2>
+
+                <div class="lg:grid grid-cols-2 gap-9">
+                    <div class="bg-[#262626] rounded-[30px] px-8 py-16 mt-2 flex text-white">
+                        <div @click="currentTestimony = currentTestimony == 0 ? (testimonies.length - 1) : currentTestimony - 1"
+                            class="w-8 mr-2 flex justify-center items-center">
+                            <button>
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex-col space-y-2 items-center justify-center mb-3">
+                                <figure class="rounded-full w-16 h-16 mx-auto">
+                                    <img :src="testimonies[currentTestimony].imgPath" />
+                                </figure>
+                                <p class="text-center">{{ testimonies[currentTestimony].name }}</p>
+                            </div>
+                            <div class="col-span-3 text-justify">
+                                <p>{{ testimonies[currentTestimony].text }}</p>
+                            </div>
+                        </div>
+                        <div @click="currentTestimony = currentTestimony == (testimonies.length - 1) ? 0 : currentTestimony + 1"
+                            class="w-8 ml-2 flex justify-center items-center">
+                            <button>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -264,9 +403,15 @@
                             <i class="fa-solid fa-chevron-right ml-6"></i>
                         </button>
                     </form>
-                    <figure class="rounded-[20px] hidden lg:block">
+                    <div class="hidden lg:flex items-center justify-center bg-[#262626] rounded-[20px] h-2/3">
+                        <video class="rounded-md" autoplay loop>
+                            <source src="../../../public/assets/vidios/dtw.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                    <!-- <figure class="rounded-[20px] hidden lg:block">
                         <img class="rounded-[20px]" src="../../../public/assets/images/contact.png" />
-                    </figure>
+                    </figure> -->
                 </div>
             </section>
 
@@ -341,7 +486,9 @@ export default {
         return {
             form,
             isNavbarFixed: false,
+            currentTestimony: 0,
             lastScrollY: 0,
+            showMobileMenu: false,
             testimonies: [
                 {
                     imgPath: e3dtest,
@@ -385,6 +532,7 @@ export default {
         scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             section.scrollIntoView({ behavior: 'smooth' });
+            this.showMobileMenu = false;
         },
         store() {
             this.form.post(route("messages.store"), {
