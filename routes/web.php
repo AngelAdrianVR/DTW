@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\MessengerController;
+
 use App\Http\Controllers\ProjectController;
-use App\Models\Message;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,11 +20,18 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('DigitalTW', [
+    return Inertia::render('Landing', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
 })->name('dtw');
+
+Route::get('/En', function () {
+    return Inertia::render('LandingEn', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('dtw-en');
 
 Route::middleware([
     'auth:sanctum',
@@ -32,14 +39,13 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        // $messages = Message::latest()->get();
-        $messages = ['hoola', 'jsjsjs'];
-        return inertia('Dashboard', compact('messages'));
+        return inertia('Dashboard');
     })->name('dashboard');
 });
 
-Route::post('/messages-create', [MessageController::class, 'store'])->name('messages.store');
-Route::get('/messages-index', [MessageController::class, 'index'])->name('messages.index');
+Route::resource('settings', SettingController::class);
 
-Route::resource('projects', ProjectController::class);
+Route::resource('resources', ResourceController::class);
+
+
 

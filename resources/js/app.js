@@ -1,17 +1,17 @@
 import './bootstrap';
 import '../css/app.css';
 
-import './vendor/css/animate.css';
-import './vendor/css/flex-slider.css';
-import './vendor/css/owl.css';
-import './vendor/css/templatemo-cyborg-gaming.css';
+// import './vendor/css/animate.css';
+// import './vendor/css/flex-slider.css';
+// import './vendor/css/owl.css';
+// import './vendor/css/templatemo-cyborg-gaming.css';
 
-import './vendor/bootstrap/js/bootstrap.min.js'
-import './vendor/jquery/jquery.min.js';
-import './vendor/js/isotope';
-import './vendor/js/owl-carousel';
-import './vendor/js/popup';
-import './vendor/js/tabs';
+// import './vendor/bootstrap/js/bootstrap.min.js'
+// import './vendor/jquery/jquery.min.js';
+// import './vendor/js/isotope';
+// import './vendor/js/owl-carousel';
+// import './vendor/js/popup';
+// import './vendor/js/tabs';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
