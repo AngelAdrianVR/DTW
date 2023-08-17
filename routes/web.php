@@ -26,6 +26,13 @@ Route::get('/', function () {
     ]);
 })->name('dtw');
 
+Route::get('/En', function () {
+    return Inertia::render('LandingEn', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('dtw-en');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

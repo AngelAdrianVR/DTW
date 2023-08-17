@@ -22,7 +22,7 @@
                 <el-table-column type="selection" width="55" />
                 <el-table-column prop="name" label="Nombre" width="180" />
                 <el-table-column prop="email" label="Correo" width="180" />
-                <el-table-column prop="company" label="Empresa" />
+                <el-table-column prop="service" label="Servicio" />
                 <el-table-column prop="phone" label="Telefono" />
                 <el-table-column prop="message" label="Mensaje" />
                 <el-table-column prop="created_at" label="Enviado el" />
