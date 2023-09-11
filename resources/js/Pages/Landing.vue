@@ -1,5 +1,5 @@
 <template>
-    <Head title="Bienvenido" />
+<!-- <MyAppLayout title="Bienvenido"> -->
     <div class="relative">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
@@ -14,6 +14,12 @@
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Inicio')">Inicio</button>
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button>
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button>
+            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
+            <ul v-if="showMore" class="text-center p-3">
+                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
+                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
+                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
+             </ul>
             <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
              / 
              <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
@@ -24,20 +30,26 @@
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img src="../../../public/assets/images/dtw_logo.png" class="h-10" alt="logo" />
+                <img src="../../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
                 <span>Digital TW</span>
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <div class="mr-12 hidden lg:inline">
+            <div class="mr-12 hidden lg:inline relative">
                 <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Inicio')">Inicio</button> |
                 <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> |
                 <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> |
+                <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
                 <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
              / 
              <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
              </button>
+             <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
+                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
+                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
+                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
+             </ul>
             </div>
         </nav>
 
@@ -60,6 +72,7 @@
                         Cotizar mi sitio
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
+                    
                 </div>
             </section>
             <!-- first section mobile -->
@@ -473,11 +486,13 @@
             </footer>
         </main>
     </div>
+    <!-- </MyAppLayout> -->
 </template>
 
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import MyAppLayout from "@/Layouts/MyAppLayout.vue"
 import e3dtest from '../../../public/assets/images/e3dtest.png';
 import churrotest from '../../../public/assets/images/churrotest.png';
 import profibratest from '../../../public/assets/images/profibratest.png';
@@ -494,6 +509,7 @@ export default {
         });
         return {
             form,
+            showMore: false,
             isNavbarFixed: false,
             currentTestimony: 0,
             lastScrollY: 0,
@@ -520,6 +536,7 @@ export default {
     components: {
         Head,
         Link,
+        MyAppLayout,
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);

@@ -48,6 +48,14 @@ Route::get('create-quote', function () {
     return inertia('CreateQuote');
 })->name('create-quote');
 
+Route::get('us', function () {
+    return inertia('Us');
+})->name('us');
+
+Route::get('packages', function () {
+    return inertia('Package');
+})->name('packages');
+
 // Admin view routes
 Route::resource('settings', SettingController::class);
 

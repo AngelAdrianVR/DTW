@@ -11,39 +11,45 @@
         <!-- mobile menu (hamburger) -->
         <div v-if="showMobileMenu"
             class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Inicio')">Inicio</button>
+            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/')">Inicio</button>
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button>
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button>
-            <button class="mx-2">
-                <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : ''"
-                    class="hover:text-[#7F659C]">EN</span></Link>
-                /
-                <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : ''"
-                    class="hover:text-[#7F659C]">ES</span></Link>
-            </button>
+            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
+            <ul v-if="showMore" class="text-center p-3">
+                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
+                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
+                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
+             </ul>
+            <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
+             / 
+             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
+             </button>
         </div>
 
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img src="../../../public/assets/images/dtw_logo.png" class="h-10" alt="logo" />
+                <img @click="$inertia.visit('/')" src="../../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
                 <span>Digital TW</span>
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
-            <div class="mr-12 hidden lg:inline">
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Inicio')">Inicio</button> |
+            <div class="mr-12 hidden lg:inline relative">
+                <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/')">Inicio</button> |
                 <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> |
                 <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> |
-                <button class="mx-2">
-                    <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : ''"
-                        class="hover:text-[#7F659C]">EN</span></Link>
-                    /
-                    <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : ''"
-                        class="hover:text-[#7F659C]">ES</span></Link>
-                </button>
+                <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
+                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
+             / 
+             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
+             </button>
+             <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
+                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
+                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
+                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
+             </ul>
             </div>
         </nav>
 
@@ -51,46 +57,174 @@
             <div class="lg:grid grid-cols-3 gap-x-8">
                 <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Solicitar cotización</h1>
                 <figure>
-                    <img src="../../../public/assets/images/quote-image.png">
+                    <img @click="$inertia.visit('/')" src="../../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
-                        <div>
-                            <InputWithPlaceholder v-model="form.name">Nombre *</InputWithPlaceholder>
+                        <div class="mr-5">
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.name || focusName }"
+                                >
+                                    Nombre *
+                                </label>
+                                <input v-model="form.name"
+                                    @focus="focusName = true"
+                                    @blur="focusName = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.name">{{ form.errors?.name }}</p>
                         </div>
                         <div>
-                            <InputWithPlaceholder v-model="form.email">Correo electrónico *</InputWithPlaceholder>
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.email || focusEmail }"
+                                >
+                                    Correo electrónico *
+                                </label>
+                                <input v-model="form.email"
+                                    @focus="focusEmail = true"
+                                    @blur="focusEmail = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.email">{{ form.errors?.email }}</p>
                         </div>
-                        <div>
-                            <InputWithPlaceholder v-model="form.phone">Teléfono *</InputWithPlaceholder>
+                        <div class="mr-5">
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.phone || focusPhone }"
+                                >
+                                    Teléfono *
+                                </label>
+                                <input v-model="form.phone"
+                                    @focus="focusPhone = true"
+                                    @blur="focusPhone = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.phone">{{ form.errors?.phone }}</p>
                         </div>
                         <div>
-                            <InputWithPlaceholder v-model="form.business_name">Nombre de tu empresa o negocio
-                            </InputWithPlaceholder>
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.business_name || focusBusinessName }"
+                                >
+                                    Nombre de tu empresa o negocio
+                                </label>
+                                <input v-model="form.business_name"
+                                    @focus="focusBusinessName = true"
+                                    @blur="focusBusinessName = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.business_name">{{ form.errors?.business_name
                             }}</p>
                         </div>
-                        <div>
-                            <InputWithPlaceholder v-model="form.related_site">Referencias o URL relevantes
-                            </InputWithPlaceholder>
+                        <div class="mr-5">
+                            <div class="lg:w-full relative">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.info || focusInfo }"
+                                >
+                                    Referencias o URL relevantes
+                                </label>
+                                <input v-model="form.info"
+                                    @focus="focusInfo = true"
+                                    @blur="focusInfo = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                                <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                content="Si tienes algún sitio web, dejános el link "
+                                placement="right-start"
+                                >
+                                <i class="fa-regular fa-circle-question text-[#7F659C] absolute -right-5 top-[10px]"></i>
+                                </el-tooltip>
+                            </div>
                         </div>
                         <div>
-                            <InputWithPlaceholder v-model="form.business_type">Tipo de industria o negocio
-                            </InputWithPlaceholder>
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.business_type || focusBusinessType }"
+                                >
+                                    Tipo de indistria o negocio
+                                </label>
+                                <input v-model="form.business_type"
+                                    @focus="focusBusinessType = true"
+                                    @blur="focusBusinessType = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr-5">
+                            <div class="lg:w-full relative">
+                                <select v-model="form.proyect_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                    <option class="hover:bg-[#7F659C]" value="Tipo de proyecto" disabled>-- Tipo de proyecto --</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Página web a la medida</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Tienda en línea</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Gestor de clientes</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Gestor de compras y ventas</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Gestor de proyectos</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Gestor de inventarios</option>
+                                </select>
+                                <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                content="Selecciona el tipo de proyecto que consideres que puedes necesitar"
+                                placement="right-start"
+                                >
+                                <i class="fa-regular fa-circle-question text-[#7F659C] absolute -right-5 top-[12px]"></i>
+                                </el-tooltip>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="lg:w-full">
+                                <select v-model="form.budget" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                    <option value="Presupuesto estimado" selected disabled>-- Presupuesto estimado --</option>
+                                    <option value="">Opcion 1</option>
+                                    <option value="">Opcion 2</option>
+                                    <option value="">Opcion 3</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-span-full mt-3">
                             <h2 class="text-[#7F659C] text-lg mb-2 ml-3">Describenos tu idea</h2>
                             <textarea
-                                class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full text-[#9A9A9A] rounded-[10px]"
+                                class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px]"
                                 rows="5"
                                 placeholder="Por favor proporcione detalles adicionales o requisitos específicos para su proyecto si es necesario."></textarea>
                         </div>
                         <div>
-                            <InputWithPlaceholder v-model="form.business_type">Como nos encontraste?
-                            </InputWithPlaceholder>
+                            <div>
+                            <div class="lg:w-full">
+                                <div class="input-container">
+                                <label
+                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    :class="{ 'active': form.how_found_us || focusHowFoundUs }"
+                                >
+                                    ¿Cómo nos encontraste?
+                                </label>
+                                <input v-model="form.how_found_us"
+                                    @focus="focusHowFoundUs = true"
+                                    @blur="focusHowFoundUs = false"
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                </div>
+                            </div>
+                        </div>
                         </div>
                         <button type="submit"
                             class="col-span-full mx-auto mt-5 rounded-[10px] border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
@@ -163,14 +297,26 @@ export default {
             phone: null,
             service: null,
             message: null,
-            info: false,
+            info: null,
+            business_type: null,
+            how_found_us: null,
+            proyect_type: 'Tipo de proyecto',
+            budget: 'Presupuesto estimado',
         });
         return {
             form,
             isNavbarFixed: false,
+            showMore:false,
             currentTestimony: 0,
             lastScrollY: 0,
             showMobileMenu: false,
+            focusName: false,
+            focusEmail: false,
+            focusPhone: false,
+            focusBusinessName: false,
+            focusInfo: false,
+            focusBusinessType: false,
+            focusHowFoundUs: false,
         };
     },
     components: {
@@ -239,5 +385,36 @@ export default {
 
 html {
     scroll-behavior: smooth;
+}
+
+.input-container {
+  position: relative;
+}
+.input-placeholder {
+  position: absolute;
+  top: 55%;
+  left: 8px;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease-in-out, color 0.1s ease-in-out;
+  pointer-events: none;
+}
+.input-placeholder.active {
+  transform: translateY(-150%) scale(0.75);
+  color: #7F659C;
+}
+
+select option:checked {
+  background-color: #7F659C; /* Cambia este color al que desees */
+  color: white; /* Cambia el color del texto si es necesario */
+}
+select option:hover {
+  background-color: #7F659C; /* Cambia este color al que desees */
+  color: white; /* Cambia el color del texto si es necesario */
+}
+select option {
+  background-color: #fff; /* Cambia este color al que desees */
+  color: black; /* Cambia el color del texto si es necesario */
+  border-radius: 5px; /* Redondea las esquinas */
+  padding: 5px; /* Agrega padding de 5px */
 }
 </style>
