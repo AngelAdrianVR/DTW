@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
@@ -44,9 +45,8 @@ Route::middleware([
 });
 
 // Customer view routes
-Route::get('create-quote', function () {
-    return inertia('CreateQuote');
-})->name('create-quote');
+Route::resource('quote-request', QuoteRequestController::class)->except(['edit', 'update', 'destroy']);
+
 
 Route::get('us', function () {
     return inertia('Us');
@@ -58,7 +58,6 @@ Route::get('packages', function () {
 
 // Admin view routes
 Route::resource('settings', SettingController::class);
-
 Route::resource('resources', ResourceController::class);
 
 
