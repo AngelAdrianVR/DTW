@@ -45,8 +45,14 @@ Route::middleware([
 });
 
 // Customer view routes
+
+// ** Quote request routes **
 Route::resource('quote-request', QuoteRequestController::class)->except(['edit', 'update', 'destroy']);
+<<<<<<< HEAD
 Route::get('create-quote-en', [QuoteRequestController::class, 'createEnglish'])->name('create-quote-en.create');
+=======
+Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteRequestController::class, 'changeDispatchedStatus'])->middleware('auth')->name('quote-request.change-dispatched-status');
+>>>>>>> 228e1968b57293860050443eca94f30f7dedf559
 
 // ----- Spanish ------
 Route::get('us', function () {

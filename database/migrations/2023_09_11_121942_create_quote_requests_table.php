@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('estimate');
             $table->text('project_description')->nullable();
             $table->string('way_of_knowing');
+            $table->boolean('is_dispatched')->default(false);
             $table->timestamps();
         });
     }
