@@ -15,6 +15,11 @@ class QuoteRequestController extends Controller
         return inertia('QuoteRequest/Index', compact('quote_requests'));
     }
 
+    public function createEnglish()
+    {
+        return inertia('QuoteRequest/CreateEn');
+    }
+
     public function create()
     {
         return inertia('QuoteRequest/Create');

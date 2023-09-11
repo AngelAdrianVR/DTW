@@ -21,14 +21,14 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Landing', [
+    return Inertia::render('Spanish/Landing', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
 })->name('dtw');
 
 Route::get('/En', function () {
-    return Inertia::render('LandingEn', [
+    return Inertia::render('English/LandingEn', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
@@ -48,16 +48,31 @@ Route::middleware([
 
 // ** Quote request routes **
 Route::resource('quote-request', QuoteRequestController::class)->except(['edit', 'update', 'destroy']);
+<<<<<<< HEAD
+Route::get('create-quote-en', [QuoteRequestController::class, 'createEnglish'])->name('create-quote-en.create');
+=======
 Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteRequestController::class, 'changeDispatchedStatus'])->middleware('auth')->name('quote-request.change-dispatched-status');
+>>>>>>> 228e1968b57293860050443eca94f30f7dedf559
 
-
+// ----- Spanish ------
 Route::get('us', function () {
-    return inertia('Us');
+    return inertia('Spanish/Us');
 })->name('us');
 
 Route::get('packages', function () {
-    return inertia('Package');
+    return inertia('Spanish/Package');
 })->name('packages');
+
+
+// ----- English -----
+Route::get('us-En', function () {
+    return inertia('English/UsEn');
+})->name('us-en');
+
+Route::get('packages-En', function () {
+    return inertia('English/PackageEn');
+})->name('packages-en');
+
 
 // Admin view routes
 Route::resource('settings', SettingController::class);

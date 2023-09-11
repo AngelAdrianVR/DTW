@@ -1,5 +1,5 @@
 <template>
-    <Head title="Bienvenido" />
+    <Head title="Welcome" />
     <div class="relative">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
@@ -11,18 +11,18 @@
         <!-- mobile menu (hamburger) -->
         <div v-if="showMobileMenu"
             class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/')">Inicio</button>
-            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button> -->
+            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/En')">Home</button>
+            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Services</button> -->
             <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button> -->
-            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
+            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">More <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
             <ul v-if="showMore" class="text-center p-3">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
+                <li @click="$inertia.get(route('us-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">About us</li>
+                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Quote</li>
+                <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">Software packages</li>
              </ul>
             <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
              / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
+             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
              </button>
         </div>
 
@@ -37,25 +37,25 @@
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
             <div class="mr-12 hidden lg:inline relative">
-                <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/')">Inicio</button> |
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> | -->
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> | -->
+                <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/En')">Home</button> |
+                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Services')">Servicios</button> | -->
+                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contact')">Contacto</button> | -->
                 <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
                 <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
              / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
+             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
              </button>
              <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
+                <li @click="$inertia.get(route('us-en'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">About us</li>
+                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Quote</li>
+                <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Software packages</li>
              </ul>
             </div>
         </nav>
 
         <main class="pt-28 lg:px-28">
             <div class="lg:grid grid-cols-3 gap-x-8">
-                <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Solicitar cotización</h1>
+                <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Request quote</h1>
                 <figure>
                     <img @click="$inertia.visit('/')" src="@/../../public/assets/images/quote-image.png">
                 </figure>
@@ -68,7 +68,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.name || focusName }"
                                 >
-                                    Nombre *
+                                    Name *
                                 </label>
                                 <input v-model="form.name"
                                     @focus="focusName = true"
@@ -85,7 +85,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.email || focusEmail }"
                                 >
-                                    Correo electrónico *
+                                    Email*
                                 </label>
                                 <input v-model="form.email"
                                     @focus="focusEmail = true"
@@ -102,7 +102,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.phone || focusPhone }"
                                 >
-                                    Teléfono *
+                                    Phone *
                                 </label>
                                 <input v-model="form.phone"
                                     @focus="focusPhone = true"
@@ -119,7 +119,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.business_name || focusBusinessName }"
                                 >
-                                    Nombre de tu empresa o negocio
+                                    Name of your company or business
                                 </label>
                                 <input v-model="form.business_name"
                                     @focus="focusBusinessName = true"
@@ -137,7 +137,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.info || focusInfo }"
                                 >
-                                    Referencias o URL relevantes
+                                    Relevant references or URLs
                                 </label>
                                 <input v-model="form.info"
                                     @focus="focusInfo = true"
@@ -147,7 +147,7 @@
                                 <el-tooltip
                                 class="box-item"
                                 effect="dark"
-                                content="Si tienes algún sitio web, dejános el link "
+                                content="If you have a website, leave us the link"
                                 placement="right-start"
                                 >
                                 <i class="fa-regular fa-circle-question text-[#7F659C] absolute -right-5 top-[10px]"></i>
@@ -161,7 +161,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.business_type || focusBusinessType }"
                                 >
-                                    Tipo de indistria o negocio
+                                    Type of industry or business
                                 </label>
                                 <input v-model="form.business_type"
                                     @focus="focusBusinessType = true"
@@ -173,18 +173,18 @@
                         <div class="mr-5">
                             <div class="lg:w-full relative">
                                 <select v-model="form.proyect_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
-                                    <option class="hover:bg-[#7F659C]" value="Tipo de proyecto" disabled>-- Tipo de proyecto --</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Página web a la medida</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Tienda en línea</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Gestor de clientes</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Gestor de compras y ventas</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Gestor de proyectos</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Gestor de inventarios</option>
+                                    <option class="hover:bg-[#7F659C]" value="Tipo de proyecto" disabled>-- Type of project --</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Custom website</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Online store</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Client manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Purchasing and sales manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Project manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="">Inventory manager</option>
                                 </select>
                                 <el-tooltip
                                 class="box-item"
                                 effect="dark"
-                                content="Selecciona el tipo de proyecto que consideres que puedes necesitar"
+                                content="Select the type of project that you think you may need"
                                 placement="right-start"
                                 >
                                 <i class="fa-regular fa-circle-question text-[#7F659C] absolute -right-5 top-[12px]"></i>
@@ -194,19 +194,20 @@
                         <div>
                             <div class="lg:w-full">
                                 <select v-model="form.budget" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
-                                    <option value="Presupuesto estimado" selected disabled>-- Presupuesto estimado --</option>
-                                    <option value="">Opcion 1</option>
-                                    <option value="">Opcion 2</option>
-                                    <option value="">Opcion 3</option>
+                                    <option value="Presupuesto estimado" selected disabled>-- Estimated budget --</option>
+                                    <option value="100 - 500 $USD">100 - 500 $USD </option>
+                                    <option value="500 - 1,500 $USD">500 - 1,500 $USD</option>
+                                    <option value="1,500 - 3,000 $USD">1,500 - 3,000 $USD</option>
+                                    <option value="+ 3,000 $USD">+ 3,000 $USD</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-span-full mt-3">
-                            <h2 class="text-[#7F659C] text-lg mb-2 ml-3">Describenos tu idea</h2>
+                            <h2 class="text-[#7F659C] text-lg mb-2 ml-3">Describe us your idea</h2>
                             <textarea
                                 class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px]"
                                 rows="5"
-                                placeholder="Por favor proporcione detalles adicionales o requisitos específicos para su proyecto si es necesario."></textarea>
+                                placeholder="Please provide additional details or specific requirements for your project if necessary."></textarea>
                         </div>
                         <div>
                             <div>
@@ -216,7 +217,7 @@
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.how_found_us || focusHowFoundUs }"
                                 >
-                                    ¿Cómo nos encontraste?
+                                    How did you find us?
                                 </label>
                                 <input v-model="form.how_found_us"
                                     @focus="focusHowFoundUs = true"
@@ -228,7 +229,7 @@
                         </div>
                         <button type="submit"
                             class="col-span-full mx-auto mt-5 rounded-[10px] border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                            Enviar
+                            Send
                             <i class="fa-solid fa-chevron-right ml-6"></i>
                         </button>
                     </form>
@@ -241,12 +242,12 @@
             </figure>
             <div class="md:grid grid-cols-3 h-28">
                 <div class="border-r border-white flex justify-center items-cente">
-                    <p class="text-lg">"Liberando tu potencial en linea"</p>
+                    <p class="text-lg">"Unlocking your potential online"</p>
                 </div>
 
                 <div class="border-r border-white flex justify-center items-center">
                     <div class="flex flex-col">
-                        <h2 class="text-center mb-5 text-xl">Contacto</h2>
+                        <h2 class="text-center mb-5 text-xl">Contact</h2>
                         <div>
                             <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
                             <p>
@@ -258,7 +259,7 @@
 
                 <div class="flex justify-center items-center">
                     <div class="flex flex-col justify-center items-center">
-                        <h2 class="text-center mb-5 text-xl">Síguenos</h2>
+                        <h2 class="text-center mb-5 text-xl">Follow us!</h2>
                         <div>
                             <a href="https://www.facebook.com/profile.php?id=100094614796876" target="_blank"><i
                                     class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"></i></a>
@@ -271,7 +272,7 @@
             </div>
             <a class="hidden md:block" href="">
                 <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
-                    Política de privacidad - Plítica de cookies
+                    Privacy policy - Cookies policy
                 </p>
             </a>
             <a class="hidden md:block" href="">
@@ -349,12 +350,13 @@ export default {
             this.showMobileMenu = false;
         },
         store() {
-            this.form.post(route("store-quote"), {
+            this.form.post(route("quote-request.store"), {
                 onSuccess: () => {
-                    this.toast.success("Se han enviado los datos. Te haremos llegar la cotizacion lo mas pronto posible", {
-                        timeout: 5000
+                    this.$notify({
+                        title: 'Success',
+                        message: "The data has been sent. We will send you the quote as soon as possible",
+                        type: 'success'
                     });
-
                     form.reset();
                 }
             });
