@@ -1,4 +1,5 @@
 <template>
+    <Head title="Bienvenido" />
     <div class="relative">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
@@ -53,7 +54,8 @@
                         necesidades, desde sitios corporativos, tiendas en línea,
                         informativos.
                     </p>
-                    <button
+
+                    <button @click="$inertia.get(route('create-quote'))"
                         class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Cotizar mi sitio
                         <i class="fa-solid fa-chevron-right ml-6"></i>
@@ -474,9 +476,8 @@
 </template>
 
 <script>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
-import InputError from "@/Components/InputError.vue";
 import e3dtest from '../../../public/assets/images/e3dtest.png';
 import churrotest from '../../../public/assets/images/churrotest.png';
 import profibratest from '../../../public/assets/images/profibratest.png';
@@ -515,6 +516,10 @@ export default {
                 },
             ],
         };
+    },
+    components: {
+        Head,
+        Link,
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);

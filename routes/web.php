@@ -43,6 +43,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
+// Customer view routes
+Route::get('create-quote', function () {
+    return inertia('CreateQuote');
+})->name('create-quote');
+
+// Admin view routes
 Route::resource('settings', SettingController::class);
 
 Route::resource('resources', ResourceController::class);
