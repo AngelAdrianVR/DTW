@@ -15,17 +15,17 @@
         <div v-if="showMobileMenu"
             class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
             <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/')">Inicio</button>
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button>
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button>
+            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button> -->
+            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button> -->
             <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
             <ul v-if="showMore" class="text-center p-3">
                 <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
-                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
+                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
                 <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
              </ul>
-            <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
+            <button class="mx-2"> <Link :href="route('us-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
              / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
+             <Link :href="route('us')"><span :class="route().current('us') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
              </button>
         </div>
 
@@ -33,7 +33,7 @@
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img @click="$inertia.visit('/')" src="../../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
+                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
                 <span>Digital TW</span>
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
@@ -41,16 +41,16 @@
             </button>
             <div class="mr-12 hidden lg:inline relative">
                 <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/')">Inicio</button> |
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> |
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> |
+                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> | -->
+                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> | -->
                 <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
-                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
+                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] ">EN</span></Link>
              / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
+             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
              </button>
              <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
                 <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
-                <li @click="$inertia.get(route('create-quote'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
+                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
                 <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
              </ul>
             </div>
@@ -97,13 +97,13 @@
       <div class="rounded-lg w-full h-72 mt-16">
         <div v-if="allProyects" class="flex space-x-7 justify-center">
             <figure>
-                <img src="../../../public/assets/images/PC-suiter.png" alt="Suiter">
+                <img src="@/../../public/assets/images/PC-suiter.png" alt="Suiter">
             </figure>
             <figure>
-                <img src="../../../public/assets/images/PC-emblems3dusa.png" alt="E3dUSA">
+                <img src="@/../../public/assets/images/PC-emblems3dusa.png" alt="E3dUSA">
             </figure>
             <figure>
-                <img src="../../../public/assets/images/PC-youpartner.png" alt="YP">
+                <img src="@/../../public/assets/images/PC-youpartner.png" alt="YP">
             </figure>
 
         </div>
@@ -119,7 +119,7 @@
       <figure>
         <img
           class="md:w-[3%] w-[7%]"
-          src="../../../public/assets/images/dtw_logo.png"
+          src="@/../../public/assets/images/dtw_logo.png"
           alt=""
         />
       </figure>
@@ -177,7 +177,6 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
-import InputWithPlaceholder from "@/Components/MyComponents/InputWithPlaceholder.vue";
 
 export default {
   data() {
@@ -208,7 +207,6 @@ export default {
   components: {
     Head,
     Link,
-    InputWithPlaceholder,
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
@@ -235,20 +233,6 @@ export default {
       const section = document.getElementById(sectionId);
       section.scrollIntoView({ behavior: "smooth" });
       this.showMobileMenu = false;
-    },
-    store() {
-      this.form.post(route("store-quote"), {
-        onSuccess: () => {
-          this.toast.success(
-            "Se han enviado los datos. Te haremos llegar la cotizacion lo mas pronto posible",
-            {
-              timeout: 5000,
-            }
-          );
-
-          form.reset();
-        },
-      });
     },
     setActive(option) {
       // Establece todas las variables en false
