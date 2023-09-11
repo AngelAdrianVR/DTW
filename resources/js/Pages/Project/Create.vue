@@ -10,55 +10,57 @@
         </h2>
       </div>
     </template>
-    <div class="lg:w-1/3 mx-auto mt-6 shadow-md py-4 px-5 bg-white rounded-lg">
+    <div class="lg:w-1/2 mx-auto mt-6 shadow-md py-4 px-5 bg-white rounded-lg">
       <form @submit.prevent="store">
-        <div class="mt-4">
+        <div class="">
           <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
 
-         <InputError :message="$page.props?.errors.name" class="mb-3" />
+         <InputError :message="$page.props?.errors.name" />
         </div>
 
-        <div class="mt-4">
+        <el-divider>Datos de cliente</el-divider>
+
+        <div class="">
         <el-input v-model="form.client_info.name" class="w-50 m-2" placeholder="Nombre del cliente" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.name']" class="mb-3" />
+          <InputError :message="$page.props?.errors['client_info.name']" />
         </div>
 
-        <div class="mt-4">
+        <div class="">
         <el-input v-model="form.client_info.email" class="w-50 m-2" placeholder="Correo" clearable type="email">
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.email']" class="mb-3" /> 
+          <InputError :message="$page.props?.errors['client_info.email']" /> 
         </div>
 
-        <div class="mt-4">
+        <div class="">
         <el-input v-model="form.client_info.company" class="w-50 m-2" placeholder="Empresa" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.company']" class="mb-3" /> 
+          <InputError :message="$page.props?.errors['client_info.company']" /> 
         </div>
 
-        <div class="mt-4">
+        <div class="">
         <el-input v-model="form.client_info.phone" class="w-50 m-2" placeholder="Teléfono de contacto" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
             </template>
           </el-input>
 
-        <InputError :message="$page.props?.errors['client_info.phone']" class="mb-3" /> 
+        <InputError :message="$page.props?.errors['client_info.phone']" /> 
        </div>
 
-        <div class="mt-4">
+        <div class="">
         <el-input v-model="form.hours_work" class="w-50 m-2" placeholder="Horas de trabajo" clearable type="number">
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-clock"></i></el-icon>
@@ -68,7 +70,7 @@
           <InputError :message="$page.props?.errors.hours_work" class="mb-1" />
         </div>
 
-        <div class="mt-4">
+        <div class="">
           <el-input v-model="form.cuote" class="w-50 m-2" placeholder="Cotización" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-dollar-sign"></i></el-icon>
@@ -92,7 +94,7 @@
             </div>
           </div>
 
-          <InputError :message="$page.props?.errors.promisse_finish_date" class="mb-3" />
+          <InputError :message="$page.props?.errors.promisse_finish_date" />
         </div>
 
         <PrimaryButton> Crear </PrimaryButton>
