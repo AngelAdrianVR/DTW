@@ -61,6 +61,9 @@ const logout = () => {
                                 <NavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
                                     Cotizaciones
                                 </NavLink>
+                                <NavLink :href="route('quote-request.index')" :active="route().current('quote-request.*')">
+                                    Cotizaciones solicitadas
+                                </NavLink>
                                 <NavLink :href="route('resources.index')" :active="route().current('resources.*')">
                                     Administrador de recursos
                                 </NavLink>
@@ -232,6 +235,9 @@ const logout = () => {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('quotes.index')" :active="route().current('quotes.*')">
                             Cotizaciones
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('quote-request.index')" :active="route().current('quote-request.*')">
+                            Cotizaciones solicitadas
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('resources.index')" :active="route().current('resources.*')">
                             Administrador de recursos

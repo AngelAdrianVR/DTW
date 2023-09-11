@@ -20,5 +20,6 @@ class QuoteRequest extends Model
         'estimate',
         'project_description',
         'way_of_knowing',
+        'is_dispatched',
     ];
 }

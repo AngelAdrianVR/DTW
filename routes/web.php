@@ -45,7 +45,10 @@ Route::middleware([
 });
 
 // Customer view routes
+
+// ** Quote request routes **
 Route::resource('quote-request', QuoteRequestController::class)->except(['edit', 'update', 'destroy']);
+Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteRequestController::class, 'changeDispatchedStatus'])->middleware('auth')->name('quote-request.change-dispatched-status');
 
 
 Route::get('us', function () {
