@@ -30,7 +30,7 @@
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img @click="$inertia.visit('/')" src="../../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
+                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
                 <span>Digital TW</span>
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
@@ -57,7 +57,7 @@
             <div class="lg:grid grid-cols-3 gap-x-8">
                 <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Solicitar cotización</h1>
                 <figure>
-                    <img @click="$inertia.visit('/')" src="../../../public/assets/images/quote-image.png">
+                    <img @click="$inertia.visit('/')" src="@/../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
@@ -237,7 +237,7 @@
         </main>
         <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
             <figure>
-                <img class="md:w-[3%] w-[7%]" src="../../../public/assets/images/dtw_logo.png" alt="" />
+                <img class="md:w-[3%] w-[7%]" src="@/../../public/assets/images/dtw_logo.png" alt="site logo" />
             </figure>
             <div class="md:grid grid-cols-3 h-28">
                 <div class="border-r border-white flex justify-center items-cente">
@@ -287,7 +287,6 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
-import InputWithPlaceholder from "@/Components/MyComponents/InputWithPlaceholder.vue";
 
 export default {
     data() {
@@ -322,7 +321,6 @@ export default {
     components: {
         Head,
         Link,
-        InputWithPlaceholder,
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
