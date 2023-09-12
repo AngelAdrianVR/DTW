@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuoteRequestResource;
 use App\Models\QuoteRequest;
 use Illuminate\Http\Request;
 
@@ -10,7 +9,7 @@ class QuoteRequestController extends Controller
 {
     public function index()
     {
-        $quote_requests = QuoteRequestResource::collection(QuoteRequest::latest()->get());
+        $quote_requests = QuoteRequest::latest()->get();
 
         return inertia('QuoteRequest/Index', compact('quote_requests'));
     }
@@ -47,31 +46,21 @@ class QuoteRequestController extends Controller
 
     public function show(QuoteRequest $quoteRequest)
     {
-        $quoteRequest = QuoteRequestResource::make($quoteRequest);
         return inertia('QuoteRequest/Show', compact('quoteRequest'));
     }
 
-    public function changeDispatchedStatus(QuoteRequest $quoteRequest)
+    public function edit(QuoteRequest $quoteRequest)
     {
-        $new_status = !$quoteRequest->is_dispatched;
-        $quoteRequest->is_dispatched = $new_status;
-        $quoteRequest->save();
-
-        return response()->json(['is_dispatched' => $new_status]);
+        //
     }
 
-    // public function edit(QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
+    public function update(Request $request, QuoteRequest $quoteRequest)
+    {
+        //
+    }
 
-    // public function update(Request $request, QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
-
-    // public function destroy(QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
+    public function destroy(QuoteRequest $quoteRequest)
+    {
+        //
+    }
 }

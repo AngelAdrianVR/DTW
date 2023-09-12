@@ -195,9 +195,11 @@
                             <div class="lg:w-full">
                                 <select v-model="form.budget" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" selected disabled>-- Presupuesto estimado --</option>
-                                    <option value="">Opcion 1</option>
-                                    <option value="">Opcion 2</option>
-                                    <option value="">Opcion 3</option>
+                                    <option value="2,000 - 6,000 $MXN">2,000 - 6,000 $MXN</option>
+                                    <option value="6,000 - 12,000 $MXN">6,000 - 12,000 $MXN</option>
+                                    <option value="12,000 - 25,000 $MXN">12,000 - 25,000 $MXN</option>
+                                    <option value="25,000 - 50,000 $MXN">25,000 - 50,000 $MXN</option>
+                                    <option value="+ 50,000 $MXN">+ 50,000 $MXN</option>
                                 </select>
                             </div>
                         </div>
