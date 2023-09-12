@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('client_info')->nullable(); //name, email, company, phone. attributes in message model 
-            $table->unsignedSmallInteger('hours_work');
-            $table->unsignedInteger('cuote');
-            $table->date('promisse_finish_date')->nullable();
-            $table->foreignId('message_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('key', 4);
+            $table->text('description');
+            $table->json('customer_info')->nullable(); //name, email, company, phone. attributes in message model 
+            $table->date('start_date')->nullable();
+            $table->date('finish_date')->nullable();
+            $table->string('state')->default('En revisión');
+            $table->unsignedFloat('price');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

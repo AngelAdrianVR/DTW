@@ -13,25 +13,11 @@
     <div class="lg:w-5/6 mx-auto mt-6">
       <el-table :data="projects.data" max-height="450" style="width: 100%">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" label="Nombre" width="180" />
-        <el-table-column prop="client_info[name]" label="Cliente" width="180" />
-        <el-table-column prop="client_info[email]" label="Correo" width="180" />
-        <el-table-column prop="client_info[phone]" label="Teléfono" width="180" />
-        <el-table-column prop="hours_work" label="Horas de trabajo" width="180" />
-        <el-table-column prop="cuote" label="Cotización" width="180" />
-        <el-table-column
-          prop="promisse_finish_date"
-          label="Fecha de entrega"
-          width="180"
-        />
-        <el-table-column prop="created_at" label="Creado el" />
-        <el-table-column fixed="right" label="Actiones" width="100">
-          <template #default="scope">
-            <!-- <Link :href="route('projects.edit', project)"> -->
-            <el-button @click="edit(scope.row)" size="small" type="primary">Edit</el-button>
-            <!-- </Link> -->
-          </template>
-        </el-table-column>
+        <el-table-column prop="key" label="Clave" width="60" />
+        <el-table-column prop="customer_info[name]" label="Cliente" />
+        <el-table-column prop="start_date" label="Fecha de inicio" />
+        <el-table-column prop="finish_date" label="Fecha de termino" />
+        <el-table-column prop="created_at" label="Fecha de Creacion" />
       </el-table>
     </div>
   </AppLayout>
@@ -54,13 +40,9 @@ export default {
     Link,
   },
   props: {
-    projects: Array,
+    projects: Object,
   },
-  methods:{
-    edit(row){
-        console.log(row);
-        this.$inertia.get(route('projects.edit', row.id));
-    }
+  methods: {
   }
 };
 </script>
