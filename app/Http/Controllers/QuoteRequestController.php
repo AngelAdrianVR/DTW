@@ -60,18 +60,4 @@ class QuoteRequestController extends Controller
         return response()->json(['is_dispatched' => $new_status]);
     }
 
-    // public function edit(QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
-
-    // public function update(Request $request, QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
-
-    // public function destroy(QuoteRequest $quoteRequest)
-    // {
-    //     //
-    // }
 }
