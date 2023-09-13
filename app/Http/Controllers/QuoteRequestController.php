@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuoteRequestResource;
 use App\Models\QuoteRequest;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class QuoteRequestController extends Controller
 {
     public function index()
     {
-        $quote_requests = QuoteRequest::latest()->get();
+        $quote_requests = QuoteRequestResource::collection(QuoteRequest::latest()->get()); 
 
         return inertia('QuoteRequest/Index', compact('quote_requests'));
     }
