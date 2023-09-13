@@ -11,16 +11,19 @@ class Project extends Model
 
     protected $fillable = [
         'name',
-        'hours_work',
-        'cuote',
-        'client_info',
-        'promisse_finish_date',
-        'message_id',
-        'user_id'
+        'key',
+        'description',
+        'customer_info',
+        'start_date',
+        'finish_date',
+        'state',
+        'price',
+        'user_id',
     ];
 
     protected $dates = [
-        'promisse_finish_date'
+        'start_date',
+        'finish_date',
     ];
 
     protected $casts = [
@@ -28,12 +31,8 @@ class Project extends Model
     ];
 
     //relattionships
-    public function message(){
-        return $this->belongsTo(Message::class);
-    }
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
-
