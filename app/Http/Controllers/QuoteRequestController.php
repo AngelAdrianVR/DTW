@@ -47,21 +47,17 @@ class QuoteRequestController extends Controller
 
     public function show(QuoteRequest $quoteRequest)
     {
+        $quoteRequest = QuoteRequestResource::make($quoteRequest);
         return inertia('QuoteRequest/Show', compact('quoteRequest'));
     }
 
-    public function edit(QuoteRequest $quoteRequest)
+    public function changeDispatchedStatus(QuoteRequest $quoteRequest)
     {
-        //
+        $new_status = !$quoteRequest->is_dispatched;
+        $quoteRequest->is_dispatched = $new_status;
+        $quoteRequest->save();
+
+        return response()->json(['is_dispatched' => $new_status]);
     }
 
-    public function update(Request $request, QuoteRequest $quoteRequest)
-    {
-        //
-    }
-
-    public function destroy(QuoteRequest $quoteRequest)
-    {
-        //
-    }
 }
