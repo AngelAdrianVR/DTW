@@ -10,7 +10,7 @@ class QuoteRequestController extends Controller
 {
     public function index()
     {
-        $quote_requests = QuoteRequestResource::collection(QuoteRequest::latest()->get());
+        $quote_requests = QuoteRequestResource::collection(QuoteRequest::latest()->get()); 
 
         return inertia('QuoteRequest/Index', compact('quote_requests'));
     }
