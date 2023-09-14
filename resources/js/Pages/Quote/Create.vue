@@ -112,13 +112,16 @@
           <InputError :message="form.errors.total_hours" />
         </div>
         <div class="mt-3">
-          <el-input @input="setExpiredDate" v-model="form.offer_validity_days" type="number" placeholder="Dias de validez de cotizacion">
+          <div class="flex space-x-2">
+          <el-input class="w-2/3" v-model="form.offer_validity_days" type="number" placeholder="Dias de validez de cotizacion">
             <template #prefix>
               <el-tooltip content="Dias de validez de cotizacion despues de emision" placement="top" effect="dark">
                 <el-icon class="el-input__icon"><i class="fa-solid fa-stopwatch"></i></el-icon>
               </el-tooltip>
             </template>
           </el-input>
+          <SecondaryButton class="w-1/3" :type="'button'" @click="setExpiredDate">Calcular fecha</SecondaryButton>
+          </div>
           <InputError :message="form.errors.offer_validity_days" />
         </div>
         <div>
@@ -214,9 +217,7 @@ export default {
   props: {
     projects: Array,
   },
-  watch: {
-    'form.offer_validity_days': 'setExpiredDate',
-  },
+
   methods: {
     store() {
       this.form.post(route("quotes.store"), {
