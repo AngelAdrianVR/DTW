@@ -135,13 +135,13 @@
                                 <div class="input-container">
                                 <label
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
-                                    :class="{ 'active': form.info || focusInfo }"
+                                    :class="{ 'active': form.related_sites || focusrelated_sites }"
                                 >
                                     Relevant references or URLs
                                 </label>
-                                <input v-model="form.info"
-                                    @focus="focusInfo = true"
-                                    @blur="focusInfo = false"
+                                <input v-model="form.related_sites"
+                                    @focus="focusrelated_sites = true"
+                                    @blur="focusrelated_sites = false"
                                     class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                                 <el-tooltip
@@ -172,14 +172,14 @@
                         </div>
                         <div class="mr-5">
                             <div class="lg:w-full relative">
-                                <select v-model="form.proyect_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                <select v-model="form.project_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option class="hover:bg-[#7F659C]" value="Tipo de proyecto" disabled>-- Type of project --</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Custom website</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Online store</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Client manager</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Purchasing and sales manager</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Project manager</option>
-                                    <option class="hover:bg-[#7F659C]" value="">Inventory manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="Custom website">Custom website</option>
+                                    <option class="hover:bg-[#7F659C]" value="Online store">Online store</option>
+                                    <option class="hover:bg-[#7F659C]" value="Client manager">Client manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="Purchasing and sales manager">Purchasing and sales manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="Project manager">Project manager</option>
+                                    <option class="hover:bg-[#7F659C]" value="Inventory manager">Inventory manager</option>
                                 </select>
                                 <el-tooltip
                                 class="box-item"
@@ -193,7 +193,7 @@
                         </div>
                         <div>
                             <div class="lg:w-full">
-                                <select v-model="form.budget" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" selected disabled>-- Estimated budget --</option>
                                     <option value="100 - 500 $USD">100 - 500 $USD </option>
                                     <option value="500 - 1,500 $USD">500 - 1,500 $USD</option>
@@ -204,7 +204,7 @@
                         </div>
                         <div class="col-span-full mt-3">
                             <h2 class="text-[#7F659C] text-lg mb-2 ml-3">Describe us your idea</h2>
-                            <textarea
+                            <textarea v-model="form.project_description"
                                 class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px]"
                                 rows="5"
                                 placeholder="Please provide additional details or specific requirements for your project if necessary."></textarea>
@@ -215,13 +215,13 @@
                                 <div class="input-container">
                                 <label
                                     class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
-                                    :class="{ 'active': form.how_found_us || focusHowFoundUs }"
+                                    :class="{ 'active': form.way_of_knowing || focusWay_of_knowing }"
                                 >
                                     How did you find us?
                                 </label>
-                                <input v-model="form.how_found_us"
-                                    @focus="focusHowFoundUs = true"
-                                    @blur="focusHowFoundUs = false"
+                                <input v-model="form.way_of_knowing"
+                                    @focus="focusWay_of_knowing = true"
+                                    @blur="focusWay_of_knowing = false"
                                     class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
@@ -297,11 +297,13 @@ export default {
             phone: null,
             service: null,
             message: null,
-            info: null,
+            related_sites: null,
             business_type: null,
-            how_found_us: null,
-            proyect_type: 'Tipo de proyecto',
-            budget: 'Presupuesto estimado',
+            business_name: null,
+            way_of_knowing: null,
+            project_description: null,
+            project_type: 'Type of project',
+            estimate: 'Estimated budget',
         });
         return {
             form,
@@ -314,7 +316,7 @@ export default {
             focusEmail: false,
             focusPhone: false,
             focusBusinessName: false,
-            focusInfo: false,
+            focusrelated_sites: false,
             focusBusinessType: false,
             focusHowFoundUs: false,
         };
@@ -357,7 +359,7 @@ export default {
                         message: "The data has been sent. We will send you the quote as soon as possible",
                         type: 'success'
                     });
-                    form.reset();
+                    this.form.reset();
                 }
             });
         },

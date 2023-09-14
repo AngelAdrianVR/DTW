@@ -14,6 +14,7 @@ class Project extends Model
         'key',
         'description',
         'customer_info',
+        'hours_work',
         'start_date',
         'finish_date',
         'state',
@@ -22,12 +23,13 @@ class Project extends Model
     ];
 
     protected $dates = [
-        'start_date',
-        'finish_date',
+        
     ];
 
     protected $casts = [
-        'client_info' => 'array',
+        'customer_info' => 'array',
+        'start_date' => 'datetime',
+        'finish_date' => 'datetime',
     ];
 
     //relattionships

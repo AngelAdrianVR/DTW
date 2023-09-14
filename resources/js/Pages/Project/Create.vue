@@ -18,46 +18,52 @@
          <InputError :message="$page.props?.errors.name" />
         </div>
 
+        <div class="mt-3">
+          <el-input v-model="form.key" placeholder="Clave del proyecto" clearable />
+
+         <InputError :message="$page.props?.errors.key" />
+        </div>
+
         <el-divider>Datos de cliente</el-divider>
 
         <div class="">
-        <el-input v-model="form.client_info.name" class="w-50 m-2" placeholder="Nombre del cliente" clearable>
+        <el-input v-model="form.customer_info.name" class="w-50 m-2" placeholder="Nombre del cliente" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.name']" />
+          <InputError :message="$page.props?.errors['customer_info.name']" />
         </div>
 
         <div class="">
-        <el-input v-model="form.client_info.email" class="w-50 m-2" placeholder="Correo" clearable type="email">
+        <el-input v-model="form.customer_info.email" class="w-50 m-2" placeholder="Correo" clearable type="email">
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.email']" /> 
+          <InputError :message="$page.props?.errors['customer_info.email']" /> 
         </div>
 
         <div class="">
-        <el-input v-model="form.client_info.company" class="w-50 m-2" placeholder="Empresa" clearable>
+        <el-input v-model="form.customer_info.company" class="w-50 m-2" placeholder="Empresa" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors['client_info.company']" /> 
+          <InputError :message="$page.props?.errors['customer_info.company']" /> 
         </div>
 
         <div class="">
-        <el-input v-model="form.client_info.phone" class="w-50 m-2" placeholder="Teléfono de contacto" clearable>
+        <el-input v-model="form.customer_info.phone" class="w-50 m-2" placeholder="Teléfono de contacto" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
             </template>
           </el-input>
 
-        <InputError :message="$page.props?.errors['client_info.phone']" /> 
+        <InputError :message="$page.props?.errors['customer_info.phone']" /> 
        </div>
 
         <div class="">
@@ -71,21 +77,29 @@
         </div>
 
         <div class="">
-          <el-input v-model="form.cuote" class="w-50 m-2" placeholder="Cotización" clearable>
+          <el-input v-model="form.price" class="w-50 m-2" placeholder="Precio" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-dollar-sign"></i></el-icon>
             </template>
           </el-input>
 
-          <InputError :message="$page.props?.errors.cuote" class="mb-1" />
+          <InputError :message="$page.props?.errors.price" class="mb-1" />
         </div>
 
+        <div class="">
+          <el-input v-model="form.description" class="w-50 m-2" placeholder="Descripción del proyecto" clearable>
+          </el-input>
+
+          <InputError :message="$page.props?.errors.description" class="mb-1" />
+        </div>
+
+<div class="flex justify-center space-x-3">
         <div>
           <div class="demo-date-picker">
             <div class="block">
-              <span class="demonstration">Fecha de entrega</span>
+              <span class="demonstration">Fecha de inicio</span>
               <el-date-picker
-                v-model="form.promisse_finish_date"
+                v-model="form.start_date"
                 type="date"
                 placeholder="Selecciona una fecha"
                 :default-value="new Date()"
@@ -94,7 +108,24 @@
             </div>
           </div>
 
-          <InputError :message="$page.props?.errors.promisse_finish_date" />
+          <InputError :message="$page.props?.errors.start_date" />
+        </div>
+        <div>
+          <div class="demo-date-picker">
+            <div class="block">
+              <span class="demonstration">Fecha de entrega</span>
+              <el-date-picker
+                v-model="form.finish_date"
+                type="date"
+                placeholder="Selecciona una fecha"
+                :default-value="new Date()"
+                value-format="YYYY-MM-DD"
+              />
+            </div>
+          </div>
+</div>
+
+          <InputError :message="$page.props?.errors.finish_date" />
         </div>
 
         <PrimaryButton> Crear </PrimaryButton>
@@ -116,15 +147,18 @@ export default {
   data() {
     const form = useForm({
       name: null,
-      client_info: {
+      key: null,
+      description: null,
+      customer_info: {
         name: null,
         email: null,
         company: null,
         phone: null,
       },
       hours_work: null,
-      cuote: null,
-      promisse_finish_date: null,
+      price: null,
+      start_date: null,
+      finish_date: null,
     });
     return {
       form,
@@ -143,8 +177,16 @@ export default {
   },
   methods: {
     store() {
-      this.form.post(route("projects.store"));
-    },
+            this.form.post(route("projects.store"), {
+                onSuccess: () => {
+                    this.$notify({
+                        title: 'Success',
+                        message: "The project has been registered",
+                        type: 'success'
+                    });
+                }
+            });
+        },
   },
 };
 </script>

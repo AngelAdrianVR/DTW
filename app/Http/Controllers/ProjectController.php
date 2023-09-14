@@ -30,8 +30,9 @@ class ProjectController extends Controller
             'name' => 'required',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
-            'cuote' => 'required|numeric|min:1',
-            'promisse_finish_date' => 'required|date|after:tomorrow',
+            'price' => 'required|numeric|min:1',
+            'start_date' => 'required|date',
+            'finish_date' => 'nullable|date|after:tomorrow',
         ]);
 
         Project::create($request->all() + ['user_id' => auth()->user()->id]);
@@ -48,6 +49,8 @@ class ProjectController extends Controller
     
     public function edit(Project $project)
     {
+
+        // return $project;
         return inertia('Project/Edit', compact('project'));
     }
 
@@ -58,8 +61,9 @@ class ProjectController extends Controller
             'name' => 'required',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
-            'cuote' => 'required|numeric|min:1',
-            'promisse_finish_date' => 'required|date|after:tomorrow',
+            'price' => 'required|numeric|min:1',
+            'start_date' => 'required|date',
+            'finish_date' => 'nullable|date|after:tomorrow',
         ]);
 
         $project->update($request->all());
@@ -71,5 +75,24 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function massiveDelete(Request $request)
+    {
+        foreach ($request->projects as $project) {
+            $project = Project::find($project['id']);
+            $project->delete();
+        }
+
+        return response()->json(['message' => 'mensaje(s) eliminado(s)']);
+    }
+
+    public function finishProject(Project $project)
+    {
+        $project->update([
+            'finish_date' => now()
+        ]);
+
+        return response()->json(['message' => 'Project finished!']);
     }
 }

@@ -19,12 +19,16 @@ class ProjectResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'key' => $this->key,
-            'customer_info' => $this->client_info,
+            'customer_info' => $this->customer_info,
             'description' => $this->description,
+            'hours_work' => $this->hours_work,
             'start_date' => $this->start_date?->isoFormat('DD MMM, YYYY'),
             'finish_date' => $this->finish_date?->isoFormat('DD MMM, YYYY'),
             'state' => $this->state,
-            'price' => $this->price,
+            'price' => [
+                    'formated' => '$' .  number_format($this->price),
+                    'raw' => $this->price
+            ],
             'user' => $this->whenLoaded('user'),
             'created_at' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             'updated_at' => $this->updated_at?->isoFormat('DD MMM, YYYY'),

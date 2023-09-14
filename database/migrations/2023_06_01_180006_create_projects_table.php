@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('key', 4);
             $table->text('description');
+            $table->string('hours_work');
             $table->json('customer_info')->nullable(); //name, email, company, phone. attributes in message model 
             $table->date('start_date')->nullable();
             $table->date('finish_date')->nullable();

@@ -10,16 +10,35 @@
         </Link>
       </div>
     </template>
+
+<div class="lg:w-5/6 mx-auto mt-6">
+    <div class="flex justify-end lg:mr-28">
+                <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
+                    title="Continuar con la eliminacion?" @confirm="deleteSelections">
+                    <template #reference>
+                        <el-button type="danger" plain class="mb-3" :disabled="disableMassiveActions">Eliminar</el-button>
+                    </template>
+                </el-popconfirm>
+            </div>
     <div class="lg:w-5/6 mx-auto mt-6">
-      <el-table :data="projects.data" max-height="450" style="width: 100%">
+      <el-table :data="projects.data" max-height="450" style="width: 100%" @selection-change="handleSelectionChange"
+      ref="multipleTableRef" :row-class-name="tableRowClassName">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="key" label="Clave" width="60" />
         <el-table-column prop="customer_info[name]" label="Cliente" />
+        <el-table-column prop="price.formated" label="Precio" />
         <el-table-column prop="start_date" label="Fecha de inicio" />
         <el-table-column prop="finish_date" label="Fecha de termino" />
         <el-table-column prop="created_at" label="Fecha de Creacion" />
+        <el-table-column label="Acciones">
+        <template v-slot="scope">
+          <el-button v-if="!scope.row.finish_date" type="success" size="mini" @click="finishProject(scope.row)">Terminar</el-button>
+          <el-button type="primary" size="mini" @click="editProject(scope.row)">Editar</el-button>
+        </template>
+      </el-table-column>
       </el-table>
     </div>
+  </div>
   </AppLayout>
 </template>
 
@@ -28,10 +47,15 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
+import { useToast } from "vue-toastification";
+import axios from 'axios';
 
 export default {
   data() {
-    return {};
+    return {
+      disableMassiveActions: true,
+       toast: null,
+    };
   },
   components: {
     ApplicationLogo,
@@ -41,8 +65,81 @@ export default {
   },
   props: {
     projects: Object,
+    messages: {
+            type: Array,
+            default: []
+        },
   },
   methods: {
-  }
+     finishProject(row) {
+
+     axios.put(`projects/${row.id}/finish`, { finish_date: new Date() })
+      .then(response => {
+        const toast = useToast();
+        toast.success('Proyecto terminado exitosamente');
+      })
+      .catch(error => {
+        const toast = useToast();
+        toast.error('Error al terminar el proyecto');
+      });
+  },
+  editProject(row){
+    this.$inertia.get(route('projects.edit', row.id));
+  },
+    handleSelectionChange(val) {
+            this.$refs.multipleTableRef.value = val;
+
+            if (!this.$refs.multipleTableRef.value.length) {
+                this.disableMassiveActions = true;
+            } else {
+                this.disableMassiveActions = false;
+            }
+        },
+    async deleteSelections() {
+            try {
+                const response = await axios.post(route('projects.massive-delete', {
+                    messages: this.$refs.multipleTableRef.value
+                }));
+
+                if (response.status == 200) {
+                    // let indexes = [];
+                    this.toast.success(response.data.message);
+
+                    // update list of messages
+                    let deletedIndexes = [];
+                    this.projects.data.forEach((message, index) => {
+                        if (this.$refs.multipleTableRef.value.includes(message)) {
+                            deletedIndexes.push(index);
+                        }
+                    });
+
+                    // Ordenar los índices de forma descendente para evitar problemas de desplazamiento al eliminar elementos
+                    deletedIndexes.sort((a, b) => b - a);
+
+                    // Eliminar mensajes por índice
+                    for (const index of deletedIndexes) {
+                        this.projects.data.splice(index, 1);
+                    }
+
+                } else {
+                    this.toast.error(response.data.message);
+                }
+
+            } catch (err) {
+                this.toast.error(err);
+                console.log(err);
+            }
+        },
+        tableRowClassName({ row, rowIndex }) {
+            if (row.finish_date) {
+                return 'text-green-600';
+            }
+
+            return '';
+        },
+  },
+  mounted() {
+        this.toast = useToast();
+    }
 };
 </script>
