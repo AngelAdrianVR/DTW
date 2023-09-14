@@ -10,7 +10,7 @@
         </h2>
       </div>
     </template>
-    <div class="lg:w-1/2 mx-auto mt-6 shadow-md py-4 px-5 bg-white rounded-lg">
+    <div class="lg:w-1/2 mx-auto p-3 mt-6 shadow-md lg:py-4 lg:px-5 bg-white rounded-lg">
       <form @submit.prevent="store">
         <div class="">
           <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
@@ -27,7 +27,7 @@
         <el-divider>Datos de cliente</el-divider>
 
         <div class="">
-        <el-input v-model="form.customer_info.name" class="w-50 m-2" placeholder="Nombre del cliente" clearable>
+        <el-input v-model="form.customer_info.name" class="w-50 p-2" placeholder="Nombre del cliente" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
             </template>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="">
-        <el-input v-model="form.customer_info.email" class="w-50 m-2" placeholder="Correo" clearable type="email">
+        <el-input v-model="form.customer_info.email" class="w-50 p-2" placeholder="Correo" clearable type="email">
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
             </template>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="">
-        <el-input v-model="form.customer_info.company" class="w-50 m-2" placeholder="Empresa" clearable>
+        <el-input v-model="form.customer_info.company" class="w-50 p-2" placeholder="Empresa" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
             </template>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="">
-        <el-input v-model="form.customer_info.phone" class="w-50 m-2" placeholder="Teléfono de contacto" clearable>
+        <el-input v-model="form.customer_info.phone" class="w-50 p-2" placeholder="Teléfono de contacto" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
             </template>
@@ -67,7 +67,7 @@
        </div>
 
         <div class="">
-        <el-input v-model="form.hours_work" class="w-50 m-2" placeholder="Horas de trabajo" clearable type="number">
+        <el-input v-model="form.hours_work" class="w-50 p-2" placeholder="Horas de trabajo" clearable type="number">
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-clock"></i></el-icon>
             </template>
@@ -77,7 +77,7 @@
         </div>
 
         <div class="">
-          <el-input v-model="form.price" class="w-50 m-2" placeholder="Precio" clearable>
+          <el-input v-model="form.price" class="w-50 p-2" placeholder="Precio" clearable>
             <template #prefix>
               <el-icon class="el-input__icon"><i class="fa-solid fa-dollar-sign"></i></el-icon>
             </template>
@@ -87,13 +87,13 @@
         </div>
 
         <div class="">
-          <el-input v-model="form.description" class="w-50 m-2" placeholder="Descripción del proyecto" clearable>
+          <el-input v-model="form.description" class="w-50 p-2" placeholder="Descripción del proyecto" clearable>
           </el-input>
 
           <InputError :message="$page.props?.errors.description" class="mb-1" />
         </div>
 
-<div class="flex justify-center space-x-3">
+<div class="lg:flex justify-center lg:space-x-3">
         <div>
           <div class="demo-date-picker">
             <div class="block">
@@ -113,7 +113,7 @@
         <div>
           <div class="demo-date-picker">
             <div class="block">
-              <span class="demonstration">Fecha de entrega</span>
+              <span class="demonstration">Fecha de entregado (Si ya se entregó)</span>
               <el-date-picker
                 v-model="form.finish_date"
                 type="date"

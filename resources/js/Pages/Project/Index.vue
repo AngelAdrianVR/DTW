@@ -11,7 +11,7 @@
       </div>
     </template>
 
-<div class="lg:w-5/6 mx-auto mt-6">
+<div class="lg:w-full mx-auto mt-6">
     <div class="flex justify-end lg:mr-28">
                 <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
                     title="Continuar con la eliminacion?" @confirm="deleteSelections">
@@ -26,11 +26,12 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="key" label="Clave" width="60" />
         <el-table-column prop="customer_info[name]" label="Cliente" />
+        <el-table-column prop="customer_info[company]" label="Empresa" />
         <el-table-column prop="price.formated" label="Precio" />
         <el-table-column prop="start_date" label="Fecha de inicio" />
         <el-table-column prop="finish_date" label="Fecha de termino" />
         <el-table-column prop="created_at" label="Fecha de Creacion" />
-        <el-table-column label="Acciones">
+        <el-table-column label="Acciones" width="200">
         <template v-slot="scope">
           <el-button v-if="!scope.row.finish_date" type="success" size="mini" @click="finishProject(scope.row)">Terminar</el-button>
           <el-button type="primary" size="mini" @click="editProject(scope.row)">Editar</el-button>

@@ -14,6 +14,7 @@ class ProjectController extends Controller
 
         $projects = ProjectResource::collection(Project::latest()->get());
 
+        // return $projects;
         return inertia('Project/Index', compact('projects'));
     }
 
