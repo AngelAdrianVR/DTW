@@ -13,8 +13,8 @@
         <div class="lg:w-5/6 mx-auto mt-6">
             <el-table :data="quotes.data" max-height="450" style="width: 100%">
                 <el-table-column type="selection" width="55" />
-                <el-table-column prop="id" label="ID" />
-                <el-table-column prop="customer_name" label="Cliente" />
+                <el-table-column prop="id" label="ID" width="60" />
+                <el-table-column prop="customer_name" label="Cliente" width="180" />
                 <el-table-column prop="promised_end_date" label="Fecha promesa de entrega" />
                 <el-table-column prop="created_at" label="Creado el" />
                 <el-table-column label="Acciones" fixed="right">

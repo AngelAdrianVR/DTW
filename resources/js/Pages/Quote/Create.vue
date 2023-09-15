@@ -228,35 +228,35 @@ export default {
           Key: 'WST'
         },
         {
-          label: 'Gestión de Relación con los Clientes',
+          label: 'Gestión de Relación con los Clientes (CRM)',
           Key: 'CRM'
         },
         {
-          label: 'Planificación de Recursos Empresariales',
+          label: 'Planificación de Recursos Empresariales (ERP)',
           Key: 'ERP'
         },
         {
-          label: 'Gestión de Contenido',
+          label: 'Gestión de Contenido (CMS)',
           Key: 'CMS'
         },
         {
-          label: 'Sistema de Gestión del Aprendizaje',
+          label: 'Sistema de Gestión del Aprendizaje (LMS)',
           Key: 'LMS'
         },
         {
-          label: 'Sistema de Gestión de Proyectos',
+          label: 'Sistema de Gestión de Proyectos (PMS)',
           Key: 'PMS'
         },
         {
-          label: 'Inteligencia de Negocios',
+          label: 'Inteligencia de Negocios (BI)',
           Key: 'BI'
         },
         {
-          label: 'Sistemas de Recursos Humanos',
+          label: 'Sistemas de Recursos Humanos (HRM)',
           Key: 'HRM'
         },
         {
-          label: 'Sistemas de Gestión de Inventarios',
+          label: 'Sistemas de Gestión de Inventarios (IMS)',
           Key: 'IMS'
         },
       ],

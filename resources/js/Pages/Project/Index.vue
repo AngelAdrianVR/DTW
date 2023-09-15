@@ -20,25 +20,30 @@
                     </template>
                 </el-popconfirm>
             </div>
-    <div class="lg:w-5/6 mx-auto mt-6">
-      <el-table :data="projects.data" max-height="450" style="width: 100%" @selection-change="handleSelectionChange"
-      ref="multipleTableRef" :row-class-name="tableRowClassName">
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="key" label="Clave" width="60" />
-        <el-table-column prop="customer_info[name]" label="Cliente" />
-        <el-table-column prop="customer_info[company]" label="Empresa" />
-        <el-table-column prop="price.formated" label="Precio" />
-        <el-table-column prop="start_date" label="Fecha de inicio" />
-        <el-table-column prop="finish_date" label="Fecha de termino" />
-        <el-table-column prop="created_at" label="Fecha de Creacion" />
-        <el-table-column label="Acciones" width="200">
-        <template v-slot="scope">
-          <el-button v-if="!scope.row.finish_date" type="success" size="mini" @click="finishProject(scope.row)">Terminar</el-button>
-          <el-button type="primary" size="mini" @click="editProject(scope.row)">Editar</el-button>
-        </template>
-      </el-table-column>
-      </el-table>
-    </div>
+    <div class="lg:w-5/6 mx-auto mt-6 cursor-pointer">
+  <el-table :data="projects.data" max-height="450" @row-click="handleRowClick" style="width: 100%" @selection-change="handleSelectionChange"
+  ref="multipleTableRef" :row-class-name="tableRowClassName">
+    <el-table-column type="selection" width="55" />
+    <el-table-column prop="key" label="Clave" width="60" />
+    <el-table-column prop="customer_info[name]" label="Cliente" />
+    <el-table-column prop="customer_info[company]" label="Empresa" />
+    <el-table-column prop="price.formated" label="Precio" />
+    <el-table-column prop="start_date" label="Fecha de inicio" />
+    <el-table-column prop="finish_date" label="Fecha de termino" />
+    <el-table-column prop="created_at" label="Fecha de Creacion" />
+    <el-table-column label="Acciones" width="200">
+    <template v-slot="scope">
+      <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
+                    title="Continuar con la acción?" @confirm="finishProject(scope.row)">
+                    <template #reference>
+                        <el-button v-if="!scope.row.finish_date" @click.stop="" type="success" size="small">Terminar</el-button>
+                    </template>
+            </el-popconfirm>
+      <el-button type="primary" size="small" @click.stop="editProject(scope.row)">Editar</el-button>
+    </template>
+  </el-table-column>
+</el-table>
+</div>
   </div>
   </AppLayout>
 </template>
@@ -72,17 +77,16 @@ export default {
         },
   },
   methods: {
+    handleRowClick(row) {
+            this.$inertia.get(route('projects.show', row));
+        },
      finishProject(row) {
-
-     axios.put(`projects/${row.id}/finish`, { finish_date: new Date() })
-      .then(response => {
-        const toast = useToast();
-        toast.success('Proyecto terminado exitosamente');
-      })
-      .catch(error => {
-        const toast = useToast();
-        toast.error('Error al terminar el proyecto');
-      });
+     this.$inertia.put(route('projects.finish',row.id));
+     this.$notify({
+                title: 'Success',
+                message: "The project has been finished!",
+                type: 'success'
+            });
   },
   editProject(row){
     this.$inertia.get(route('projects.edit', row.id));

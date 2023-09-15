@@ -42,9 +42,14 @@ class ProjectController extends Controller
     }
 
     
-    public function show(Project $project)
+    public function show($project_id)
     {
-        //
+        
+        $project = ProjectResource::make(Project::find($project_id));
+
+        // return $project;
+
+        return inertia('Project/Show', compact('project'));
     }
 
     
@@ -94,6 +99,5 @@ class ProjectController extends Controller
             'finish_date' => now()
         ]);
 
-        return response()->json(['message' => 'Project finished!']);
     }
 }

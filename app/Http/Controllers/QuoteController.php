@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuoteResource;
 use App\Models\Quote;
+use App\Models\QuoteRequest;
 use Illuminate\Http\Request;
 
 class QuoteController extends Controller
 {
     public function index()
     {
-        $quotes = Quote::latest()->paginate(15);
+        $quotes = QuoteResource::collection(Quote::latest()->paginate(15));
         return inertia('Quote/Index', compact('quotes'));
     }
 
