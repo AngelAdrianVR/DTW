@@ -75,5 +75,8 @@ Route::get('packages-En', function () {
 Route::resource('settings', SettingController::class);
 Route::resource('resources', ResourceController::class);
 
+//PDF routes
+Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
+
 
 

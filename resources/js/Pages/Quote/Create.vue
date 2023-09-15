@@ -43,6 +43,10 @@
           </el-input>
           <InputError :message="form.errors.company_address" />
         </div>
+        <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable placeholder="Tipo de proyecto">
+            <el-option v-for="project in project_types" :key="project.value" :label="project.label"
+                :value="project.key"></el-option>
+        </el-select>
         <div class="mt-3">
           <div class="flex space-x-2">
           <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
@@ -135,14 +139,19 @@
           <InputError :message="form.errors.promised_end_date" />
         </div>
         <div class="flex justify-end">
-          <PrimaryButton :disabled="form.processing"> Crear </PrimaryButton>
+          <PrimaryButton @click="store" :disabled="form.processing"> Crear </PrimaryButton>
         </div>
       </form>
+
+      <!-- ------------- quote preview --------------- -->
       <div class="text-sm shadow-md py-2 mb-6 px-3 bg-white rounded-lg relative">
     <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
-    <figure>
-      <img src="@/../../public/assets/images/quote-logo.png" alt="">
-    </figure>
+    <div class="flex justify-between">
+      <figure>
+        <img src="@/../../public/assets/images/quote-logo.png" alt="">
+      </figure>
+      <p class="text-xs mt-4">{{ folio }}</p>
+    </div>
     <p class="font-bold text-sm text-center">Cotización</p>
     <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span></p>
     <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{ formatearFecha(fechaVigencia) }}</span></p>
@@ -169,6 +178,7 @@
       <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios significativos en el alcance del proyecto. </p>
     </div>
   </div>
+  {{form}}
     </div>
   </AppLayout>
 </template>
@@ -188,6 +198,7 @@ export default {
       customer_name: null,
       company: null,
       company_address: null,
+      project: null,
       included_features: [],
       suggested_features: [],
       promised_end_date: null,
@@ -201,10 +212,54 @@ export default {
     });
     return {
       form,
-      fechaEmision: null, // Inicializamos fechaEmision como una cadena vacía
-      fechaVigencia: null, // Inicializamos fechaVigencia como una cadena vacía
+      fechaEmision: null, 
+      fechaVigencia: null,
       new_feature: null,
+      project_type: null,
+      folio: null,
       toast: null,
+      project_types: [
+        {
+          label: 'Tienda online',
+          Key: 'ECO'
+        },
+        {
+          label: 'Página web',
+          Key: 'WST'
+        },
+        {
+          label: 'Gestión de Relación con los Clientes',
+          Key: 'CRM'
+        },
+        {
+          label: 'Planificación de Recursos Empresariales',
+          Key: 'ERP'
+        },
+        {
+          label: 'Gestión de Contenido',
+          Key: 'CMS'
+        },
+        {
+          label: 'Sistema de Gestión del Aprendizaje',
+          Key: 'LMS'
+        },
+        {
+          label: 'Sistema de Gestión de Proyectos',
+          Key: 'PMS'
+        },
+        {
+          label: 'Inteligencia de Negocios',
+          Key: 'BI'
+        },
+        {
+          label: 'Sistemas de Recursos Humanos',
+          Key: 'HRM'
+        },
+        {
+          label: 'Sistemas de Gestión de Inventarios',
+          Key: 'IMS'
+        },
+      ],
     };
   },
   components: {
@@ -216,6 +271,7 @@ export default {
   },
   props: {
     projects: Array,
+    quotes: Array,
   },
 
   methods: {
@@ -223,6 +279,26 @@ export default {
       this.form.post(route("quotes.store"), {
         onSuccess: () => this.toast.success("Cotizacion creada"),
       });
+      // this.generatePDF();
+        
+    },
+    generatePDF() {
+    // Reemplaza {id} con el ID de la cotización que deseas generar como PDF
+    const cotizacionId = 1; // Cambia esto según tu caso
+    window.open(`/generar-pdf/${cotizacionId}`, '_blank');
+},
+    generateFolio() {
+      // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
+    const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
+
+    const projectTypePrefix = this.form.project_type;
+
+     // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
+    const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
+
+      // Combinar los elementos en el formato deseado
+    this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
+  console.log(this.folio);
     },
      formatearFecha(fecha) {
       if (!fecha) return ''; // Manejar el caso en que la fecha sea null o undefined
