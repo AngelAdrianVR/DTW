@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SettingController;
@@ -71,9 +72,21 @@ Route::get('packages-En', function () {
 })->name('packages-en');
 
 
-// Admin view routes
-Route::resource('settings', SettingController::class);
-Route::resource('resources', ResourceController::class);
+// Admin view routes ---------------------------------------
+Route::resource('settings', SettingController::class)->middleware('auth');
+
+
+Route::resource('resources', ResourceController::class)->middleware('auth');
+
+
+Route::resource('prospects', ProspectController::class)->middleware('auth');
+Route::put('prospects/{prospect}/aproved', [ProspectController::class, 'aprovedProspect'])->name('prospects.aproved')->middleware('auth');
+Route::put('prospects/{prospect}/rejected', [ProspectController::class, 'rejectedProspect'])->name('prospects.rejected')->middleware('auth');
+
+
+
+//PDF routes ----------------------------------------------------
+Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
 
 
 

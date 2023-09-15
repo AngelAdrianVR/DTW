@@ -12,10 +12,13 @@ class Quote extends Model
     protected $fillable = [
         'customer_name',
         'company',
+        'company_address',
+        'project',
         'email',
         'included_features',
+        'total_work_days',
         'suggested_features',
-        'discounts',
+        'percentage_discount',
         'advance_payment_percentage',
         'total_hours',
         'total_cost',
@@ -26,6 +29,8 @@ class Quote extends Model
 
     protected $casts = [
         'promised_end_date' => 'datetime',
+        'included_features' => 'array',
+        'suggested_features' => 'array',
     ];
 
     public function user()
