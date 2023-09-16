@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('key', 4);
+            $table->string('key');
             $table->text('description');
             $table->string('hours_work');
             $table->json('customer_info')->nullable(); //name, email, company, phone. attributes in message model 

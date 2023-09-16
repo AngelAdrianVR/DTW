@@ -24,6 +24,16 @@
           <InputError :message="form.errors.customer_name" />
         </div>
         <div class="mt-3">
+          <el-input v-model="form.quote_name" type="text" placeholder="Nombre de la cotización">
+            <template #prefix>
+              <el-tooltip content="Nombre de la cotización" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-regular fa-file"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <InputError :message="form.errors.quote_name" />
+        </div>
+        <div class="mt-3">
           <el-input v-model="form.company" type="text" placeholder="Empresa">
             <template #prefix>
               <el-tooltip content="Nombre de la empresa" placement="top" effect="dark">
@@ -43,10 +53,38 @@
           </el-input>
           <InputError :message="form.errors.company_address" />
         </div>
+        <div class="mt-3">
+          <el-input v-model="form.quote_description" type="text" placeholder="Descripción de la cotización">
+            <template #prefix>
+              <el-tooltip content="Descripción de la cotización" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-solid fa-quote-left"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <InputError :message="form.errors.quote_description" />
+        </div>
         <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable placeholder="Tipo de proyecto">
             <el-option v-for="project in project_types" :key="project.value" :label="project.label"
                 :value="project.key"></el-option>
         </el-select>
+        <div class="mt-3">
+          <div class="flex space-x-2">
+          <el-input class="w-3/4" v-model="new_subtitle" type="text" placeholder="Subtítulo de proyecto">
+            <template #prefix>
+              <el-tooltip content="Subtítulo de proyecto" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-solid fa-heading"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <SecondaryButton :type="'button'" @click="addSubtitle">Agregar</SecondaryButton>
+          </div>
+        <el-select class="mt-2 w-full" v-model="form.subtitles" multiple clearable placeholder="Subtítulos"
+            no-data-text="Agrega primero un subtitulo">
+            <el-option v-for="subtitle in form.subtitles" :key="subtitle" :label="subtitle"
+                :value="subtitle"></el-option>
+        </el-select>
+          <InputError :message="form.errors.subtitles" />
+        </div>
         <div class="mt-3">
           <div class="flex space-x-2">
           <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
@@ -152,16 +190,24 @@
       </figure>
       <p class="text-xs mt-4">{{ folio }}</p>
     </div>
-    <p class="font-bold text-sm text-center">Cotización</p>
+    <p class="font-bold text-sm text-center">Cotización. {{ form.quote_name }}</p>
     <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span></p>
     <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{ formatearFecha(fechaVigencia) }}</span></p>
     <div class="px-4 mt-2">
       <p v-if="form.company" class="text-xs text-left">{{ form.company }}</p>
       <p v-if="form.company_address" class="text-xs text-left">{{ form.company_address }}</p>
+      <p v-if="form.quote_description" class="text-xs text-left"><strong>Descripción: </strong>{{ form.quote_description }}</p>
       <p v-if="form.included_features?.length" class="text-sm font-bold text-left mt-2">Servicios</p>
-      <ul class="ml-4 mt-2" v-if="form.included_features?.length">
-        <li class="text-xs" v-for="(feature, index) in form.included_features" :key="feature"><span class="mr-3">{{ (index + 1) + '. ' }}</span>{{feature }}</li>
-      </ul>
+      <!-- <p v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</p> -->
+      <ul class="ml-4 mt-2" v-if="form.included_features?.length || form.subtitles?.length">
+  <template v-if="form.subtitles?.length">
+    <li class="text-sm font-bold text-[#7F659C] text-left mt-2" v-for="(subtitle, subtitleIndex) in form.subtitles" :key="'subtitle-' + subtitleIndex">{{ subtitle }}</li>
+    <li class="text-xs ml-4" v-for="(feature, featureIndex) in form.included_features" :key="'feature-' + featureIndex">{{ (featureIndex + 1) + '. ' }}{{ feature }}</li>
+  </template>
+  <template v-else>
+    <li class="text-xs" v-for="(feature, index) in form.included_features" :key="'feature-' + index"><span class="mr-3">{{ (index + 1) + '. ' }}</span>{{ feature }}</li>
+  </template>
+</ul>
       <p v-if="form.total_work_days" class="text-sm font-bold text-left mt-2">Duración</p>
       <p class="text-xs" v-if="form.total_work_days">La entrega estimada para la implementación final del proyecto es {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
         inicio del proyecto.
@@ -178,7 +224,6 @@
       <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios significativos en el alcance del proyecto. </p>
     </div>
   </div>
-  {{form}}
     </div>
   </AppLayout>
 </template>
@@ -195,10 +240,13 @@ import { useToast } from "vue-toastification";
 export default {
   data() {
     const form = useForm({
+      quote_name: null,
       customer_name: null,
       company: null,
       company_address: null,
+      quote_description: null,
       project: null,
+      subtitles: [],
       included_features: [],
       suggested_features: [],
       promised_end_date: null,
@@ -215,6 +263,7 @@ export default {
       fechaEmision: null, 
       fechaVigencia: null,
       new_feature: null,
+      new_subtitle: null,
       project_type: null,
       folio: null,
       toast: null,
@@ -311,6 +360,13 @@ export default {
                 this.form.included_features.push(this.new_feature);
                 this.included_features.push(this.new_feature);
                 this.new_feature = '';
+            }
+    },
+    addSubtitle(){
+      if (this.new_subtitle.trim() !== '') {
+                this.form.subtitles.push(this.new_subtitle);
+                this.subtitles.push(this.new_subtitle);
+                this.new_subtitle = '';
             }
     },
     setExpiredDate() {

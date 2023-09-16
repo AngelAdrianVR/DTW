@@ -10,10 +10,13 @@ class Quote extends Model
     use HasFactory;
 
     protected $fillable = [
+        'quote_name',
         'customer_name',
         'company',
         'company_address',
+        'quote_description',
         'project',
+        'subtitles',
         'email',
         'included_features',
         'total_work_days',
@@ -31,6 +34,7 @@ class Quote extends Model
         'promised_end_date' => 'datetime',
         'included_features' => 'array',
         'suggested_features' => 'array',
+        'subtitles' => 'array',
     ];
 
     public function user()
