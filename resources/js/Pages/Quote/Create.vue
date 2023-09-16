@@ -24,6 +24,16 @@
           <InputError :message="form.errors.customer_name" />
         </div>
         <div class="mt-3">
+          <el-input v-model="form.quote_name" type="text" placeholder="Nombre de la cotización">
+            <template #prefix>
+              <el-tooltip content="Nombre de la cotización" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-regular fa-file"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <InputError :message="form.errors.quote_name" />
+        </div>
+        <div class="mt-3">
           <el-input v-model="form.company" type="text" placeholder="Empresa">
             <template #prefix>
               <el-tooltip content="Nombre de la empresa" placement="top" effect="dark">
@@ -43,10 +53,38 @@
           </el-input>
           <InputError :message="form.errors.company_address" />
         </div>
+        <div class="mt-3">
+          <el-input v-model="form.quote_description" type="text" placeholder="Descripción de la cotización">
+            <template #prefix>
+              <el-tooltip content="Descripción de la cotización" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-solid fa-quote-left"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <InputError :message="form.errors.quote_description" />
+        </div>
         <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable placeholder="Tipo de proyecto">
             <el-option v-for="project in project_types" :key="project.value" :label="project.label"
-                :value="project.key"></el-option>
+                :value="project.code"></el-option>
         </el-select>
+        <div class="mt-3">
+          <div class="flex space-x-2">
+          <el-input class="w-3/4" v-model="new_subtitle" type="text" placeholder="Subtítulo de proyecto">
+            <template #prefix>
+              <el-tooltip content="Subtítulo de proyecto" placement="top" effect="dark">
+                <el-icon class="el-input__icon"><i class="fa-solid fa-heading"></i></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+          <SecondaryButton :type="'button'" @click="addSubtitle">Agregar</SecondaryButton>
+          </div>
+        <el-select class="mt-2 w-full" v-model="form.subtitles" multiple clearable placeholder="Subtítulos"
+            no-data-text="Agrega primero un subtitulo">
+            <el-option v-for="subtitle in form.subtitles" :key="subtitle" :label="subtitle"
+                :value="subtitle"></el-option>
+        </el-select>
+          <InputError :message="form.errors.subtitles" />
+        </div>
         <div class="mt-3">
           <div class="flex space-x-2">
           <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
@@ -152,16 +190,19 @@
       </figure>
       <p class="text-xs mt-4">{{ folio }}</p>
     </div>
-    <p class="font-bold text-sm text-center">Cotización</p>
+    <p class="font-bold text-sm text-center">Cotización. {{ form.quote_name }}</p>
     <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span></p>
     <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{ formatearFecha(fechaVigencia) }}</span></p>
     <div class="px-4 mt-2">
       <p v-if="form.company" class="text-xs text-left">{{ form.company }}</p>
       <p v-if="form.company_address" class="text-xs text-left">{{ form.company_address }}</p>
+      <p v-if="form.quote_description" class="text-xs text-left"><strong>Descripción: </strong>{{ form.quote_description }}</p>
       <p v-if="form.included_features?.length" class="text-sm font-bold text-left mt-2">Servicios</p>
+      <!-- <p v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</p> -->
       <ul class="ml-4 mt-2" v-if="form.included_features?.length">
+        <li v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</li>
         <li class="text-xs" v-for="(feature, index) in form.included_features" :key="feature"><span class="mr-3">{{ (index + 1) + '. ' }}</span>{{feature }}</li>
-      </ul>
+      </ul> 
       <p v-if="form.total_work_days" class="text-sm font-bold text-left mt-2">Duración</p>
       <p class="text-xs" v-if="form.total_work_days">La entrega estimada para la implementación final del proyecto es {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
         inicio del proyecto.
@@ -176,9 +217,46 @@
       <p class="text-xs">40% al finalizar el desarrollo. </p>
       <p class="text-xs">30% al finalizar la implementación. </p>
       <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios significativos en el alcance del proyecto. </p>
+      <p class="text-xs mt-1">Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra por la adquisición de los mismo.  </p>
+      <p class="text-xs font-bold mt-3">Proceso</p>
+      <p class="text-xs">El proyecto parte desde cero, comenzando con la fase de diseño. En esta etapa, se envía al cliente un archivo que contiene
+        todas las vistas planificadas para la aplicación. Una vez que el diseño es aprobado, avanzamos hacia el desarrollo de la
+        programación.
+        Después de completar la programación, llevamos a cabo la fase de despliegue de la aplicación, lo que implica su
+        alojamiento en la nube y su entrega al cliente. Durante esta fase, se verifica la funcionalidad y se corrigen de inmediato
+        cualquier error de desarrollo o programación que pueda surgir.
+        Adicionalmente, ofrecemos una capacitación en línea para un máximo de 5 usuarios seleccionados por la empresa. Esto
+        garantiza que el cliente pueda aprovechar al máximo la nueva aplicación.
+        Para respaldar nuestro compromiso con la calidad, proporcionamos un año de soporte técnico integral para solucionar
+        cualquier problema relacionado con el desarrollo del sistema. Nuestra prioridad es asegurar un funcionamiento fluido y
+        eficiente durante toda la vida útil de la aplicación
+      </p>
+      <p class="text-xs font-bold mt-3">Beneficios de adquirir el software</p>
+      <p class="text-xs">- Compatibilidad en todos los dispositivos: nuestra plataforma es compatible con una amplia gama de dispositivos
+        (computadora de escritorio, laptop, Tablet y/o teléfono móvil)
+      </p>
+      <p class="text-xs">- Seguridad de datos: la información se almacena de manera segura en la nube para proteger los datos de la
+        empresa contra pérdidas. Realizamos respaldos automáticos para garantizar que sus datos estén siempre
+        protegidos. 
+      </p>
+      <p class="text-xs">- Acceso remoto: Los usuarios pueden acceder a la información de la empresa desde cualquier lugar con conexión
+       a Internet, lo que facilita el trabajo remoto y la colaboración fuera de la oficina principal.
+      </p>
+      <p class="text-xs">- Escalabilidad sin interrupciones: con nuestra tecnología, su sistema puede crecer y adaptarse a medida que su
+        empresa evoluciona.
+      </p>
+      <p class="text-xs">- Soporte: Ofrecemos soporte técnico para garantizar que los usuarios aprovechen al máximo la plataforma y
+        resuelvan cualquier problema de manera eficiente. 
+      </p>
+      <p class="text-xs">- Personalización de marca: "Entendemos la importancia de la identidad de su empresa. Personalizamos nuestro
+        programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional para
+        sus usuarios y clientes." 
+      </p>
+      <p class="text-xs">- Sin límite de usuarios. </p>
+      <p class="text-xs">- No pagan cuota mensual, es de una sola adquisición. </p>
+
     </div>
   </div>
-  {{form}}
     </div>
   </AppLayout>
 </template>
@@ -195,10 +273,13 @@ import { useToast } from "vue-toastification";
 export default {
   data() {
     const form = useForm({
+      quote_name: null,
       customer_name: null,
       company: null,
       company_address: null,
+      quote_description: null,
       project: null,
+      subtitles: [],
       included_features: [],
       suggested_features: [],
       promised_end_date: null,
@@ -215,49 +296,50 @@ export default {
       fechaEmision: null, 
       fechaVigencia: null,
       new_feature: null,
+      new_subtitle: null,
       project_type: null,
       folio: null,
       toast: null,
       project_types: [
         {
           label: 'Tienda online',
-          Key: 'ECO'
+          code: 'ECO'
         },
         {
           label: 'Página web',
-          Key: 'WST'
+          code: 'WST'
         },
         {
           label: 'Gestión de Relación con los Clientes (CRM)',
-          Key: 'CRM'
+          code: 'CRM'
         },
         {
           label: 'Planificación de Recursos Empresariales (ERP)',
-          Key: 'ERP'
+          code: 'ERP'
         },
         {
           label: 'Gestión de Contenido (CMS)',
-          Key: 'CMS'
+          code: 'CMS'
         },
         {
           label: 'Sistema de Gestión del Aprendizaje (LMS)',
-          Key: 'LMS'
+          code: 'LMS'
         },
         {
           label: 'Sistema de Gestión de Proyectos (PMS)',
-          Key: 'PMS'
+          code: 'PMS'
         },
         {
           label: 'Inteligencia de Negocios (BI)',
-          Key: 'BI'
+          code: 'BI'
         },
         {
           label: 'Sistemas de Recursos Humanos (HRM)',
-          Key: 'HRM'
+          code: 'HRM'
         },
         {
           label: 'Sistemas de Gestión de Inventarios (IMS)',
-          Key: 'IMS'
+          code: 'IMS'
         },
       ],
     };
@@ -279,14 +361,10 @@ export default {
       this.form.post(route("quotes.store"), {
         onSuccess: () => this.toast.success("Cotizacion creada"),
       });
+      // this.$inertia.get(route('quote.pdf'));
       // this.generatePDF();
         
     },
-    generatePDF() {
-    // Reemplaza {id} con el ID de la cotización que deseas generar como PDF
-    const cotizacionId = 1; // Cambia esto según tu caso
-    window.open(`/generar-pdf/${cotizacionId}`, '_blank');
-},
     generateFolio() {
       // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
     const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
@@ -310,7 +388,14 @@ export default {
       if (this.new_feature.trim() !== '') {
                 this.form.included_features.push(this.new_feature);
                 this.included_features.push(this.new_feature);
-                this.new_feature = '';
+                this.new_feature = null;
+            }
+    },
+    addSubtitle(){
+      if (this.new_subtitle.trim() !== '') {
+                this.form.subtitles.push(this.new_subtitle);
+                this.subtitles.push(this.new_subtitle);
+                this.new_subtitle = null;
             }
     },
     setExpiredDate() {

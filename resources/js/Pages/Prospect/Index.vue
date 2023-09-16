@@ -16,8 +16,8 @@
         <el-table-column prop="prospect_name" label="Nombre prospecto" width="180" />
         <el-table-column prop="company" label="Empresa" width="180" />
         <el-table-column prop="project_type" label="Tipo de proyecto" width="180" />
-        <el-table-column prop="notes" label="Notas" width="250" />
-        <el-table-column prop="user.name" label="Usuario" width="100" />
+        <el-table-column prop="notes" label="Notas" width="350" />
+        <el-table-column prop="user.name" label="Usuario" width="150" />
         <el-table-column prop="created_at" label="creado el" width="150" />
         <el-table-column fixed="right" label="Actiones" width="110" >
           <template #default="scope">

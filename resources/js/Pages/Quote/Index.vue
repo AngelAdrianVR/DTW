@@ -10,8 +10,8 @@
                 </Link>
             </div>
         </template>
-        <div class="lg:w-5/6 mx-auto mt-6">
-            <el-table :data="quotes.data" max-height="450" style="width: 100%">
+        <div class="lg:w-5/6 mx-auto mt-6 cursor-pointer">
+            <el-table :data="quotes.data" max-height="650" @row-click="handleRowClick" style="width: 100%">
                 <el-table-column type="selection" width="55" />
                 <el-table-column prop="id" label="ID" width="60" />
                 <el-table-column prop="customer_name" label="Cliente" width="180" />
@@ -20,7 +20,7 @@
                 <el-table-column label="Acciones" fixed="right">
                     <template #default="scope">
                         <el-button size="small" type="primary"
-                            @click="createPoryect(scope.$index, scope.row)">Crear proyecto</el-button>
+                            @click.stop="createPoryect(scope.$index, scope.row)">Crear proyecto</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -47,6 +47,11 @@ export default {
     props: {
         quotes: Array,
     },
+    methods:{
+        handleRowClick(row) {
+            this.$inertia.get(route('quotes.show', row));
+        },
+    }
 };
 
 </script>
