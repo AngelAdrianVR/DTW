@@ -46,6 +46,12 @@ class QuoteController extends Controller
             'user_id' => auth()->id(), 
         ]);
 
-        return back();
+        return to_route('quotes.index');
+    }
+
+    public function show(Quote $quote)
+    {
+        // return $quote;
+        return inertia('Quote/Show', compact('quote'));
     }
 }

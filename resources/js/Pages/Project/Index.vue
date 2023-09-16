@@ -21,7 +21,7 @@
                 </el-popconfirm>
             </div>
     <div class="lg:w-5/6 mx-auto mt-6 cursor-pointer">
-  <el-table :data="projects.data" max-height="450" @row-click="handleRowClick" style="width: 100%" @selection-change="handleSelectionChange"
+  <el-table :data="projects.data" max-height="650" @row-click="handleRowClick" style="width: 100%" @selection-change="handleSelectionChange"
   ref="multipleTableRef" :row-class-name="tableRowClassName">
     <el-table-column type="selection" width="55" />
     <el-table-column prop="key" label="Clave" width="60" />

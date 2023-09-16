@@ -66,7 +66,7 @@
                          needs, from corporate sites, online stores,
                          informative.
                     </p>
-                    <button
+                    <button @click="$inertia.get(route('create-quote-en.create'))"
                         class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Quote my site
                         <i class="fa-solid fa-chevron-right ml-6"></i>
