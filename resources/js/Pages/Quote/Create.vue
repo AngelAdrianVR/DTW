@@ -63,44 +63,44 @@
           </el-input>
           <InputError :message="form.errors.quote_description" />
         </div>
-        <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable placeholder="Tipo de proyecto">
-            <el-option v-for="project in project_types" :key="project.value" :label="project.label"
-                :value="project.code"></el-option>
+        <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable
+          placeholder="Tipo de proyecto">
+          <el-option v-for="project in project_types" :key="project.value" :label="project.label"
+            :value="project.code"></el-option>
         </el-select>
         <div class="mt-3">
           <div class="flex space-x-2">
-          <el-input class="w-3/4" v-model="new_subtitle" type="text" placeholder="Subtítulo de proyecto">
-            <template #prefix>
-              <el-tooltip content="Subtítulo de proyecto" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-heading"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <SecondaryButton :type="'button'" @click="addSubtitle">Agregar</SecondaryButton>
+            <el-input class="w-3/4" v-model="new_subtitle" type="text" placeholder="Subtítulo de proyecto">
+              <template #prefix>
+                <el-tooltip content="Subtítulo de proyecto" placement="top" effect="dark">
+                  <el-icon class="el-input__icon"><i class="fa-solid fa-heading"></i></el-icon>
+                </el-tooltip>
+              </template>
+            </el-input>
+            <SecondaryButton :type="'button'" @click="addSubtitle">Agregar</SecondaryButton>
           </div>
-        <el-select class="mt-2 w-full" v-model="form.subtitles" multiple clearable placeholder="Subtítulos"
+          <el-select class="mt-2 w-full" v-model="form.subtitles" multiple clearable placeholder="Subtítulos"
             no-data-text="Agrega primero un subtitulo">
-            <el-option v-for="subtitle in form.subtitles" :key="subtitle" :label="subtitle"
-                :value="subtitle"></el-option>
-        </el-select>
+            <el-option v-for="subtitle in form.subtitles" :key="subtitle" :label="subtitle" :value="subtitle"></el-option>
+          </el-select>
           <InputError :message="form.errors.subtitles" />
         </div>
         <div class="mt-3">
           <div class="flex space-x-2">
-          <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
-            <template #prefix>
-              <el-tooltip content="Caracterísicas incluidas en la lcotización" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-regular fa-clipboard"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <SecondaryButton :type="'button'" @click="addFeature">Agregar</SecondaryButton>
+            <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
+              <template #prefix>
+                <el-tooltip content="Caracterísicas incluidas en la lcotización" placement="top" effect="dark">
+                  <el-icon class="el-input__icon"><i class="fa-regular fa-clipboard"></i></el-icon>
+                </el-tooltip>
+              </template>
+            </el-input>
+            <SecondaryButton :type="'button'" @click="addFeature">Agregar</SecondaryButton>
           </div>
-        <el-select class="mt-2 w-full" v-model="form.included_features" multiple clearable placeholder="Caracteristicas"
+          <el-select class="mt-2 w-full" v-model="form.included_features" multiple clearable placeholder="Caracteristicas"
             no-data-text="Agrega primero una caracteristica">
             <el-option v-for="feature in form.included_features" :key="feature" :label="feature"
-                :value="feature"></el-option>
-        </el-select>
+              :value="feature"></el-option>
+          </el-select>
           <InputError :message="form.errors.included_features" />
         </div>
         <div class="mt-3">
@@ -124,7 +124,8 @@
           <InputError :message="form.errors.total_cost" />
         </div>
         <div class="mt-3">
-          <el-input v-model="form.percentage_discount" type="number" max="100" min="1" placeholder="Porcentaje de descuento">
+          <el-input v-model="form.percentage_discount" type="number" max="100" min="1"
+            placeholder="Porcentaje de descuento">
             <template #prefix>
               <el-tooltip content="Porcentaje de descuento" placement="top" effect="dark">
                 <el-icon class="el-input__icon"><i class="fa-solid fa-percent"></i></el-icon>
@@ -155,14 +156,15 @@
         </div>
         <div class="mt-3">
           <div class="flex space-x-2">
-          <el-input class="w-2/3" v-model="form.offer_validity_days" type="number" placeholder="Dias de validez de cotizacion">
-            <template #prefix>
-              <el-tooltip content="Dias de validez de cotizacion despues de emision" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-stopwatch"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <SecondaryButton class="w-1/3" :type="'button'" @click="setExpiredDate">Calcular fecha</SecondaryButton>
+            <el-input class="w-2/3" v-model="form.offer_validity_days" type="number"
+              placeholder="Dias de validez de cotizacion">
+              <template #prefix>
+                <el-tooltip content="Dias de validez de cotizacion despues de emision" placement="top" effect="dark">
+                  <el-icon class="el-input__icon"><i class="fa-solid fa-stopwatch"></i></el-icon>
+                </el-tooltip>
+              </template>
+            </el-input>
+            <SecondaryButton class="w-1/3" :type="'button'" @click="setExpiredDate">Calcular fecha</SecondaryButton>
           </div>
           <InputError :message="form.errors.offer_validity_days" />
         </div>
@@ -183,80 +185,105 @@
 
       <!-- ------------- quote preview --------------- -->
       <div class="text-sm shadow-md py-2 mb-6 px-3 bg-white rounded-lg relative">
-    <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
-    <div class="flex justify-between">
-      <figure>
-        <img src="@/../../public/assets/images/quote-logo.png" alt="">
-      </figure>
-      <p class="text-xs mt-4">{{ folio }}</p>
-    </div>
-    <p class="font-bold text-sm text-center">Cotización. {{ form.quote_name }}</p>
-    <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span></p>
-    <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{ formatearFecha(fechaVigencia) }}</span></p>
-    <div class="px-4 mt-2">
-      <p v-if="form.company" class="text-xs text-left">{{ form.company }}</p>
-      <p v-if="form.company_address" class="text-xs text-left">{{ form.company_address }}</p>
-      <p v-if="form.quote_description" class="text-xs text-left"><strong>Descripción: </strong>{{ form.quote_description }}</p>
-      <p v-if="form.included_features?.length" class="text-sm font-bold text-left mt-2">Servicios</p>
-      <!-- <p v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</p> -->
-      <ul class="ml-4 mt-2" v-if="form.included_features?.length">
-        <li v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</li>
-        <li class="text-xs" v-for="(feature, index) in form.included_features" :key="feature"><span class="mr-3">{{ (index + 1) + '. ' }}</span>{{feature }}</li>
-      </ul> 
-      <p v-if="form.total_work_days" class="text-sm font-bold text-left mt-2">Duración</p>
-      <p class="text-xs" v-if="form.total_work_days">La entrega estimada para la implementación final del proyecto es {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
-        inicio del proyecto.
-      </p>
-      <p v-if="form.total_cost" class="text-sm font-bold text-left mt-2">Costo</p>
-      <p class="text-xs" v-if="form.total_cost">${{ form.total_cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} IVA incluido</p>
-      <p v-if="form.percentage_discount" class="text-xs">Descuento: ${{ ((form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (%{{ form.percentage_discount }})</p>
-      <p v-if="form.percentage_discount" class="text-sm font-bold text-left mt-2">Total</p>
-      <p class="text-xs" v-if="form.percentage_discount">${{ (form.total_cost - (form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} IVA incluido</p>
-      <p class="text-sm font-bold text-left mt-2">Condiciones de pago</p>
-      <p class="text-xs">30% al inicio del proyecto. </p>
-      <p class="text-xs">40% al finalizar el desarrollo. </p>
-      <p class="text-xs">30% al finalizar la implementación. </p>
-      <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios significativos en el alcance del proyecto. </p>
-      <p class="text-xs mt-1">Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra por la adquisición de los mismo.  </p>
-      <p class="text-xs font-bold mt-3">Proceso</p>
-      <p class="text-xs">El proyecto parte desde cero, comenzando con la fase de diseño. En esta etapa, se envía al cliente un archivo que contiene
-        todas las vistas planificadas para la aplicación. Una vez que el diseño es aprobado, avanzamos hacia el desarrollo de la
-        programación.
-        Después de completar la programación, llevamos a cabo la fase de despliegue de la aplicación, lo que implica su
-        alojamiento en la nube y su entrega al cliente. Durante esta fase, se verifica la funcionalidad y se corrigen de inmediato
-        cualquier error de desarrollo o programación que pueda surgir.
-        Adicionalmente, ofrecemos una capacitación en línea para un máximo de 5 usuarios seleccionados por la empresa. Esto
-        garantiza que el cliente pueda aprovechar al máximo la nueva aplicación.
-        Para respaldar nuestro compromiso con la calidad, proporcionamos un año de soporte técnico integral para solucionar
-        cualquier problema relacionado con el desarrollo del sistema. Nuestra prioridad es asegurar un funcionamiento fluido y
-        eficiente durante toda la vida útil de la aplicación
-      </p>
-      <p class="text-xs font-bold mt-3">Beneficios de adquirir el software</p>
-      <p class="text-xs">- Compatibilidad en todos los dispositivos: nuestra plataforma es compatible con una amplia gama de dispositivos
-        (computadora de escritorio, laptop, Tablet y/o teléfono móvil)
-      </p>
-      <p class="text-xs">- Seguridad de datos: la información se almacena de manera segura en la nube para proteger los datos de la
-        empresa contra pérdidas. Realizamos respaldos automáticos para garantizar que sus datos estén siempre
-        protegidos. 
-      </p>
-      <p class="text-xs">- Acceso remoto: Los usuarios pueden acceder a la información de la empresa desde cualquier lugar con conexión
-       a Internet, lo que facilita el trabajo remoto y la colaboración fuera de la oficina principal.
-      </p>
-      <p class="text-xs">- Escalabilidad sin interrupciones: con nuestra tecnología, su sistema puede crecer y adaptarse a medida que su
-        empresa evoluciona.
-      </p>
-      <p class="text-xs">- Soporte: Ofrecemos soporte técnico para garantizar que los usuarios aprovechen al máximo la plataforma y
-        resuelvan cualquier problema de manera eficiente. 
-      </p>
-      <p class="text-xs">- Personalización de marca: "Entendemos la importancia de la identidad de su empresa. Personalizamos nuestro
-        programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional para
-        sus usuarios y clientes." 
-      </p>
-      <p class="text-xs">- Sin límite de usuarios. </p>
-      <p class="text-xs">- No pagan cuota mensual, es de una sola adquisición. </p>
+        <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
+        <div class="flex justify-between">
+          <figure>
+            <img src="@/../../public/assets/images/quote-logo.png" alt="">
+          </figure>
+          <p class="text-xs mt-4">{{ folio }}</p>
+        </div>
+        <p class="font-bold text-sm text-center">Cotización. {{ form.quote_name }}</p>
+        <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span>
+        </p>
+        <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{
+          formatearFecha(fechaVigencia) }}</span></p>
+        <div class="px-4 mt-2">
+          <p v-if="form.company" class="text-xs text-left">{{ form.company }}</p>
+          <p v-if="form.company_address" class="text-xs text-left">{{ form.company_address }}</p>
+          <p v-if="form.quote_description" class="text-xs text-left"><strong>Descripción: </strong>{{
+            form.quote_description }}</p>
+          <p v-if="form.included_features?.length" class="text-sm font-bold text-left mt-2">Servicios</p>
+          <!-- <p v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</p> -->
+          <ul class="ml-4 mt-2" v-if="form.included_features?.length">
+            <li v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{ form.subtitles }}
+            </li>
+            <li class="text-xs" v-for="(feature, index) in form.included_features" :key="feature"><span class="mr-3">{{
+              (index + 1) + '. ' }}</span>{{ feature }}</li>
+          </ul>
+          <p v-if="form.total_work_days" class="text-sm font-bold text-left mt-2">Duración</p>
+          <p class="text-xs" v-if="form.total_work_days">La entrega estimada para la implementación final del proyecto es
+            {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
+            inicio del proyecto.
+          </p>
+          <p v-if="form.total_cost" class="text-sm font-bold text-left mt-2">Costo</p>
+          <p class="text-xs" v-if="form.total_cost">${{ form.total_cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          }} IVA incluido</p>
+          <p v-if="form.percentage_discount" class="text-xs">Descuento: ${{ ((form.percentage_discount * 0.01) *
+            form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (%{{ form.percentage_discount }})</p>
+          <p v-if="form.percentage_discount" class="text-sm font-bold text-left mt-2">Total</p>
+          <p class="text-xs" v-if="form.percentage_discount">${{ (form.total_cost - (form.percentage_discount * 0.01) *
+            form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} IVA incluido</p>
+          <p class="text-sm font-bold text-left mt-2">Condiciones de pago</p>
+          <p class="text-xs">30% al inicio del proyecto. </p>
+          <p class="text-xs">40% al finalizar el desarrollo. </p>
+          <p class="text-xs">30% al finalizar la implementación. </p>
+          <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
+            significativos en el alcance del proyecto. </p>
+          <p class="text-xs mt-1">Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra por la
+            adquisición de los mismo. </p>
+          <p class="text-xs font-bold mt-3">Proceso</p>
+          <p class="text-xs">El proyecto parte desde cero, comenzando con la fase de diseño. En esta etapa, se envía al
+            cliente un archivo que contiene
+            todas las vistas planificadas para la aplicación. Una vez que el diseño es aprobado, avanzamos hacia el
+            desarrollo de la
+            programación.
+            Después de completar la programación, llevamos a cabo la fase de despliegue de la aplicación, lo que implica
+            su
+            alojamiento en la nube y su entrega al cliente. Durante esta fase, se verifica la funcionalidad y se corrigen
+            de inmediato
+            cualquier error de desarrollo o programación que pueda surgir.
+            Adicionalmente, ofrecemos una capacitación en línea para un máximo de 5 usuarios seleccionados por la empresa.
+            Esto
+            garantiza que el cliente pueda aprovechar al máximo la nueva aplicación.
+            Para respaldar nuestro compromiso con la calidad, proporcionamos un año de soporte técnico integral para
+            solucionar
+            cualquier problema relacionado con el desarrollo del sistema. Nuestra prioridad es asegurar un funcionamiento
+            fluido y
+            eficiente durante toda la vida útil de la aplicación
+          </p>
+          <p class="text-xs font-bold mt-3">Beneficios de adquirir el software</p>
+          <p class="text-xs">- Compatibilidad en todos los dispositivos: nuestra plataforma es compatible con una amplia
+            gama de dispositivos
+            (computadora de escritorio, laptop, Tablet y/o teléfono móvil)
+          </p>
+          <p class="text-xs">- Seguridad de datos: la información se almacena de manera segura en la nube para proteger
+            los datos de la
+            empresa contra pérdidas. Realizamos respaldos automáticos para garantizar que sus datos estén siempre
+            protegidos.
+          </p>
+          <p class="text-xs">- Acceso remoto: Los usuarios pueden acceder a la información de la empresa desde cualquier
+            lugar con conexión
+            a Internet, lo que facilita el trabajo remoto y la colaboración fuera de la oficina principal.
+          </p>
+          <p class="text-xs">- Escalabilidad sin interrupciones: con nuestra tecnología, su sistema puede crecer y
+            adaptarse a medida que su
+            empresa evoluciona.
+          </p>
+          <p class="text-xs">- Soporte: Ofrecemos soporte técnico para garantizar que los usuarios aprovechen al máximo la
+            plataforma y
+            resuelvan cualquier problema de manera eficiente.
+          </p>
+          <p class="text-xs">- Personalización de marca: "Entendemos la importancia de la identidad de su empresa.
+            Personalizamos nuestro
+            programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional
+            para
+            sus usuarios y clientes."
+          </p>
+          <p class="text-xs">- Sin límite de usuarios. </p>
+          <p class="text-xs">- No pagan cuota mensual, es de una sola adquisición. </p>
 
-    </div>
-  </div>
+        </div>
+      </div>
     </div>
   </AppLayout>
 </template>
@@ -293,7 +320,7 @@ export default {
     });
     return {
       form,
-      fechaEmision: null, 
+      fechaEmision: null,
       fechaVigencia: null,
       new_feature: null,
       new_subtitle: null,
@@ -363,40 +390,40 @@ export default {
       });
       // this.$inertia.get(route('quote.pdf'));
       // this.generatePDF();
-        
+
     },
     generateFolio() {
       // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
-    const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
+      const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
 
-    const projectTypePrefix = this.form.project_type;
+      const projectTypePrefix = this.form.project_type;
 
-     // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
-    const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
+      // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
+      const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
 
       // Combinar los elementos en el formato deseado
-    this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
-  console.log(this.folio);
+      this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
+      console.log(this.folio);
     },
-     formatearFecha(fecha) {
+    formatearFecha(fecha) {
       if (!fecha) return ''; // Manejar el caso en que la fecha sea null o undefined
 
       const options = { day: 'numeric', month: 'long', year: 'numeric' };
       return fecha.toLocaleDateString('es-ES', options);
     },
-    addFeature(){
+    addFeature() {
       if (this.new_feature.trim() !== '') {
-                this.form.included_features.push(this.new_feature);
-                this.included_features.push(this.new_feature);
-                this.new_feature = null;
-            }
+        this.form.included_features.push(this.new_feature);
+        this.included_features?.push(this.new_feature);
+        this.new_feature = '';
+      }
     },
-    addSubtitle(){
+    addSubtitle() {
       if (this.new_subtitle.trim() !== '') {
-                this.form.subtitles.push(this.new_subtitle);
-                this.subtitles.push(this.new_subtitle);
-                this.new_subtitle = null;
-            }
+        this.form.subtitles.push(this.new_subtitle);
+        this.subtitles.push(this.new_subtitle);
+        this.new_subtitle = '';
+      }
     },
     setExpiredDate() {
       if (this.form.offer_validity_days) {
@@ -429,8 +456,7 @@ export default {
 };
 </script>
 
-<style scoped>
-.demo-date-picker {
+<style scoped>.demo-date-picker {
   width: 100%;
   padding: 0;
   flex-wrap: wrap;
@@ -451,5 +477,4 @@ export default {
   color: var(--el-text-color-secondary);
   font-size: 14px;
   margin-top: 0.75rem;
-}
-</style>
+}</style>
