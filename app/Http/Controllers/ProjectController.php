@@ -14,7 +14,6 @@ class ProjectController extends Controller
 
         $projects = ProjectResource::collection(Project::latest()->get());
 
-        // return $projects;
         return inertia('Project/Index', compact('projects'));
     }
 
@@ -46,8 +45,6 @@ class ProjectController extends Controller
     {
         
         $project = ProjectResource::make(Project::find($project_id));
-
-        // return $project;
 
         return inertia('Project/Show', compact('project'));
     }
