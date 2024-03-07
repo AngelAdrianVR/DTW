@@ -19,8 +19,10 @@
                 <el-table-column prop="created_at" label="Creado el" />
                 <el-table-column label="Acciones" fixed="right">
                     <template #default="scope">
+                        <el-button size="small" type="primary">Crear
+                            proyecto</el-button>
                         <el-button size="small" type="primary"
-                            @click.stop="createPoryect(scope.$index, scope.row)">Crear proyecto</el-button>
+                            @click.stop="$inertia.get(route('quotes.edit', scope.row))">Editar</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -47,7 +49,7 @@ export default {
     props: {
         quotes: Array,
     },
-    methods:{
+    methods: {
         handleRowClick(row) {
             this.$inertia.get(route('quotes.show', row));
         },
