@@ -1,9 +1,9 @@
 <template>
     <button :id="`accordion-title-${id}`"
-        class="w-full text-start px-2 mb- flex justify-between items-center text-xs rounded-md py-1"
-        :class="active ? 'font-bold text-primary' : ''" @click.prevent="accordionOpen = !accordionOpen"
+        class="w-full text-start px-2 mb- flex justify-between items-center text-xs rounded-full py-1"
+        :class="active ? 'font-bold text-primary bg-[#3E3D3F]' : ''" @click.prevent="accordionOpen = !accordionOpen"
         :aria-expanded="accordionOpen" :aria-controls="`accordion-text-${id}`" :title="title">
-        <p>
+        <p class="flex items-center">
             <i v-html="icon"></i>
             <span class="ml-2">{{ title }}</span>
         </p>
@@ -14,7 +14,7 @@
         class="grid text-sm overflow-hidden transition-all duration-300 ease-in-out ml-2"
         :class="accordionOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
         <div class="overflow-hidden">
-            <p class="pb-1">
+            <p>
                 <slot />
             </p>
         </div>
