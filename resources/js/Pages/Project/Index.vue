@@ -1,15 +1,33 @@
 <template>
   <AppLayout title="Proyectos">
-    <template #header>
+    <div class="px-10 py-5">
       <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          <i class="fa-solid fa-laptop text-gray-500 text-lg mr-2"></i>Proyectos
+          <div class="flex items-center space-x-4">
+            <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <mask id="mask0_8456_162" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+              <rect width="16" height="16" fill="#D9D9D9"/>
+              </mask>
+              <g mask="url(#mask0_8456_162)">
+              <path d="M6.04818 10.8333L7.99818 9.65001L9.94818 10.8333L9.43151 8.61668L11.1648 7.11668L8.88151 6.93334L7.99818 4.83334L7.11484 6.93334L4.83151 7.11668L6.56484 8.61668L6.04818 10.8333ZM7.99818 15.5333L5.76484 13.3333H2.66484V10.2333L0.464844 8.00001L2.66484 5.76667V2.66667H5.76484L7.99818 0.466675L10.2315 2.66667H13.3315V5.76667L15.5315 8.00001L13.3315 10.2333V13.3333H10.2315L7.99818 15.5333ZM7.99818 13.6667L9.66484 12H11.9982V9.66668L13.6648 8.00001L11.9982 6.33334V4.00001H9.66484L7.99818 2.33334L6.33151 4.00001H3.99818V6.33334L2.33151 8.00001L3.99818 9.66668V12H6.33151L7.99818 13.6667Z" fill="black"/>
+              </g>
+            </svg>
+            <p>Proyectos</p>
+          </div>
         </h2>
-        <Link :href="route('projects.create')">
-          <SecondaryButton> Agregar + </SecondaryButton>
-        </Link>
+          <PrimaryButton @click="$inertia.get(route('projects.create'))"> Crear proyecto </PrimaryButton>
+      </div>  
+
+      <!-- Buscador -->
+      <div class="lg:w-1/4 relative mt-4">
+          <input v-model="inputSearch" @keyup.enter="handleSearch" class="input w-full !pl-9"
+              placeholder="Buscar proyecto" type="search">
+          <i class="fa-solid fa-magnifying-glass text-xs text-gray99 absolute top-[10px] left-4"></i>
       </div>
-    </template>
+    </div>
+
+    <!-- Tabla de proyectos -->
+    <ProjectsTable :projects="filteredTableData" />
 
 <div class="lg:w-full mx-auto mt-6">
     <div class="flex justify-end lg:mr-28">
@@ -49,25 +67,27 @@
 </template>
 
 <script>
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import ProjectsTable from "@/Components//MyComponents/Project/ProjectsTable.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import axios from 'axios';
 
 export default {
-  data() {
+  data() {  
     return {
       disableMassiveActions: true,
-       toast: null,
+      toast: null,
+      inputSearch: "", //buscador
+      search: "", //buscador
     };
   },
   components: {
-    ApplicationLogo,
+    ProjectsTable,
+    PrimaryButton,
     AppLayout,
-    SecondaryButton,
-    Link,
+    Link
   },
   props: {
     projects: Object,
@@ -142,6 +162,24 @@ export default {
 
             return '';
         },
+        handleSearch() {
+          this.search = this.inputSearch;
+        },
+  },
+  computed: {
+    filteredTableData() {
+      if (!this.search) {
+        return this.projects.data;
+      } else {
+        return this.projects.data.filter(
+          (project) =>
+            project.id.toString().toLowerCase().includes(this.search.toLowerCase()) ||
+            project.name.toLowerCase().includes(this.search.toLowerCase()) ||
+            // project.status.toLowerCase().includes(this.search.toLowerCase()) ||
+            project.customer_info.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      }
+    },
   },
   mounted() {
         this.toast = useToast();

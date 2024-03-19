@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Project extends Model
+class Project extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -18,7 +21,14 @@ class Project extends Model
         'start_date',
         'finish_date',
         'state',
+        'category',
+        'estimated_date',
         'price',
+        'invoice',
+        'payment_method',
+        'responsible_id',
+        'customer_id',
+        'quote_id',
         'user_id',
     ];
 
@@ -30,11 +40,27 @@ class Project extends Model
         'customer_info' => 'array',
         'start_date' => 'datetime',
         'finish_date' => 'datetime',
+        'estimated_date' => 'date',
     ];
 
     //relattionships
-    public function user()
+    public function user() :BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function responsible() :BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // public function customer() :BelongsTo
+    // {
+    //     return $this->belongsTo(Customer::class);
+    // }
+
+    public function quote() :BelongsTo
+    {
+        return $this->belongsTo(Quote::class);
     }
 }
