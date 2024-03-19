@@ -35,7 +35,7 @@
                 <span class="text-[10px]">{{ '$page.props.auth.user.phone' }}</span>
             </p>
         </div>
-        <form method="POST" @submit.prevent="logout" class="flex mr-3 mt-2 justify-end text-redpad text-xs text-right">
+        <form method="POST" @submit.prevent="logout" class="text-red-500 flex mr-3 mt-2 justify-end text-redpad text-xs text-right">
             <button>
                 Cerrar sesión
             </button>
@@ -49,6 +49,11 @@ export default {
     emits: ['close'],
     components: {
         Link,
-    }
+    },
+    methods: {
+        logout() {
+            this.$inertia.post(route('logout'));
+        },
+    },
 }
 </script>

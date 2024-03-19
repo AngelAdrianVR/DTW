@@ -55,18 +55,17 @@ onMounted(() => {
                 <nav class="lg:bg-white bg-grayED border-b border-gray-100">
                     <!-- Primary Navigation Menu -->
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex justify-between h-16">
+                        <div class="flex justify-between h-12">
                             <div class="flex">
                                 <!-- Logo -->
                                 <div class="shrink-0 flex items-center lg:hidden">
                                     <Link :href="route('dashboard')">
                                     <figure class="">
-                                        <img class="w-32" src="@/../../public/assets/images/dtw_logo.png" alt="logo">
+                                        <img class="w-8" src="@/../../public/assets/images/dtw_logo.png" alt="logo">
                                     </figure>
                                     </Link>
                                 </div>
                             </div>
-
                             <div class="hidden sm:flex sm:items-center sm:ms-6">
                                 <!-- notifications -->
                                 <NotificationsCenter class="hidden lg:block" />
@@ -74,8 +73,6 @@ onMounted(() => {
                         </div>
                     </div>
                 </nav>
-
-
                 <div class="overflow-y-auto h-[calc(100vh-9.1rem)] lg:h-[calc(100vh-4.1rem)] bg-white">
                     <slot />
                 </div>

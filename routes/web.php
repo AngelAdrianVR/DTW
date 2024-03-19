@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProspectController;
@@ -61,6 +62,11 @@ Route::resource('settings', SettingController::class)->middleware('auth');
 
 // quotes routes
 Route::resource('quotes', QuoteController::class)->middleware('auth');
+
+// clients routes
+Route::resource('clients', ClientController::class)->middleware('auth');
+Route::get('clients-get-matches/{query}', [ClientController::class, 'getMatches'])->name('clients.get-matches');
+Route::get('clients-get-by-page/{currentPage}', [ClientController::class, 'getItemsByPage'])->name('clients.get-by-page')->middleware('auth');
 
 // messages routes
 Route::resource('messages', MessageController::class)->middleware('auth')->except('show');
