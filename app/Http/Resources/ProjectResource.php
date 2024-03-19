@@ -29,6 +29,13 @@ class ProjectResource extends JsonResource
                     'formated' => '$' .  number_format($this->price),
                     'raw' => $this->price
             ],
+            'payment_method' => $this->payment_method,
+            'estimated_date' => $this->estimated_date?->isoFormat('DD MMM, YYYY'),
+            'category' => $this->category,
+            'invoice' => $this->invoice,
+            'responsible' => $this->whenLoaded('responsible'),
+            'customer' => $this->whenLoaded('customer'),
+            'quote' => $this->whenLoaded('quote'),
             'user' => $this->whenLoaded('user'),
             'created_at' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             'updated_at' => $this->updated_at?->isoFormat('DD MMM, YYYY'),

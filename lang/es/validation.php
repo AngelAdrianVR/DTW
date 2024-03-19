@@ -150,5 +150,9 @@ return [
         'estimate' => 'presupuesto',
         'project_description' => 'descripcion del proyecto',
         'way_of_knowing' => 'como nos encontraste',
+        'payment_method' => 'condiciones de pago',
+        'category' => 'categoría',
+        'hours_work' => 'horas de trabajo',
+        'price' => 'precio',
     ],
 ];

@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen flex flex-col sm:justify-center items-center sm:pt-0 bg-zinc-800">
-        <figure class="absolute w-full">
+        <figure class="absolute h-full w-full">
             <img class="h-screen lg:h-full w-full" src="@/../../public/assets/images/fondo_login.png" alt="fondo">
         </figure>
 
@@ -13,7 +13,7 @@
                     <slot />
                 </div>
             </div>
-            <figure class="w-full mt-4 lg:mt-0">
+            <figure class="w-full lg:h-[770px] mt-4 lg:mt-0">
                 <img class="h-full w-full" src="@/../../public/assets/images/fondo_login_interno.png" alt="fondo">
             </figure>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -11,16 +12,18 @@ class ProjectController extends Controller
     
     public function index()
     {
-
         $projects = ProjectResource::collection(Project::latest()->get());
 
+        // return $projects;
         return inertia('Project/Index', compact('projects'));
     }
 
     
     public function create()
     {
-        return inertia('Project/Create');
+        $users = User::all(['id', 'name']);
+
+        return inertia('Project/Create', compact('users'));
     }
 
     
@@ -33,9 +36,21 @@ class ProjectController extends Controller
             'price' => 'required|numeric|min:1',
             'start_date' => 'required|date',
             'finish_date' => 'nullable|date|after:tomorrow',
+            'payment_method' => 'required|string|max:100',
+            'estimated_date' => 'nullable|date|after:today',
+            'category' => 'required|string|max:100',
+            'invoice' => 'nullable|boolean',
+            'responsible_id' => 'nullable',
+            'customer_id' => 'nullable',
+            'quote_id' => 'nullable',
         ]);
 
-        Project::create($request->all() + ['user_id' => auth()->user()->id]);
+        $project = Project::create($request->all() + ['user_id' => auth()->user()->id]);
+
+         // Guardar el archivo en la colección 'guest_images'
+         if ($request->hasFile('media')) {
+            $project->addMediaFromRequest('media')->toMediaCollection('media');
+        }
 
         return to_route('projects.index');
     }

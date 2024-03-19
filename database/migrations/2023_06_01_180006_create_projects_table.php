@@ -15,18 +15,25 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('key');
+            $table->string('payment_method');
+            $table->string('category');
             $table->text('description');
             $table->string('hours_work');
             $table->json('customer_info')->nullable(); //name, email, company, phone. attributes in message model 
             $table->date('start_date')->nullable();
+            $table->date('estimated_date')->nullable();
             $table->date('finish_date')->nullable();
             $table->string('state')->default('En revisión');
+            $table->boolean('invoice')->default(false);
             $table->unsignedFloat('price');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('responsible_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('quote_id_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
-
+        
     /**
      * Reverse the migrations.
      */

@@ -20,14 +20,14 @@
 
       <!-- Buscador -->
       <div class="lg:w-1/4 relative mt-4">
-          <input v-model="inputSearch" @keydown.enter="console.log('hola')" class="input w-full !pl-9"
+          <input v-model="inputSearch" @keyup.enter="handleSearch" class="input w-full !pl-9"
               placeholder="Buscar proyecto" type="search">
           <i class="fa-solid fa-magnifying-glass text-xs text-gray99 absolute top-[10px] left-4"></i>
       </div>
     </div>
 
     <!-- Tabla de proyectos -->
-    <!-- <ProjectsTable /> -->
+    <ProjectsTable :projects="filteredTableData" />
 
 <div class="lg:w-full mx-auto mt-6">
     <div class="flex justify-end lg:mr-28">
@@ -79,7 +79,8 @@ export default {
     return {
       disableMassiveActions: true,
       toast: null,
-      inputSearch: null, //buscador
+      inputSearch: "", //buscador
+      search: "", //buscador
     };
   },
   components: {
@@ -161,6 +162,24 @@ export default {
 
             return '';
         },
+        handleSearch() {
+          this.search = this.inputSearch;
+        },
+  },
+  computed: {
+    filteredTableData() {
+      if (!this.search) {
+        return this.projects.data;
+      } else {
+        return this.projects.data.filter(
+          (project) =>
+            project.id.toString().toLowerCase().includes(this.search.toLowerCase()) ||
+            project.name.toLowerCase().includes(this.search.toLowerCase()) ||
+            // project.status.toLowerCase().includes(this.search.toLowerCase()) ||
+            project.customer_info.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+      }
+    },
   },
   mounted() {
         this.toast = useToast();
