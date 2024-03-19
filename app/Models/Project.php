@@ -27,7 +27,7 @@ class Project extends Model implements HasMedia
         'invoice',
         'payment_method',
         'responsible_id',
-        'customer_id',
+        'client_id',
         'quote_id',
         'user_id',
     ];
@@ -54,10 +54,10 @@ class Project extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    // public function customer() :BelongsTo
-    // {
-    //     return $this->belongsTo(Customer::class);
-    // }
+    public function client() :BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
 
     public function quote() :BelongsTo
     {
