@@ -20,7 +20,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "element-plus": "^2.6.0",
+        "element-plus": "^2.6.1",
         "jquery": "^3.7.0",
         "vue-toastification": "^2.0.0-rc.5"
     }
