@@ -67,6 +67,7 @@ Route::resource('quotes', QuoteController::class)->middleware('auth');
 Route::resource('clients', ClientController::class)->middleware('auth');
 Route::get('clients-get-matches/{query}', [ClientController::class, 'getMatches'])->name('clients.get-matches');
 Route::get('clients-get-by-page/{currentPage}', [ClientController::class, 'getItemsByPage'])->name('clients.get-by-page')->middleware('auth');
+Route::get('clients-get-all', [ClientController::class, 'getAll'])->name('clients.get-all')->middleware('auth');
 
 // messages routes
 Route::resource('messages', MessageController::class)->middleware('auth')->except('show');

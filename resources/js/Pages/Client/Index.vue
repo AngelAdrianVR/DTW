@@ -4,15 +4,15 @@
       <header>
         <h1>Clientes</h1>
         <!-- Buscador -->
-        <div class="flex flex-col lg:flex-row justify-between space-y-3 space-x-3 lg:items-center mt-4 mx-2 lg:mx-10">
+        <div class="flex flex-col lg:flex-row justify-between space-y-3 space-x-3 lg:items-center mt-4">
           <SearchInput @search="handleSearch" />
           <el-tag v-if="search" size="large" closable @close="handleTagClose">
             Estas buscando: <b>{{ search }}</b>
           </el-tag>
+          <PrimaryButton @click="$inertia.visit(route('clients.create'))">Crear cliente</PrimaryButton>
         </div>
       </header>
       <main>
-        <!-- Tickets -->
         <section v-if="loading" class="mt-32">
           <Loading />
         </section>
@@ -20,8 +20,7 @@
           <div v-if="localItems.length" class="flex items-center space-x-9 border-b border-grayD9 pb-2">
             <p class="text-gray66 text-right text-[11px]">{{ localItems.length }} de {{ total_items }} elementos </p>
           </div>
-          <!-- <TicketRow v-for="ticket in localItems" :key="ticket" :ticket="ticket" :selectTicket="selectAllTickets"
-            @selected="selectedTicket" @unselected="unselectedTicket" /> -->
+          <ClientTable />
           <p class="text-gray66 text-left ml-8 mt-2 text-[11px]">{{ localItems.length }} de {{ total_items }} elementos
           </p>
           <p v-if="loadingItems" class="text-xs my-4 text-center">
@@ -31,7 +30,7 @@
             @click="fetchItemsByPage" class="w-full text-secondary my-4 text-xs mx-auto underline ml-6">
             Cargar más elementos
           </button>
-          <el-empty image="https://dtw.com.mx/storage/empty.png" v-if="!localItems.length" description="No hay clientes para mostrar" />
+          <el-empty v-if="!localItems.length" description="No hay clientes para mostrar" />
         </section>
       </main>
     </div>
@@ -40,7 +39,9 @@
 
 <script>
 import Loading from "@/Components/MyComponents/Loading.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SearchInput from "@/Components/MyComponents/SearchInput.vue";
+import ClientTable from "@/Components/MyComponents/Client/ClientTable.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 export default {
@@ -61,6 +62,8 @@ export default {
     AppLayout,
     Loading,
     SearchInput,
+    PrimaryButton,
+    ClientTable,
   },
   props: {
     clients: Array,
