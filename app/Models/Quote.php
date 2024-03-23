@@ -10,35 +10,36 @@ class Quote extends Model
     use HasFactory;
 
     protected $fillable = [
-        'quote_name',
-        'customer_name',
-        'company',
-        'company_address',
-        'quote_description',
-        'project',
-        'subtitles',
-        'email',
-        'included_features',
+        'name',
+        'description',
+        'features',
         'total_work_days',
-        'suggested_features',
         'percentage_discount',
-        'advance_payment_percentage',
-        'total_hours',
+        'payment_percentages',
         'total_cost',
-        'promised_end_date',
         'offer_validity_days',
+        'client_id',
+        'prospect_id',
         'user_id',
     ];
 
     protected $casts = [
-        'promised_end_date' => 'datetime',
-        'included_features' => 'array',
-        'suggested_features' => 'array',
-        'subtitles' => 'array',
+        'features' => 'array',
+        'payment_percentages' => 'array',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function prospect()
+    {
+        return $this->belongsTo(Prospect::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

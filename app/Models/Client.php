@@ -33,5 +33,9 @@ class Client extends Model
     {
         return $this->morphMany(Contact::class, 'contactable');
     }
-
+    
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
 }
