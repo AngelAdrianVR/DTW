@@ -29,11 +29,12 @@
                 <th>Estado</th>
                 <th>Contacto</th>
                 <th>Teléfono</th>
+                <th>Correo</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in localClients" :key="item.id"
+              <tr @click="$inertia.visit(route('clients.show', item))" v-for="item in localClients" :key="item.id"
                 class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
                 <td class="rounded-s-full">{{ item.id }}</td>
                 <td>{{ item.name ?? '-' }}</td>
@@ -42,10 +43,11 @@
                 <td>{{ item.state }}</td>
                 <td>{{ item.contacts[0].name }}</td>
                 <td>{{ item.contacts[0].phone }}</td>
+                <td>{{ item.contacts[0].email ?? '-' }}</td>
                 <td class="rounded-e-full text-end">
                   <el-dropdown trigger="click" @command="handleCommand">
                     <button @click.stop
-                      class="el-dropdown-link mr-3 justify-center items-center size-6 hover:bg-primary hover:text-primarylight rounded-full text-primary transition-all duration-200 ease-in-out">
+                      class="el-dropdown-link justify-center items-center size-6 hover:bg-primary hover:text-primarylight rounded-full text-primary transition-all duration-200 ease-in-out">
                       <i class="fa-solid fa-ellipsis-vertical"></i>
                     </button>
                     <template #dropdown>
