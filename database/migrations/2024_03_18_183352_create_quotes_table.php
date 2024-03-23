@@ -14,16 +14,19 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('description')->nullable();
-            $table->json('features')->nullable();
+            $table->text('features')->nullable();
             $table->unsignedMediumInteger('total_work_days')->nullable();
             $table->unsignedMediumInteger('percentage_discount')->nullable();
-            $table->json('payment_percentages')->nullable();
+            $table->string('payment_type');
             $table->unsignedMediumInteger('total_cost');
             $table->unsignedTinyInteger('offer_validity_days')->default(30);
+            $table->boolean('show_process')->default(false);
+            $table->boolean('show_benefits')->default(false);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('client_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
             $table->foreignId('prospect_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

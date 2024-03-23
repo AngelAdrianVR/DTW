@@ -1,373 +1,278 @@
 <template>
-  <AppLayout title="Cotizacion-crear">
-    <template #header>
-      <div class="flex justify-between">
-        <Link :href="route('quotes.index')"
-          class="hover:bg-gray-300/50 rounded-full w-10 h-10 flex justify-center items-center">
-        <i class="fa-solid fa-chevron-left"></i>
-        </Link>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Crear cotizacion
-        </h2>
-      </div>
-    </template>
-    <div class="lg:w-11/12 lg:grid mx-auto grid-cols-2 gap-5 mt-6">
-      <form @submit.prevent="store" class="shadow-md py-4 mb-6 px-5 bg-white rounded-lg">
-        <div class="mt-3">
-          <el-input v-model="form.customer_name" type="text" placeholder="Nombre de cliente">
-            <template #prefix>
-              <el-tooltip content="Nombre del cliente" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.customer_name" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.quote_name" type="text" placeholder="Nombre de la cotización">
-            <template #prefix>
-              <el-tooltip content="Nombre de la cotización" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-regular fa-file"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.quote_name" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.company" type="text" placeholder="Empresa">
-            <template #prefix>
-              <el-tooltip content="Nombre de la empresa" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.company" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.company_address" type="text" placeholder="Dirección de la empresa">
-            <template #prefix>
-              <el-tooltip content="Dirección de la empresa" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-map-location-dot"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.company_address" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.quote_description" type="text" placeholder="Descripción de la cotización">
-            <template #prefix>
-              <el-tooltip content="Descripción de la cotización" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-quote-left"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.quote_description" />
-        </div>
-        <el-select @change="generateFolio" class="mt-2 w-full" v-model="form.project" clearable
-          placeholder="Tipo de proyecto">
-          <el-option v-for="project in project_types" :key="project.value" :label="project.label"
-            :value="project.code"></el-option>
-        </el-select>
-        <div class="mt-3">
-          <div class="flex space-x-2">
-            <el-input class="w-3/4" v-model="new_subtitle" type="text" placeholder="Subtítulo de proyecto">
-              <template #prefix>
-                <el-tooltip content="Subtítulo de proyecto" placement="top" effect="dark">
-                  <el-icon class="el-input__icon"><i class="fa-solid fa-heading"></i></el-icon>
-                </el-tooltip>
-              </template>
-            </el-input>
-            <SecondaryButton :type="'button'" @click="addSubtitle">Agregar</SecondaryButton>
+  <AppLayout title="Crear cotización">
+    <div class="mx-2 md:mx-12 mt-4">
+      <header>
+        <Back />
+      </header>
+      <main class="lg:grid grid-cols-2 gap-x-5 mt-6">
+        <form @submit.prevent="store" class="border border-grayD9 rounded-[10px] px-5 py-4">
+          <h1 class="font-bold text-sm">Información del cliente</h1>
+          <div class="text-end">
+            <el-radio-group v-model="isClient">
+              <el-radio :value="true" size="small">Cliente</el-radio>
+              <el-radio :value="false" size="small">Prospecto</el-radio>
+            </el-radio-group>
           </div>
-          <el-select class="mt-2 w-full" v-model="form.subtitles" multiple clearable placeholder="Subtítulos"
-            no-data-text="Agrega primero un subtitulo">
-            <el-option v-for="subtitle in form.subtitles" :key="subtitle" :label="subtitle" :value="subtitle"></el-option>
-          </el-select>
-          <InputError :message="form.errors.subtitles" />
-        </div>
-        <div class="mt-3">
-          <div class="flex space-x-2">
-            <el-input class="w-3/4" v-model="new_feature" type="text" placeholder="Características incluidas">
-              <template #prefix>
-                <el-tooltip content="Caracterísicas incluidas en la lcotización" placement="top" effect="dark">
-                  <el-icon class="el-input__icon"><i class="fa-regular fa-clipboard"></i></el-icon>
-                </el-tooltip>
-              </template>
-            </el-input>
-            <SecondaryButton :type="'button'" @click="addFeature">Agregar</SecondaryButton>
+          <div v-if="isClient" class="mt-3">
+            <InputLabel value="Cliente *" />
+            <el-select @change="fetchClientContacts" v-model="form.client_id" placeholder="Selecciona al cliente">
+              <el-option v-for="item in clients" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+            <InputError :message="form.errors.client_id" />
           </div>
-          <el-select class="mt-2 w-full" v-model="form.included_features" multiple clearable placeholder="Caracteristicas"
-            no-data-text="Agrega primero una caracteristica">
-            <el-option v-for="feature in form.included_features" :key="feature" :label="feature"
-              :value="feature"></el-option>
-          </el-select>
-          <InputError :message="form.errors.included_features" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.total_work_days" type="number" placeholder="Días habiles de trabajo">
-            <template #prefix>
-              <el-tooltip content="Días habiles de trabajo" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-business-time"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.total_work_days" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.total_cost" type="number" placeholder="Costo total del proyecto">
-            <template #prefix>
-              <el-tooltip content="Costo total del proyecto" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-dollar"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.total_cost" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.percentage_discount" type="number" max="100" min="1"
-            placeholder="Porcentaje de descuento">
-            <template #prefix>
-              <el-tooltip content="Porcentaje de descuento" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-percent"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.percentage_discount" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.email" type="email" placeholder="Correo electronico">
-            <template #prefix>
-              <el-tooltip content="Correo electronico" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.email" />
-        </div>
-        <div class="mt-3">
-          <el-input v-model="form.total_hours" type="number" placeholder="Horas totales">
-            <template #prefix>
-              <el-tooltip content="Duracion de proyecto en horas" placement="top" effect="dark">
-                <el-icon class="el-input__icon"><i class="fa-solid fa-business-time"></i></el-icon>
-              </el-tooltip>
-            </template>
-          </el-input>
-          <InputError :message="form.errors.total_hours" />
-        </div>
-        <div class="mt-3">
-          <div class="flex space-x-2">
-            <el-input class="w-2/3" v-model="form.offer_validity_days" type="number"
-              placeholder="Dias de validez de cotizacion">
-              <template #prefix>
-                <el-tooltip content="Dias de validez de cotizacion despues de emision" placement="top" effect="dark">
-                  <el-icon class="el-input__icon"><i class="fa-solid fa-stopwatch"></i></el-icon>
-                </el-tooltip>
-              </template>
-            </el-input>
-            <SecondaryButton class="w-1/3" :type="'button'" @click="setExpiredDate">Calcular fecha</SecondaryButton>
+          <div v-else class="mt-3">
+            <InputLabel value="Prospecto *" />
+            <el-select @change="fetchProspectContacts" v-model="form.prospect_id" placeholder="Selecciona al prospecto">
+              <el-option v-for="item in prospects" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+            <InputError :message="form.errors.prospect_id" />
           </div>
-          <InputError :message="form.errors.offer_validity_days" />
-        </div>
-        <div>
-          <div class="demo-date-picker">
-            <div class="block">
-              <el-date-picker v-model="form.promised_end_date" type="date" placeholder="Entrega tentativa"
-                :default-value="new Date()" value-format="YYYY-MM-DD" />
+          <div class="mt-3">
+            <InputLabel value="Contacto *" />
+            <el-select v-model="form.contact_id" placeholder="Selecciona al contacto">
+              <el-option v-for="item in contacts" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+            <InputError :message="form.errors.contact_id" />
+          </div>
+          <h1 class="font-bold text-sm mt-3">Información de la cotización</h1>
+          <div class="mt-2">
+            <InputLabel value="Nombre de la cotización *" />
+            <el-input v-model="form.name" type="text" placeholder="Agrega el nombre de la cotización" />
+            <InputError :message="form.errors.name" />
+          </div>
+          <div class="mt-3">
+            <InputLabel value="Descripción de la cotización" />
+            <el-input v-model="form.description" maxlength="500" :autosize="{ minRows: 3, maxRows: 5 }" show-word-limit
+              type="textarea" placeholder="Agrega la descripción de la cotización si es necesario" />
+            <InputError :message="form.errors.description" />
+          </div>
+          <div class="mt-3">
+            <InputLabel value="Servicios *" />
+            <el-input v-model="form.features" maxlength="1500" :autosize="{ minRows: 3, maxRows: 5 }" show-word-limit
+              type="textarea" placeholder="Agrega o servicios o las características que incluyen esta cotización" />
+            <InputError :message="form.errors.features" />
+          </div>
+          <div class="mt-3">
+            <InputLabel value="Condiciones de pago *" />
+            <el-select v-model="form.payment_type" placeholder="Selecciona las condiciones de pago">
+              <el-option v-for="item in paymentTypes" :key="item" :label="item" :value="item" />
+            </el-select>
+            <InputError :message="form.errors.payment_type" />
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-3">
+            <div>
+              <InputLabel value="Costo total del proyecto *" />
+              <el-input v-model="form.total_cost" type="text" placeholder="Ingresa el costo total"
+                :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="(value) => value.replace(/\$\s?|(,*)/g, '')">
+                <template #prefix>
+                  <i class="fa-solid fa-dollar"></i>
+                </template>
+              </el-input>
+              <InputError :message="form.errors.total_cost" />
+            </div>
+            <div>
+              <InputLabel value="Descuento" />
+              <el-input v-model="form.percentage_discount" type="text" maxlength="2"
+                placeholder="Porcentaje de descuento">
+                <template #prefix>
+                  <i class="fa-solid fa-percentage"></i>
+                </template>
+              </el-input>
+              <InputError :message="form.errors.percentage_discount" />
+            </div>
+            <div>
+              <InputLabel value="Días hábiles de trabajo *" />
+              <el-input v-model="form.total_work_days" type="text" placeholder="Cantidad de días de trabajo"
+                :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                :parser="(value) => value.replace(/\$\s?|(,*)/g, '')" />
+              <InputError :message="form.errors.total_work_days" />
+            </div>
+            <div>
+              <InputLabel value="Días de validez de cotización *" />
+              <el-select v-model="form.offer_validity_days" placeholder="Selecciona los días  de validez">
+                <el-option v-for="item in offerValidities" :key="item" :label="item" :value="item" />
+              </el-select>
+              <InputError :message="form.errors.offer_validity_days" />
             </div>
           </div>
-
-          <InputError :message="form.errors.promised_end_date" />
+          <div class="mt-3 flex flex-col">
+            <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
+            <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
+          </div>
+        </form>
+        <!-- ------------- quote preview --------------- -->
+        <div class="text-sm border border-grayD9 rounded-[10px] px-5 py-4 relative">
+          <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
+          <div class="flex justify-between">
+            <figure>
+              <img src="@/../../public/assets/images/quote-logo.png">
+            </figure>
+            <p class="text-xs mt-4">{{ folio }}</p>
+          </div>
+          <p class="font-bold text-sm text-center">Cotización. {{ form.name }}</p>
+          <p class="text-xs text-right">Emisión: <span>{{ new Date() }}</span>
+          </p>
+          <p class="text-xs text-right">Vigente hasta: <span>{{ new Date() }}</span></p>
+          <div class="px-4 mt-2">
+            <p v-if="form.client_id" class="text-xs text-left">
+              {{ clients.find(item => item.id === form.client_id).name }}</p>
+            <p v-if="form.description" class="text-xs text-left">{{ form.description }}</p>
+            <p v-if="form.features" class="text-sm font-bold text-left mt-2">Servicios</p>
+            <section v-if="form.total_work_days">
+              <h2 class="text-sm font-bold text-left mt-2">Duración</h2>
+              <p class="text-xs">La entrega estimada para la implementación final del proyecto es
+                {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
+                inicio del proyecto.
+              </p>
+            </section>
+            <section v-if="form.total_cost">
+              <h2 class="text-sm font-bold text-left mt-2">Costo</h2>
+              <p class="text-xs">
+                ${{ form.total_cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} IVA incluido
+              </p>
+            </section>
+            <section v-if="form.percentage_discount">
+              <p class="text-xs">
+                Descuento: ${{ ((form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (%{{ form.percentage_discount }})
+              </p>
+              <p class="text-sm font-bold text-left mt-2">Total</p>
+              <p class="text-xs">
+                ${{ (form.total_cost - (form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+                 IVA incluido
+                </p>
+            </section>
+            <section v-if="form.payment_type">
+              <h2 class="text-sm font-bold text-left mt-2">Condiciones de pago</h2>
+              <p class="text-xs">{{ form.payment_type }}</p>
+            </section>
+            <p class="text-xs mt-3">
+              Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
+              significativos en el alcance del proyecto.
+            </p>
+            <p class="text-xs mt-1">
+              Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra
+              por la adquisición de los mismo.
+            </p>
+            <section v-if="form.show_process" class="text-xs mt-3">
+              <h2 class="font-bold">Proceso</h2>
+              <p>
+                El proyecto parte desde cero, comenzando con la fase de diseño. En esta etapa, se envía
+                al cliente un archivo que contiene
+                todas las vistas planificadas para la aplicación. Una vez que el diseño es aprobado, avanzamos hacia el
+                desarrollo de la
+                programación.
+                Después de completar la programación, llevamos a cabo la fase de despliegue de la aplicación, lo que
+                implica
+                su
+                alojamiento en la nube y su entrega al cliente. Durante esta fase, se verifica la funcionalidad y se
+                corrigen
+                de inmediato
+                cualquier error de desarrollo o programación que pueda surgir.
+                Adicionalmente, ofrecemos una capacitación en línea para un máximo de 5 usuarios seleccionados por la
+                empresa.
+                Esto
+                garantiza que el cliente pueda aprovechar al máximo la nueva aplicación.
+                Para respaldar nuestro compromiso con la calidad, proporcionamos un año de soporte técnico integral para
+                solucionar
+                cualquier problema relacionado con el desarrollo del sistema. Nuestra prioridad es asegurar un
+                funcionamiento
+                fluido y
+                eficiente durante toda la vida útil de la aplicación
+              </p>
+            </section>
+            <section v-if="form.show_benefits" class="text-xs mt-3">
+              <h2 class="font-bold">Beneficios de adquirir el software</h2>
+              <p>- Compatibilidad en todos los dispositivos: nuestra plataforma es compatible con una
+                amplia
+                gama de dispositivos
+                (computadora de escritorio, laptop, Tablet y/o teléfono móvil)
+              </p>
+              <p>- Seguridad de datos: la información se almacena de manera segura en la nube para
+                proteger
+                los datos de la
+                empresa contra pérdidas. Realizamos respaldos automáticos para garantizar que sus datos estén siempre
+                protegidos.
+              </p>
+              <p>- Acceso remoto: Los usuarios pueden acceder a la información de la empresa desde
+                cualquier
+                lugar con conexión
+                a Internet, lo que facilita el trabajo remoto y la colaboración fuera de la oficina principal.
+              </p>
+              <p>- Escalabilidad sin interrupciones: con nuestra tecnología, su sistema puede crecer y
+                adaptarse a medida que su
+                empresa evoluciona.
+              </p>
+              <p>- Soporte: Ofrecemos soporte técnico para garantizar que los usuarios aprovechen al
+                máximo la
+                plataforma y
+                resuelvan cualquier problema de manera eficiente.
+              </p>
+              <p>- Personalización de marca: "Entendemos la importancia de la identidad de su empresa.
+                Personalizamos nuestro
+                programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional
+                para
+                sus usuarios y clientes."
+              </p>
+              <p>- Sin límite de usuarios. </p>
+              <p>- No pagan cuota mensual, es de una sola adquisición. </p>
+            </section>
+          </div>
         </div>
-        <div class="flex justify-end">
-          <PrimaryButton @click="store" :disabled="form.processing"> Crear </PrimaryButton>
-        </div>
-      </form>
-
-      <!-- ------------- quote preview --------------- -->
-      <div class="text-sm shadow-md py-2 mb-6 px-3 bg-white rounded-lg relative">
-        <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
-        <div class="flex justify-between">
-          <figure>
-            <img src="@/../../public/assets/images/quote-logo.png" alt="">
-          </figure>
-          <p class="text-xs mt-4">{{ folio }}</p>
-        </div>
-        <p class="font-bold text-sm text-center">Cotización. {{ form.quote_name }}</p>
-        <p class="text-xs text-right">Fecha de emisión: <span id="fecha-emision">{{ formatearFecha(fechaEmision) }}</span>
-        </p>
-        <p class="text-xs text-right">Vigencia de la cotización: <span id="fecha-vigencia">{{
-          formatearFecha(fechaVigencia) }}</span></p>
-        <div class="px-4 mt-2">
-          <p v-if="form.company" class="text-xs text-left">{{ form.company }}</p>
-          <p v-if="form.company_address" class="text-xs text-left">{{ form.company_address }}</p>
-          <p v-if="form.quote_description" class="text-xs text-left"><strong>Descripción: </strong>{{
-            form.quote_description }}</p>
-          <p v-if="form.included_features?.length" class="text-sm font-bold text-left mt-2">Servicios</p>
-          <!-- <p v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{form.subtitles}}</p> -->
-          <ul class="ml-4 mt-2" v-if="form.included_features?.length">
-            <li v-if="form.subtitles?.length" class="text-sm font-bold text-[#7F659C] text-left mt-2">{{ form.subtitles }}
-            </li>
-            <li class="text-xs" v-for="(feature, index) in form.included_features" :key="feature"><span class="mr-3">{{
-              (index + 1) + '. ' }}</span>{{ feature }}</li>
-          </ul>
-          <p v-if="form.total_work_days" class="text-sm font-bold text-left mt-2">Duración</p>
-          <p class="text-xs" v-if="form.total_work_days">La entrega estimada para la implementación final del proyecto es
-            {{ form.total_work_days }} días hábiles, iniciando a partir del primer pago al
-            inicio del proyecto.
-          </p>
-          <p v-if="form.total_cost" class="text-sm font-bold text-left mt-2">Costo</p>
-          <p class="text-xs" v-if="form.total_cost">${{ form.total_cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }} IVA incluido</p>
-          <p v-if="form.percentage_discount" class="text-xs">Descuento: ${{ ((form.percentage_discount * 0.01) *
-            form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (%{{ form.percentage_discount }})</p>
-          <p v-if="form.percentage_discount" class="text-sm font-bold text-left mt-2">Total</p>
-          <p class="text-xs" v-if="form.percentage_discount">${{ (form.total_cost - (form.percentage_discount * 0.01) *
-            form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} IVA incluido</p>
-          <p class="text-sm font-bold text-left mt-2">Condiciones de pago</p>
-          <p class="text-xs">30% al inicio del proyecto. </p>
-          <p class="text-xs">40% al finalizar el desarrollo. </p>
-          <p class="text-xs">30% al finalizar la implementación. </p>
-          <p class="text-xs mt-3">Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
-            significativos en el alcance del proyecto. </p>
-          <p class="text-xs mt-1">Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra por la
-            adquisición de los mismo. </p>
-          <p class="text-xs font-bold mt-3">Proceso</p>
-          <p class="text-xs">El proyecto parte desde cero, comenzando con la fase de diseño. En esta etapa, se envía al
-            cliente un archivo que contiene
-            todas las vistas planificadas para la aplicación. Una vez que el diseño es aprobado, avanzamos hacia el
-            desarrollo de la
-            programación.
-            Después de completar la programación, llevamos a cabo la fase de despliegue de la aplicación, lo que implica
-            su
-            alojamiento en la nube y su entrega al cliente. Durante esta fase, se verifica la funcionalidad y se corrigen
-            de inmediato
-            cualquier error de desarrollo o programación que pueda surgir.
-            Adicionalmente, ofrecemos una capacitación en línea para un máximo de 5 usuarios seleccionados por la empresa.
-            Esto
-            garantiza que el cliente pueda aprovechar al máximo la nueva aplicación.
-            Para respaldar nuestro compromiso con la calidad, proporcionamos un año de soporte técnico integral para
-            solucionar
-            cualquier problema relacionado con el desarrollo del sistema. Nuestra prioridad es asegurar un funcionamiento
-            fluido y
-            eficiente durante toda la vida útil de la aplicación
-          </p>
-          <p class="text-xs font-bold mt-3">Beneficios de adquirir el software</p>
-          <p class="text-xs">- Compatibilidad en todos los dispositivos: nuestra plataforma es compatible con una amplia
-            gama de dispositivos
-            (computadora de escritorio, laptop, Tablet y/o teléfono móvil)
-          </p>
-          <p class="text-xs">- Seguridad de datos: la información se almacena de manera segura en la nube para proteger
-            los datos de la
-            empresa contra pérdidas. Realizamos respaldos automáticos para garantizar que sus datos estén siempre
-            protegidos.
-          </p>
-          <p class="text-xs">- Acceso remoto: Los usuarios pueden acceder a la información de la empresa desde cualquier
-            lugar con conexión
-            a Internet, lo que facilita el trabajo remoto y la colaboración fuera de la oficina principal.
-          </p>
-          <p class="text-xs">- Escalabilidad sin interrupciones: con nuestra tecnología, su sistema puede crecer y
-            adaptarse a medida que su
-            empresa evoluciona.
-          </p>
-          <p class="text-xs">- Soporte: Ofrecemos soporte técnico para garantizar que los usuarios aprovechen al máximo la
-            plataforma y
-            resuelvan cualquier problema de manera eficiente.
-          </p>
-          <p class="text-xs">- Personalización de marca: "Entendemos la importancia de la identidad de su empresa.
-            Personalizamos nuestro
-            programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional
-            para
-            sus usuarios y clientes."
-          </p>
-          <p class="text-xs">- Sin límite de usuarios. </p>
-          <p class="text-xs">- No pagan cuota mensual, es de una sola adquisición. </p>
-
-        </div>
-      </div>
+      </main>
     </div>
   </AppLayout>
 </template>
 
 <script>
-
+import Back from "@/Components/MyComponents/Back.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputError from "@/Components/InputError.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import { useToast } from "vue-toastification";
+import axios from "axios";
 
 export default {
   data() {
     const form = useForm({
-      quote_name: null,
-      customer_name: null,
-      company: null,
-      company_address: null,
-      quote_description: null,
-      project: null,
-      subtitles: [],
-      included_features: [],
-      suggested_features: [],
-      promised_end_date: null,
-      total_work_days: null,
+      name: null,
+      client_id: null,
+      prospect_id: null,
+      contact_id: null,
+      name: null,
+      description: null,
+      features: null,
+      payment_type: null,
       total_cost: null,
       percentage_discount: null,
-      email: null,
-      advance_payment_percentage: 50,
-      total_hours: null,
+      total_work_days: null,
       offer_validity_days: 30,
+      show_process: false,
+      show_benefits: false,
     });
     return {
       form,
+      contacts: [],
+      isClient: true,
       fechaEmision: null,
       fechaVigencia: null,
       new_feature: null,
       new_subtitle: null,
       project_type: null,
       folio: null,
-      toast: null,
-      project_types: [
-        {
-          label: 'Tienda online',
-          code: 'ECO'
-        },
-        {
-          label: 'Página web',
-          code: 'WST'
-        },
-        {
-          label: 'Gestión de Relación con los Clientes (CRM)',
-          code: 'CRM'
-        },
-        {
-          label: 'Planificación de Recursos Empresariales (ERP)',
-          code: 'ERP'
-        },
-        {
-          label: 'Gestión de Contenido (CMS)',
-          code: 'CMS'
-        },
-        {
-          label: 'Sistema de Gestión del Aprendizaje (LMS)',
-          code: 'LMS'
-        },
-        {
-          label: 'Sistema de Gestión de Proyectos (PMS)',
-          code: 'PMS'
-        },
-        {
-          label: 'Inteligencia de Negocios (BI)',
-          code: 'BI'
-        },
-        {
-          label: 'Sistemas de Recursos Humanos (HRM)',
-          code: 'HRM'
-        },
-        {
-          label: 'Sistemas de Gestión de Inventarios (IMS)',
-          code: 'IMS'
-        },
+      paymentTypes: [
+        'Pago en una sola exhibición',
+        '2 pagos (50% al inicio y 50% a la entrega del proyecto)',
+        '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)',
+      ],
+      offerValidities: [
+        '7 días',
+        '15 días',
+        '30 días',
+        '60 días',
+        '90 días',
       ],
     };
   },
@@ -377,54 +282,61 @@ export default {
     Link,
     PrimaryButton,
     InputError,
+    InputLabel,
+    Back,
   },
   props: {
     projects: Array,
     quotes: Array,
+    clients: Array,
+    prospects: Array,
   },
 
   methods: {
     store() {
       this.form.post(route("quotes.store"), {
-        onSuccess: () => this.toast.success("Cotizacion creada"),
+        onSuccess: () => {
+          this.$notify({
+            title: "Correcto",
+            message: "",
+            type: "success",
+          });
+        }
       });
-      // this.$inertia.get(route('quote.pdf'));
-      // this.generatePDF();
-
     },
-    generateFolio() {
-      // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
-      const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
+    // generateFolio() {
+    //   // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
+    //   const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
 
-      const projectTypePrefix = this.form.project_type;
+    //   const projectTypePrefix = this.form.project_type;
 
-      // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
-      const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
+    //   // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
+    //   const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
 
-      // Combinar los elementos en el formato deseado
-      this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
-      console.log(this.folio);
-    },
-    formatearFecha(fecha) {
-      if (!fecha) return ''; // Manejar el caso en que la fecha sea null o undefined
+    //   // Combinar los elementos en el formato deseado
+    //   this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
+    //   console.log(this.folio);
+    // },
+    // formatearFecha(fecha) {
+    //   if (!fecha) return ''; // Manejar el caso en que la fecha sea null o undefined
 
-      const options = { day: 'numeric', month: 'long', year: 'numeric' };
-      return fecha.toLocaleDateString('es-ES', options);
-    },
-    addFeature() {
-      if (this.new_feature.trim() !== '') {
-        this.form.included_features.push(this.new_feature);
-        this.included_features?.push(this.new_feature);
-        this.new_feature = '';
-      }
-    },
-    addSubtitle() {
-      if (this.new_subtitle.trim() !== '') {
-        this.form.subtitles.push(this.new_subtitle);
-        this.subtitles.push(this.new_subtitle);
-        this.new_subtitle = '';
-      }
-    },
+    //   const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    //   return fecha.toLocaleDateString('es-ES', options);
+    // },
+    // addFeature() {
+    //   if (this.new_feature.trim() !== '') {
+    //     this.form.included_features.push(this.new_feature);
+    //     this.included_features?.push(this.new_feature);
+    //     this.new_feature = '';
+    //   }
+    // },
+    // addSubtitle() {
+    //   if (this.new_subtitle.trim() !== '') {
+    //     this.form.subtitles.push(this.new_subtitle);
+    //     this.subtitles.push(this.new_subtitle);
+    //     this.new_subtitle = '';
+    //   }
+    // },
     setExpiredDate() {
       if (this.form.offer_validity_days) {
         const fechaActual = new Date();
@@ -435,46 +347,45 @@ export default {
         this.fechaVigencia = null;
       }
     },
+    async fetchClientContacts() {
+      try {
+        const response = await axios.get(route('clients.get-contacts', this.form.client_id));
+
+        if (response.status === 200) {
+          this.contacts = response.data.items;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchProspectContacts() {
+      try {
+        const response = await axios.get(route('prospects.get-contacts', this.form.prospect_id));
+
+        if (response.status === 200) {
+          this.contacts = response.data.items;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   mounted() {
-    this.toast = useToast();
+    // this.toast = useToast();
 
-    const fechaEmisionSpan = document.getElementById('fecha-emision');
-    const fechaVigenciaSpan = document.getElementById('fecha-vigencia');
+    // const fechaEmisionSpan = document.getElementById('fecha-emision');
+    // const fechaVigenciaSpan = document.getElementById('fecha-vigencia');
 
     // Crea un objeto de fecha para obtener la fecha actual
-    const fechaActual = new Date();
+    // const fechaActual = new Date();
 
-    // Calcula la fecha de vigencia
-    const fechaVigencia = new Date();
-    fechaVigencia.setDate(fechaVigencia.getDate() + this.form.offer_validity_days);
+    // // Calcula la fecha de vigencia
+    // const fechaVigencia = new Date();
+    // fechaVigencia.setDate(fechaVigencia.getDate() + this.form.offer_validity_days);
 
-    // Actualiza las propiedades de fecha
-    this.fechaEmision = fechaActual;
-    this.fechaVigencia = fechaVigencia
+    // // Actualiza las propiedades de fecha
+    // this.fechaEmision = fechaActual;
+    // this.fechaVigencia = fechaVigencia
   },
 };
 </script>
-
-<style scoped>.demo-date-picker {
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.demo-date-picker .block {
-  padding-top: 0.75rem;
-  border-right: solid 1px var(--el-border-color);
-  /* flex: 1; */
-}
-
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-top: 0.75rem;
-}</style>

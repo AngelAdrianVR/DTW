@@ -15,17 +15,15 @@ class Quote extends Model
         'features',
         'total_work_days',
         'percentage_discount',
-        'payment_percentages',
+        'payment_type',
         'total_cost',
         'offer_validity_days',
+        'show_process',
+        'show_benefits',
         'client_id',
+        'contact_id',
         'prospect_id',
         'user_id',
-    ];
-
-    protected $casts = [
-        'features' => 'array',
-        'payment_percentages' => 'array',
     ];
 
     public function user()
@@ -41,5 +39,10 @@ class Quote extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
     }
 }

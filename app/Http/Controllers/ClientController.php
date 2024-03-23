@@ -116,4 +116,11 @@ class ClientController extends Controller
 
         return response()->json(['items' => $clients]);
     }
+
+    public function getContacts(Client $client)
+    {
+        $items = $client->contacts;
+
+        return response()->json(compact('items'));
+    }
 }

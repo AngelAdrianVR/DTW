@@ -62,12 +62,14 @@ Route::resource('settings', SettingController::class)->middleware('auth');
 
 // quotes routes
 Route::resource('quotes', QuoteController::class)->middleware('auth');
+Route::get('quotes-get-matches/{query}', [QuoteController::class, 'getMatches'])->name('quotes.get-matches');
+Route::get('quotes-get-by-page/{currentPage}', [QuoteController::class, 'getItemsByPage'])->name('quotes.get-by-page')->middleware('auth');
 
 // clients routes
 Route::resource('clients', ClientController::class)->middleware('auth');
 Route::get('clients-get-matches/{query}', [ClientController::class, 'getMatches'])->name('clients.get-matches');
 Route::get('clients-get-by-page/{currentPage}', [ClientController::class, 'getItemsByPage'])->name('clients.get-by-page')->middleware('auth');
-// Route::get('clients-get-all', [ClientController::class, 'getAll'])->name('clients.get-all')->middleware('auth');
+Route::get('clients-get-contacts/{client}', [ClientController::class, 'getContacts'])->name('clients.get-contacts')->middleware('auth');
 
 // messages routes
 Route::resource('messages', MessageController::class)->middleware('auth')->except('show');
@@ -88,6 +90,7 @@ Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteReques
 Route::resource('prospects', ProspectController::class)->middleware('auth');
 Route::put('prospects/{prospect}/aproved', [ProspectController::class, 'aprovedProspect'])->name('prospects.aproved')->middleware('auth');
 Route::put('prospects/{prospect}/rejected', [ProspectController::class, 'rejectedProspect'])->name('prospects.rejected')->middleware('auth');
+Route::get('prospects-get-contacts/{prospect}', [ProspectController::class, 'getContacts'])->name('prospects.get-contacts')->middleware('auth');
 
 // users routes
 Route::get('users-get-notifications', [UserController::class, 'getNotifications'])->middleware('auth')->name('users.get-notifications');
@@ -96,6 +99,3 @@ Route::post('users-delete-notifications', [UserController::class, 'deleteNotific
 
 //PDF routes ----------------------------------------------------
 Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
-
-
-

@@ -14,6 +14,7 @@ class Client extends Model
         'rfc',
         'address',
         'state',
+        'notes',
         'user_id',
         'responsible_id',
     ];
