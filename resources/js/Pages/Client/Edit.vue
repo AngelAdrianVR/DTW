@@ -25,6 +25,7 @@
             <el-select v-model="form.state" filterable placeholder="Selecciona el estado de la republica">
               <el-option v-for="item in states" :key="item" :label="item" :value="item" />
             </el-select>
+            <InputError :message="form.errors.state" />
           </div>
           <div>
             <InputLabel value="Responsable *" />
@@ -62,7 +63,7 @@
               type="textarea" placeholder="Escribe las notas" />
           </div>
           <div class="md:col-span-full flex justify-end mt-3">
-            <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Crear cliente</PrimaryButton>
+            <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Actualizar cliente</PrimaryButton>
           </div>
         </form>
       </main>
@@ -89,9 +90,9 @@ export default {
       notes: this.client.notes,
       contacts: [
         { //eliminar este objeto cuando se agreguen mas contactos
-          name: this.client.contacts[0].name,
-          email: this.client.contacts[0].email,
-          phone: this.client.contacts[0].phone,
+          name: this.client.contacts[0]?.name,
+          email: this.client.contacts[0]?.email,
+          phone: this.client.contacts[0]?.phone,
         }
       ],
     });
@@ -145,14 +146,15 @@ export default {
     PrimaryButton,
     InputLabel,
     Back,
+    InputError,
   },
   props: {
-    cilent: Object,
+    client: Object,
     users: Array,
   },
   methods: {
     update() {
-      this.form.put(route('clients.update'), {
+      this.form.put(route('clients.update', this.client), {
         onSuccess: () => {
           this.$notify({
             title: "Correcto",

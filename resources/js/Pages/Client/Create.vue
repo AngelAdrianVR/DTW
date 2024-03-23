@@ -25,6 +25,7 @@
             <el-select v-model="form.state" placeholder="Selecciona el estado de la republica">
               <el-option v-for="item in states" :key="item" :label="item" :value="item" />
             </el-select>
+            <InputError :message="form.errors.state" />
           </div>
           <div>
             <InputLabel value="Responsable *" />

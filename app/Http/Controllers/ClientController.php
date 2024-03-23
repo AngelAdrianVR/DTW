@@ -11,7 +11,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clients = Client::latest()->get()->take(15);
+        $clients = Client::with(['contacts'])->latest()->get()->take(15);
         $total_items = Client::all()->count();
 
         return inertia('Client/Index', compact('clients', 'total_items'));
@@ -54,6 +54,7 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
+        $client = $client->load(['contacts']);
         $users = User::where('is_active', true)->get(['id', 'name', 'profile_photo_path']);
 
         return inertia('Client/Edit', compact('client', 'users'));
@@ -61,11 +62,33 @@ class ClientController extends Controller
 
     public function update(Request $request, Client $client)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'rfc' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'state' => 'required|string|max:255',
+            'responsible_id' => 'required|numeric|min:1',
+            'contacts.0.name' => 'required|string|max:255',
+            'contacts.0.phone' => 'required|string|max:13',
+            'contacts' => 'array|min:1',
+        ]);
+
+        $client->update($validated);
+
+        // editar el primer contacto registrado
+        $client->contacts[0]->update([
+            'name' => $validated['contacts'][0]['name'],
+            'phone' => $validated['contacts'][0]['phone'],
+        ]);
+
+        return to_route('clients.show', $client);
     }
 
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        return response()->json([]);
     }
 
     // APIs
@@ -90,12 +113,5 @@ class ClientController extends Controller
             ->get();
 
         return response()->json(['items' => $clients]);
-    }
-
-    public function getAll()
-    {
-        $items = Client::with(['contacts'])->latest()->get()->take(20);
-
-        return response()->json(compact('items'));
     }
 }

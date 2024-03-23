@@ -23,7 +23,7 @@ export default {
       window.history.back();
     },
     goToRoute() {
-      this.$inertia.visit(route(this.route));      
+      this.$inertia.visit(this.route);      
     },
   },
 };
