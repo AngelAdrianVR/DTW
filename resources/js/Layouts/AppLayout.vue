@@ -28,9 +28,9 @@ const fetchNotifications = async () => {
     }
 };
 
-const logout = () => {
-    router.post(route('logout'));
-};
+// const logout = () => {
+//     router.post(route('logout'));
+// };
 
 onMounted(() => {
     fetchNotifications();

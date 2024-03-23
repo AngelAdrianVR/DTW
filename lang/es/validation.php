@@ -154,5 +154,8 @@ return [
         'category' => 'categoría',
         'hours_work' => 'horas de trabajo',
         'price' => 'precio',
+        'contacts.0.name' => 'nombre del contacto',
+        'contacts.0.phone' => 'teléfono del contacto',
+        'state' => 'estado',
     ],
 ];
