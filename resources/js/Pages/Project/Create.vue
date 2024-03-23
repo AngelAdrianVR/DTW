@@ -29,12 +29,12 @@
 
         <div class="mt-3 md:mt-0">
           <InputLabel value="Cliente*" class="ml-3 mb-1" />
-          <el-select class="w-full" v-model="form.customer_id" clearable
+          <el-select class="w-full" v-model="form.client_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
               <el-option v-for="customer in customers" :key="customer" :label="customer.name" :value="customer.id" />
           </el-select>
-          <InputError :message="$page.props?.errors.customer_id" />
+          <InputError :message="$page.props?.errors.client_id" />
         </div>
 
         <div class="mt-3 md:mt-0">
@@ -42,7 +42,7 @@
           <el-select class="w-full" v-model="form.quote_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="quote in quotes" :key="quote" :label="quote.name" :value="quote.id" />
+              <el-option v-for="quote in quotes" :key="quote" :label="quote.quote_name" :value="quote.id" />
           </el-select>
           <InputError :message="$page.props?.errors.quote_id" />
         </div>
@@ -206,7 +206,7 @@ export default {
     const form = useForm({
       name: null,
       responsible_id: null, //nuevo agregado
-      customer_id: null, //nuevo agregado
+      client_id: null, //nuevo agregado
       quote_id: null, //nuevo agregado
       payment_method: null, //nuevo agregado
       estimated_date: null, //nuevo agregado
@@ -246,7 +246,9 @@ export default {
     Back
   },
   props: {
-    users: Array
+    users: Array,
+    quotes: Array,
+    clients:Array
   },
   methods: {
     store() {

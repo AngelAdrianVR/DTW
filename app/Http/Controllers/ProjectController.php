@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
+use App\Models\Client;
 use App\Models\Project;
+use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -22,8 +24,10 @@ class ProjectController extends Controller
     public function create()
     {
         $users = User::all(['id', 'name']);
+        $quotes = Quote::all(['id', 'quote_name']);
+        $clients = Client::all(['id', 'name']);
 
-        return inertia('Project/Create', compact('users'));
+        return inertia('Project/Create', compact('users', 'quotes', 'clients'));
     }
 
     
