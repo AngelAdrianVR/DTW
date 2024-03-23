@@ -24,7 +24,7 @@
                     </button>
                 </div>
                 <div v-if="(activeTab == 2 || activeTab == 3)" class="flex space-x-2 w-full justify-end">
-                    <PrimaryButton @click="$inertia.get(route('tasks.create', { projectId: project.data.id }))">Crear tarea</PrimaryButton>
+                    <PrimaryButton @click="$inertia.get(route('project-tasks.create', { projectId: project.data.id }))">Crear tarea</PrimaryButton>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 <ProjectInfo :project="project.data" />
             </el-tab-pane>
             <el-tab-pane label="Tareas" name="2">
-                <Tasks />
+                <Tasks :tasks="project.data.tasks" :users="users" />
             </el-tab-pane>
             <el-tab-pane label="Cronograma" name="3">
                 Tab 3
@@ -65,6 +65,7 @@ export default {
     props: {
         project: Object,
         projects: Array,
+        users: Array,
     },
     components: {
         AppLayout,

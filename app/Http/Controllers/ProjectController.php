@@ -63,11 +63,12 @@ class ProjectController extends Controller
     public function show($project_id)
     {
         
-        $project = ProjectResource::make(Project::with('client', 'user:id,name', 'quote:id,quote_name')->find($project_id));
+        $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,quote_name', 'tasks'])->find($project_id));
         $projects = Project::latest()->get(['id', 'name']);
+        $users = User::all(['id', 'name']);
 
         // return $project;
-        return inertia('Project/Show', compact('project', 'projects'));
+        return inertia('Project/Show', compact('project', 'projects', 'users'));
     }
 
     

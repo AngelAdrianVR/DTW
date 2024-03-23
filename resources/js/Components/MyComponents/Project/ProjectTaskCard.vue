@@ -4,7 +4,7 @@
     itemToShow = taskComponentLocal;" :class="taskComponentLocal?.priority.color_border"
     class="shadow-md shadow-gray-400/100 border border-t-[#d9d9d9] border-r-[#d9d9d9] border-b-[#d9d9d9] h-36 rounded-r-md border-l-4 py-2 px-3 cursor-pointer my-3">
     <!-- ------------ top ------------------ -->
-    <!-- <el-tooltip :content="'Prioridad: ' + taskComponentLocal?.priority.label" placement="top"> -->
+    <el-tooltip :content="'Prioridad: ' + taskComponentLocal?.priority.label" placement="top">
     <div class="flex justify-between items-center">
       <div @click.stop="" class="rounded-full px-2 cursor-move">
         <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
@@ -17,14 +17,14 @@
         <p class="mr-5">{{ taskComponentLocal?.created_at }}</p>
       </div>
     </div>
-    <!-- </el-tooltip> -->
+    </el-tooltip>
     <!-- ------------ body -------------------------- -->
     <div class="flex items-center justify-between p-3">
       <p class="text-sm w-11/12 truncate" :title="taskComponentLocal?.title">{{ taskComponentLocal?.title }}</p>
       <div>
-        <!-- <el-tooltip content="Tienes una tarea por cumplir antes de poder comenzar" placement="top">
-                            <i @click.stop="" class="fa-solid fa-hourglass cursor-default mr-3"></i>
-                        </el-tooltip> -->
+        <el-tooltip content="Tienes una tarea por cumplir antes de poder comenzar" placement="top">
+            <i @click.stop="" class="fa-solid fa-hourglass cursor-default mr-3"></i>
+        </el-tooltip>
         <el-tooltip v-if="taskComponentLocal?.media.length" content="Archivos adjunto" placement="top">
           <i @click.stop="" class="fa-solid fa-paperclip rounded-full p-2"></i>
         </el-tooltip>
@@ -66,7 +66,7 @@
   </div>
 
   <!-- -------------- task information Modal -------------- -->
-  <Modal :show="taskInformationModal" @close="taskInformationModal = false">
+  <!-- <Modal :show="taskInformationModal" @close="taskInformationModal = false">
     <div class="mx-7 my-4 space-y-4 relative">
       <div @click="taskInformationModal = false"
         class="cursor-pointer w-5 h-5 rounded-full flex items-center justify-center absolute top-0 right-0">
@@ -162,13 +162,13 @@
           <InputError :message="form.errors.start_date" />
           <InputError :message="form.errors.limit_date" />
         </div>
-        <!-- <div class="w-1/2 mt-3">
+        <div class="w-1/2 mt-3">
           <label>Recordatorio</label>
           <textarea v-model="form.reminder" disabled class="textarea w-full"> </textarea>
           <InputError :message="form.errors.reminder" />
         </div> -->
         <!-- --------------------- TABS -------------------- -->
-        <section class="mt-9">
+        <!-- <section class="mt-9">
           <div class="flex items-center justify-center">
             <p @click="tabs = 1" :class="tabs == 1 ? 'border-b-2 border-[#D90537] text-primary' : ''"
               class="h-8 p-1 cursor-pointer ml-5 transition duration-300 ease-in-out text-xs md:text-base">
@@ -179,14 +179,14 @@
               class="ml-3 h-8 p-1 cursor-pointer transition duration-300 ease-in-out text-xs md:text-base">
               Documentos ({{ taskComponentLocal?.media.length }})
             </p>
-            <!-- <div class="border-r-2 border-[#cccccc] h-7 ml-3"></div> -->
-            <!-- <p @click="tabs = 3" :class="tabs == 3 ? 'border-b-2 border-[#D90537] text-primary' : ''"
+            <div class="border-r-2 border-[#cccccc] h-7 ml-3"></div>
+            <p @click="tabs = 3" :class="tabs == 3 ? 'border-b-2 border-[#D90537] text-primary' : ''"
               class="ml-3 h-8 p-1 cursor-pointer transition duration-300 ease-in-out text-xs md:text-base">
               Historial
-            </p> -->
-          </div>
+            </p>
+          </div> -->
           <!-- -------------- Tab 1 comentarios starts ----------------->
-          <div v-if="tabs == 1" class="mt-7 min-h-[170px]">
+          <!-- <div v-if="tabs == 1" class="mt-7 min-h-[170px]">
             <div>
               <figure class="flex space-x-2 mt-4" v-for="comment in taskComponentLocal?.comments" :key="comment">
                 <div v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm rounded-full w-10">
@@ -207,11 +207,11 @@
                   ref="commentEditor" class="flex-1" withFooter :userList="users" :disabled="sendingComments" />
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- ---------------- tab 1 comentarios ends  -------------->
 
           <!-- -------------- Tab 2 documentos starts ----------------->
-          <div v-if="tabs == 2" class="mt-7 min-h-[170px]">
+          <!-- <div v-if="tabs == 2" class="mt-7 min-h-[170px]">
             <a :href="file?.original_url" target="_blank" v-for="file in taskComponentLocal?.media" :key="file"
               class="flex justify-between items-center cursor-pointer">
               <div class="flex space-x-7 items-center">
@@ -220,16 +220,16 @@
               </div>
               <i class="fa-solid fa-download text-right text-sm text-[#9a9a9a]"></i>
             </a>
-          </div>
+          </div> -->
           <!-- ---------------- tab 2 documentos ends  -------------->
 
           <!-- -------------- Tab 3 historial starts ----------------->
-          <div v-if="tabs == 3" class="mt-7 min-h-[170px]"></div>
+          <!-- <div v-if="tabs == 3" class="mt-7 min-h-[170px]"></div> -->
           <!-- ---------------- tab 3 historial ends  -------------->
-        </section>
-      </div>
+        <!-- </section>
+      </div> -->
       <!-- {{ form }} -->
-      <div class="flex justify-end space-x-3 pt-5 pb-1">
+      <!-- <div class="flex justify-end space-x-3 pt-5 pb-1">
         <CancelButton @click="!canEdit ? taskInformationModal = false : canEdit = false">
           {{ !canEdit ? 'Cancelar' : 'Cancelar edición' }}
         </CancelButton>
@@ -257,9 +257,9 @@
         </div>
       </div>
     </div>
-  </Modal>
+  </Modal> -->
 
-  <ConfirmationModal :show="showConfirmModal" @close="showConfirmModal = false">
+  <!-- <ConfirmationModal :show="showConfirmModal" @close="showConfirmModal = false">
     <template #title> Eliminar tarea </template>
     <template #content> ¿Continuar con la eliminación? </template>
     <template #footer>
@@ -268,19 +268,19 @@
         <PrimaryButton @click="deleteProjectTask">Eliminar</PrimaryButton>
       </div>
     </template>
-  </ConfirmationModal>
+  </ConfirmationModal> -->
 </template>
 
 <script>
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import CancelButton from "@/Components/MyComponents/CancelButton.vue";
+import CancelButton from "@/Components/CancelButton.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
-import RichText from "@/Components/MyComponents/RichText.vue";
+// import RichText from "@/Components/MyComponents/RichText.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import axios from "axios";
-import { isSameDay, parseISO } from "date-fns";
+// import { isSameDay, parseISO } from "date-fns";
 
 
 export default {
@@ -346,12 +346,12 @@ export default {
   },
   components: {
     Modal,
+    ConfirmationModal,
     PrimaryButton,
     CancelButton,
-    Link,
     InputError,
-    RichText,
-    ConfirmationModal
+    // RichText,
+    Link,
   },
   props: {
     taskComponent: Object,
