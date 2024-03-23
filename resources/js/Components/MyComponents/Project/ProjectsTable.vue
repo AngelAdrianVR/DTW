@@ -23,7 +23,7 @@
             <td class="text-left py-2 pr-2 pl-4 rounded-l-full">{{ project.id }}</td>
             <td :title="project.name" class="text-left py-2 max-w-[220px] truncate pr-2">{{ project.name }}</td>
             <td class="text-left py-2">{{ project.customer_info?.name }}</td>
-            <td class="text-left py-2">{{ project.price?.formated }}</td>
+            <td class="text-left py-2">{{ 'project.price?.client.name' }}</td>
             <td class="text-left py-2">{{ project.price?.formated }}</td>
             <td class="text-left py-2">{{ project.hours_work / 8 }}</td>
             <td class="text-left py-2">{{ project.start_date }}</td>

@@ -34,7 +34,7 @@ class ProjectResource extends JsonResource
             'category' => $this->category,
             'invoice' => $this->invoice,
             'responsible' => $this->whenLoaded('responsible'),
-            'customer' => $this->whenLoaded('customer'),
+            'client' => $this->whenLoaded('client'),
             'quote' => $this->whenLoaded('quote'),
             'user' => $this->whenLoaded('user'),
             'created_at' => $this->created_at?->isoFormat('DD MMM, YYYY'),
