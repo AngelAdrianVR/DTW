@@ -9,7 +9,7 @@
         </div>
 
         <div class="flex justify-between items-center mt-5 mx-2 lg:mx-14">
-            <div class="mr-2">
+            <div class="mr-2 w-40">
                 <el-select @change="$inertia.get(route('projects.show', selectedProject))" v-model="selectedProject" clearable filterable placeholder="Buscar proyecto"
                 no-data-text="No hay proyectos registrados" no-match-text="No se encontraron coincidencias">
                 <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id" />
@@ -38,7 +38,7 @@
                 <Tasks :tasks="project.data.tasks" :users="users" />
             </el-tab-pane>
             <el-tab-pane label="Cronograma" name="3">
-                Tab 3
+                <Schedule :currentProject="project.data" />
             </el-tab-pane>
         </el-tabs>
         <!-- ------------- tabs section ends ------------- -->
@@ -51,6 +51,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import ProjectInfo from "@/Pages/Project/Tabs/ProjectInfo.vue";
 import Tasks from "@/Pages/Project/Tabs/Tasks.vue";
+import Schedule from "@/Pages/Project/Tabs/Schedule.vue";
 import Back from "@/Components/MyComponents/Back.vue";
 import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
@@ -71,6 +72,7 @@ export default {
         AppLayout,
         PrimaryButton,
         ProjectInfo,
+        Schedule,
         Tasks,
         Back,
         Link
@@ -93,6 +95,10 @@ export default {
                 console.log(error);
             }
         }
-    }
+    },
+    mounted() {
+        this.selectedProject = this.project.data.id;
+        // this.uniqueUsers = [];
+    },
 }
 </script>

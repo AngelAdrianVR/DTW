@@ -29,40 +29,6 @@
     <!-- Tabla de proyectos -->
     <ProjectsTable :projects="filteredTableData" />
 
-<div class="lg:w-full mx-auto mt-6">
-    <div class="flex justify-end lg:mr-28">
-                <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
-                    title="Continuar con la eliminacion?" @confirm="deleteSelections">
-                    <template #reference>
-                        <el-button type="danger" plain class="mb-3" :disabled="disableMassiveActions">Eliminar</el-button>
-                    </template>
-                </el-popconfirm>
-            </div>
-    <div class="lg:w-5/6 mx-auto mt-6 cursor-pointer">
-  <el-table :data="projects.data" max-height="650" @row-click="handleRowClick" style="width: 100%" @selection-change="handleSelectionChange"
-  ref="multipleTableRef" :row-class-name="tableRowClassName">
-    <el-table-column type="selection" width="55" />
-    <el-table-column prop="key" label="Clave" width="60" />
-    <el-table-column prop="customer_info[name]" label="Cliente" />
-    <el-table-column prop="customer_info[company]" label="Empresa" />
-    <el-table-column prop="price.formated" label="Precio" />
-    <el-table-column prop="start_date" label="Fecha de inicio" />
-    <el-table-column prop="finish_date" label="Fecha de termino" />
-    <el-table-column prop="created_at" label="Fecha de Creacion" />
-    <el-table-column label="Acciones" width="200">
-    <template v-slot="scope">
-      <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#FF0000"
-                    title="Continuar con la acción?" @confirm="finishProject(scope.row)">
-                    <template #reference>
-                        <el-button v-if="!scope.row.finish_date" @click.stop="" type="success" size="small">Terminar</el-button>
-                    </template>
-            </el-popconfirm>
-      <el-button type="primary" size="small" @click.stop="editProject(scope.row)">Editar</el-button>
-    </template>
-  </el-table-column>
-</el-table>
-</div>
-  </div>
   </AppLayout>
 </template>
 
@@ -80,7 +46,7 @@ export default {
       disableMassiveActions: true,
       toast: null,
       inputSearch: "", //buscador
-      search: "", //buscador
+      search: null, //buscador
     };
   },
   components: {
@@ -176,7 +142,7 @@ export default {
             project.id.toString().toLowerCase().includes(this.search.toLowerCase()) ||
             project.name.toLowerCase().includes(this.search.toLowerCase()) ||
             // project.status.toLowerCase().includes(this.search.toLowerCase()) ||
-            project.customer_info.name.toLowerCase().includes(this.search.toLowerCase())
+            project.client?.name.toLowerCase().includes(this.search.toLowerCase())
         );
       }
     },

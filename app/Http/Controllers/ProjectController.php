@@ -14,7 +14,7 @@ class ProjectController extends Controller
     
     public function index()
     {
-        $projects = ProjectResource::collection(Project::with('client')->latest()->get());
+        $projects = ProjectResource::collection(Project::with(['client', 'tasks'])->latest()->get());
 
         // return $projects;
         return inertia('Project/Index', compact('projects'));

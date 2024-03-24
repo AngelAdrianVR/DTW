@@ -37,7 +37,7 @@ class ProjectResource extends JsonResource
             'client' => $this->whenLoaded('client'),
             'quote' => $this->whenLoaded('quote'),
             'user' => $this->whenLoaded('user'),
-            'tasks' => $this->whenLoaded('tasks'),
+            'tasks' => ProjectTaskResource::collection($this->whenLoaded('tasks')),
             'media' => $this->getMedia('media')->all(),
             'created_at' => $this->created_at?->isoFormat('DD MMM, YYYY'),
             'updated_at' => $this->updated_at?->isoFormat('DD MMM, YYYY'),
