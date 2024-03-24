@@ -32,7 +32,7 @@
           <el-select class="w-full" v-model="form.client_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="customer in customers" :key="customer" :label="customer.name" :value="customer.id" />
+              <el-option v-for="client in clients" :key="client" :label="client.name" :value="client.id" />
           </el-select>
           <InputError :message="$page.props?.errors.client_id" />
         </div>
@@ -42,7 +42,7 @@
           <el-select class="w-full" v-model="form.quote_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="quote in quotes" :key="quote" :label="quote.quote_name" :value="quote.id" />
+              <el-option v-for="quote in quotes" :key="quote" :label="quote.quote_name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
           </el-select>
           <InputError :message="$page.props?.errors.quote_id" />
         </div>
@@ -109,79 +109,6 @@
             <FileUploader @files-selected="this.form.media = $event" />
           </div>
 
-        <!-- <div class="mt-3">
-          <InputLabel value="Responsable(s)*" class="ml-3 mb-1" />
-          <el-input v-model="form.key" placeholder="Clave del proyecto" clearable />
-          <InputError :message="$page.props?.errors.key" />
-        </div> -->
-
-        <!-- <el-divider>Datos de cliente</el-divider> -->
-
-        <!-- <div class="">
-          <el-input
-            v-model="form.customer_info.name"
-            class="w-50 p-2"
-            placeholder="Nombre del cliente"
-            clearable
-          >
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.name']" />
-        </div>
-
-        <div class="">
-          <el-input
-            v-model="form.customer_info.email"
-            class="w-50 p-2"
-            placeholder="Correo"
-            clearable
-            type="email"
-          >
-            <template #prefix>
-              <el-icon class="el-input__icon"
-                ><i class="fa-solid fa-envelope"></i
-              ></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.email']" />
-        </div>
-
-        <div class="">
-          <el-input
-            v-model="form.customer_info.company"
-            class="w-50 p-2"
-            placeholder="Empresa"
-            clearable
-          >
-            <template #prefix>
-              <el-icon class="el-input__icon"
-                ><i class="fa-solid fa-building"></i
-              ></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.company']" />
-        </div>
-
-        <div class="">
-          <el-input
-            v-model="form.customer_info.phone"
-            class="w-50 p-2"
-            placeholder="Teléfono de contacto"
-            clearable
-          >
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.phone']" />
-        </div> -->
-
         <div class="col-span-full text-right mt-5">
           <PrimaryButton class="px-12"> Crear proyecto</PrimaryButton>
         </div>
@@ -215,12 +142,6 @@ export default {
       media: null, //nuevo agregado
       key: null,
       description: null,
-      // customer_info: {
-      //   name: null,
-      //   email: null,
-      //   company: null,
-      //   phone: null,
-      // },
       hours_work: null,
       price: null,
       start_date: null,
@@ -229,7 +150,7 @@ export default {
     return {
       form,
       duration: null, //rango de fechas. separar y guardar en start_date y estimated_date
-      invoices: ['Al contado', '2 pagos (50% al inicio y 50% a la entrega del proyecto)', '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)'],
+      payment_methods: ['Al contado', '2 pagos (50% al inicio y 50% a la entrega del proyecto)', '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)'],
       categories: ['Página web', 'Tienda en linea', 'Punto de venta', 'ERP (Planificación de recursos empresariales)',
                 'CRM (Gestión de relaciones con los clientes)', 'PMS (Planificación de recursos empresariales)', 'CMS (Gestión de contenido)',
                 'LMS (Sistema de gestión del aprendizaje)', 'BI (Inteligencia de negocios)', 'Otro'],
@@ -248,7 +169,7 @@ export default {
   props: {
     users: Array,
     quotes: Array,
-    clients:Array
+    clients: Array
   },
   methods: {
     store() {

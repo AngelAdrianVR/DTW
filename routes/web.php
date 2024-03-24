@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectTaskController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteRequestController;
@@ -80,6 +81,12 @@ Route::post('messages/massive-delete', [MessageController::class, 'massiveDelete
 Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::post('projects/massive-delete', [ProjectController::class, 'massiveDelete'])->name('projects.massive-delete');
 Route::put('projects/{project}/finish', [ProjectController::class, 'finishProject'])->name('projects.finish');
+Route::post('projects/update-with-media/{project}', [ProjectController::class, 'updateWithMedia'])->name('projects.update-with-media');
+
+
+// projects-tasks routes
+Route::resource('project-tasks', ProjectTaskController::class)->middleware('auth');
+
 
 // ** Quote request routes **
 Route::resource('quote-request', QuoteRequestController::class)->middleware('auth')->except(['edit', 'update', 'destroy']);
