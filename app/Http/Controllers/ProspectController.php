@@ -71,6 +71,7 @@ class ProspectController extends Controller
     }
 
 
+    // API
     public function aprovedProspect(Prospect $prospect)
     {
         $prospect->update([
@@ -84,5 +85,12 @@ class ProspectController extends Controller
             'is_aproved' => false
         ]);
         
+    }
+
+    public function getContacts(Prospect $prospect)
+    {
+        $items = $prospect->contacts;
+
+        return response()->json(compact('items'));
     }
 }

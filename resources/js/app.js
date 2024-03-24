@@ -1,17 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
-
-// import './vendor/css/animate.css';
-// import './vendor/css/flex-slider.css';
-// import './vendor/css/owl.css';
-// import './vendor/css/templatemo-cyborg-gaming.css';
-
-// import './vendor/bootstrap/js/bootstrap.min.js'
-// import './vendor/jquery/jquery.min.js';
-// import './vendor/js/isotope';
-// import './vendor/js/owl-carousel';
-// import './vendor/js/popup';
-// import './vendor/js/tabs';
+import '../css/ckeditor-reset.css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -21,6 +10,7 @@ import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
+import CKEditor from '@ckeditor/ckeditor5-vue';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
@@ -39,6 +29,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(Toast, options)
             .use(ElementPlus)
+            .use(CKEditor)
             .mount(el);
     },
     progress: {

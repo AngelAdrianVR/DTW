@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('rfc')->nullable();
             $table->string('address')->nullable();
             $table->string('state')->nullable();
+            $table->text('notes')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('responsible_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

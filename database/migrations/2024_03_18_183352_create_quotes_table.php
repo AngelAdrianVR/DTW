@@ -14,24 +14,20 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name')->default('Cliente');
-            $table->string('quote_name')->nullable();
-            $table->string('company')->nullable();
-            $table->string('company_address')->nullable();
-            $table->string('quote_description')->nullable();
-            $table->string('project')->nullable();
-            $table->json('subtitles')->nullable();
-            $table->string('email')->nullable();
-            $table->json('included_features')->nullable();
-            $table->json('suggested_features')->nullable();
-            $table->unsignedMediumInteger('percentage_discount')->nullable();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->text('features')->nullable();
             $table->unsignedMediumInteger('total_work_days')->nullable();
-            $table->unsignedTinyInteger('advance_payment_percentage')->default(50);
+            $table->unsignedMediumInteger('percentage_discount')->nullable();
+            $table->string('payment_type');
             $table->unsignedMediumInteger('total_cost');
-            $table->unsignedSmallInteger('total_hours');
-            $table->date('promised_end_date');
             $table->unsignedTinyInteger('offer_validity_days')->default(30);
+            $table->boolean('show_process')->default(false);
+            $table->boolean('show_benefits')->default(false);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('client_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('prospect_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

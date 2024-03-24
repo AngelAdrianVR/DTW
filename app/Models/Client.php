@@ -14,6 +14,7 @@ class Client extends Model
         'rfc',
         'address',
         'state',
+        'notes',
         'user_id',
         'responsible_id',
     ];
@@ -33,5 +34,9 @@ class Client extends Model
     {
         return $this->morphMany(Contact::class, 'contactable');
     }
-
+    
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
 }
