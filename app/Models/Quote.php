@@ -24,6 +24,13 @@ class Quote extends Model
         'contact_id',
         'prospect_id',
         'user_id',
+        'sent_at',
+        'authorized_at',
+    ];
+
+    protected $cast = [
+        'sent_at' => 'datetime',
+        'authorized_at' => 'datetime',
     ];
 
     public function user()

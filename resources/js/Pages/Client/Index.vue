@@ -36,7 +36,7 @@
             <tbody>
               <tr @click="$inertia.visit(route('clients.show', item))" v-for="item in localClients" :key="item.id"
                 class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
-                <td class="rounded-s-full">{{ item.id }}</td>
+                <td class="rounded-s-full">{{ String(item.id).padStart(3, '0') }}</td>
                 <td>{{ item.name ?? '-' }}</td>
                 <td>{{ item.rfc ?? '-' }}</td>
                 <td>{{ item.address ?? '-' }}</td>
@@ -81,7 +81,8 @@
           <p v-if="loadingItems" class="text-xs my-4 text-center">
             Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-secondary"></i>
           </p>
-          <button v-else-if="localClients.length && !search && (localTotalItems > 15 && localClients.length < localTotalItems)"
+          <button
+            v-else-if="localClients.length && !search && (localTotalItems > 15 && localClients.length < localTotalItems)"
             @click="fetchItemsByPage" class="w-full text-secondary my-4 text-xs mx-auto underline ml-6">
             Cargar más elementos
           </button>
@@ -218,7 +219,7 @@ export default {
         if (response.status === 200) {
           const index = this.localClients.findIndex(item => item.id == this.itemIdToDelete);
           this.localClients.splice(index, 1);
-          this.localTotalItems --;
+          this.localTotalItems--;
           this.$notify({
             title: "Correcto",
             message: "",

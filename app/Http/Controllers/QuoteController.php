@@ -127,4 +127,26 @@ class QuoteController extends Controller
 
         return response()->json(['items' => $quotes]);
     }
+
+    public function markAsAuthorized(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        // si se autoriza sin haber mandado al cliente, se marca tambien como enviado
+        if ($quote->sent_at === null) {
+            $quote->sent_at = $now;
+        }
+        $quote->authorized_at = $now;
+        $quote->save();
+
+        return response()->json(['prop' => $now]);
+    }
+
+    public function markAsSent(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        $quote->sent_at = $now;
+        $quote->save();
+
+        return response()->json(['prop' => $now]);
+    }
 }

@@ -65,6 +65,8 @@ Route::resource('settings', SettingController::class)->middleware('auth');
 Route::resource('quotes', QuoteController::class)->middleware('auth');
 Route::get('quotes-get-matches/{query}', [QuoteController::class, 'getMatches'])->name('quotes.get-matches');
 Route::get('quotes-get-by-page/{currentPage}', [QuoteController::class, 'getItemsByPage'])->name('quotes.get-by-page')->middleware('auth');
+Route::put('quotes-mark-as-authorized/{quote}', [QuoteController::class, 'markAsAuthorized'])->name('quotes.mark-as-authorized')->middleware('auth');
+Route::put('quotes-mark-as-sent/{quote}', [QuoteController::class, 'markAsSent'])->name('quotes.mark-as-sent')->middleware('auth');
 
 // clients routes
 Route::resource('clients', ClientController::class)->middleware('auth');

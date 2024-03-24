@@ -28,6 +28,8 @@ return new class extends Migration
             $table->foreignId('client_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
             $table->foreignId('prospect_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamp('authorized_at')->nullable();
             $table->timestamps();
         });
     }
