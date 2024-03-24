@@ -18,11 +18,11 @@
         <h1 class="text-primary font-bold text-sm mt-3">Contacto</h1>
         <article class="grid grid-cols-8 gap-y-2 mt-1">
             <span>Nombre</span>
-            <span class="col-span-7">Empresa</span>
+            <span class="col-span-7">{{ client.contacts[0].name }}</span>
             <span>Teléfono</span>
-            <span class="col-span-7">Empresa</span>
+            <span class="col-span-7">{{ client.contacts[0].phone }}</span>
             <span>Correo electrónico</span>
-            <span class="col-span-7">Empresa</span>
+            <span class="col-span-7">{{ client.contacts[0].email ?? '-' }}</span>
         </article>
     </div>
 </template>

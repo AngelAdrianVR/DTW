@@ -11,7 +11,7 @@
           :class="(drag && !pendingTasksList?.length) ? 'h-40' : ''">
           <template #item="{ element: task }">
             <li>
-              <ProjectTaskCard @delete-task="deleteProjectTask" @updated-status="updateTask($event)" :taskComponent="project."
+              <ProjectTaskCard @delete-task="deleteProjectTask" @updated-status="updateTask($event)" :taskComponent="task"
                 :users="users" :id="task.id" />
             </li>
           </template>

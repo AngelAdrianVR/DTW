@@ -20,6 +20,10 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^41.2.1",
+        "@ckeditor/ckeditor5-vue": "^5.1.0",
+        "ckeditor-tailwind-reset": "^1.0.5",
+        "date-fns": "^3.6.0",
         "element-plus": "^2.6.1",
         "jquery": "^3.7.0",
         "vue-toastification": "^2.0.0-rc.5"
