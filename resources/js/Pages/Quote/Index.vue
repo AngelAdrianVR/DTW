@@ -27,8 +27,8 @@
                                 <th>Nombre</th>
                                 <th>Cliente</th>
                                 <th>Contacto</th>
-                                <th>Creado el</th>
                                 <th>Creado por</th>
+                                <th>Creado el</th>
                                 <th>Costo</th>
                                 <th></th>
                             </tr>
@@ -36,14 +36,13 @@
                         <tbody>
                             <tr @click="$inertia.visit(route('quotes.show', item))" v-for="item in localItems"
                                 :key="item.id" class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
-                                <td class="rounded-s-full">{{ item.id }}</td>
-                                <td>{{ String(item.id).padStart(3,'0') }}</td>
+                                <td class="rounded-s-full">{{ 'C-'+String(item.id).padStart(3, '0') }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.client.name }}</td>
                                 <td>{{ item.contact.name }}</td>
-                                <td>{{ item.created_at }}</td>
                                 <td>{{ item.user.name }}</td>
-                                <td>{{ item.total_cost }}</td>
+                                <td>{{ formatDateTime(item.created_at) }}</td>
+                                <td>${{ item.total_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
                                 <td class="rounded-e-full text-end">
                                     <el-dropdown trigger="click" @command="handleCommand">
                                         <button @click.stop
@@ -118,6 +117,8 @@ import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import CancelButton from "@/Components/CancelButton.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export default {
     data() {
@@ -150,6 +151,11 @@ export default {
         total_items: Number,
     },
     methods: {
+        formatDateTime(dateTime) {
+            let parsedDate = new Date(dateTime);
+
+            return format(parsedDate, 'd MMM, Y • hh:mm a', { locale: es }); // Formato personalizado
+        },
         handleCommand(command) {
             const commandName = command.split('-')[0];
             const itemId = command.split('-')[1];
@@ -239,6 +245,10 @@ export default {
                 this.loading = false;
             }
         },
+    },
+    mounted() {
+        this.localItems = this.quotes;
+        this.localTotalItems = this.total_items;
     }
 };
 

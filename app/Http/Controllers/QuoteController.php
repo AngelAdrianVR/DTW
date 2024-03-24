@@ -13,79 +13,79 @@ class QuoteController extends Controller
 {
     public function index()
     {
-        $quotes = QuoteResource::collection(Quote::latest()->paginate(15));
-        return inertia('Quote/Index', compact('quotes'));
+        $quotes = Quote::with(['user', 'client', 'contact'])->latest()->get()->take(15);
+        $total_items = Quote::all()->count();
+
+        return inertia('Quote/Index', compact('quotes', 'total_items'));
     }
 
     public function create()
     {
-        $quotes = Quote::all();
         $clients = Client::get(['id', 'name']);
         $prospects = [];
         // $prospects = Prospect::get(['id', 'name']);
 
-        return inertia('Quote/Create', compact('quotes', 'clients', 'prospects'));
+        return inertia('Quote/Create', compact('clients', 'prospects'));
     }
 
     public function edit(Quote $quote)
     {
-        return inertia('Quote/Edit', compact('quote'));
+        $clients = Client::get(['id', 'name']);
+        $prospects = [];
+        // $prospects = Prospect::get(['id', 'name']);
+
+        return inertia('Quote/Edit', compact('quote', 'clients', 'prospects'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'customer_name' => 'required|string|max:191',
-            'company' => 'nullable|string|max:191',
-            'company_address' => 'nullable|string',
-            'project' => 'nullable|string',
-            'total_work_days' => 'required|numeric|min:1',
-            'total_cost' => 'required|numeric|min:1',
-            'percentage_discount' => 'nullable|numeric|',
-            'email' => 'nullable',
-            'included_features' => 'nullable',
-            'suggested_features' => 'nullable',
-            'discounts' => 'nullable',
-            'advance_payment_percentage' => 'required|numeric',
-            'total_hours' => 'required|numeric',
-            'promised_end_date' => 'date',
-            'offer_validity_days' => 'required|numeric',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'features' => 'required|string',
+            'total_work_days' => 'required|numeric|min:0',
+            'percentage_discount' => 'nullable|numeric|min:0',
+            'payment_type' => 'required|string|max:255',
+            'total_cost' => 'required|numeric|min:0',
+            'offer_validity_days' => 'nullable|numeric|min:0',
+            'show_process' => 'boolean',
+            'show_benefits' => 'boolean',
+            'client_id' => 'nullable|numeric|min:1',
+            'contact_id' => 'required|numeric|min:1',
+            'prospect_id' => 'nullable|numeric|min:1',
         ]);
 
-        Quote::create($request->all() + [
-            'user_id' => auth()->id(),
-        ]);
+        Quote::create($validated + ['user_id' => auth()->id()]);
 
         return to_route('quotes.index');
     }
 
     public function update(Quote $quote, Request $request)
     {
-        $request->validate([
-            'customer_name' => 'required|string|max:191',
-            'company' => 'nullable|string|max:191',
-            'company_address' => 'nullable|string',
-            'project' => 'nullable|string',
-            'total_work_days' => 'required|numeric|min:1',
-            'total_cost' => 'required|numeric|min:1',
-            'percentage_discount' => 'nullable|numeric|',
-            'email' => 'nullable',
-            'included_features' => 'nullable',
-            'suggested_features' => 'nullable',
-            'discounts' => 'nullable',
-            'advance_payment_percentage' => 'required|numeric',
-            'total_hours' => 'required|numeric',
-            'promised_end_date' => 'date',
-            'offer_validity_days' => 'required|numeric',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'features' => 'required|string',
+            'total_work_days' => 'nullable|numeric|min:0',
+            'percentage_discount' => 'nullable|numeric|min:0',
+            'payment_type' => 'nullable|string|max:255',
+            'total_cost' => 'nullable|numeric|min:0',
+            'offer_validity_days' => 'nullable|numeric|min:0',
+            'show_process' => 'boolean',
+            'show_benefits' => 'boolean',
+            'client_id' => 'nullable|numeric|min:1',
+            'contact_id' => 'required|numeric|min:1',
+            'prospect_id' => 'nullable|numeric|min:1',
         ]);
 
-        $quote->update($request->all());
+        $quote->update($validated);
 
         return to_route('quotes.index');
     }
 
     public function show(Quote $quote)
     {
+        $quote = $quote->load(['client', 'prospect', 'contact']);
         return inertia('Quote/Show', compact('quote'));
     }
 

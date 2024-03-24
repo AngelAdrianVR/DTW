@@ -48,8 +48,7 @@
           </div>
           <div class="mt-3">
             <InputLabel value="Servicios *" />
-            <el-input v-model="form.features" maxlength="1500" :autosize="{ minRows: 3, maxRows: 5 }" show-word-limit
-              type="textarea" placeholder="Agrega o servicios o las características que incluyen esta cotización" />
+            <ckeditor :editor="editor" v-model="form.features" :config="editorConfig"></ckeditor>
             <InputError :message="form.errors.features" />
           </div>
           <div class="mt-3">
@@ -100,6 +99,9 @@
             <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
             <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
           </div>
+          <div class="mt-2 flex justify-end">
+            <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Crear cotización</PrimaryButton>
+          </div>
         </form>
         <!-- ------------- quote preview --------------- -->
         <div class="text-sm border border-grayD9 rounded-[10px] px-5 py-4 relative">
@@ -108,17 +110,17 @@
             <figure>
               <img src="@/../../public/assets/images/quote-logo.png">
             </figure>
-            <p class="text-xs mt-4">{{ folio }}</p>
           </div>
           <p class="font-bold text-sm text-center">Cotización. {{ form.name }}</p>
-          <p class="text-xs text-right">Emisión: <span>{{ new Date() }}</span>
+          <p class="text-xs text-right">Emisión: <span>{{ formatDate(date) }}</span>
           </p>
-          <p class="text-xs text-right">Vigente hasta: <span>{{ new Date() }}</span></p>
+          <p class="text-xs text-right">Vigente hasta {{ form.offer_validity_days }} días después de la emisión</p>
           <div class="px-4 mt-2">
             <p v-if="form.client_id" class="text-xs text-left">
               {{ clients.find(item => item.id === form.client_id).name }}</p>
             <p v-if="form.description" class="text-xs text-left">{{ form.description }}</p>
             <p v-if="form.features" class="text-sm font-bold text-left mt-2">Servicios</p>
+            <div v-html="form.features"></div>
             <section v-if="form.total_work_days">
               <h2 class="text-sm font-bold text-left mt-2">Duración</h2>
               <p class="text-xs">La entrega estimada para la implementación final del proyecto es
@@ -134,13 +136,16 @@
             </section>
             <section v-if="form.percentage_discount">
               <p class="text-xs">
-                Descuento: ${{ ((form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (%{{ form.percentage_discount }})
+                Descuento: ${{ ((form.percentage_discount * 0.01) *
+          form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+            ",") }} (%{{ form.percentage_discount }})
               </p>
               <p class="text-sm font-bold text-left mt-2">Total</p>
               <p class="text-xs">
-                ${{ (form.total_cost - (form.percentage_discount * 0.01) * form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
-                 IVA incluido
-                </p>
+                ${{ (form.total_cost - (form.percentage_discount * 0.01) *
+          form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+                IVA incluido
+              </p>
             </section>
             <section v-if="form.payment_type">
               <h2 class="text-sm font-bold text-left mt-2">Condiciones de pago</h2>
@@ -210,7 +215,8 @@
               </p>
               <p>- Personalización de marca: "Entendemos la importancia de la identidad de su empresa.
                 Personalizamos nuestro
-                programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y profesional
+                programa con los colores y la marca de su empresa, lo que le brinda una experiencia cohesiva y
+                profesional
                 para
                 sus usuarios y clientes."
               </p>
@@ -233,6 +239,9 @@ import InputError from "@/Components/InputError.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import axios from "axios";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
   data() {
@@ -241,7 +250,6 @@ export default {
       client_id: null,
       prospect_id: null,
       contact_id: null,
-      name: null,
       description: null,
       features: null,
       payment_type: null,
@@ -253,26 +261,25 @@ export default {
       show_benefits: false,
     });
     return {
+      // ckEditor 5
+      editor: ClassicEditor,
+      editorConfig: {
+        // The configuration of the editor.
+      },
       form,
       contacts: [],
       isClient: true,
-      fechaEmision: null,
-      fechaVigencia: null,
-      new_feature: null,
-      new_subtitle: null,
-      project_type: null,
-      folio: null,
       paymentTypes: [
         'Pago en una sola exhibición',
         '2 pagos (50% al inicio y 50% a la entrega del proyecto)',
         '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)',
       ],
       offerValidities: [
-        '7 días',
-        '15 días',
-        '30 días',
-        '60 días',
-        '90 días',
+        7,
+        15,
+        30,
+        60,
+        90,
       ],
     };
   },
@@ -286,13 +293,18 @@ export default {
     Back,
   },
   props: {
-    projects: Array,
-    quotes: Array,
     clients: Array,
     prospects: Array,
   },
 
   methods: {
+    formatDate(date = null) {
+      let parsedDate = new Date();
+      if (date) {
+        parsedDate = new Date(date);
+      }
+      return format(parsedDate, 'EEEE d \'de\' MMMM', { locale: es }); // Formato personalizado
+    },
     store() {
       this.form.post(route("quotes.store"), {
         onSuccess: () => {
@@ -304,39 +316,6 @@ export default {
         }
       });
     },
-    // generateFolio() {
-    //   // Obtener las primeras 3 letras del nombre de la empresa en mayúsculas
-    //   const companyPrefix = this.form.company.substr(0, 3).toUpperCase();
-
-    //   const projectTypePrefix = this.form.project_type;
-
-    //   // Formatear el número consecutivo con ceros a la izquierda para que tenga 4 dígitos
-    //   const consecutiveNumberFormatted = this.quotes?.length.toString().padStart(4, "0");
-
-    //   // Combinar los elementos en el formato deseado
-    //   this.folio = `C-${companyPrefix}-${projectTypePrefix}-${consecutiveNumberFormatted}`;
-    //   console.log(this.folio);
-    // },
-    // formatearFecha(fecha) {
-    //   if (!fecha) return ''; // Manejar el caso en que la fecha sea null o undefined
-
-    //   const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    //   return fecha.toLocaleDateString('es-ES', options);
-    // },
-    // addFeature() {
-    //   if (this.new_feature.trim() !== '') {
-    //     this.form.included_features.push(this.new_feature);
-    //     this.included_features?.push(this.new_feature);
-    //     this.new_feature = '';
-    //   }
-    // },
-    // addSubtitle() {
-    //   if (this.new_subtitle.trim() !== '') {
-    //     this.form.subtitles.push(this.new_subtitle);
-    //     this.subtitles.push(this.new_subtitle);
-    //     this.new_subtitle = '';
-    //   }
-    // },
     setExpiredDate() {
       if (this.form.offer_validity_days) {
         const fechaActual = new Date();
@@ -369,23 +348,6 @@ export default {
         console.log(error);
       }
     }
-  },
-  mounted() {
-    // this.toast = useToast();
-
-    // const fechaEmisionSpan = document.getElementById('fecha-emision');
-    // const fechaVigenciaSpan = document.getElementById('fecha-vigencia');
-
-    // Crea un objeto de fecha para obtener la fecha actual
-    // const fechaActual = new Date();
-
-    // // Calcula la fecha de vigencia
-    // const fechaVigencia = new Date();
-    // fechaVigencia.setDate(fechaVigencia.getDate() + this.form.offer_validity_days);
-
-    // // Actualiza las propiedades de fecha
-    // this.fechaEmision = fechaActual;
-    // this.fechaVigencia = fechaVigencia
   },
 };
 </script>
