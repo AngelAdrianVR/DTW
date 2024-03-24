@@ -1,41 +1,79 @@
 <template>
-    <div class="mx-24 my-14">
-        <Link :href="route('projects.index')" class="mb-8 underline block">Atras</Link>
-        <p><strong>id:</strong> {{ project.data.id }}</p>
-        <p><strong>Nombre:</strong> {{ project.data.name }}</p>
-        <p><strong>Clave:</strong> {{ project.data.key }}</p>
-        <p><strong>Nombre del cliente:</strong> {{ project.data.customer_info.name }}</p>
-        <p><strong>Correo del cliente:</strong> {{ project.data.customer_info.email ?? '--' }}</p>
-        <p><strong>Empresa del cliente:</strong> {{ project.data.customer_info.company }}</p>
-        <p><strong>Teléfono del cliente:</strong> {{ project.data.customer_info.phone ?? '--' }}</p>
-        <p><strong>Descripción del proyecto:</strong> {{ project.data.description }}</p>
-        <p><strong>Horas totales del proyecto:</strong> {{ project.data.hours_work }}</p>
-        <p><strong>Precio del proyecto:</strong> {{ project.data.price.formated }}</p>
-        <p><strong>Fecha de comienza del proyecto:</strong> {{ project.data.start_date }}</p>
-        <p><strong>Fecha de finalización del proyecto:</strong> {{ project.data.finish_date }}</p>
-        <p><strong>Estatus:</strong> {{ project.data.state }}</p>
-        <p><strong>Creado el:</strong> {{ project.data.created_at }}</p>
+    <AppLayout title="Detalles de proyecto">
+        <div class="flex justify-between text-lg mx-2 lg:mx-14 mt-11">
+            <span>Detalles de proyecto</span>
+            <Link :href="route('projects.index')"
+                class="cursor-pointer w-7 h-7 rounded-full hover:bg-[#D9D9D9] flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </Link>
+        </div>
 
-        <!-- <el-button @click="changeDispatchedStatus()" class="mt-6">
-            {{ quoteRequest.data.is_dispatched ? 'Marcar como pendiente por enviar' : 'Marcar como cotizacion enviada' }}
-        </el-button> -->
-    </div>
+        <div class="flex justify-between items-center mt-5 mx-2 lg:mx-14">
+            <div class="mr-2">
+                <el-select @change="$inertia.get(route('projects.show', selectedProject))" v-model="selectedProject" clearable filterable placeholder="Buscar proyecto"
+                no-data-text="No hay proyectos registrados" no-match-text="No se encontraron coincidencias">
+                <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id" />
+                </el-select>
+            </div>
+            <h1 class="font-bold">{{ project.data.name }}</h1>
+            <div class="flex">
+                <div v-if="activeTab == 1" class="flex space-x-2 w-full justify-end">
+                    <PrimaryButton @click="$inertia.get(route('projects.create'))">Crear proyecto</PrimaryButton>
+                    <button @click="$inertia.get(route('projects.edit', project.data.id))" class="w-9 h-9 rounded-full bg-[#D9D9D9]">
+                        <i class="fa-solid fa-pen text-sm text-gray-600"></i>
+                    </button>
+                </div>
+                <div v-if="(activeTab == 2 || activeTab == 3)" class="flex space-x-2 w-full justify-end">
+                    <PrimaryButton @click="$inertia.get(route('project-tasks.create', { projectId: project.data.id }))">Crear tarea</PrimaryButton>
+                </div>
+            </div>
+        </div>
+
+        <!-- ------------- tabs section starts ------------- -->
+        <el-tabs class="mx-2 md:mx-9 mt-10" v-model="activeTab">
+            <el-tab-pane label="Información del proyecto" name="1">
+                <ProjectInfo :project="project.data" />
+            </el-tab-pane>
+            <el-tab-pane label="Tareas" name="2">
+                <Tasks :tasks="project.data.tasks" :users="users" />
+            </el-tab-pane>
+            <el-tab-pane label="Cronograma" name="3">
+                Tab 3
+            </el-tab-pane>
+        </el-tabs>
+        <!-- ------------- tabs section ends ------------- -->
+
+
+    </AppLayout>
 </template>
 <script>
+import AppLayout from "@/Layouts/AppLayout.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import ProjectInfo from "@/Pages/Project/Tabs/ProjectInfo.vue";
+import Tasks from "@/Pages/Project/Tabs/Tasks.vue";
+import Back from "@/Components/MyComponents/Back.vue";
 import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
 export default {
     data() {
         return {
-
+            selectedProject: null,
+            activeTab: '1',
         }
     },
     props: {
         project: Object,
+        projects: Array,
+        users: Array,
     },
     components: {
-        Link,
+        AppLayout,
+        PrimaryButton,
+        ProjectInfo,
+        Tasks,
+        Back,
+        Link
     },
     methods: {
         async changeDispatchedStatus() {

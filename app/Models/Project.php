@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -63,4 +64,18 @@ class Project extends Model implements HasMedia
     {
         return $this->belongsTo(Quote::class);
     }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(ProjectTask::class);
+    }
+
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class)
+    //     ->withPivot([
+    //         'id',
+    //         'permissions',
+    //     ])->withTimestamps();
+    // }
 }

@@ -157,6 +157,7 @@ return [
         'contacts.0.name' => 'nombre del contacto',
         'contacts.0.phone' => 'teléfono del contacto',
         'state' => 'estado',
+        'priority' => 'prioridad',
         'contact_id' => 'contacto',
         'features' => 'servicios',
         'payment_type' => 'condiciones de pago',
