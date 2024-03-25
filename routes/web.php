@@ -86,6 +86,7 @@ Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::post('projects/massive-delete', [ProjectController::class, 'massiveDelete'])->name('projects.massive-delete');
 Route::put('projects/{project}/finish', [ProjectController::class, 'finishProject'])->name('projects.finish');
 Route::post('projects/update-with-media/{project}', [ProjectController::class, 'updateWithMedia'])->name('projects.update-with-media');
+Route::get('projects-get-by-page/{currentPage}', [ProjectController::class, 'getItemsByPage'])->name('projects.get-by-page')->middleware('auth');
 
 
 // projects-tasks routes

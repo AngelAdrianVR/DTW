@@ -27,14 +27,27 @@
     </div>
 
     <!-- Tabla de proyectos -->
-    <ProjectsTable :projects="filteredTableData" />
-
+    <Loading v-if="loading" class="mt-20" />
+      <div v-else class="lg:w-11/12 mx-auto">
+          <p v-if="localProjects.length" class="text-gray66 text-[11px]">{{ localProjects.length }} de {{
+              total_projects }} elementos
+          </p>
+          <ProjectsTable :projects="filteredTableData" />
+          <p v-if="loadingItems" class="text-xs my-4 text-center">
+              Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-primary"></i>
+          </p>
+          <button v-else-if="total_projects > 20 && localProjects.length < total_projects && localProjects.length"
+              @click="fetchItemsByPage" class="w-full text-primary my-4 text-xs mx-auto underline ml-6">
+              Cargar más elementos
+          </button>
+      </div>
   </AppLayout>
 </template>
 
 <script>
 import ProjectsTable from "@/Components//MyComponents/Project/ProjectsTable.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Loading from '@/Components/MyComponents/Loading.vue';
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
@@ -43,7 +56,10 @@ import axios from 'axios';
 export default {
   data() {  
     return {
-      disableMassiveActions: true,
+      loading: false,
+      localProjects: this.projects.data,
+      loadingItems: false, //para paginación
+      currentPage: 1, //para paginación
       toast: null,
       inputSearch: "", //buscador
       search: null, //buscador
@@ -53,95 +69,42 @@ export default {
     ProjectsTable,
     PrimaryButton,
     AppLayout,
+    Loading,
     Link
   },
   props: {
     projects: Object,
-    messages: {
-            type: Array,
-            default: []
-        },
+    total_projects: Number,
   },
   methods: {
-    handleRowClick(row) {
-            this.$inertia.get(route('projects.show', row));
-        },
-     finishProject(row) {
-     this.$inertia.put(route('projects.finish',row.id));
-     this.$notify({
-                title: 'Success',
-                message: "The project has been finished!",
-                type: 'success'
-            });
+  handleSearch() {
+    this.search = this.inputSearch;
   },
-  editProject(row){
-    this.$inertia.get(route('projects.edit', row.id));
+  async fetchItemsByPage() {
+    try {
+        this.loadingItems = true;
+        const response = await axios.get(route('projects.get-by-page', this.currentPage));
+
+        if (response.status === 200) {
+            this.localProjects = [...this.localProjects, ...response.data.items];
+            this.currentPage++;
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        this.loadingItems = false;
+    }
   },
-    handleSelectionChange(val) {
-            this.$refs.multipleTableRef.value = val;
-
-            if (!this.$refs.multipleTableRef.value.length) {
-                this.disableMassiveActions = true;
-            } else {
-                this.disableMassiveActions = false;
-            }
-        },
-    async deleteSelections() {
-            try {
-                const response = await axios.post(route('projects.massive-delete', {
-                    messages: this.$refs.multipleTableRef.value
-                }));
-
-                if (response.status == 200) {
-                    // let indexes = [];
-                    this.toast.success(response.data.message);
-
-                    // update list of messages
-                    let deletedIndexes = [];
-                    this.projects.data.forEach((message, index) => {
-                        if (this.$refs.multipleTableRef.value.includes(message)) {
-                            deletedIndexes.push(index);
-                        }
-                    });
-
-                    // Ordenar los índices de forma descendente para evitar problemas de desplazamiento al eliminar elementos
-                    deletedIndexes.sort((a, b) => b - a);
-
-                    // Eliminar mensajes por índice
-                    for (const index of deletedIndexes) {
-                        this.projects.data.splice(index, 1);
-                    }
-
-                } else {
-                    this.toast.error(response.data.message);
-                }
-
-            } catch (err) {
-                this.toast.error(err);
-                console.log(err);
-            }
-        },
-        tableRowClassName({ row, rowIndex }) {
-            if (row.finish_date) {
-                return 'text-green-600';
-            }
-
-            return '';
-        },
-        handleSearch() {
-          this.search = this.inputSearch;
-        },
   },
   computed: {
     filteredTableData() {
       if (!this.search) {
-        return this.projects.data;
+        return this.localProjects;
       } else {
-        return this.projects.data.filter(
+        return this.localProjects.filter(
           (project) =>
             project.id.toString().toLowerCase().includes(this.search.toLowerCase()) ||
             project.name.toLowerCase().includes(this.search.toLowerCase()) ||
-            // project.status.toLowerCase().includes(this.search.toLowerCase()) ||
             project.client?.name.toLowerCase().includes(this.search.toLowerCase())
         );
       }
