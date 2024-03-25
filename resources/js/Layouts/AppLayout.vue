@@ -73,7 +73,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </nav>
-                <div class="overflow-y-auto h-[calc(100vh-9.1rem)] lg:h-[calc(100vh-4.1rem)] bg-white">
+                <div class="overflow-y-auto h-[calc(100vh-9.1rem)] lg:h-[calc(100vh-3.2rem)] bg-white">
                     <slot />
                 </div>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="mt-5">
         <Loading v-if="loading" class="mt-12" />
-        <table v-else class="w-full">
+        <table v-else-if="quotes.length" class="w-full">
             <thead>
                 <tr class="*:text-left *:pb-2 *:px-4 *:text-sm">
                     <th>Folio</th>
@@ -48,6 +48,7 @@
                 </tr>
             </tbody>
         </table>
+        <el-empty v-else description="No hay cotizaciones para mostrar" />
     </div>
 </template>
 <script>

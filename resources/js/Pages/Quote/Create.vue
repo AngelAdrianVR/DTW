@@ -95,9 +95,10 @@
               <InputError :message="form.errors.offer_validity_days" />
             </div>
           </div>
-          <div class="mt-3 flex flex-col">
+          <div class="mt-3">
             <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
             <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
+            <el-checkbox v-model="form.show_bank_info" label="Mostrar beneficios" size="small" />
           </div>
           <div class="mt-2 flex justify-end">
             <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Crear cotización</PrimaryButton>
@@ -120,7 +121,7 @@
               {{ clients.find(item => item.id === form.client_id).name }}</p>
             <p v-if="form.description" class="text-xs text-left">{{ form.description }}</p>
             <p v-if="form.features" class="text-sm font-bold text-left mt-2">Servicios</p>
-            <div v-html="form.features"></div>
+            <div v-html="form.features" class="text-xs"></div>
             <section v-if="form.total_work_days">
               <h2 class="text-sm font-bold text-left mt-2">Duración</h2>
               <p class="text-xs">La entrega estimada para la implementación final del proyecto es
@@ -259,6 +260,7 @@ export default {
       offer_validity_days: 30,
       show_process: false,
       show_benefits: false,
+      show_bank_info: false,
     });
     return {
       // ckEditor 5

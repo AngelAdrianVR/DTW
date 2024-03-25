@@ -20,6 +20,7 @@ class Quote extends Model
         'offer_validity_days',
         'show_process',
         'show_benefits',
+        'show_bank_info',
         'client_id',
         'contact_id',
         'prospect_id',

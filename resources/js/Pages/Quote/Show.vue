@@ -1,22 +1,27 @@
 <template>
-  <Head :title="'C-'+String(quote.id).padStart(3, '0')" />
-  <div class="text-sm rounded-[10px] px-5 py-4 relative">
-    <div class="flex justify-between">
-      <figure>
-        <img src="@/../../public/assets/images/quote-logo.png">
+
+  <Head :title="'C-' + String(quote.id).padStart(3, '0')" />
+  <div class="text-sm rounded-[10px] px-12 py-4 relative min-h-screen">
+    <div class="absolute w-full top-0 left-0">
+      <figure
+        class="w-full bg-cover h-32 py-11 pl-12 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
+        <img src="@/../../public/assets/images/quoteTemplate/logo.png" class="h-10">
       </figure>
-      <p class="text-xs mt-4">{{ 'C-'+String(quote.id).padStart(3, '0') }}</p>
     </div>
-    <p class="font-bold text-sm text-center">Cotización. {{ quote.name }}</p>
-    <p class="text-xs text-right">Emisión: <span>{{ formatDate(date) }}</span>
-    </p>
-    <p class="text-xs text-right">Vigente hasta {{ quote.offer_validity_days }} días después de la emisión</p>
-    <div class="px-4 mt-2">
-      <p v-if="quote.client_id" class="text-xs text-left">
-        {{ quote.client.name }}</p>
-      <p v-if="quote.description" class="text-xs text-left">{{ quote.description }}</p>
-      <p v-if="quote.features" class="text-sm font-bold text-left mt-2">Servicios</p>
-      <div v-html="quote.features"></div>
+    <div class="flex flex-col items-end mt-6">
+      <p class="text-xs">{{ 'C-' + String(quote.id).padStart(3, '0') }}</p>
+      <p class="text-xs">Emisión: <span>{{ formatDate(date) }}</span></p>
+      <p class="text-xs">Vigente hasta {{ quote.offer_validity_days }} días después de la emisión</p>
+    </div>
+    <main class="mt-9">
+      <h1 class="font-bold text-base text-center">Cotización. {{ quote.name }}</h1>
+      <div v-if="quote.client_id">
+        <p class="text-xs text-left">{{ quote.client.name }}</p>
+        <p class="text-xs text-left">{{ quote.client.address }}</p>
+      </div>
+      <p v-if="quote.description" class="text-xs text-left"><b>Descripción: </b>{{ quote.description }}</p>
+      <h2 v-if="quote.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
+      <div v-html="quote.features" class="text-xs"></div>
       <section v-if="quote.total_work_days">
         <h2 class="text-sm font-bold text-left mt-2">Duración</h2>
         <p class="text-xs">La entrega estimada para la implementación final del proyecto es
@@ -33,13 +38,13 @@
       <section v-if="quote.percentage_discount">
         <p class="text-xs">
           Descuento: ${{ ((quote.percentage_discount * 0.01) *
-        quote.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
-          ",") }} (%{{ quote.percentage_discount }})
+    quote.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+      ",") }} (%{{ quote.percentage_discount }})
         </p>
         <p class="text-sm font-bold text-left mt-2">Total</p>
         <p class="text-xs">
           ${{ (quote.total_cost - (quote.percentage_discount * 0.01) *
-        quote.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+    quote.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
           IVA incluido
         </p>
       </section>
@@ -119,7 +124,19 @@
         <p>- Sin límite de usuarios. </p>
         <p>- No pagan cuota mensual, es de una sola adquisición. </p>
       </section>
-    </div>
+    </main>
+    <footer v-if="!quote.show_bank_info" class="w-full absolute bottom-0 right-0">
+      <section
+        class="w-[60%] bg-cover ml-auto h-32 pl-[15%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/footer.png')]">
+        <article class="text-[#6d6d6d] text-xs">
+          <h2 class="font-bold text-center mb-1">Datos para la realización de pagos</h2>
+          <p>Nombre del beneficiario: <span class="text-black">Miguel Osvaldo Vázquez Rodríguez</span></p>
+          <p>Banco: <span class="text-black">NU México</span></p>
+          <p>Número de cuenta: <span class="text-black">00017049244</span></p>
+          <p>CLABE: <span class="text-black">638180000170492445</span></p>
+        </article>   
+      </section>
+    </footer>
   </div>
 </template>
 

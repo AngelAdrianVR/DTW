@@ -8,27 +8,27 @@
         <h1 class="font-bold">Crear cliente</h1>
         <form @submit.prevent="store" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2">
           <div>
-            <InputLabel value="Nombre de la empresa *" />
+            <InputLabel class="mb-1 ml-2" value="Nombre de la empresa *" />
             <el-input v-model="form.name" placeholder="Escribe el nombre de la empresa" clearable />
             <InputError :message="form.errors.name" />
           </div>
           <div>
-            <InputLabel value="RFC" />
+            <InputLabel class="mb-1 ml-2" value="RFC" />
             <el-input v-model="form.rfc" placeholder="Escribe el RFC en caso de tenerlo" clearable />
           </div>
           <div>
-            <InputLabel value="Domicilio" />
+            <InputLabel class="mb-1 ml-2" value="Domicilio" />
             <el-input v-model="form.address" placeholder="Agregar el domicilio en caso de tenerlo" clearable />
           </div>
           <div>
-            <InputLabel value="Estado" />
+            <InputLabel class="mb-1 ml-2" value="Estado" />
             <el-select v-model="form.state" placeholder="Selecciona el estado de la republica">
               <el-option v-for="item in states" :key="item" :label="item" :value="item" />
             </el-select>
             <InputError :message="form.errors.state" />
           </div>
           <div>
-            <InputLabel value="Responsable *" />
+            <InputLabel class="mb-1 ml-2" value="Responsable *" />
             <el-select v-model="form.responsible_id" placeholder="Selecciona el responsable de dar seguimiento">
               <el-option v-for="item in users" :key="item.id" :label="item.name" :value="item.id">
                 <figure style="float: left">
@@ -40,17 +40,17 @@
             <InputError :message="form.errors.responsible_id" />
           </div>
           <div>
-            <InputLabel value="Nombre del contacto *" />
+            <InputLabel class="mb-1 ml-2" value="Nombre del contacto *" />
             <el-input v-model="form.contacts[0].name" placeholder="Escribe el nombre del contacto" clearable />
             <InputError :message="form.errors.contact_name" />
             <InputError :message="form.errors['contacts.0.name']" />
           </div>
           <div>
-            <InputLabel value="Correo electrónico" />
+            <InputLabel class="mb-1 ml-2" value="Correo electrónico" />
             <el-input v-model="form.contacts[0].email" placeholder="Escribe el correo electronico" clearable />
           </div>
           <div>
-            <InputLabel value="Teléfono *" />
+            <InputLabel class="mb-1 ml-2" value="Teléfono *" />
             <el-input v-model="form.contacts[0].phone"
             :formatter="(value) => `${value}`.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2 $3')"
             :parser="(value) => value.replace(/\D/g, '')" maxlength="10" clearable
@@ -58,7 +58,7 @@
             <InputError :message="form.errors['contacts.0.phone']" />
           </div>
           <div class="md:col-span-full">
-            <InputLabel value="Notas" />
+            <InputLabel class="mb-1 ml-2" value="Notas" />
             <el-input v-model="form.notes" maxlength="500" :autosize="{ minRows: 3, maxRows: 5 }" show-word-limit
               type="textarea" placeholder="Escribe las notas" />
           </div>
