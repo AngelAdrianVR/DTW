@@ -12,7 +12,7 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-          <InputLabel value="Responsable(s)*" class="ml-3 mb-1" />
+          <InputLabel value="Responsable(s) *" class="ml-3 mb-1" />
           <el-select class="w-full" v-model="form.responsible_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
@@ -39,12 +39,18 @@
 
         <div class="mt-3 md:mt-0">
           <InputLabel value="Cotización*" class="ml-3 mb-1" />
-          <el-select class="w-full" v-model="form.quote_id" clearable
+          <el-select @change="getTotalDaysWork" class="w-full" v-model="form.quote_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="quote in quotes" :key="quote" :label="quote.quote_name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
+              <el-option v-for="quote in quotes" :key="quote" :label="quote.name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
           </el-select>
           <InputError :message="$page.props?.errors.quote_id" />
+        </div>
+
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Días hábiles de trabajo" class="ml-3 mb-1" />
+          <el-input disabled v-model="form.total_work_days" placeholder="Días hábiles de trabajo" clearable />
+          <InputError :message="$page.props?.errors.total_work_days" />
         </div>
 
         <div class="mt-3 md:mt-0">
@@ -68,9 +74,10 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-            <InputLabel value="Duración" class="ml-3 mb-1" />
+            <InputLabel value="Duración*" class="ml-3 mb-1" />
             <el-date-picker @change="saveDates" v-model="duration" type="daterange" range-separator="A"
-                start-placeholder="Fecha de inicio" end-placeholder="Fecha esperada de fin" />
+                start-placeholder="Fecha de inicio" end-placeholder="Fecha esperada de fin" class="!w-full" />
+            <InputError :message="$page.props?.errors.start_date" />
         </div>
 
         <div class="mt-3 md:mt-0">
@@ -81,7 +88,7 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-          <InputLabel value="Horas de trabajo" class="ml-3 mb-1" />
+          <InputLabel value="Horas de trabajo*" class="ml-3 mb-1" />
           <el-input
             v-model="form.hours_work"
             class=""
@@ -93,7 +100,7 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-          <InputLabel value="Precio del proyecto" class="ml-3 mb-1" />
+          <InputLabel value="Precio del proyecto*" class="ml-3 mb-1" />
           <el-input v-model="form.price" placeholder="Precio" clearable />
           <InputError :message="$page.props?.errors.price" class="mb-1" />
         </div>
@@ -110,7 +117,7 @@
           </div>
 
         <div class="col-span-full text-right mt-5">
-          <PrimaryButton class="px-12"> Guardar cambios</PrimaryButton>
+          <PrimaryButton class="px-12">Guardar cambios</PrimaryButton>
         </div>
       </form>
     </div>
@@ -138,6 +145,7 @@ export default {
       payment_method: this.project.payment_method, //nuevo agregado
       estimated_date: this.project.estimated_date, //nuevo agregado
       category: this.project.category, //nuevo agregado
+      total_work_days: null, //nuevo agregado
       invoice: !! this.project.invoice, //nuevo agregado
       media: null, //nuevo agregado
       key: this.project.key,
@@ -200,6 +208,10 @@ export default {
     saveDates() {
       this.form.start_date = this.duration[0];
       this.form.estimated_date = this.duration[1];
+    },
+    getTotalDaysWork() {
+      const quote = this.quotes.find(quote => quote.id === this.form.quote_id);
+      this.form.total_work_days = quote.total_work_days;
     }
   },
 };

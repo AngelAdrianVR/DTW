@@ -22,6 +22,7 @@ class ProjectResource extends JsonResource
             'customer_info' => $this->customer_info,
             'description' => $this->description,
             'hours_work' => $this->hours_work,
+            'total_work_days' => $this->total_work_days,
             'start_date' => $this->start_date?->isoFormat('DD MMM, YYYY'),
             'finish_date' => $this->finish_date?->isoFormat('DD MMM, YYYY'),
             'state' => $this->state,

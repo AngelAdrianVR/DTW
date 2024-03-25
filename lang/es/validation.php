@@ -164,5 +164,9 @@ return [
         'total_cost' => 'costo total',
         'total_work_days' => 'días hábiles',
         'offer_validity_days' => 'días de validéz',
+        'responsible_id' => 'responsable',
+        'client_id' => 'cliente',
+        'quote_id' => 'cotización',
+        'start_date' => 'duración',
     ],
 ];
