@@ -33,10 +33,6 @@ class Project extends Model implements HasMedia
         'user_id',
     ];
 
-    protected $dates = [
-        
-    ];
-
     protected $casts = [
         'customer_info' => 'array',
         'start_date' => 'datetime',

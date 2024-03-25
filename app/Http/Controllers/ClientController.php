@@ -130,4 +130,11 @@ class ClientController extends Controller
 
         return response()->json(compact('items'));
     }
+    
+    public function getProjects(Client $client)
+    {
+        $items = $client->projects()->with(['tasks'])->get();
+
+        return response()->json(compact('items'));
+    }
 }
