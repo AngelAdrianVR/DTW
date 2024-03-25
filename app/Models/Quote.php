@@ -20,10 +20,18 @@ class Quote extends Model
         'offer_validity_days',
         'show_process',
         'show_benefits',
+        'show_bank_info',
         'client_id',
         'contact_id',
         'prospect_id',
         'user_id',
+        'sent_at',
+        'authorized_at',
+    ];
+
+    protected $cast = [
+        'sent_at' => 'datetime',
+        'authorized_at' => 'datetime',
     ];
 
     public function user()

@@ -36,7 +36,32 @@
                         <tbody>
                             <tr @click="$inertia.visit(route('quotes.show', item))" v-for="item in localItems"
                                 :key="item.id" class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
-                                <td class="rounded-s-full">{{ 'C-'+String(item.id).padStart(3, '0') }}</td>
+                                <td class="rounded-s-full">
+                                    <p class=" flex items-center space-x-1">
+                                        <el-tooltip v-if="item.sent_at && !item.authorized_at" placement="top"
+                                            :content="'Enviado al cliente el ' + formatDateTime(item.sent_at)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-[14px] text-yellow-600">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                        </el-tooltip>
+                                        <el-tooltip v-else-if="item.authorized_at" placement="top"
+                                            :content="'Autorizado por cliente el ' + formatDateTime(item.sent_at)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                class="size-[14px] text-green-600">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m4.5 12.75 6 6 9-13.5" />
+                                            </svg>
+                                        </el-tooltip>
+                                        <el-tooltip v-else placement="top" content="Sin enviar a cliente / prospecto">
+                                            <i class="fa-solid fa-question size-[14px] text-red-600"></i>
+                                        </el-tooltip>
+                                        <span>{{ 'C-' + String(item.id).padStart(3, '0') }}</span>
+                                    </p>
+                                </td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.client.name }}</td>
                                 <td>{{ item.contact.name }}</td>
@@ -59,6 +84,26 @@
                                                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                                                     </svg>
                                                     <span class="text-xs">Editar</span>
+                                                </el-dropdown-item>
+                                                <el-dropdown-item v-if="!item.sent_at && !item.authorized_at"
+                                                    :command="'sent-' + item.id">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-[14px] mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+                                                    <span class="text-xs">Esperando respuesta</span>
+                                                </el-dropdown-item>
+                                                <el-dropdown-item v-if="!item.authorized_at"
+                                                    :command="'auth-' + item.id">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-[14px] mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m4.5 12.75 6 6 9-13.5" />
+                                                    </svg>
+                                                    <span class="text-xs">Autorizado</span>
                                                 </el-dropdown-item>
                                                 <el-dropdown-item :command="'delete-' + item.id">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -154,7 +199,7 @@ export default {
         formatDateTime(dateTime) {
             let parsedDate = new Date(dateTime);
 
-            return format(parsedDate, 'd MMM, Y • hh:mm a', { locale: es }); // Formato personalizado
+            return format(parsedDate, 'd MMM, y • hh:mm a', { locale: es }); // Formato personalizado
         },
         handleCommand(command) {
             const commandName = command.split('-')[0];
@@ -162,6 +207,10 @@ export default {
 
             if (commandName == 'edit') {
                 this.$inertia.get(route('quotes.edit', itemId));
+            } else if (commandName == 'sent') {
+                this.markAsSent(itemId);
+            } else if (commandName == 'auth') {
+                this.markAsAuthorized(itemId);
             } else {
                 this.showDeleteConfirm = true;
                 this.itemIdToDelete = itemId;
@@ -184,6 +233,48 @@ export default {
             if (this.itemsBuffer.length) {
                 this.localItems = this.itemsBuffer;
                 this.itemsBuffer = [];
+            }
+        },
+        async markAsSent(itemId) {
+            try {
+                const response = await axios.put(route('quotes.mark-as-sent', itemId));
+
+                if (response.status === 200) {
+                    this.quotes.find(item => item.id == itemId).sent_at = response.data.prop;
+                    this.$notify({
+                        title: "Correcto",
+                        message: "",
+                        type: "success",
+                    });
+                }
+            } catch (error) {
+                this.$notify({
+                    title: "No se pudo completar la solicitud",
+                    message: "El servidor no pudo procesar la petición, inténtalo más tarde",
+                    type: "error",
+                });
+                console.log(error)
+            }
+        },
+        async markAsAuthorized(itemId) {
+            try {
+                const response = await axios.put(route('quotes.mark-as-authorized', itemId));
+
+                if (response.status === 200) {
+                    this.quotes.find(item => item.id == itemId).authorized_at = response.data.prop;
+                    this.$notify({
+                        title: "Correcto",
+                        message: "",
+                        type: "success",
+                    });
+                }
+            } catch (error) {
+                this.$notify({
+                    title: "No se pudo completar la solicitud",
+                    message: "El servidor no pudo procesar la petición, inténtalo más tarde",
+                    type: "error",
+                });
+                console.log(error)
             }
         },
         async fetchItemsByPage() {

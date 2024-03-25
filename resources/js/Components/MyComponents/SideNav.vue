@@ -23,7 +23,7 @@
                         <button v-if="menu.show" @click="goToRoute(menu.route)" :active="menu.active"
                             :title="menu.label"
                             class="flex justify-center items-center mx-auto size-10 rounded-full mt-2 transition ease-linear duration-150"
-                            :class="menu.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-gray66'">
+                            :class="menu.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-white'">
                             <span v-html="menu.icon"></span>
                         </button>
                     </div>
@@ -36,7 +36,7 @@
                                 <button @click="goToRoute(option.route)" v-if="option.show" :active="option.active"
                                     :title="option.label"
                                     class="w-full text-start pl-6 pr-2 mt-2 flex justify-betweenn text-xs rounded-full py-1 transition ease-linear duration-150"
-                                    :class="option.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-gray66'">
+                                    :class="option.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-white'">
                                     <p class="w-full truncate"> {{ option.label }}</p>
                                 </button>
                             </div>
@@ -44,7 +44,7 @@
                         <button v-else-if="menu.show" @click="goToRoute(menu.route)" :active="menu.active"
                             :title="menu.label"
                             class="w-full text-start px-2 mt-2 flex justify-between text-xs rounded-full py-1 transition ease-linear duration-150"
-                            :class="menu.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-gray66'">
+                            :class="menu.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-white'">
                             <p class="w-full text-xs truncate flex items-center">
                                 <span class="mr-2" v-html="menu.icon"></span>
                                 {{ menu.label }}

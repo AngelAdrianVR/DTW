@@ -50,6 +50,7 @@ class QuoteController extends Controller
             'offer_validity_days' => 'nullable|numeric|min:0',
             'show_process' => 'boolean',
             'show_benefits' => 'boolean',
+            'show_bank_info' => 'boolean',
             'client_id' => 'nullable|numeric|min:1',
             'contact_id' => 'required|numeric|min:1',
             'prospect_id' => 'nullable|numeric|min:1',
@@ -73,6 +74,7 @@ class QuoteController extends Controller
             'offer_validity_days' => 'nullable|numeric|min:0',
             'show_process' => 'boolean',
             'show_benefits' => 'boolean',
+            'show_bank_info' => 'boolean',
             'client_id' => 'nullable|numeric|min:1',
             'contact_id' => 'required|numeric|min:1',
             'prospect_id' => 'nullable|numeric|min:1',
@@ -126,5 +128,27 @@ class QuoteController extends Controller
             ->get();
 
         return response()->json(['items' => $quotes]);
+    }
+
+    public function markAsAuthorized(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        // si se autoriza sin haber mandado al cliente, se marca tambien como enviado
+        if ($quote->sent_at === null) {
+            $quote->sent_at = $now;
+        }
+        $quote->authorized_at = $now;
+        $quote->save();
+
+        return response()->json(['prop' => $now]);
+    }
+
+    public function markAsSent(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        $quote->sent_at = $now;
+        $quote->save();
+
+        return response()->json(['prop' => $now]);
     }
 }

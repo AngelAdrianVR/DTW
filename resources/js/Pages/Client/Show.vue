@@ -49,7 +49,7 @@
               <span class="text-sm">Cotizaciones</span>
             </div>
           </template>
-          <Quotes :items="client.quotes" />
+          <Quotes :clientId="client.id" />
         </el-tab-pane>
         <el-tab-pane name="3">
           <template #label>
@@ -62,7 +62,7 @@
               <span class="text-sm">Proyectos</span>
             </div>
           </template>
-          <Projects :items="client.projects" />
+          <Projects :clientId="client.id" />
         </el-tab-pane>
       </el-tabs>
     </main>

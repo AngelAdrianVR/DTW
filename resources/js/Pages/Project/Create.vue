@@ -12,7 +12,7 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-          <InputLabel value="Responsable(s)*" class="ml-3 mb-1" />
+          <InputLabel value="Responsable(s) *" class="ml-3 mb-1" />
           <el-select class="w-full" v-model="form.responsible_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
@@ -42,7 +42,7 @@
           <el-select class="w-full" v-model="form.quote_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="quote in quotes" :key="quote" :label="quote.quote_name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
+              <el-option v-for="quote in quotes" :key="quote" :label="quote.name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
           </el-select>
           <InputError :message="$page.props?.errors.quote_id" />
         </div>
@@ -70,7 +70,7 @@
         <div class="mt-3 md:mt-0">
             <InputLabel value="Duración" class="ml-3 mb-1" />
             <el-date-picker @change="saveDates" v-model="duration" type="daterange" range-separator="A"
-                start-placeholder="Fecha de inicio" end-placeholder="Fecha esperada de fin" />
+                start-placeholder="Fecha de inicio" end-placeholder="Fecha esperada de fin" class="!w-full" />
         </div>
 
         <div class="mt-3 md:mt-0">

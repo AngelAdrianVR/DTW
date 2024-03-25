@@ -24,7 +24,7 @@ class ProjectController extends Controller
     public function create()
     {
         $users = User::all(['id', 'name']);
-        $quotes = Quote::all(['id', 'quote_name', 'total_cost']);
+        $quotes = Quote::all(['id', 'name', 'total_cost']);
         $clients = Client::all(['id', 'name']);
 
         return inertia('Project/Create', compact('users', 'quotes', 'clients'));
@@ -63,7 +63,7 @@ class ProjectController extends Controller
     public function show($project_id)
     {
         
-        $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,quote_name', 'tasks'])->find($project_id));
+        $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,name', 'tasks'])->find($project_id));
         $projects = Project::latest()->get(['id', 'name']);
         $users = User::all(['id', 'name']);
 
@@ -75,7 +75,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $users = User::all(['id', 'name']);
-        $quotes = Quote::all(['id', 'quote_name', 'total_cost']);
+        $quotes = Quote::all(['id', 'name', 'total_cost']);
         $clients = Client::all(['id', 'name']);
 
         // return $project;
