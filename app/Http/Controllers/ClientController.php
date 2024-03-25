@@ -123,4 +123,11 @@ class ClientController extends Controller
 
         return response()->json(compact('items'));
     }
+
+    public function getQuotes(Client $client)
+    {
+        $items = $client->quotes()->with(['user:id,name', 'contact:id,name'])->get();
+
+        return response()->json(compact('items'));
+    }
 }
