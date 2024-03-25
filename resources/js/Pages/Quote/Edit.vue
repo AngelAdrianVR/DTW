@@ -98,7 +98,7 @@
           <div class="mt-3">
             <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
             <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
-            <el-checkbox v-model="form.show_bank_info" label="Mostrar beneficios" size="small" />
+            <el-checkbox v-model="form.show_bank_info" label="Mostrar datos bancarios" size="small" />
           </div>
           <div class="mt-2 flex justify-end">
             <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Actualizar cotización
@@ -107,21 +107,25 @@
         </form>
         <!-- ------------- quote preview --------------- -->
         <div class="text-sm border border-grayD9 rounded-[10px] px-5 py-4 relative">
-          <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p>
-          <div class="flex justify-between">
-            <figure>
-              <img src="@/../../public/assets/images/quote-logo.png">
+          <!-- <p class="absolute top-0 right-2 text-gray-400 text-sm">Vista previa</p> -->
+          <div class="absolute w-full top-0 left-0">
+            <figure
+              class="w-full rounded-t-[10px] bg-cover h-32 py-11 pl-12 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
+              <img src="@/../../public/assets/images/quoteTemplate/logo.png" class="h-10">
             </figure>
           </div>
-          <p class="font-bold text-sm text-center">Cotización. {{ form.name }}</p>
-          <p class="text-xs text-right">Emisión: <span>{{ formatDate(date) }}</span>
-          </p>
-          <p class="text-xs text-right">Vigente hasta {{ form.offer_validity_days }} días después de la emisión</p>
-          <div class="px-4 mt-2">
-            <p v-if="form.client_id" class="text-xs text-left">
-              {{ clients.find(item => item.id === form.client_id).name }}</p>
-            <p v-if="form.description" class="text-xs text-left">{{ form.description }}</p>
-            <p v-if="form.features" class="text-sm font-bold text-left mt-2">Servicios</p>
+          <div class="flex flex-col items-end mt-6">
+            <p class="text-xs">Emisión: <span>{{ formatDate(date) }}</span></p>
+            <p class="text-xs">Vigente hasta {{ form.offer_validity_days }} días después de la emisión</p>
+          </div>
+          <main class="mt-16 mb-24">
+            <h1 class="font-bold text-base text-center">Cotización. {{ form.name }}</h1>
+            <div v-if="form.client_id">
+              <p class="text-xs text-left">{{ clients.find(item => item.id === form.client_id).name }}</p>
+              <p class="text-xs text-left">{{ clients.find(item => item.id === form.client_id).address }}</p>
+            </div>
+            <p v-if="form.description" class="text-xs text-left"><b>Descripción: </b>{{ form.description }}</p>
+            <h2 v-if="form.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
             <div v-html="form.features" class="text-xs"></div>
             <section v-if="form.total_work_days">
               <h2 class="text-sm font-bold text-left mt-2">Duración</h2>
@@ -225,7 +229,19 @@
               <p>- Sin límite de usuarios. </p>
               <p>- No pagan cuota mensual, es de una sola adquisición. </p>
             </section>
-          </div>
+          </main>
+          <footer v-if="form.show_bank_info" class="w-full absolute bottom-0 right-0">
+            <section
+              class="w-[70%] bg-cover ml-auto h-24 pl-[17%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/footer.png')]">
+              <article class="text-[#6d6d6d] text-xs">
+                <h2 class="font-bold text-center mb-1">Datos para la realización de pagos</h2>
+                <p>Nombre del beneficiario: <span class="text-black">Miguel Osvaldo Vázquez Rodríguez</span></p>
+                <p>Banco: <span class="text-black">NU México</span></p>
+                <p>Número de cuenta: <span class="text-black">00017049244</span></p>
+                <p>CLABE: <span class="text-black">638180000170492445</span></p>
+              </article>
+            </section>
+          </footer>
         </div>
       </main>
     </div>
@@ -261,6 +277,7 @@ export default {
       offer_validity_days: this.quote.offer_validity_days,
       show_process: Boolean(this.quote.show_process),
       show_benefits: Boolean(this.quote.show_benefits),
+      show_bank_info: Boolean(this.quote.show_bank_info),
     });
     return {
       // ckEditor 5

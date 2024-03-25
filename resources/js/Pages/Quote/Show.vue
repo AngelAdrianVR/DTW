@@ -1,5 +1,4 @@
 <template>
-
   <Head :title="'C-' + String(quote.id).padStart(3, '0')" />
   <div class="text-sm rounded-[10px] px-12 py-4 relative min-h-screen">
     <div class="absolute w-full top-0 left-0">
@@ -13,7 +12,7 @@
       <p class="text-xs">Emisión: <span>{{ formatDate(date) }}</span></p>
       <p class="text-xs">Vigente hasta {{ quote.offer_validity_days }} días después de la emisión</p>
     </div>
-    <main class="mt-9">
+    <main class="mt-9 mb-16">
       <h1 class="font-bold text-base text-center">Cotización. {{ quote.name }}</h1>
       <div v-if="quote.client_id">
         <p class="text-xs text-left">{{ quote.client.name }}</p>
@@ -125,9 +124,9 @@
         <p>- No pagan cuota mensual, es de una sola adquisición. </p>
       </section>
     </main>
-    <footer v-if="!quote.show_bank_info" class="w-full absolute bottom-0 right-0">
+    <footer v-if="quote.show_bank_info" class="w-full absolute bottom-0 right-0">
       <section
-        class="w-[60%] bg-cover ml-auto h-32 pl-[15%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/footer.png')]">
+        class="w-[60%] bg-cover ml-auto h-28 pl-[15%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/footer.png')]">
         <article class="text-[#6d6d6d] text-xs">
           <h2 class="font-bold text-center mb-1">Datos para la realización de pagos</h2>
           <p>Nombre del beneficiario: <span class="text-black">Miguel Osvaldo Vázquez Rodríguez</span></p>

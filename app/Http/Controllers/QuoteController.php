@@ -21,7 +21,7 @@ class QuoteController extends Controller
 
     public function create()
     {
-        $clients = Client::get(['id', 'name']);
+        $clients = Client::get(['id', 'name', 'address']);
         $prospects = [];
         // $prospects = Prospect::get(['id', 'name']);
 
@@ -30,7 +30,7 @@ class QuoteController extends Controller
 
     public function edit(Quote $quote)
     {
-        $clients = Client::get(['id', 'name']);
+        $clients = Client::get(['id', 'name', 'address']);
         $prospects = [];
         // $prospects = Prospect::get(['id', 'name']);
 
@@ -113,14 +113,14 @@ class QuoteController extends Controller
 
     public function getMatches($query)
     {
-        $quotes = Quote::with([])
+        $quotes = Quote::with(['user', 'client', 'contact'])
             ->where('id', 'LIKE', "%$query%")
             ->orWhere('name', 'LIKE', "%$query%")
-            ->orWhereHas('user', function ($query) {
-                $query->orWhere('user.name', 'LIKE', "%$query%");
+            ->orWhereHas('user', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%$query%");
             })
-            ->orWhereHas('client', function ($query) {
-                $query->orWhere('client.name', 'LIKE', "%$query%");
+            ->orWhereHas('client', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%$query%");
             })
             // ->orWhereHas('prospect', function ($query) {
             //     $query->orWhere('prospect.name', 'LIKE', "%$query%");
