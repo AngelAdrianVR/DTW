@@ -26,8 +26,8 @@ class ProjectResource extends JsonResource
             'finish_date' => $this->finish_date?->isoFormat('DD MMM, YYYY'),
             'state' => $this->state,
             'price' => [
-                    'formated' => '$' .  number_format($this->price),
-                    'raw' => $this->price
+                'formated' => '$' .  number_format($this->price),
+                'raw' => $this->price
             ],
             'payment_method' => $this->payment_method,
             'estimated_date' => $this->estimated_date?->isoFormat('DD MMM, YYYY'),
