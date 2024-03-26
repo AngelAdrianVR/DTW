@@ -34,6 +34,7 @@ class ClientController extends Controller
             'responsible_id' => 'required|numeric|min:1',
             'contacts.0.name' => 'required|string|max:255',
             'contacts.0.phone' => 'required|string|max:13',
+            'contacts.0.email' => 'nullable|string|max:255',
             'contacts' => 'array|min:1',
         ]);
 
@@ -42,6 +43,7 @@ class ClientController extends Controller
         $client->contacts()->create([
             'name' => $validated['contacts'][0]['name'],
             'phone' => $validated['contacts'][0]['phone'],
+            'email' => $validated['contacts'][0]['email'],
         ]);
 
         return to_route('clients.show', $client);
@@ -72,6 +74,7 @@ class ClientController extends Controller
             'responsible_id' => 'required|numeric|min:1',
             'contacts.0.name' => 'required|string|max:255',
             'contacts.0.phone' => 'required|string|max:13',
+            'contacts.0.email' => 'nullable|string|max:255',
             'contacts' => 'array|min:1',
         ]);
 
@@ -81,6 +84,7 @@ class ClientController extends Controller
         $client->contacts[0]->update([
             'name' => $validated['contacts'][0]['name'],
             'phone' => $validated['contacts'][0]['phone'],
+            'email' => $validated['contacts'][0]['email'],
         ]);
 
         return to_route('clients.show', $client);

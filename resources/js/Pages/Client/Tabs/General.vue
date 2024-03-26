@@ -7,7 +7,7 @@
             <span>RFC</span>
             <span class="col-span-7">{{ client.rfc ?? '-' }}</span>
             <span>Domicilio</span>
-            <span class="col-span-7">{{ client.address ?? '-' }} - {{ client.state }}</span>
+            <span class="col-span-7">{{ client.address ?? '-' }} • {{ client.state }}</span>
             <span>Responsable</span>
             <span class="col-span-7">{{ client.responsible.name }}</span>
             <span>Creador</span>

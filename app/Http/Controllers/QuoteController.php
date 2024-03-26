@@ -13,7 +13,7 @@ class QuoteController extends Controller
 {
     public function index()
     {
-        $quotes = Quote::with(['user', 'client', 'contact'])->latest()->get()->take(15);
+        $quotes = Quote::with(['user', 'client', 'contact', 'prospect'])->latest()->get()->take(15);
         $total_items = Quote::all()->count();
 
         return inertia('Quote/Index', compact('quotes', 'total_items'));
@@ -22,8 +22,7 @@ class QuoteController extends Controller
     public function create()
     {
         $clients = Client::get(['id', 'name', 'address']);
-        $prospects = [];
-        // $prospects = Prospect::get(['id', 'name']);
+        $prospects = Prospect::get(['id', 'name', 'address']);
 
         return inertia('Quote/Create', compact('clients', 'prospects'));
     }
@@ -31,8 +30,7 @@ class QuoteController extends Controller
     public function edit(Quote $quote)
     {
         $clients = Client::get(['id', 'name', 'address']);
-        $prospects = [];
-        // $prospects = Prospect::get(['id', 'name']);
+        $prospects = Prospect::get(['id', 'name', 'address']);
 
         return inertia('Quote/Edit', compact('quote', 'clients', 'prospects'));
     }

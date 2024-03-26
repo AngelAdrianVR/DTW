@@ -14,17 +14,18 @@ class ProjectController extends Controller
     
     public function index()
     {
-        $projects = ProjectResource::collection(Project::with(['client', 'tasks'])->latest()->get());
+        $projects = ProjectResource::collection(Project::with(['client', 'tasks'])->latest()->get()->take(20));
+        $total_projects = Project::all()->count();
 
         // return $projects;
-        return inertia('Project/Index', compact('projects'));
+        return inertia('Project/Index', compact('projects', 'total_projects'));
     }
 
     
     public function create()
     {
         $users = User::all(['id', 'name']);
-        $quotes = Quote::all(['id', 'name', 'total_cost']);
+        $quotes = Quote::all(['id', 'name', 'total_cost', 'total_work_days']);
         $clients = Client::all(['id', 'name']);
 
         return inertia('Project/Create', compact('users', 'quotes', 'clients'));
@@ -44,9 +45,9 @@ class ProjectController extends Controller
             'estimated_date' => 'nullable|date|after:today',
             'category' => 'required|string|max:100',
             'invoice' => 'nullable|boolean',
-            'responsible_id' => 'nullable',
-            'customer_id' => 'nullable',
-            'quote_id' => 'nullable',
+            'responsible_id' => 'required',
+            'client_id' => 'required',
+            'quote_id' => 'required',
         ]);
 
         $project = Project::create($request->all() + ['user_id' => auth()->user()->id]);
@@ -75,7 +76,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $users = User::all(['id', 'name']);
-        $quotes = Quote::all(['id', 'name', 'total_cost']);
+        $quotes = Quote::all(['id', 'name', 'total_cost', 'total_work_days']);
         $clients = Client::all(['id', 'name']);
 
         // return $project;
@@ -96,9 +97,9 @@ class ProjectController extends Controller
             'estimated_date' => 'nullable|date|after:today',
             'category' => 'required|string|max:100',
             'invoice' => 'nullable|boolean',
-            'responsible_id' => 'nullable',
-            'customer_id' => 'nullable',
-            'quote_id' => 'nullable',
+            'responsible_id' => 'required',
+            'client_id' => 'required',
+            'quote_id' => 'required',
         ]);
 
         $project->update($request->all());
@@ -120,9 +121,9 @@ class ProjectController extends Controller
             'estimated_date' => 'nullable|date|after:today',
             'category' => 'required|string|max:100',
             'invoice' => 'nullable|boolean',
-            'responsible_id' => 'nullable',
-            'customer_id' => 'nullable',
-            'quote_id' => 'nullable',
+            'responsible_id' => 'required',
+            'client_id' => 'required',
+            'quote_id' => 'required',
         ]);
 
         $project->update($request->all());
@@ -139,18 +140,9 @@ class ProjectController extends Controller
     
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
     }
 
-    public function massiveDelete(Request $request)
-    {
-        foreach ($request->projects as $project) {
-            $project = Project::find($project['id']);
-            $project->delete();
-        }
-
-        return response()->json(['message' => 'mensaje(s) eliminado(s)']);
-    }
 
     public function finishProject(Project $project)
     {
@@ -158,5 +150,17 @@ class ProjectController extends Controller
             'finish_date' => now()
         ]);
 
+    }
+
+
+    public function getItemsByPage($currentPage)
+    {
+        $offset = $currentPage * 20;
+        $projects = ProjectResource::collection(Project::latest()
+            ->skip($offset)
+            ->take(20)
+            ->get());
+
+        return response()->json(['items' => $projects]);
     }
 }

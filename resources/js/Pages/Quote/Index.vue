@@ -25,7 +25,7 @@
                             <tr class="*:text-left *:pb-2 *:px-4 *:text-sm">
                                 <th>Folio</th>
                                 <th>Nombre</th>
-                                <th>Cliente</th>
+                                <th>Cliente / prospecto</th>
                                 <th>Contacto</th>
                                 <th>Creado por</th>
                                 <th>Creado el</th>
@@ -63,8 +63,24 @@
                                     </p>
                                 </td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ item.client.name }}</td>
-                                <td>{{ item.contact.name }}</td>
+                                <td v-if="item.client_id !== null" class="flex items-center space-x-1">
+                                    <el-tooltip content="Cliente" placement="left">
+                                        <div class="flex items-center space-x-1">
+                                            <i class="fa-solid fa-circle text-green-600 text-[7px]"></i>
+                                            <span>{{ item.client.name }}</span>
+                                        </div>
+                                    </el-tooltip>
+                                </td>
+                                <td v-else class="flex items-center space-x-1">
+                                    <el-tooltip content="Prospecto" placement="left">
+                                        <div class="flex items-center space-x-1">
+                                            <i class="fa-solid fa-circle text-blue-600 text-[7px]"></i>
+                                            <span>{{ item.prospect.name }}</span>
+                                        </div>
+                                    </el-tooltip>
+                                </td>
+                                <td v-if="item.client_id !== null">{{ item.contact.name }}</td>
+                                <td v-else>{{ item.contact.name }}</td>
                                 <td>{{ item.user.name }}</td>
                                 <td>{{ formatDateTime(item.created_at) }}</td>
                                 <td>${{ item.total_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>

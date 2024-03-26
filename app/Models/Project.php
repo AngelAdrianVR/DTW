@@ -19,6 +19,7 @@ class Project extends Model implements HasMedia
         'description',
         'customer_info',
         'hours_work',
+        'total_work_days',
         'start_date',
         'finish_date',
         'state',
