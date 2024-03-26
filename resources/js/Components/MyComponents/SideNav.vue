@@ -35,7 +35,7 @@
                             <div v-for="(option, index2) in menu.options" :key="index2">
                                 <button @click="goToRoute(option.route)" v-if="option.show" :active="option.active"
                                     :title="option.label"
-                                    class="w-full text-start pl-6 pr-2 mt-2 flex justify-betweenn text-xs rounded-full py-1 transition ease-linear duration-150"
+                                    class="w-full text-start px-2 mt-2 flex justify-betweenn text-xs rounded-full py-1 transition ease-linear duration-150"
                                     :class="option.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-white'">
                                     <p class="w-full truncate"> {{ option.label }}</p>
                                 </button>

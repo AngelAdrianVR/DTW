@@ -102,7 +102,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import CancelButton from "@/Components/CancelButton.vue";
 
 export default {
-data() {
+  data() {
     return {
       showDeleteConfirm: false,
       itemIdToDelete: null,
@@ -165,7 +165,6 @@ methods:{
           bg: 'bg-red-200',
         };
       }
-
       if (completedTasks === totalTasks) {
         return {
           label: 'Terminado',
@@ -186,6 +185,6 @@ methods:{
         };
       }
     },
-}
+  }
 }
 </script>
