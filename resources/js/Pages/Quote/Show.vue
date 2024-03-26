@@ -1,4 +1,5 @@
 <template>
+
   <Head :title="'C-' + String(quote.id).padStart(3, '0')" />
   <div class="text-sm rounded-[10px] px-12 py-4 relative min-h-screen">
     <div class="absolute w-full top-0 left-0">
@@ -12,11 +13,15 @@
       <p class="text-xs">Emisión: <span>{{ formatDate(date) }}</span></p>
       <p class="text-xs">Vigente hasta {{ quote.offer_validity_days }} días después de la emisión</p>
     </div>
-    <main class="mt-9 mb-16">
+    <main class="mt-11 mb-16">
       <h1 class="font-bold text-base text-center">Cotización. {{ quote.name }}</h1>
       <div v-if="quote.client_id">
         <p class="text-xs text-left">{{ quote.client.name }}</p>
         <p class="text-xs text-left">{{ quote.client.address }}</p>
+      </div>
+      <div v-if="quote.prospect_id">
+        <p class="text-xs text-left">{{ quote.prospect.name }}</p>
+        <p class="text-xs text-left">{{ quote.prospect.address }}</p>
       </div>
       <p v-if="quote.description" class="text-xs text-left"><b>Descripción: </b>{{ quote.description }}</p>
       <h2 v-if="quote.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
@@ -133,7 +138,7 @@
           <p>Banco: <span class="text-black">NU México</span></p>
           <p>Número de cuenta: <span class="text-black">00017049244</span></p>
           <p>CLABE: <span class="text-black">638180000170492445</span></p>
-        </article>   
+        </article>
       </section>
     </footer>
   </div>

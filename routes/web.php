@@ -76,6 +76,14 @@ Route::get('clients-get-contacts/{client}', [ClientController::class, 'getContac
 Route::get('clients-get-quotes/{client}', [ClientController::class, 'getQuotes'])->name('clients.get-quotes')->middleware('auth');
 Route::get('clients-get-projects/{client}', [ClientController::class, 'getProjects'])->name('clients.get-projects')->middleware('auth');
 
+// ------- CRM (prospectos Routes)  ---------
+Route::resource('prospects', ProspectController::class)->middleware('auth');
+Route::get('prospects-get-matches/{query}', [ProspectController::class, 'getMatches'])->name('prospects.get-matches');
+Route::get('prospects-get-quotes/{prospect}', [ProspectController::class, 'getQuotes'])->name('prospects.get-quotes');
+Route::post('prospects/turn-into-client/{prospect}', [ProspectController::class, 'turnIntoClient'])->name('prospects.turn-into-client');
+Route::get('prospects-get-quotes/{prospect}', [ProspectController::class, 'getQuotes'])->name('prospects.get-quotes')->middleware('auth');
+Route::get('prospects-get-contact/{prospect}', [ProspectController::class, 'getContact'])->name('prospects.get-contact')->middleware('auth');
+
 // messages routes
 Route::resource('messages', MessageController::class)->middleware('auth')->except('show');
 Route::post('messages/mark-as-dispatched', [MessageController::class, 'MarkAsdispatched'])->middleware('auth')->name('messages.mark-as-dispatched');
@@ -87,7 +95,6 @@ Route::post('projects/massive-delete', [ProjectController::class, 'massiveDelete
 Route::put('projects/{project}/finish', [ProjectController::class, 'finishProject'])->name('projects.finish');
 Route::post('projects/update-with-media/{project}', [ProjectController::class, 'updateWithMedia'])->name('projects.update-with-media');
 Route::get('projects-get-by-page/{currentPage}', [ProjectController::class, 'getItemsByPage'])->name('projects.get-by-page')->middleware('auth');
-
 
 // projects-tasks routes
 Route::resource('project-tasks', ProjectTaskController::class)->middleware('auth');

@@ -1,106 +1,197 @@
 <template>
-  <AppLayout title="Prospectos-editar |">
-    <template #header>
-      <div class="flex justify-between">
-        <Link :href="route('prospects.index')" class="hover:bg-gray-300/50 rounded-full w-10 h-10 flex justify-center items-center">
-          <i class="fa-solid fa-chevron-left"></i>
-        </Link>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Editar {{ prospect.company }}
-        </h2>
-      </div>
-    </template>
-    <div class="lg:w-1/2 mx-auto p-3 mt-6 shadow-md lg:py-4 lg:px-5 bg-white rounded-lg">
-      <form @submit.prevent="update">
-        <div class="">
-          <el-input v-model="form.prospect_name" placeholder="Nombre del prospecto" clearable>
-                <template #prefix>
-                <el-icon class="el-input__icon"><i class="fa-solid fa-user-plus"></i></el-icon>
-                </template>
-            </el-input>
-
-         <InputError :message="$page.props?.errors.prospect_name" />
-        </div>
-
-        <div class="mt-3">
-          <el-input v-model="form.company" placeholder="Nombre de la empresa" clearable>
-            <template #prefix>
-                <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
-                </template>
-            </el-input>
-
-         <InputError :message="$page.props?.errors.company" />
-        </div>
-
-        <div class="">
-        <el-input v-model="form.project_type" class="mt-3" placeholder="Tipo de proyecto" clearable>
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-earth-americas"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors.project_type" />
-        </div>
-
-        <div class="">
-          <el-input v-model="form.notes" class="mt-3 mb-6" placeholder="Notas del proyecto" clearable>
-          </el-input>
-
-          <InputError :message="$page.props?.errors.notes" class="mb-1" />
-        </div>
-
-        <PrimaryButton> Actualizar </PrimaryButton>
-      </form>
+  <AppLayout title="Actualizar prospecto">
+    <div class="mx-2 md:mx-12 mt-4">
+      <header>
+        <Back />
+      </header>
+      <main class="border border-grayD9 rounded-[10px] px-5 py-4 mx-2 md:mx-24 mt-10">
+        <h1 class="font-bold">Actualizar prospecto</h1>
+        <form @submit.prevent="update" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2">
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Nombre de la empresa *" />
+            <el-input v-model="form.name" placeholder="Escribe el nombre de la empresa" clearable />
+            <InputError :message="form.errors.name" />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Dirección" />
+            <el-input v-model="form.address" placeholder="Escribe la dirección" clearable />
+            <InputError :message="form.errors.address" />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Estado *" />
+            <el-select v-model="form.state" filterable placeholder="Selecciona el estado de la república" class="w-full"
+              no-data-text="No hay opciones para mostrar" no-match-text="No se encontraron coincidencias">
+              <el-option v-for="(item, index) in states" :key="index" :label="item" :value="item" />
+            </el-select>
+            <InputError :message="form.errors.state" />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Nombre del contacto *" />
+            <el-input v-model="form.contact.name" placeholder="Escribe el nombre del contacto " clearable />
+            <InputError :message="form.errors['contact.name']" />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Correo electrónico" />
+            <el-input v-model="form.contact.email" placeholder="Escribe el correo electrónico" clearable />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Teléfono *" />
+            <el-input v-model="form.contact.phone"
+              :formatter="(value) => `${value}`.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2 $3')"
+              :parser="(value) => value.replace(/\D/g, '')" maxlength="10" clearable
+              placeholder="Escribe el número de teléfono" />
+            <InputError :message="form.errors['contact.phone']" />
+          </div>
+          <div class="self-end">
+            <InputLabel class="mb-1 ml-2">
+              <status class="mr-1">Estatus *</status>
+              <el-tooltip :content="statuses.find(item => item.label == form.status).tooltip" placement="top">
+                <i class="fa-solid fa-circle text-[10px] mt-1"
+                  :style="{ color: statuses.find(item => item.label == form.status).color }"></i>
+              </el-tooltip>
+            </InputLabel>
+            <el-select v-model="form.status" placeholder="Selecciona el estatus" class="w-full"
+              no-data-text="No hay opciones para mostrar" no-match-text="No se encontraron coincidencias">
+              <el-option v-for="(item, index) in statuses" :key="index" :label="item.label" :value="item.label">
+                <p class="flex items-center space-x-2">
+                  <i class="fa-solid fa-circle text-[10px] mt-1" :style="{ color: item.color }"></i>
+                  <span class="text-sm">{{ item.label }}</span>
+                </p>
+              </el-option>
+            </el-select>
+            <InputError :message="form.errors.status" />
+          </div>
+          <div>
+            <InputLabel class="mb-1 ml-2" value="Responsable *" />
+            <el-select v-model="form.responsible_id" placeholder="Selecciona el responsable de dar seguimiento">
+              <el-option v-for="item in sellers" :key="item.id" :label="item.name" :value="item.id">
+                <figure style="float: left">
+                  <img class="object-cover size-7 rounded-full mt-1" :src="item.profile_photo_url" />
+                </figure>
+                <span class="ml-2">{{ item.name }}</span>
+              </el-option>
+            </el-select>
+            <InputError :message="form.errors.responsible_id" />
+          </div>
+          <div class="md:col-span-full">
+            <InputLabel class="mb-1 ml-2" value="Notas" />
+            <el-input v-model="form.abstract" maxlength="500" :autosize="{ minRows: 3, maxRows: 5 }" show-word-limit
+              type="textarea" placeholder="Escribe las notas" />
+          </div>
+          <div class="md:col-span-full flex justify-end mt-3">
+            <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Actualizar prospecto</PrimaryButton>
+          </div>
+        </form>
+      </main>
     </div>
   </AppLayout>
 </template>
 
 <script>
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link, useForm } from "@inertiajs/vue3";
+import Back from "@/Components/MyComponents/Back.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { useForm } from "@inertiajs/vue3";
 
 export default {
   data() {
     const form = useForm({
-      prospect_name: this.prospect.prospect_name,
-      company: this.prospect.company,
-      project_type: this.prospect.project_type,
-      notes: this.prospect.notes,
+      name: this.prospect.name,
+      responsible_id: this.prospect.responsible_id,
+      address: this.prospect.address,
+      state: this.prospect.state,
+      status: this.prospect.status,
+      abstract: this.prospect.abstract,
+      contact: {
+        name: this.prospect.contact.name,
+        phone: this.prospect.contact.phone,
+        email: this.prospect.contact.email,
+      }
     });
+
     return {
       form,
+      states: [
+        'Aguascalientes',
+        'Baja California',
+        'Baja California Sur',
+        'Campeche',
+        'Chiapas',
+        'Chihuahua',
+        'Ciudad de México',
+        'Coahuila',
+        'Colima',
+        'Durango',
+        'Estado de México',
+        'Guanajuato',
+        'Guerrero',
+        'Hidalgo',
+        'Jalisco',
+        'Michoacán',
+        'Morelos',
+        'Nayarit',
+        'Nuevo León',
+        'Oaxaca',
+        'Puebla',
+        'Querétaro',
+        'Quintana Roo',
+        'San Luis Potosí',
+        'Sinaloa',
+        'Sonora',
+        'Tabasco',
+        'Tamaulipas',
+        'Tlaxcala',
+        'Veracruz',
+        'Yucatán',
+        'Zacatecas',
+      ],
+      statuses: [
+        {
+          label: "Contacto inicial",
+          bg: "#F1F996",
+          color: "#B1B402",
+          tooltip: "El prospecto entra en contacto con la empresa por primera vez",
+        },
+        {
+          label: "En proceso de conversión",
+          bg: "#BCF996",
+          color: "#37A305",
+          tooltip: "El responsable esta trabajando para convertir el prospecto en nuevo cliente",
+        },
+        {
+          label: "Perdido",
+          bg: "#F7B7FC",
+          color: "#9E0FA9",
+          tooltip: "El prospecto no se convierte en cliente ",
+        },
+      ],
     };
   },
   components: {
-    ApplicationLogo,
     AppLayout,
-    SecondaryButton,
-    Link,
-    TextInput,
     PrimaryButton,
-    InputError
+    InputLabel,
+    InputError,
+    Back,
   },
   props: {
-    prospect: Object
+    prospect: Object,
+    sellers: Array,
   },
   methods: {
     update() {
-            this.form.put(route("prospects.update", this.prospect.id), {
-                onSuccess: () => {
-                    this.$notify({
-                        title: 'Success',
-                        message: "The prospect has been edited",
-                        type: 'success'
-                    });
-                }
-            });
-        },
-  },
+      this.form.put(route('prospects.update', this.prospect), {
+        onSuccess: () => {
+          this.$notify({
+            title: "Correcto",
+            message: "Se ha actualizado el prospecto",
+            type: "success",
+          })
+        }
+      });
+    },
+  }
 };
 </script>
-

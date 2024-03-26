@@ -168,5 +168,7 @@ return [
         'client_id' => 'cliente',
         'quote_id' => 'cotización',
         'start_date' => 'duración',
+        'contact.name' => 'nombre de contacto',
+        'contact.phone' => 'telefono de contacto',
     ],
 ];

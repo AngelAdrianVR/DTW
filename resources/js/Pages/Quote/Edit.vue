@@ -22,7 +22,7 @@
           </div>
           <div v-else class="mt-3">
             <InputLabel value="Prospecto *" />
-            <el-select @change="fetchProspectContacts" v-model="form.prospect_id" placeholder="Selecciona al prospecto">
+            <el-select @change="fetchProspectContact" v-model="form.prospect_id" placeholder="Selecciona al prospecto">
               <el-option v-for="item in prospects" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
             <InputError :message="form.errors.prospect_id" />
@@ -123,6 +123,10 @@
             <div v-if="form.client_id">
               <p class="text-xs text-left">{{ clients.find(item => item.id === form.client_id).name }}</p>
               <p class="text-xs text-left">{{ clients.find(item => item.id === form.client_id).address }}</p>
+            </div>
+            <div v-if="form.prospect_id">
+              <p class="text-xs text-left">{{ prospects.find(item => item.id === form.prospect_id).name }}</p>
+              <p class="text-xs text-left">{{ prospects.find(item => item.id === form.prospect_id).address }}</p>
             </div>
             <p v-if="form.description" class="text-xs text-left"><b>Descripción: </b>{{ form.description }}</p>
             <h2 v-if="form.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
@@ -357,12 +361,13 @@ export default {
         console.log(error);
       }
     },
-    async fetchProspectContacts() {
+    async fetchProspectContact() {
       try {
-        const response = await axios.get(route('prospects.get-contacts', this.form.prospect_id));
+        const response = await axios.get(route('prospects.get-contact', this.form.prospect_id));
 
         if (response.status === 200) {
-          this.contacts = response.data.items;
+          this.contacts.push(response.data.item);
+          this.form.contact_id = response.data.item.id;
         }
       } catch (error) {
         console.log(error);
