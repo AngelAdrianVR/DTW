@@ -170,5 +170,9 @@ return [
         'start_date' => 'duración',
         'contact.name' => 'nombre de contacto',
         'contact.phone' => 'telefono de contacto',
+        'created_at' => 'fecha de ingreso',
+        'employee_properties.phone' => 'telefono de empleado',
+        'employee_properties.department' => 'departamento',
+        'employee_properties.charge' => 'puesto',
     ],
 ];
