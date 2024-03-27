@@ -112,9 +112,11 @@ Route::put('prospects/{prospect}/rejected', [ProspectController::class, 'rejecte
 Route::get('prospects-get-contacts/{prospect}', [ProspectController::class, 'getContacts'])->name('prospects.get-contacts')->middleware('auth');
 
 // users routes
+Route::resource('users', UserController::class)->middleware('auth');
 Route::get('users-get-notifications', [UserController::class, 'getNotifications'])->middleware('auth')->name('users.get-notifications');
 Route::post('users-read-notifications', [UserController::class, 'readNotifications'])->middleware('auth')->name('users.read-user-notifications');
 Route::post('users-delete-notifications', [UserController::class, 'deleteNotifications'])->middleware('auth')->name('users.delete-user-notifications');
+Route::get('users-get-by-page/{currentPage}', [UserController::class, 'getItemsByPage'])->name('users.get-by-page')->middleware('auth');
 
 //PDF routes ----------------------------------------------------
 Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
