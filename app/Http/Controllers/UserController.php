@@ -36,21 +36,19 @@ class UserController extends Controller
             'employee_properties.department' => 'required',
         ]);
 
-        User::create($request->all() + ['password' => bcrypt('0000')]);
+        $user = User::create($request->all() + ['password' => bcrypt('0000')]);
 
-        return to_route('users.index');
+        return to_route('users.show', $user->id);
     }
 
     
-    public function show($project_id)
-    {
-        
-        // $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,name', 'tasks'])->find($project_id));
-        // $projects = Project::latest()->get(['id', 'name']);
-        // $users = User::all(['id', 'name']);
+    public function show($user_id)
+    {      
+        $user = UserResource::make(User::find($user_id));
+        $users = User::all(['id', 'name']);
 
-        // // return $project;
-        // return inertia('Project/Show', compact('project', 'projects', 'users'));
+        // return $user;
+        return inertia('User/Show', compact('user','users'));
     }
 
     
@@ -73,7 +71,7 @@ class UserController extends Controller
 
         $user->update($request->all());
 
-        return to_route('users.index');
+        return to_route('users.show', $user->id);
     }
 
 

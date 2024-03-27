@@ -1,6 +1,6 @@
 <template>
     <!-- sidebar -->
-    <div class="h-screen hidden lg:block shadow-lg relative">
+    <div class="h-screen hidden lg:block shadow-lg relative z-10">
         <i @click="small = false" v-if="small"
             class="fa-solid fa-angle-right text-center text-xs pt-[2px] text-white rounded-full size-5 bg-primary absolute top-24 -right-3 cursor-pointer hover:scale-125 transition-transform ease-linear duration-150"></i>
         <i @click="small = true" v-else
