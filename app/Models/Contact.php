@@ -10,6 +10,8 @@ class Contact extends Model
     use HasFactory;
 
     protected $fillable = [
+        'contactable_type',
+        'contactable_id',
         'name',
         'email',
         'phone',
@@ -21,7 +23,7 @@ class Contact extends Model
         'additional_emails' => 'array',
         'additional_phones' => 'array',
     ];
-    
+
     // relaciones
     public function contactable()
     {
