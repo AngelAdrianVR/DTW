@@ -2,8 +2,25 @@
   <AppLayout title="Detalles de cliente">
     <header class="px-2 lg:px-14 mt-5">
       <Back />
+      <div class="flex justify-between items-center mt-7">
+        <div class="w-1/3">
+          <el-select @change="$inertia.get(route('clients.show', selectedClient))" v-model="selectedClient"
+            filterable placeholder="Buscar cliente" no-data-text="No hay clientes registrados"
+            no-match-text="No se encontraron coincidencias">
+            <el-option v-for="client in clients" :key="client.id" :label="client.name" :value="client.id" />
+          </el-select>
+        </div>
+        <div class="flex space-x-2 w-full justify-end">
+          <PrimaryButton @click="$inertia.get(route('clients.create'))">Crear cliete</PrimaryButton>
+          <button @click="$inertia.get(route('clients.edit', client.id))"
+            class="size-9 rounded-full bg-[#D9D9D9]">
+            <i class="fa-solid fa-pen text-sm text-gray-600"></i>
+          </button>
+        </div>
+      </div>
     </header>
     <main class="px-2 lg:px-14 mt-5">
+      <h1 class="font-bold text-lg text-center">{{ client.name }}</h1>
       <el-tabs v-model="activeTab" @tab-click="handleClick">
         <el-tab-pane name="1">
           <template #label>
@@ -82,6 +99,7 @@ export default {
   data() {
     return {
       activeTab: '1',
+      selectedClient: this.client.id,
     };
   },
   components: {
@@ -95,6 +113,7 @@ export default {
   },
   props: {
     client: Object,
+    clients: Array,
   },
   methods: {
     handleClick(tab) {

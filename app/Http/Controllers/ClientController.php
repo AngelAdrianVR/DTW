@@ -52,8 +52,9 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         $client = $client->load(['user', 'responsible', 'contacts']);
+        $clients = Client::get(['id','name']);
         
-        return inertia('Client/Show', compact('client'));
+        return inertia('Client/Show', compact('client', 'clients'));
     }
 
     public function edit(Client $client)
