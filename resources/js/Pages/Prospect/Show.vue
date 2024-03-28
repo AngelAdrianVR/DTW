@@ -2,6 +2,21 @@
   <AppLayout title="Detalles de prospecto">
     <header class="px-2 lg:px-14 mt-5">
       <Back />
+      <div class="flex justify-between items-center mt-7">
+        <div class="w-1/3">
+          <el-select @change="$inertia.get(route('prospects.show', selectedProspect))" v-model="selectedProspect" filterable
+            placeholder="Buscar prospecto" no-data-text="No hay prospectos registrados"
+            no-match-text="No se encontraron coincidencias">
+            <el-option v-for="prospect in prospects" :key="prospect.id" :label="prospect.name" :value="prospect.id" />
+          </el-select>
+        </div>
+        <div class="flex space-x-2 w-full justify-end">
+          <PrimaryButton @click="$inertia.get(route('prospects.create'))">Crear prospecto</PrimaryButton>
+          <button @click="$inertia.get(route('prospects.edit', prospect.id))" class="size-9 rounded-full bg-[#D9D9D9]">
+            <i class="fa-solid fa-pen text-sm text-gray-600"></i>
+          </button>
+        </div>
+      </div>
     </header>
     <main class="px-2 lg:px-14 mt-5">
       <el-tabs v-model="activeTab" @tab-click="handleClick">
@@ -68,6 +83,7 @@ export default {
   data() {
     return {
       activeTab: '1',
+      selectedProspect: this.prospect.id,
     };
   },
   components: {
@@ -80,6 +96,7 @@ export default {
   },
   props: {
     prospect: Object,
+    prospects: Array,
   },
   methods: {
     handleClick(tab) {

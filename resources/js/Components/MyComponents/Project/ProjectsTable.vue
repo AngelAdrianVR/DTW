@@ -1,6 +1,6 @@
 <template>
     <div class="w-11/12 lg:mx-8 my-10 overflow-auto">
-      <table v-if="projects?.length" class="w-full mx-auto text-sm">
+      <table v-if="projects?.length" class="w-full mx-auto text-xs">
         <thead>
           <tr class="text-center">
             <th class="font-bold pb-3 pl-2 text-left">ID</th>
@@ -82,7 +82,7 @@
     <!-- Delete confirmation modal -->
     <ConfirmationModal :show="showDeleteConfirm" @close="showDeleteConfirm = false">
       <template #title>
-        <h1>Eliminar cliente</h1>
+        <h1>Eliminar proyecto</h1>
       </template>
       <template #content>
         <p>Se eliminará el proyecto y todos los registros relacionados al mismo. ¿Continuar de todas formas?</p>
