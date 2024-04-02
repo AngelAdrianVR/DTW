@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <!-- Tabla de proyectos -->
+    <!-- Tabla de usuarios -->
     <Loading v-if="loading" class="mt-20" />
       <div v-else class="lg:w-11/12 mx-auto px-2">
           <p v-if="localUsers.length" class="text-gray66 text-[11px]">{{ localUsers.length }} de {{
