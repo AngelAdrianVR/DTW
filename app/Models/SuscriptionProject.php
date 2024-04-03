@@ -17,6 +17,7 @@ class SuscriptionProject extends Model
         'plans_quantity',
         'status',
         'release_date',
+        'description',
         'responsible_id',
     ];
 
