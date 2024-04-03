@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('plans_quantity');
             $table->string('status');
             $table->timestamp('release_date'); //Fecha en la que se lanzó al mercado
+            $table->text('description');
             $table->foreignId('responsible_id')->nullable()->constrained('users')->cascadeOnDelete(); //usuario responsable de ese proyecto (no obligatorio)
             $table->timestamps();
         });

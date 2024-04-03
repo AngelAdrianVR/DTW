@@ -36,7 +36,7 @@
           <p v-if="localProjects.length" class="text-gray66 text-[11px]">{{ localProjects.length }} de {{
               total_projects }} elementos
           </p>
-          <!-- <UsersTable :users="filteredTableData" /> -->
+          <SuscriptionProyectsTable :suscription_projects="filteredTableData" />
           <p v-if="loadingItems" class="text-xs my-4 text-center">
               Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-primary"></i>
           </p>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import UsersTable from "@/Components/MyComponents/User/UsersTable.vue";
+import SuscriptionProyectsTable from "@/Components/MyComponents/SuscriptionProyect/SuscriptionProyectsTable.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Loading from '@/Components/MyComponents/Loading.vue';
 import AppLayout from "@/Layouts/AppLayout.vue";
@@ -69,12 +69,12 @@ export default {
   },
   components: {
     PrimaryButton,
-    UsersTable,
+    SuscriptionProyectsTable,
     AppLayout,
     Loading,
   },
   props: {
-    suscription_projects: Object,
+    suscription_projects: Array,
     total_projects: Number,
   },
   methods: {
@@ -105,7 +105,8 @@ export default {
         return this.localProjects.filter(
           (project) =>
             project.id.toString().toLowerCase().includes(this.search.toLowerCase()) ||
-            project.name.toLowerCase().includes(this.search.toLowerCase())
+            project.name.toLowerCase().includes(this.search.toLowerCase()) ||
+            project.status.toLowerCase().includes(this.search.toLowerCase())
         );
       }
     },

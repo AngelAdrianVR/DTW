@@ -111,6 +111,7 @@ Route::get('projects-get-by-page/{currentPage}', [ProjectController::class, 'get
 // suscription projects routes -----------------------------------------------------
 Route::resource('suscription-projects', SuscriptionProjectController::class)->middleware('auth');
 Route::get('projects-get-by-page/{currentPage}', [SuscriptionProjectController::class, 'getItemsByPage'])->name('suscription-projects.get-by-page')->middleware('auth');
+Route::put('projects-update-status/{suscription_project}/{status}', [SuscriptionProjectController::class, 'updateStatus'])->name('suscription-projects.update-status')->middleware('auth');
 
 
 // projects-tasks routes -------------------------------------------------
