@@ -4,8 +4,8 @@
   <div class="text-sm rounded-[10px] px-12 py-4 relative min-h-screen">
     <div class="absolute w-full top-0 left-0">
       <figure
-        class="w-full bg-cover h-32 py-11 pl-12 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
-        <img src="@/../../public/assets/images/quoteTemplate/logo.png" class="h-10">
+        class="w-full bg-cover h-32 py-6 pl-6 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
+        <img src="@/../../public/assets/images/black_logo.png" class="h-20">
       </figure>
     </div>
     <div class="flex flex-col items-end mt-6">
@@ -23,7 +23,7 @@
         <p class="text-xs text-left">{{ quote.prospect.name }}</p>
         <p class="text-xs text-left">{{ quote.prospect.address }}</p>
       </div>
-      <p v-if="quote.description" class="text-xs text-left"><b>Descripción: </b>{{ quote.description }}</p>
+      <p v-if="quote.description" class="text-xs text-left my-1"><b>Descripción: </b>{{ quote.description }}</p>
       <h2 v-if="quote.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
       <div v-html="quote.features" class="text-xs"></div>
       <section v-if="quote.total_work_days">

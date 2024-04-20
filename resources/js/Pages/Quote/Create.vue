@@ -108,8 +108,8 @@
         <div class="text-sm border border-grayD9 rounded-[10px] px-5 py-4 relative">
           <div class="absolute w-full top-0 left-0">
             <figure
-              class="w-full rounded-t-[10px] bg-cover h-32 py-11 pl-12 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
-              <img src="@/../../public/assets/images/quoteTemplate/logo.png" class="h-10">
+              class="w-full bg-cover h-32 py-6 pl-6 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
+              <img src="@/../../public/assets/images/black_logo.png" class="h-20">
             </figure>
           </div>
           <div class="flex flex-col items-end mt-6">
@@ -126,7 +126,7 @@
               <p class="text-xs text-left">{{ prospects.find(item => item.id === form.prospect_id).name }}</p>
               <p class="text-xs text-left">{{ prospects.find(item => item.id === form.prospect_id).address }}</p>
             </div>
-            <p v-if="form.description" class="text-xs text-left"><b>Descripción: </b>{{ form.description }}</p>
+            <p v-if="form.description" class="text-xs text-left my-1"><b>Descripción: </b>{{ form.description }}</p>
             <h2 v-if="form.features" class="text-sm font-bold text-left mt-3">Servicios</h2>
             <div v-html="form.features" class="text-xs"></div>
             <section v-if="form.total_work_days">
@@ -145,13 +145,13 @@
             <section v-if="form.percentage_discount">
               <p class="text-xs">
                 Descuento: ${{ ((form.percentage_discount * 0.01) *
-          form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
-            ",") }} (%{{ form.percentage_discount }})
+                  form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                ",") }} (%{{ form.percentage_discount }})
               </p>
               <p class="text-sm font-bold text-left mt-2">Total</p>
               <p class="text-xs">
                 ${{ (form.total_cost - (form.percentage_discount * 0.01) *
-          form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+                  form.total_cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
                 IVA incluido
               </p>
             </section>
@@ -293,7 +293,7 @@ export default {
       paymentTypes: [
         'Pago en una sola exhibición',
         '2 pagos (50% al inicio y 50% a la entrega del proyecto)',
-        '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)',
+        '3 pagos ( 30% al inicio, 40% al desarrollo y 30% a la entrega)',
       ],
       offerValidities: [
         7,
