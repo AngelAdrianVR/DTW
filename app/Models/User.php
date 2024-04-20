@@ -71,4 +71,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function suscriptionProjects()
+    {
+        return $this->hasMany(SuscriptionProject::class);
+    }
+
+    
 }

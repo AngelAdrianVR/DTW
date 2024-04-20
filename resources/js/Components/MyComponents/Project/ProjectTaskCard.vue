@@ -533,7 +533,7 @@ export default {
   },
   mounted() {
     this.taskComponentLocal = this.taskComponent;
-    this.form.participants = this.taskComponent.participants.map(user => user.id);
+    // this.form.participants = this.taskComponent.participants.map(user => user.id);
 
     // inicializar fechas en range
     this.range = [this.taskComponentLocal.start_date_raw, this.taskComponentLocal.end_date_raw];

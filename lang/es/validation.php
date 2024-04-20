@@ -174,5 +174,10 @@ return [
         'employee_properties.phone' => 'telefono de empleado',
         'employee_properties.department' => 'departamento',
         'employee_properties.charge' => 'puesto',
+        'subscribers_quantity' => 'suscriptores',
+        'public_price' => 'precio',
+        'plans_quantity' => 'número de planes',
+        'release_date' => 'fecha de lanzamiento',
+        'status' => 'estatus',
     ],
 ];
