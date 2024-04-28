@@ -27,6 +27,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_active',
+        'employee_properties',
+        'emergency_contact',
+        'last_access',
     ];
 
     /**
@@ -48,6 +52,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'employee_properties' => 'array',
+        'emergency_contact' => 'array',
+        'last_access' => 'datetime',
     ];
 
     /**
@@ -64,4 +71,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function suscriptionProjects()
+    {
+        return $this->hasMany(SuscriptionProject::class);
+    }
+
+    
 }

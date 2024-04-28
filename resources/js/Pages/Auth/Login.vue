@@ -48,7 +48,7 @@ const submit = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="block w-full"
                     required
                     autofocus
                     autocomplete="username"
@@ -63,7 +63,7 @@ const submit = () => {
                     id="password"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full"
                     required
                     autocomplete="current-password"
                     placeholder="Escribe tu contraseña"
@@ -71,10 +71,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
+            <div class="block mt-3 ml-2 text-xs">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">Mantener sesión abierta</span>
+                    <span class="ml-2 text-gray-600">Mantener sesión abierta</span>
                 </label>
             </div>
 

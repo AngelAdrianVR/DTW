@@ -11,17 +11,36 @@ class Prospect extends Model
     use HasFactory;
 
     protected $fillable = [
-        'prospect_name',
-        'company',
-        'project_type',
-        'notes',
-        'is_aproved',
+        'name',
+        'contact_name',
+        'contact_email',
+        'contact_phone',
+        'address',
+        'state',
+        'status',
+        'abstract',
         'user_id',
+        'responsible_id',
     ];
 
-    //relationships
-    public function user(): BelongsTo
+    // relaciones
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function contact()
+    {
+        return $this->morphOne(Contact::class, 'contactable');
+    }
+    
+    public function responsible()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
     }
 }

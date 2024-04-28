@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('prospects', function (Blueprint $table) {
             $table->id();
-            $table->string('prospect_name');
-            $table->string('company');
-            $table->string('project_type');
-            $table->text('notes')->nullable();
-            $table->boolean('is_aproved')->nullable();
+            $table->string('name');
+            $table->string('status');
+            $table->string('address')->nullable();
+            $table->string('state');
+            $table->text('abstract')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('responsible_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -1,160 +1,155 @@
 <template>
   <AppLayout title="Proyectos-editar">
-    <template #header>
-      <div class="flex justify-between">
-        <Link :href="route('projects.index')" class="hover:bg-gray-300/50 rounded-full w-10 h-10 flex justify-center items-center">
-          <i class="fa-solid fa-chevron-left"></i>
-        </Link>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Editar {{ project.name }}
-        </h2>
-      </div>
-    </template>
-    <div class="lg:w-1/2 p-3 mx-auto mt-6 shadow-md lg:py-4 lg:px-5 bg-white rounded-lg">
-      <form @submit.prevent="update">
-        <div class="">
-          <el-input v-model="form.name" placeholder="Nombre del proyecto" clearable />
+    <Back class="mt-5 ml-7" />
+    <div class="lg:w-[60%] w-[95%] mx-auto p-3 mt-9 lg:py-4 lg:px-5 border border-[#D9D9D9] rounded-lg">
+      <h1 class="font-bold">Editar proyecto</h1>
 
-         <InputError :message="$page.props?.errors.name" />
+      <form class="mt-4 md:grid grid-cols-2 gap-4" @submit.prevent="update">
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Nombre del proyecto*" class="ml-3 mb-1" />
+          <el-input v-model="form.name" placeholder="Escribe el nombre del proyecto" clearable />
+          <InputError :message="$page.props?.errors.name" />
         </div>
 
-        <div class="mt-3">
-          <el-input v-model="form.key" placeholder="Clave del proyecto" clearable />
-
-         <InputError :message="$page.props?.errors.key" />
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Responsable(s) *" class="ml-3 mb-1" />
+          <el-select class="w-full" v-model="form.responsible_id" clearable
+              placeholder="Seleccione" no-data-text="No hay opciones registradas"
+              no-match-text="No se encontraron coincidencias">
+              <el-option v-for="user in users" :key="user.id" :label="user.name" :value="user.id">
+                <div v-if="$page.props.jetstream.managesProfilePhotos"
+                  class="flex text-sm rounded-full items-center mt-[3px]">
+                  <img class="h-7 w-7 rounded-full object-cover mr-4" :src="user.profile_photo_url" :alt="user.name" />
+                  <p>{{ user.name }}</p>
+                </div>
+              </el-option>
+          </el-select>
+          <InputError :message="$page.props?.errors.responsible_id" />
         </div>
 
-        <el-divider>Datos de cliente</el-divider>
-
-        <div class="">
-        <el-input v-model="form.customer_info.name" class="w-50 p-2" placeholder="Nombre del cliente" clearable>
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-user"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.name']" />
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Cliente*" class="ml-3 mb-1" />
+          <el-select class="w-full" v-model="form.client_id" clearable
+              placeholder="Seleccione" no-data-text="No hay opciones registradas"
+              no-match-text="No se encontraron coincidencias">
+              <el-option v-for="client in clients" :key="client" :label="client.name" :value="client.id" />
+          </el-select>
+          <InputError :message="$page.props?.errors.client_id" />
         </div>
 
-        <div class="">
-        <el-input v-model="form.customer_info.email" class="w-50 p-2" placeholder="Correo" clearable type="email">
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-envelope"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.email']" /> 
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Cotización*" class="ml-3 mb-1" />
+          <el-select @change="getTotalDaysWork" class="w-full" v-model="form.quote_id" clearable
+              placeholder="Seleccione" no-data-text="No hay opciones registradas"
+              no-match-text="No se encontraron coincidencias">
+              <el-option v-for="quote in quotes" :key="quote" :label="quote.name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
+          </el-select>
+          <InputError :message="$page.props?.errors.quote_id" />
         </div>
 
-        <div class="">
-        <el-input v-model="form.customer_info.company" class="w-50 p-2" placeholder="Empresa" clearable>
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-building"></i></el-icon>
-            </template>
-          </el-input>
-
-          <InputError :message="$page.props?.errors['customer_info.company']" /> 
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Días hábiles de trabajo" class="ml-3 mb-1" />
+          <el-input disabled v-model="form.total_work_days" placeholder="Días hábiles de trabajo" clearable />
+          <InputError :message="$page.props?.errors.total_work_days" />
         </div>
 
-        <div class="">
-        <el-input v-model="form.customer_info.phone" class="w-50 p-2" placeholder="Teléfono de contacto" clearable>
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-phone"></i></el-icon>
-            </template>
-          </el-input>
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Condiciones de pago*" class="ml-3 mb-1" />
+          <el-select class="w-full" v-model="form.payment_method" clearable
+              placeholder="Seleccione" no-data-text="No hay opciones registradas"
+              no-match-text="No se encontraron coincidencias">
+              <el-option v-for="payment in payment_methods" :key="payment" :label="payment" :value="payment" />
+          </el-select>
+          <InputError :message="$page.props?.errors.payment_method" />
+        </div>
 
-        <InputError :message="$page.props?.errors['customer_info.phone']" /> 
-       </div>
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Categoría*" class="ml-3 mb-1" />
+          <el-select class="w-full" v-model="form.category" clearable
+              placeholder="Seleccione" no-data-text="No hay opciones registradas"
+              no-match-text="No se encontraron coincidencias">
+              <el-option v-for="category in categories" :key="category" :label="category" :value="category" />
+          </el-select>
+          <InputError :message="$page.props?.errors.category" />
+        </div>
 
-        <div class="">
-        <el-input v-model="form.hours_work" class="w-50 p-2" placeholder="Horas de trabajo" clearable type="number">
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-clock"></i></el-icon>
-            </template>
-          </el-input>
+        <div class="mt-3 md:mt-0">
+            <InputLabel value="Duración*" class="ml-3 mb-1" />
+            <el-date-picker @change="saveDates" v-model="duration" type="daterange" range-separator="A"
+                start-placeholder="Fecha de inicio" end-placeholder="Fecha esperada de fin" class="!w-full" />
+            <InputError :message="$page.props?.errors.start_date" />
+        </div>
 
+        <div class="mt-3 md:mt-0">
+          <label class="flex items-center">
+              <Checkbox v-model:checked="form.invoice" />
+              <span class="ml-2 text-sm text-gray-600">Requiere factura</span>
+          </label>
+        </div>
+
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Horas de trabajo*" class="ml-3 mb-1" />
+          <el-input
+            v-model="form.hours_work"
+            class=""
+            placeholder="Horas de trabajo"
+            clearable
+            type="number"
+          />
           <InputError :message="$page.props?.errors.hours_work" class="mb-1" />
         </div>
 
-        <div class="">
-          <el-input v-model="form.price" class="w-50 p-2" placeholder="Precio" clearable>
-            <template #prefix>
-              <el-icon class="el-input__icon"><i class="fa-solid fa-dollar-sign"></i></el-icon>
-            </template>
-          </el-input>
-
+        <div class="mt-3 md:mt-0">
+          <InputLabel value="Precio del proyecto*" class="ml-3 mb-1" />
+          <el-input v-model="form.price" placeholder="Precio" clearable />
           <InputError :message="$page.props?.errors.price" class="mb-1" />
         </div>
 
-        <div class="">
-          <el-input v-model="form.description" class="w-50 p-2" placeholder="Descripción del proyecto" clearable>
-          </el-input>
-
-          <InputError :message="$page.props?.errors.description" class="mb-1" />
+        <div class="col-span-full mt-3">
+          <InputLabel value="Descripción" class="text-sm ml-2 !text-gray-400" />
+          <el-input v-model="form.description"
+            :autosize="{ minRows: 3, maxRows: 5 }" type="textarea" placeholder="Escribe una descripción (opcional)"
+            :maxlength="200" show-word-limit clearable />
         </div>
 
-<div class="lg:flex justify-center space-x-3">
-        <div>
-          <div class="demo-date-picker">
-            <div class="block">
-              <span class="demonstration">Fecha de inicio</span>
-              <el-date-picker
-                v-model="form.start_date"
-                type="date"
-                placeholder="Selecciona una fecha"
-                :default-value="new Date()"
-                value-format="YYYY-MM-DD"
-              />
-            </div>
+        <div class="ml-2 mt-3 md:mt-0 col-span-full">
+            <FileUploader @files-selected="this.form.media = $event" />
           </div>
 
-          <InputError :message="$page.props?.errors.start_date" />
+        <div class="col-span-full text-right mt-5">
+          <PrimaryButton class="px-12">Guardar cambios</PrimaryButton>
         </div>
-        <div>
-          <div class="demo-date-picker">
-            <div class="block">
-              <span class="demonstration">Fecha de entrega</span>
-              <el-date-picker
-                v-model="form.finish_date"
-                type="date"
-                placeholder="Selecciona una fecha"
-                :default-value="new Date()"
-                value-format="YYYY-MM-DD"
-              />
-            </div>
-          </div>
-</div>
-
-          <InputError :message="$page.props?.errors.finish_date" />
-        </div>
-
-        <PrimaryButton> Actualizar </PrimaryButton>
       </form>
     </div>
   </AppLayout>
 </template>
 
 <script>
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import Checkbox from '@/Components/Checkbox.vue';
+import InputLabel from "@/Components/InputLabel.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import FileUploader from "@/Components/MyComponents/FileUploader.vue";
+import Back from "@/Components/MyComponents/Back.vue";
+import { useForm } from "@inertiajs/vue3";
 
 export default {
   data() {
     const form = useForm({
       name: this.project.name,
+      responsible_id: this.project.responsible_id, //nuevo agregado
+      client_id: this.project.client_id, //nuevo agregado
+      quote_id: this.project.quote_id, //nuevo agregado
+      payment_method: this.project.payment_method, //nuevo agregado
+      estimated_date: this.project.estimated_date, //nuevo agregado
+      category: this.project.category, //nuevo agregado
+      total_work_days: null, //nuevo agregado
+      invoice: !! this.project.invoice, //nuevo agregado
+      media: null, //nuevo agregado
       key: this.project.key,
       description: this.project.description,
-      customer_info: {
-        name: this.project.customer_info.name,
-        email: this.project.customer_info.email,
-        company: this.project.customer_info.company,
-        phone: this.project.customer_info.phone,
-      },
       hours_work: this.project.hours_work,
       price: this.project.price,
       start_date: this.project.start_date,
@@ -162,32 +157,62 @@ export default {
     });
     return {
       form,
+      duration: [this.project.start_date, this.project.estimated_date], //rango de fechas. separar y guardar en start_date y estimated_date
+      payment_methods: ['Al contado', '2 pagos (50% al inicio y 50% a la entrega del proyecto)', '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)'],
+      categories: ['Página web', 'Tienda en linea', 'Punto de venta', 'ERP (Planificación de recursos empresariales)',
+                'CRM (Gestión de relaciones con los clientes)', 'PMS (Planificación de recursos empresariales)', 'CMS (Gestión de contenido)',
+                'LMS (Sistema de gestión del aprendizaje)', 'BI (Inteligencia de negocios)', 'Otro'],
     };
   },
   components: {
-    ApplicationLogo,
-    AppLayout,
     SecondaryButton,
-    Link,
-    TextInput,
     PrimaryButton,
-    InputError
+    FileUploader,
+    InputError,
+    InputLabel,
+    AppLayout,
+    Checkbox,
+    Back
   },
   props: {
-    project: Object
+    project: Object,
+    users: Array,
+    quotes: Array,
+    clients: Array
   },
   methods: {
     update() {
-            this.form.put(route("projects.update", this.project), {
-                onSuccess: () => {
-                    this.$notify({
-                        title: 'Success',
-                        message: "The project has been edited",
-                        type: 'success'
-                    });
-                }
+      if (this.form.media !== null) {
+        this.form.post(route("projects.update-with-media", this.project.id), {
+          method: '_put',
+          onSuccess: () => {
+            this.$notify({
+              title: "Éxito",
+              message: "The project has been edited",
+              type: "success",
             });
-        },
+          },
+        });
+      } else {
+        this.form.put(route("projects.update", this.project.id), {
+          onSuccess: () => {
+            this.$notify({
+              title: "Éxito",
+              message: "The project has been edited",
+              type: "success",
+            });
+          },
+        });
+      }
+    },
+    saveDates() {
+      this.form.start_date = this.duration[0];
+      this.form.estimated_date = this.duration[1];
+    },
+    getTotalDaysWork() {
+      const quote = this.quotes.find(quote => quote.id === this.form.quote_id);
+      this.form.total_work_days = quote.total_work_days;
+    }
   },
 };
 </script>
