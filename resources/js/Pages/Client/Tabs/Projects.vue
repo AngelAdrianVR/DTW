@@ -27,15 +27,15 @@
                                 :style="{ borderColor: getStatusColor(item.tasks) }">
                                 <div :class="(item.tasks.filter(task => task.status === 'Terminada').length / item.tasks.length) * 100 == 100 ? 'rounded-full' : 'rounded-l-full'"
                                     class="absolute top-0 left-0 bg-primary h-[18px]" :style="{
-            width: (item.tasks.filter(task => task.status === 'Terminada').length / item.tasks.length) * 100 + '%' ,
-            backgroundColor: getStatusColor(item.tasks)
-        }">
+                                        width: (item.tasks.filter(task => task.status === 'Terminada').length / item.tasks.length) * 100 + '%' ,
+                                        backgroundColor: getStatusColor(item.tasks)
+                                    }">
                                 </div>
-                                <p class="text-[11px] mt-px absolute top-0 right-12 text-black">{{ item.tasks.length !=
-            0 ?
-            Math.round((item.tasks.filter(task => task.status === 'Terminada').length /
-                item.tasks.length) *
-                100) : '0' }}%</p>
+                                <p class="text-[11px] mt-px absolute top-0 right-12 text-black">{{ item.tasks.length !=0 ?
+                                    Math.round((item.tasks.filter(task => task.status === 'Terminada').length /
+                                    item.tasks.length) *
+                                    100) : '0' }}%
+                                </p>
                             </div>
                         </el-tooltip>
                         <p class="text-[10px] mt-1">{{ item.tasks.length }}</p>

@@ -116,6 +116,10 @@ Route::put('projects-update-status/{suscription_project}/{status}', [Suscription
 
 // projects-tasks routes -------------------------------------------------
 Route::resource('project-tasks', ProjectTaskController::class)->middleware('auth');
+Route::post('project-tasks-{project_task}-comment', [ProjectTaskController::class, 'comment'])->name('project-tasks.comment')->middleware('auth');
+Route::put('project-tasks-{project_task}-pause-play', [ProjectTaskController::class, 'pausePlayTask'])->name('project-tasks.pause-play')->middleware('auth');
+Route::put('project-tasks-{project_task}-update-status', [ProjectTaskController::class, 'updateStatus'])->name('project-tasks.update-status')->middleware('auth');
+Route::get('project-tasks-late-tasks', [ProjectTaskController::class, 'getLateTasks'])->middleware('auth')->name('project-tasks.get-late-tasks');
 
 
 // ** Quote request routes ** ---------------------------------------------

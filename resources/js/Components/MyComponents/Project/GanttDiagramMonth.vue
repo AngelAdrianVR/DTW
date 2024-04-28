@@ -9,7 +9,7 @@
         <div v-if="showDepartmentFilter" class="absolute right-4 top-[60px] bg-white rounded-md px-4 py-2">
           <label class="flex items-center">
             <Checkbox v-model:checked="productionCheck" class="bg-transparent" />
-            <span class="ml-2 text-sm text-[#9A9A9A]">Producción</span>
+            <span class="ml-2 text-sm text-[#9A9A9A]">Programación</span>
           </label>
           <label class="flex items-center">
             <Checkbox v-model:checked="designCheck" class="bg-transparent" />
@@ -28,10 +28,10 @@
       <th class="border border-[#9A9A9A] text-center font-thin">
         <strong class="text-base uppercase font-bold tex">{{ monthName }}</strong><br />
         <div class="flex space-x-8 justify-center w-[95%] mx-4 bg-primarylight">
-          <p v-for="day in daysInMonth" :key="day" class="text-primary relative">
+          <!-- <p v-for="day in daysInMonth" :key="day" class="text-primary relative">
             {{ daysOfWeek[(day + startDayOfWeek - 2) % 7] }}
             <span class="absolute -bottom-3 -left-0 text-[9px] text-black pt-1">{{ day }}</span>
-          </p>
+          </p> -->
         </div>
       </th>
     </tr>
@@ -99,7 +99,7 @@ export default {
     taskStartDay(task) {
       const startDate = new Date(task.start_date_raw);
       const startDay = startDate.getDate();
-    const currentMonthFirstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    const currentMonthFirstDay = new Date(this.currentDate?.getFullYear(), this.currentDate?.getMonth(), 1);
       const dayDifference = Math.abs(startDate - currentMonthFirstDay) / (1000 * 60 * 60 * 24);
       return dayDifference; // Sumar 1 para que el primer día sea 1 en lugar de 0
     },
@@ -120,7 +120,7 @@ export default {
     taskMatchesFilters(task) {
       // Verifica si la tarea cumple con al menos uno de los criterios de filtro
       return (
-        (this.productionCheck && task.department === "Produccion") ||
+        (this.productionCheck && task.department === "Programación") ||
         (this.designCheck && task.department === "Diseño") ||
         (this.salesCheck && task.department === "Ventas") ||
         (this.marketingCheck && task.department === "Marketing")

@@ -1,9 +1,8 @@
 <template>
     <div class="text-left text-sm items-center mt-4">
 
-      <!-- <GanttDiagramMonth v-if="period === 'Mes'" :currentProject="currentProject" :currentDate="currentDate" /> -->
-      <!-- <GanttDiagramBimester v-if="period === 'Bimestre'" :currentProject="currentProject" :currentDate="currentDate" /> -->
-
+      <GanttDiagramMonth v-if="period === 'Mes'" :currentProject="currentProject" :currentDate="currentDate" />
+      <GanttDiagramBimester v-if="period === 'Bimestre'" :currentProject="currentProject" :currentDate="currentDate" />
         <p class="text-center text-gray-500 mt-5" v-if="currentProject?.tasks?.length == 0">No hay tareas para mostrar. 
           <span @click="$inertia.get(route('project-tasks.create', { projectId: currentProject?.id ?? 1 }))" class="text-primary cursor-pointer">Crea una</span></p>
 

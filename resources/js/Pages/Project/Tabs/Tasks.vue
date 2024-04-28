@@ -11,7 +11,7 @@
           :class="(drag && !pendingTasksList?.length) ? 'h-40' : ''">
           <template #item="{ element: task }">
             <li>
-              <ProjectTaskCard @delete-task="deleteProjectTask" @updated-status="updateTask($event)" :taskComponent="tasks"
+              <ProjectTaskCard @delete-task="deleteProjectTask" @updated-status="updateTask($event)" :taskComponent="task"
                 :users="users" :id="task.id" />
             </li>
           </template>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import ProjectTaskCard from "@/Components/MyComponents/Project/ProjectTaskCard.vue";
 
 export default {
@@ -83,6 +84,7 @@ data() {
 },
 components:{
 ProjectTaskCard,
+draggable
 },
 props:{
 tasks: Array,
@@ -106,7 +108,7 @@ methods:{
     },
     async updateTaskStatus(status) {
       try {
-        const response = await axios.put(route('tasks.update-status', this.draggingTaskId), { status: status });
+        const response = await axios.put(route('project-tasks.update-status', this.draggingTaskId), { status: status });
 
         if (response.status === 200) {
           const taskIndex = this.tasks.findIndex(item => item.id === this.draggingTaskId);
@@ -144,7 +146,7 @@ methods:{
     },
     async deleteProjectTask(data) {
       try {
-        const response = await axios.delete(route('tasks.destroy', data));
+        const response = await axios.delete(route('project-tasks.destroy', data));
 
         if (response.status === 200) {
           this.$notify({

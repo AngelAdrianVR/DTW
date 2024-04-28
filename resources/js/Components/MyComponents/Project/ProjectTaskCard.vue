@@ -21,11 +21,11 @@
     <!-- ------------ body -------------------------- -->
     <div class="flex items-center justify-between p-3">
       <p class="text-sm w-11/12 truncate" :title="taskComponentLocal?.title">{{ taskComponentLocal?.title }}</p>
-      <div>
+      <div class="flex items-center">
         <el-tooltip content="Tienes una tarea por cumplir antes de poder comenzar" placement="top">
             <i @click.stop="" class="fa-solid fa-hourglass cursor-default mr-3"></i>
         </el-tooltip>
-        <el-tooltip v-if="taskComponentLocal?.media.length" content="Archivos adjunto" placement="top">
+        <el-tooltip v-if="taskComponentLocal?.media?.length" content="Archivos adjunto" placement="top">
           <i @click.stop="" class="fa-solid fa-paperclip rounded-full p-2"></i>
         </el-tooltip>
       </div>
@@ -39,20 +39,20 @@
           <p class="text-xs">{{ taskComponentLocal?.comments?.length }}</p>
           <p class="text-sm ml-1">| {{ "Dpto. " + taskComponentLocal?.department }}</p>
         </div>
-        <div class="flex items-center absolute bottom-3 right-0 cursor-default">
+        <div class="flex items-center absolute bottom-3 right-0 cursor-default space-x-1">
           <el-tooltip v-if="taskComponentLocal?.status == 'Terminada'" content="Tarea terminada" placement="bottom">
             <i @click.stop="" class="fa-solid fa-check text-green-500 text-xl cursor-default mr-2"></i>
           </el-tooltip>
           <el-tooltip v-if="taskComponentLocal?.participants?.length > 2" placement="top">
-            <p class="text-primary mr-1"> + {{ taskComponentLocal?.participants.length - 2 }}</p>
+            <p class="text-primary mr-1"> + {{ taskComponentLocal?.participants?.length - 2 }}</p>
             <template #content>
               <div>
-                <p v-for="user in taskComponentLocal?.participants.slice(2, taskComponentLocal?.participants.length)"
-                  :key="user">{{ user.name }}</p>
+                <p v-for="user in taskComponentLocal?.participants?.slice(2, taskComponentLocal?.participants?.length)"
+                  :key="user">{{ user?.name }}</p>
               </div>
             </template>
           </el-tooltip>
-          <el-tooltip v-for="user in taskComponentLocal?.participants.slice(0, 2)" :key="user" :content="user.name"
+          <el-tooltip v-for="user in taskComponentLocal?.participants?.slice(0, 2)" :key="user" :content="user.name"
             placement="bottom">
             <figure @click.stop="">
               <div v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm rounded-full">
@@ -66,8 +66,8 @@
   </div>
 
   <!-- -------------- task information Modal -------------- -->
-  <!-- <Modal :show="taskInformationModal" @close="taskInformationModal = false">
-    <div class="mx-7 my-4 space-y-4 relative">
+  <Modal :show="taskInformationModal" @close="taskInformationModal = false">
+    <div class="mx-7 my-4 space-y-4 relative text-sm">
       <div @click="taskInformationModal = false"
         class="cursor-pointer w-5 h-5 rounded-full flex items-center justify-center absolute top-0 right-0">
         <i class="fa-solid fa-xmark"></i>
@@ -77,7 +77,7 @@
       <div class="relative">
         <label>
           Estado actual
-          <i :class="getColorStatus(form.status)" class="fa-solid fa-circle text-xs ml-1"></i>
+          <i :class="getColorStatus(form.status)" class="fa-solid fa-circle text-[9px] ml-1"></i>
         </label> <br />
         <div class="flex items-center space-x-4">
           <el-select :disabled="taskComponentLocal?.is_paused || !authUserIsParticipant" class="lg:w-1/2"
@@ -136,7 +136,7 @@
         <div class="mt-2">
           <label>Descripción</label>
           <RichText v-if="canEdit" @content="updateDescription($event)" :defaultValue="form.description" />
-          <div v-else class="rounded-[10px] bg-[#cccccc] px-3 py-2 min-h-[100px] text-sm">{{ form.description }}</div>
+          <div v-else class="rounded-[10px] bg-grayD9 px-3 py-2 min-h-[100px] text-sm">{{ form.description }}</div>
           <InputError :message="form.errors.description" />
         </div>
         <div class="mt-3 relative">
@@ -162,31 +162,31 @@
           <InputError :message="form.errors.start_date" />
           <InputError :message="form.errors.limit_date" />
         </div>
-        <div class="w-1/2 mt-3">
+        <!-- <div class="w-1/2 mt-3">
           <label>Recordatorio</label>
           <textarea v-model="form.reminder" disabled class="textarea w-full"> </textarea>
           <InputError :message="form.errors.reminder" />
         </div> -->
         <!-- --------------------- TABS -------------------- -->
-        <!-- <section class="mt-9">
+        <section class="mt-9">
           <div class="flex items-center justify-center">
-            <p @click="tabs = 1" :class="tabs == 1 ? 'border-b-2 border-[#D90537] text-primary' : ''"
+            <p @click="tabs = 1" :class="tabs == 1 ? 'border-b-2 border-primary text-primary' : ''"
               class="h-8 p-1 cursor-pointer ml-5 transition duration-300 ease-in-out text-xs md:text-base">
               Comentarios ({{ taskComponentLocal?.comments?.length }})
             </p>
             <div class="border-r-2 border-[#cccccc] h-7 ml-3"></div>
-            <p @click="tabs = 2" :class="tabs == 2 ? 'border-b-2 border-[#D90537] text-primary' : ''"
+            <p @click="tabs = 2" :class="tabs == 2 ? 'border-b-2 border-primary text-primary' : ''"
               class="ml-3 h-8 p-1 cursor-pointer transition duration-300 ease-in-out text-xs md:text-base">
               Documentos ({{ taskComponentLocal?.media.length }})
             </p>
             <div class="border-r-2 border-[#cccccc] h-7 ml-3"></div>
-            <p @click="tabs = 3" :class="tabs == 3 ? 'border-b-2 border-[#D90537] text-primary' : ''"
+            <p @click="tabs = 3" :class="tabs == 3 ? 'border-b-2 border-primary text-primary' : ''"
               class="ml-3 h-8 p-1 cursor-pointer transition duration-300 ease-in-out text-xs md:text-base">
               Historial
             </p>
-          </div> -->
+          </div>
           <!-- -------------- Tab 1 comentarios starts ----------------->
-          <!-- <div v-if="tabs == 1" class="mt-7 min-h-[170px]">
+          <div v-if="tabs == 1" class="mt-7 min-h-[170px]">
             <div>
               <figure class="flex space-x-2 mt-4" v-for="comment in taskComponentLocal?.comments" :key="comment">
                 <div v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm rounded-full w-10">
@@ -198,7 +198,7 @@
                   <p v-html="comment.body"></p>
                 </div>
               </figure>
-              <div v-if="toBool(authUserPermissions[4])" class="flex space-x-1 mt-5">
+              <div class="flex space-x-1 mt-5">
                 <div v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm rounded-full w-10">
                   <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url"
                     :alt="$page.props.auth.user.name" />
@@ -207,11 +207,11 @@
                   ref="commentEditor" class="flex-1" withFooter :userList="users" :disabled="sendingComments" />
               </div>
             </div>
-          </div> -->
+          </div>
           <!-- ---------------- tab 1 comentarios ends  -------------->
 
           <!-- -------------- Tab 2 documentos starts ----------------->
-          <!-- <div v-if="tabs == 2" class="mt-7 min-h-[170px]">
+          <div v-if="tabs == 2" class="mt-7 min-h-[170px]">
             <a :href="file?.original_url" target="_blank" v-for="file in taskComponentLocal?.media" :key="file"
               class="flex justify-between items-center cursor-pointer">
               <div class="flex space-x-7 items-center">
@@ -220,24 +220,23 @@
               </div>
               <i class="fa-solid fa-download text-right text-sm text-[#9a9a9a]"></i>
             </a>
-          </div> -->
+          </div>
           <!-- ---------------- tab 2 documentos ends  -------------->
 
           <!-- -------------- Tab 3 historial starts ----------------->
-          <!-- <div v-if="tabs == 3" class="mt-7 min-h-[170px]"></div> -->
+          <div v-if="tabs == 3" class="mt-7 min-h-[170px]"></div>
           <!-- ---------------- tab 3 historial ends  -------------->
-        <!-- </section>
-      </div> -->
-      <!-- {{ form }} -->
-      <!-- <div class="flex justify-end space-x-3 pt-5 pb-1">
+        </section>
+      </div>
+      <div class="flex justify-end space-x-3 pt-5 pb-1">
         <CancelButton @click="!canEdit ? taskInformationModal = false : canEdit = false">
           {{ !canEdit ? 'Cancelar' : 'Cancelar edición' }}
         </CancelButton>
-        <div v-if="toBool(authUserPermissions[2]) && toBool(authUserPermissions[3])">
+        <div>
           <el-dropdown v-if="canEdit" split-button type="primary" @click="update" class="custom-dropdown rounded-lg">
             <span>Guardar cambios</span>
             <template #dropdown>
-              <el-dropdown-menu v-if="toBool(authUserPermissions[3])">
+              <el-dropdown-menu>
                 <el-dropdown-item @click="showConfirmModal = true">Eliminar</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -245,21 +244,21 @@
           <el-dropdown v-else split-button type="primary" @click="canEdit = true" class="custom-dropdown rounded-lg">
             <span>Editar</span>
             <template #dropdown>
-              <el-dropdown-menu v-if="toBool(authUserPermissions[3])">
+              <el-dropdown-menu>
                 <el-dropdown-item @click="showConfirmModal = true">Eliminar</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
         </div>
-        <div v-else-if="!toBool(authUserPermissions[3])">
+        <div>
           <PrimaryButton @click="update" v-if="canEdit">Guardar cambios</PrimaryButton>
           <PrimaryButton @click="canEdit = true" v-else>Editar</PrimaryButton>
         </div>
       </div>
     </div>
-  </Modal> -->
+  </Modal>
 
-  <!-- <ConfirmationModal :show="showConfirmModal" @close="showConfirmModal = false">
+  <ConfirmationModal :show="showConfirmModal" @close="showConfirmModal = false">
     <template #title> Eliminar tarea </template>
     <template #content> ¿Continuar con la eliminación? </template>
     <template #footer>
@@ -268,19 +267,19 @@
         <PrimaryButton @click="deleteProjectTask">Eliminar</PrimaryButton>
       </div>
     </template>
-  </ConfirmationModal> -->
+  </ConfirmationModal>
 </template>
 
 <script>
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CancelButton from "@/Components/CancelButton.vue";
-import { Link, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
-// import RichText from "@/Components/MyComponents/RichText.vue";
+import RichText from "@/Components/MyComponents/RichText.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
+import { Link, useForm } from "@inertiajs/vue3";
+import { isSameDay, parseISO } from "date-fns";
 import axios from "axios";
-// import { isSameDay, parseISO } from "date-fns";
 
 
 export default {
@@ -288,12 +287,12 @@ export default {
     const form = useForm({
       status: this.taskComponent.status,
       title: this.taskComponent.title,
-      project_name: this.taskComponent.project.project_name,
-      user: this.taskComponent.user.name,
+      project_name: this.taskComponent?.project?.name,
+      user: this.taskComponent.user?.name,
       department: this.taskComponent.department,
       participants: null,
       description: this.taskComponent.description,
-      priority: this.taskComponent.priority.label,
+      priority: this.taskComponent.priority?.label,
       start_date: this.taskComponent.start_date_raw,
       limit_date: this.taskComponent.end_date_raw,
       reminder: this.taskComponent.reminder,
@@ -350,7 +349,7 @@ export default {
     PrimaryButton,
     CancelButton,
     InputError,
-    // RichText,
+    RichText,
     Link,
   },
   props: {
@@ -395,7 +394,7 @@ export default {
     },
     async updateStatus() {
       try {
-        const response = await axios.put(route('tasks.update-status', this.taskComponentLocal.id), { status: this.form.status });
+        const response = await axios.put(route('project-tasks.update-status', this.taskComponentLocal.id), { status: this.form.status });
 
         if (response.status === 200) {
           this.taskComponentLocal.status = this.form.status;
@@ -414,7 +413,7 @@ export default {
     },
     async playPauseTask(task) {
       try {
-        const response = await axios.put(route('tasks.pause-play', task));
+        const response = await axios.put(route('project-tasks.pause-play', task));
 
         if (response.status === 200) {
           this.taskComponentLocal = response.data.item;
@@ -441,7 +440,7 @@ export default {
     },
     async update() {
       try {
-        const response = await axios.put(route("tasks.update", this.taskComponentLocal), {
+        const response = await axios.put(route("project-tasks.update", this.taskComponentLocal), {
           status: this.form.status,
           title: this.form.title,
           department: this.form.department,
@@ -476,7 +475,7 @@ export default {
       if (this.form.comment) {
         this.sendingComments = true;
         try {
-          const response = await axios.post(route("tasks.comment", this.taskComponentLocal.id), {
+          const response = await axios.post(route("project-tasks.comment", this.taskComponentLocal.id), {
             comment: this.form.comment,
             mentions: editor.mentions,
           });

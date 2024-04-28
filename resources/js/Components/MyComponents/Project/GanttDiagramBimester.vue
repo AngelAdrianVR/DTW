@@ -9,7 +9,7 @@
             <div v-if="showDepartmentFilter" class="absolute right-4 top-[60px] bg-[#D9D9D9] rounded-md px-4 py-2">
               <label class="flex items-center">
                 <Checkbox v-model:checked="productionCheck" class="bg-transparent" />
-                <span class="ml-2 text-sm text-[#9A9A9A]">Producción</span>
+                <span class="ml-2 text-sm text-[#9A9A9A]">Programación</span>
               </label>
               <label class="flex items-center">
                 <Checkbox v-model:checked="designCheck" class="bg-transparent" />
@@ -28,27 +28,27 @@
           <th class="border border-[#9A9A9A] text-center font-thin text-xs">
             <strong class="text-base uppercase font-bold tex">{{ monthName }}</strong><br />
             <div class="flex space-x-3 justify-center w-[95%] mx-auto">
-              <p
+              <!-- <p
                 v-for="day in daysInMonth"
                 :key="day"
                 class="text-secondary relative"
               >
                 {{ daysOfWeek[(day + startDayOfWeek - 2) % 7] }}
                 <span class="absolute -bottom-3 -left-0 text-[10px] text-black">{{ day }}</span>
-              </p>
+              </p> -->
             </div>
           </th>
           <th class="border border-[#9A9A9A] text-center font-thin text-xs">
           <strong class="text-base uppercase font-bold">{{ nextMonthName }}</strong>
            <div class="flex space-x-3 justify-center w-[95%] mx-auto">
-              <p
+              <!-- <p
                 v-for="day in daysInNextMonth"
                 :key="day"
                 class="text-secondary relative"
               >
                 {{ daysOfWeek[(day + startDayOfWeekNextMonth - 2) % 7] }}
                 <span class="absolute -bottom-3 -left-0 text-[10px] text-black">{{ day }}</span>
-              </p>
+              </p> -->
             </div>
         </th>
         </tr>
@@ -68,7 +68,9 @@
                 width: (100 / daysInMonth) * taskDuration(task) + '%',
                 '--days-in-month': daysInMonth,
                 '--task-start-day': taskStartDay(task)
-              }"></div>
+              }">
+              <i v-if="task.status == 'Terminada'" class="fa-solid fa-check absolute left-1 text-[#25DF07] rounded-full px-[2px] py-[1px] mt-[1px] bg-white"></i>
+            </div>
           </el-tooltip>
         </div>
       </td>
@@ -107,7 +109,7 @@ export default {
       } else if (task.status == "En curso") {
         return "bg-[#0355B5]";
       } else {
-        return "bg-green-500";
+        return "bg-[#25DF07]";
       }
     },
     taskStartDay(task) {
@@ -143,7 +145,7 @@ export default {
     taskMatchesFilters(task) {
       // Verifica si la tarea cumple con al menos uno de los criterios de filtro
       return (
-        (this.productionCheck && task.department === "Produccion") ||
+        (this.productionCheck && task.department === "Programación") ||
         (this.designCheck && task.department === "Diseño") ||
         (this.salesCheck && task.department === "Ventas") ||
         (this.marketingCheck && task.department === "Marketing")
