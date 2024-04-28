@@ -77,7 +77,7 @@
           <InputError :message="$page.props?.errors['employee_properties.schedule']" />
         </div>
 
-        <p class="font-bold col-span-full my-2">Información laboral</p>
+        <p class="font-bold col-span-full my-2">Contácto de emergencia</p>
 
         <div class="mt-3 md:mt-0">
           <InputLabel value="Nombre" class="ml-3 mb-1" />
