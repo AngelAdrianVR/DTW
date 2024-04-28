@@ -11,7 +11,7 @@
           <span>Prospectos</span>
         </h1>
         <!-- Buscador -->
-        <div class="flex flex-col lg:flex-row justify-between space-y-3 space-x-3 lg:items-center mt-4">
+        <div class="flex justify-between space-x-3 lg:items-center mt-4">
           <SearchInput @search="handleSearch" />
           <el-tag v-if="search" size="large" closable @close="handleTagClose">
             Estas buscando: <b>{{ search }}</b>
@@ -21,7 +21,7 @@
       </header>
       <main>
         <Loading v-if="loading" class="mt-20" />
-        <article v-else-if="localProspects.length" class="w-full mt-7">
+        <article v-else-if="localProspects.length" class="w-full mt-7 overflow-auto">
           <div class="flex items-center space-x-9 mb-4">
             <p class="text-gray66 text-right text-[11px]">{{ localProspects.length }} de {{ localTotalItems }} elementos
             </p>
@@ -51,9 +51,10 @@
                 <td>
                   <el-tooltip :content="statuses.find(status => status.label == item.status).tooltip" placement="top">
                     <span class="px-2 py-1 rounded-full" :style="{
-            color: statuses.find(status => status.label == item.status).color,
-            backgroundColor: statuses.find(status => status.label == item.status).bg
-          }">{{ item.status }}</span>
+                        color: statuses.find(status => status.label == item.status).color,
+                        backgroundColor: statuses.find(status => status.label == item.status).bg
+                      }">{{ item.status }}
+                    </span>
                   </el-tooltip>
                 </td>
                 <td class="rounded-e-full text-end">

@@ -23,7 +23,7 @@
             <td>${{ item.public_price?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") ?? '-' }}</td>
             <td>{{ item.plans_quantity }}</td>
             <td> <p :class="getStatusStyles(item.status)" class="border rounded-full text-center p-1">{{ item.status ?? 'estatus' }}</p></td>
-            <td>{{ item.release_date }}</td>
+            <td>{{ formatDate(item.release_date) }}</td>
             <td>{{ item.responsible?.name ?? '-' }}</td>
             <td class="rounded-e-full text-end">
                 <el-dropdown trigger="click" @command="handleCommand">
@@ -97,6 +97,8 @@
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import CancelButton from "@/Components/CancelButton.vue";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export default {
 data() {
@@ -114,6 +116,11 @@ props:{
 suscription_projects: Array
 },
 methods:{
+  formatDate(dateTime) {
+        let parsedDate = new Date(dateTime);
+
+        return format(parsedDate, 'd MMM, y', { locale: es }); // Formato personalizado
+    },
     handleCommand(command) {
       const status = command.split('-')[0];
       const commandName = command.split('-')[1];

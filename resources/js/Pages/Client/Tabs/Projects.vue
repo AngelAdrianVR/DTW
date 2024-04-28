@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5">
+    <div class="mt-5 overflow-auto">
         <Loading v-if="loading" class="mt-12" />
         <table v-else-if="projects.length" class="w-full">
             <thead>
