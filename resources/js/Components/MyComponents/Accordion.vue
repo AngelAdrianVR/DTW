@@ -11,7 +11,7 @@
             :class="{ '!rotate-180': accordionOpen }"></i>
     </button>
     <div :id="`accordion-text-${id}`" role="region" :aria-labelledby="`accordion-title-${id}`"
-        class="grid text-sm overflow-hidden transition-all duration-300 ease-in-out ml-2"
+        class="grid text-sm overflow-hidden transition-all duration-300 ease-in-out ml-3"
         :class="accordionOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
         <div class="overflow-hidden">
             <p>
