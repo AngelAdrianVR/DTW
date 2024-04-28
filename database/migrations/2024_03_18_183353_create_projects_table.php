@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('key')->nullable();
             $table->string('payment_method');
             $table->string('category');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('hours_work');
             $table->unsignedTinyInteger('total_work_days')->nullable();
             $table->json('customer_info')->nullable(); //name, email, company, phone. attributes in message model 

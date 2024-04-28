@@ -100,8 +100,8 @@ class QuoteController extends Controller
     public function getItemsByPage($currentPage)
     {
         $offset = $currentPage * 15;
-        $quotes = Quote::latest('id')
-            ->with([])
+        $quotes = Quote::latest()
+            ->with(['user', 'client', 'contact', 'prospect'])
             ->skip($offset)
             ->take(15)
             ->get();
