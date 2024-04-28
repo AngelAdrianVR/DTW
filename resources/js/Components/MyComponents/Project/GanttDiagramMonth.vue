@@ -1,64 +1,66 @@
 <template>
-  <table class="border border-[#9A9A9A] default w-full">
-    <tr>
-      <th class="border-y border-[#9A9A9A] text-left pl-7 py-3 font-thin relative w-1/4" scope="row">
-        Proyecto <br />
-        <p class="text-base font-bold truncate w-4/5">{{ currentProject?.name }}</p>
-        <i @click="showDepartmentFilter = !showDepartmentFilter"
-          class="fa-solid fa-ellipsis text-primary absolute bottom-4 right-4 cursor-pointer hover:bg-[#dfdede] rounded-full p-2"></i>
-        <div v-if="showDepartmentFilter" class="absolute right-4 top-[60px] bg-white rounded-md px-4 py-2">
-          <label class="flex items-center">
-            <Checkbox v-model:checked="productionCheck" class="bg-transparent" />
-            <span class="ml-2 text-sm text-[#9A9A9A]">Programación</span>
-          </label>
-          <label class="flex items-center">
-            <Checkbox v-model:checked="designCheck" class="bg-transparent" />
-            <span class="ml-2 text-sm text-[#9A9A9A]">Diseño</span>
-          </label>
-          <label class="flex items-center">
-            <Checkbox v-model:checked="salesCheck" class="bg-transparent" />
-            <span class="ml-2 text-sm text-[#9A9A9A]">Ventas</span>
-          </label>
-          <label class="flex items-center">
-            <Checkbox v-model:checked="marketingCheck" class="bg-transparent" />
-            <span class="ml-2 text-sm text-[#9A9A9A]">Marketing</span>
-          </label>
-        </div>
-      </th>
-      <th class="border border-[#9A9A9A] text-center font-thin">
-        <strong class="text-base uppercase font-bold tex">{{ monthName }}</strong><br />
-        <div class="flex space-x-8 justify-center w-[95%] mx-4 bg-primarylight">
-          <!-- <p v-for="day in daysInMonth" :key="day" class="text-primary relative">
-            {{ daysOfWeek[(day + startDayOfWeek - 2) % 7] }}
-            <span class="absolute -bottom-3 -left-0 text-[9px] text-black pt-1">{{ day }}</span>
-          </p> -->
-        </div>
-      </th>
-    </tr>
+  <div class="overflow-auto">
+    <table class="border border-[#9A9A9A] default w-[1700px]">
+      <tr>
+        <th class="border-y border-[#9A9A9A] text-left pl-7 py-3 font-thin relative w-1/4" scope="row">
+          Proyecto <br />
+          <p class="text-base font-bold truncate w-4/5">{{ currentProject?.name }}</p>
+          <i @click="showDepartmentFilter = !showDepartmentFilter"
+            class="fa-solid fa-ellipsis text-primary absolute bottom-4 right-4 cursor-pointer hover:bg-[#dfdede] rounded-full p-2"></i>
+          <div v-if="showDepartmentFilter" class="absolute right-4 top-[60px] bg-white rounded-md px-4 py-2">
+            <label class="flex items-center">
+              <Checkbox v-model:checked="productionCheck" class="bg-transparent" />
+              <span class="ml-2 text-sm text-[#9A9A9A]">Programación</span>
+            </label>
+            <label class="flex items-center">
+              <Checkbox v-model:checked="designCheck" class="bg-transparent" />
+              <span class="ml-2 text-sm text-[#9A9A9A]">Diseño</span>
+            </label>
+            <label class="flex items-center">
+              <Checkbox v-model:checked="salesCheck" class="bg-transparent" />
+              <span class="ml-2 text-sm text-[#9A9A9A]">Ventas</span>
+            </label>
+            <label class="flex items-center">
+              <Checkbox v-model:checked="marketingCheck" class="bg-transparent" />
+              <span class="ml-2 text-sm text-[#9A9A9A]">Marketing</span>
+            </label>
+          </div>
+        </th>
+        <th class="border border-[#9A9A9A] text-center font-thin">
+          <strong class="text-base uppercase font-bold tex">{{ monthName }}</strong><br />
+          <div class="flex space-x-8 justify-center w-[95%] mx-4 bg-primarylight">
+            <!-- <p v-for="day in daysInMonth" :key="day" class="text-primary relative">
+              {{ daysOfWeek[(day + startDayOfWeek - 2) % 7] }}
+              <span class="absolute -bottom-3 -left-0 text-[9px] text-black pt-1">{{ day }}</span>
+            </p> -->
+          </div>
+        </th>
+      </tr>
 
-    <tr v-for="task in currentProject?.tasks" :key="task" v-show="taskMatchesFilters(task)">
-      <th class="font-normal pl-7 py-2 border-y border-[#9A9A9A]">
-        <div :class="task.priority.color_border" class="border-r-4">
-          <p class="w-[300px] truncate text-sm" :title="task.title">{{ task.title }}</p>
-          <p class="text-[#9A9A9A] text-xs">Depto. {{ task.department }}</p>
-        </div>
-      </th>
-      <td class="border-x border-[#CCCCCC] overflow-x-hidden">
-        <div class="w-[93%] mx-auto">
-          <el-tooltip :content="task.start_date + ' - ' + task.end_date" placement="top">
-            <div class="h-5 rounded-full shadow-md shadow-gray-400/100 relative" :class="getStatusColor(task) + ' start-day-2'"
-              :style="{
-                width: (100 / daysInMonth) * taskDuration(task) + '%',
-                '--days-in-month': daysInMonth,
-                '--task-start-day': taskStartDay(task)
-              }">
-              <i v-if="task.status == 'Terminada' " class="fa-solid fa-check absolute left-1 text-[#25DF07] rounded-full px-[2px] py-[1px] mt-[1px] bg-white"></i>
-            </div>
-          </el-tooltip>
-        </div>
-      </td>
-    </tr>
-  </table>
+      <tr v-for="task in currentProject?.tasks" :key="task" v-show="taskMatchesFilters(task)">
+        <th class="font-normal pl-7 py-2 border-y border-[#9A9A9A]">
+          <div :class="task.priority.color_border" class="border-r-4">
+            <p class="w-[300px] truncate text-sm" :title="task.title">{{ task.title }}</p>
+            <p class="text-[#9A9A9A] text-xs">Depto. {{ task.department }}</p>
+          </div>
+        </th>
+        <td class="border-x border-[#CCCCCC] overflow-x-hidden">
+          <div class="w-[93%] mx-auto">
+            <el-tooltip :content="task.start_date + ' - ' + task.end_date" placement="top">
+              <div class="h-5 rounded-full shadow-md shadow-gray-400/100 relative" :class="getStatusColor(task) + ' start-day-2'"
+                :style="{
+                  width: (100 / daysInMonth) * taskDuration(task) + '%',
+                  '--days-in-month': daysInMonth,
+                  '--task-start-day': taskStartDay(task)
+                }">
+                <i v-if="task.status == 'Terminada' " class="fa-solid fa-check absolute left-1 text-[#25DF07] rounded-full px-[2px] py-[1px] mt-[1px] bg-white"></i>
+              </div>
+            </el-tooltip>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
   <p v-if="this.currentDate == undefined">No hay tareas en este proyecto</p>
 </template>
 
