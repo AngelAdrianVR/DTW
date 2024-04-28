@@ -64,7 +64,7 @@ class ProjectController extends Controller
     public function show($project_id)
     {
         
-        $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,name', 'tasks'])->find($project_id));
+        $project = ProjectResource::make(Project::with(['client:id,name', 'user:id,name', 'quote:id,name', 'tasks' => ['comments.user', 'participants', 'project', 'user']])->find($project_id));
         $projects = Project::latest()->get(['id', 'name']);
         $users = User::all(['id', 'name']);
 

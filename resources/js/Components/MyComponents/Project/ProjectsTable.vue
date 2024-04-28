@@ -33,16 +33,22 @@
             </td>
             <td class="text-left py-2 rounded-r-full flex space-x-px items-center">
               <p class="text-[10px] mt-1">{{ project.tasks.filter(task => task.status === 'Terminada').length }}</p>
-              <div class="relative bg-gray4 rounded-full h-5 w-24 mt-1 border border-primary group-hover:border-white">
-                <div
-                  :class="(project.tasks.filter(task => task.status === 'Terminada').length / project.tasks.length) * 100 == 100 ? 'rounded-full' : 'rounded-l-full'"
-                  class="absolute top-0 left-0 bg-primary h-5"
-                  :style="{ width: (project.tasks.filter(task => task.status === 'Terminada').length / project.tasks.length) * 100 + '%' }">
-                </div>
-                <p class="text-xs mt-px absolute top-0 right-8 text-black">{{ project.tasks.length != 0 ?
-                  Math.round((project.tasks.filter(task => task.status === 'Terminada').length / project.tasks.length) *
-                    100) : '0' }}%</p>
-              </div>
+              <el-tooltip :content="getStatusTooltip(project.tasks)" placement="top">
+                  <div class="relative bg-gray4 rounded-full h-5 w-28 mt-1 border group-hover:border-white"
+                      :style="{ borderColor: getStatusColor(project.tasks) }">
+                      <div :class="(project.tasks.filter(task => task.status === 'Terminada').length / project.tasks.length) * 100 == 100 ? 'rounded-full' : 'rounded-l-full'"
+                          class="absolute top-0 left-0 bg-primary h-[18px]" :style="{
+                              width: (project.tasks.filter(task => task.status === 'Terminada').length / project.tasks.length) * 100 + '%' ,
+                              backgroundColor: getStatusColor(project.tasks)
+                          }">
+                      </div>
+                      <p class="text-[11px] mt-px absolute top-0 right-12 text-black">{{ project.tasks.length !=0 ?
+                          Math.round((project.tasks.filter(task => task.status === 'Terminada').length /
+                          project.tasks.length) *
+                          100) : '0' }}%
+                      </p>
+                  </div>
+              </el-tooltip>
               <p class="text-[10px] mt-1">{{ project.tasks.length }}</p>
             </td>
             <td class="rounded-e-full text-end pr-4">
@@ -184,6 +190,38 @@ methods:{
           bg: 'bg-orange-200',
         };
       }
+    },
+    getStatusTooltip(tasks) {
+        const totalTasks = tasks.length;
+        const completedTasks = tasks.filter(task => task.status === 'Terminada').length;
+        const inProgressTasks = tasks.filter(task => task.status === 'En curso').length;
+
+        if (totalTasks === 0) {
+            return 'Sin tareas';
+        }
+        if (completedTasks === totalTasks) {
+            return 'Terminado';
+        } else if (inProgressTasks > 0 || completedTasks > 0) {
+            return 'En proceso';
+        } else {
+            return 'Sin iniciar';
+        }
+    },
+    getStatusColor(tasks) {
+        const totalTasks = tasks.length;
+        const completedTasks = tasks.filter(task => task.status === 'Terminada').length;
+        const inProgressTasks = tasks.filter(task => task.status === 'En curso').length;
+
+        if (totalTasks === 0) {
+            return '#E61B0F';
+        }
+        if (completedTasks === totalTasks) {
+            return '#26E108';
+        } else if (inProgressTasks > 0 || completedTasks > 0) {
+            return '#FD7708';
+        } else {
+            return '#9a9a9a';
+        }
     },
   }
 }

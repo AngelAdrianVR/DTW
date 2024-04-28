@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectTaskResource;
+use App\Models\Comment;
 use App\Models\Project;
 use App\Models\ProjectTask;
 use App\Models\User;
@@ -105,54 +106,52 @@ class ProjectTaskController extends Controller
     }
 
 
-    public function comment(Request $request, Task $task)
+    public function comment(Request $request, ProjectTask $project_task)
     {
-
         $comment = new Comment([
             'body' => $request->comment,
             'user_id' => auth()->id(),
         ]);
 
-        $task->comments()->save($comment);
+        $project_task->comments()->save($comment);
 
-        $mentions = $request->mentions;
-        foreach ($mentions as $mention) {
-            $user = User::find($mention['id']);
-            $user->notify(new MentionNotification($task, "", 'projects'));
-        }
+        // $mentions = $request->mentions;
+        //mencionar a algun usuario
+        // foreach ($mentions as $mention) {
+        //     $user = User::find($mention['id']);
+        //     $user->notify(new MentionNotification($project_task, "", 'projects'));
+        // }
         
-        event(new RecordCreated($comment));
-
         return response()->json(['item' => $comment->fresh('user')]);
     }
 
-    public function pausePlayTask(Task $task)
+    public function pausePlayTask(ProjectTask $project_task)
     {
-        if ($task->is_paused) {
-            $task->update([
+        if ($project_task->is_paused) {
+            $project_task->update([
                 'is_paused' => false
             ]);
         } else {
-            $task->update([
+            $project_task->update([
                 'is_paused' => true
             ]);
         }
-        $task->save();
+        $project_task->save();
 
-        return response()->json(['item' => TaskResource::make($task->fresh(['participants', 'project', 'user', 'comments.user', 'media']))]);
+        return response()->json(['item' => ProjectTaskResource::make($project_task->fresh(['participants', 'project', 'user', 'comments.user', 'media']))]);
     }
 
-    public function updateStatus(Task $task, Request $request)
+    public function updateStatus(ProjectTask $project_task, Request $request)
     {
-        $task->update(['status' => $request->status]);
-        $this->handleUpdatedTaskStatus($task->project_id);
+        $project_task->update(['status' => $request->status]);
+        $this->handleUpdatedTaskStatus($project_task->project_id);
 
         return response()->json([]);
     }
 
     public function getLateTasks()
     {
-        $late_tasks = Task::with(['participants', 'project'])->where('status', '!=', 'Terminada')->whereDate('end_date', '<', today())->get();
+        $late_tasks = ProjectTask::with(['participants', 'project'])->where('status', '!=', 'Terminada')->whereDate('end_date', '<', today())->get();
 
         $currentDate = today();
 

@@ -99,11 +99,10 @@ import InputError from "@/Components/InputError.vue";
 import CancelButton from "@/Components/CancelButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import FileUploader from "@/Components/MyComponents/FileUploader.vue";
-// import RichText from "@/Components/MyComponents/RichText.vue";
 import Modal from "@/Components/Modal.vue";
 import Back from "@/Components/MyComponents/Back.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-// import { isSameDay, parseISO } from "date-fns";
+import { isSameDay, parseISO } from "date-fns";
 
 export default {
   data() {
@@ -131,7 +130,7 @@ export default {
         'Alta',
       ],
       departments: [
-        'Produccion',
+        'Programación',
         'Ventas',
         'Diseño',
         'Marketing',
@@ -145,7 +144,6 @@ export default {
     InputLabel,
     FileUploader,
     InputError,
-    // RichText,
     Modal,
     Back,
     Link
