@@ -27,7 +27,7 @@ return new class extends Migration
             $table->date('finish_date')->nullable();
             $table->string('state')->default('En revisión');
             $table->boolean('invoice')->default(false);
-            $table->unsignedFloat('price');
+            $table->unsignedFloat('price')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('responsible_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('client_id')->nullable()->constrained()->onDelete('cascade');
