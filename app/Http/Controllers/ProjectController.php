@@ -25,10 +25,9 @@ class ProjectController extends Controller
     public function create()
     {
         $users = User::all(['id', 'name']);
-        $quotes = Quote::all(['id', 'name', 'total_cost', 'total_work_days']);
         $clients = Client::all(['id', 'name']);
 
-        return inertia('Project/Create', compact('users', 'quotes', 'clients'));
+        return inertia('Project/Create', compact('users', 'clients'));
     }
 
     
@@ -36,18 +35,19 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'internal_project' => 'boolean',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
             'price' => 'required|numeric|min:1',
+            'estimated_date' => 'nullable|date',
             'start_date' => 'required|date',
             'finish_date' => 'nullable|date',
-            'payment_method' => 'required|string|max:100',
-            'estimated_date' => 'nullable|date',
+            'payment_method' => $request->internal_project ? 'nullable' : 'required|string|max:100',
             'category' => 'required|string|max:100',
             'invoice' => 'nullable|boolean',
             'responsible_id' => 'required',
-            'client_id' => 'required',
-            'quote_id' => 'required',
+            'client_id' => $request->internal_project ? 'nullable' : 'required',
+            'quote_id' => $request->internal_project ? 'nullable' : 'required',
         ]);
 
         $project = Project::create($request->all() + ['user_id' => auth()->user()->id]);

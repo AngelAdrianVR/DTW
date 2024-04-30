@@ -1,20 +1,23 @@
 <template>
   <AppLayout title="Crear tarea">
-    <template #header>
+    <!-- <template #header>
       <div class="flex justify-between">
-        <Back />
         <div class="flex items-center space-x-2">
           <h2 class="font-semibold text-xl leading-tight">Nueva tarea</h2>
         </div>
       </div>
-    </template>
+    </template> -->
 
+    <div class="p-3">
+      <Back />
+    </div>
     <!-- Form -->
     <form @submit.prevent="store">
       <div class="md:w-1/2 md:mx-auto my-5 border border-[#D9D9D9] rounded-lg lg:p-9 p-4 space-y-3">
+      <h1 class="font-bold">Crear nueva tarea</h1>
         <div>
           <InputLabel value="Proyecto*" class="ml-3" />
-          <el-select @change="getProject()" class="w-full mt-2" v-model="form.project_id" clearable filterable
+          <el-select disabled @change="getProject()" class="w-full mt-2" v-model="form.project_id" clearable filterable
             placeholder="Seleccionar proyecto" no-data-text="No hay proyectos registrados"
             no-match-text="No se encontraron coincidencias">
             <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id" />
