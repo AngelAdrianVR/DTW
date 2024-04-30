@@ -9,15 +9,15 @@
             <!-- Logo -->
             <div class="flex items-center justify-center mt-7">
                 <Link v-if="small" :href="route('dashboard')">
-                <ApplicationMark class="w-10 mx-4" />
+                    <ApplicationMark class="w-14 mx-2" />
                 </Link>
                 <Link v-else :href="route('dashboard')">
                 <figure class="">
-                    <img class="w-10" src="@/../../public/assets/images/dtw_logo.png" alt="logo">
+                    <img class="w-32" src="@/../../public/assets/images/white_logo.png" alt="logo">
                 </figure>
                 </Link>
             </div>
-            <nav class="px-2 text-white" :class="small ? 'pt-5' : 'pt-10'">
+            <nav class="px-2 text-white" :class="small ? 'pt-16' : 'pt-10'">
                 <template v-if="small">
                     <div v-for="(menu, index) in menus" :key="index">
                         <button v-if="menu.show" @click="goToRoute(menu.route)" :active="menu.active"

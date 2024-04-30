@@ -30,8 +30,7 @@
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img src="@/../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
-                <span>Digital TW</span>
+                <img src="@/../../public/assets/images/black_logo.png" class="h-12 cursor-pointer" alt="logo" />
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
                 <i class="fa-solid fa-bars text-xl"></i>
@@ -438,9 +437,9 @@
                 </div>
             </section>
 
-            <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
-                <figure>
-                    <img class="md:w-[3%] w-[7%]" src="@/../../public/assets/images/dtw_logo.png" alt="" />
+            <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative overflow-auto">
+                <figure class="w-full">
+                    <img class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
                 </figure>
                 <div class="md:grid grid-cols-3 h-28">
                     <div class="border-r border-white flex justify-center items-cente">

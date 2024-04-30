@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Quote;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -141,5 +142,12 @@ class ClientController extends Controller
         $items = $client->projects()->with(['tasks'])->get();
 
         return response()->json(compact('items'));
+    }
+
+    public function fetchQuotes($client)
+    {
+        $quotes = Quote::where('client_id', $client)->get();
+
+        return response()->json(compact('quotes'));
     }
 }

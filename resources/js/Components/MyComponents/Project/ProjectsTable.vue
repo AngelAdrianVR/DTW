@@ -19,10 +19,10 @@
           <tr v-for="project in projects" :key="project.id" class="mb-4 cursor-pointer hover:bg-primarylight group"
             @click="$inertia.get(route('projects.show', project.id))">
             <td class="text-left py-2 pr-2 pl-4 rounded-l-full">{{ project.id }}</td>
-            <td class="text-left py-2">{{ project.client?.name ?? project.customer_info?.name }}</td>
+            <td class="text-left py-2">{{ project.client?.name ?? '-' }}</td>
             <td :title="project.name" class="text-left py-2 max-w-[220px] truncate pr-2">{{ project.name }}</td>
-            <td class="text-left py-2">{{ project.price?.formated }}</td>
-            <td class="text-left py-2">{{ project.total_work_days }}</td>
+            <td class="text-left py-2">{{ project.price?.formated ?? '0' }}</td>
+            <td class="text-left py-2">{{ project.total_work_days ?? '-' }}</td>
             <td class="text-left py-2">{{ project.start_date }}</td>
             <td class="text-left py-2">{{ project.estimated_date }}</td>
             <td class="text-left py-2">
