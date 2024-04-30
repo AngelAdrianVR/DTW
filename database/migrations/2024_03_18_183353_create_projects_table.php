@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->boolean('internal_project')->default(false);
             $table->string('key')->nullable();
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('category');
             $table->text('description')->nullable();
             $table->string('hours_work');
@@ -29,8 +30,8 @@ return new class extends Migration
             $table->unsignedFloat('price');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('responsible_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('quote_id')->constrained()->onDelete('cascade');
+            $table->foreignId('client_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('quote_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

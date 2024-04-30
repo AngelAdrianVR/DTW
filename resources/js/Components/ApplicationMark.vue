@@ -1,3 +1,3 @@
 <template>
-    <img src="@/../../public/assets/images/dtw_logo.png" alt="" />
+    <img src="@/../../public/assets/images/white_logo.png" alt="" />
 </template>

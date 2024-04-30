@@ -30,8 +30,7 @@
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
             class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
             <div class="flex space-x-2 items-center">
-                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
-                <span>Digital TW</span>
+                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/black_logo.png" class="h-12 cursor-pointer" alt="logo" />
             </div>
             <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
                 <i class="fa-solid fa-bars text-xl"></i>
@@ -56,61 +55,60 @@
         <main class="pt-28 lg:px-28">
             
         </main>
-        <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
-      <figure>
-        <img
-          class="md:w-[3%] w-[7%]"
-          src="@/../../public/assets/images/dtw_logo.png"
-          alt=""
-        />
-      </figure>
-      <div class="md:grid grid-cols-3 h-28">
-        <div class="border-r border-white flex justify-center items-cente">
-          <p class="text-lg">"Unlocking your online potential"</p>
-        </div>
+        <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative overflow-auto">
+          <figure>
+            <img
+              class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png"
+              alt="dtw logo"
+            />
+          </figure>
+          <div class="md:grid grid-cols-3 h-28">
+            <div class="border-r border-white flex justify-center items-cente">
+              <p class="text-lg">"Unlocking your online potential"</p>
+            </div>
 
-        <div class="border-r border-white flex justify-center items-center">
-          <div class="flex flex-col">
-            <h2 class="text-center mb-5 text-xl">Contact</h2>
-            <div>
-              <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
-              <p><i class="fa-solid fa-envelope mr-2"></i>contacto@dtw.com.mx</p>
+            <div class="border-r border-white flex justify-center items-center">
+              <div class="flex flex-col">
+                <h2 class="text-center mb-5 text-xl">Contact</h2>
+                <div>
+                  <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
+                  <p><i class="fa-solid fa-envelope mr-2"></i>contacto@dtw.com.mx</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-center items-center">
+              <div class="flex flex-col justify-center items-center">
+                <h2 class="text-center mb-5 text-xl">Follow us!</h2>
+                <div>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=100094614796876"
+                    target="_blank"
+                    ><i
+                      class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"
+                    ></i
+                  ></a>
+                  <a
+                    href="https://instagram.com/digital_tw?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
+                    target="_blank"
+                    ><i
+                      class="fa-brands fa-instagram text-2xl border border-white rounded-full px-3 py-2 cursor-pointer"
+                    ></i
+                  ></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="flex justify-center items-center">
-          <div class="flex flex-col justify-center items-center">
-            <h2 class="text-center mb-5 text-xl">Follow us!</h2>
-            <div>
-              <a
-                href="https://www.facebook.com/profile.php?id=100094614796876"
-                target="_blank"
-                ><i
-                  class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"
-                ></i
-              ></a>
-              <a
-                href="https://instagram.com/digital_tw?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
-                target="_blank"
-                ><i
-                  class="fa-brands fa-instagram text-2xl border border-white rounded-full px-3 py-2 cursor-pointer"
-                ></i
-              ></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="hidden md:block" href="">
-        <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
-          Privacy policy - Cookies policy
-        </p>
-      </a>
-      <a class="hidden md:block" href="">
-        <p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
-          Copyright | 2023 | Todos los derechos reservados por Digital TW S.A de C.V.
-        </p>
-      </a>
+          <a class="hidden md:block" href="">
+            <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
+              Privacy policy - Cookies policy
+            </p>
+          </a>
+          <a class="hidden md:block" href="">
+            <p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
+              Copyright | 2023 | Todos los derechos reservados por Digital TW S.A de C.V.
+            </p>
+          </a>
     </footer>
     </div>
 </template>

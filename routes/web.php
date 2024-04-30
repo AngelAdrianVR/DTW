@@ -83,6 +83,7 @@ Route::get('clients-get-by-page/{currentPage}', [ClientController::class, 'getIt
 Route::get('clients-get-contacts/{client}', [ClientController::class, 'getContacts'])->name('clients.get-contacts')->middleware('auth');
 Route::get('clients-get-quotes/{client}', [ClientController::class, 'getQuotes'])->name('clients.get-quotes')->middleware('auth');
 Route::get('clients-get-projects/{client}', [ClientController::class, 'getProjects'])->name('clients.get-projects')->middleware('auth');
+Route::get('clients-fetch-quotes/{client}', [ClientController::class, 'fetchQuotes'])->name('clients.fetch-quotes')->middleware('auth');
 
 
 // ------- CRM (prospectos Routes)  ------------------------------------------

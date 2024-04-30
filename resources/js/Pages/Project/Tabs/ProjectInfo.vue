@@ -3,25 +3,26 @@
         <div class="grid grid-cols-2 text-left gap-y-3 p-4 md:ml-10 items-center">
             <p class="text-secondary font-bold col-span-2 mb-2">Información del proyecto</p>
 
+            <span v-if="project.internal_project" class="bg-primarylight py-1 px-2 col-span-full font-bold">Proyecto interno</span>
             <span class="text-[#6A6A6A]">Nombre del proyecto</span>
             <span>{{ project.name }}</span>
             <span class="text-[#6A6A6A]">Creado por</span>
             <span>{{ project.user?.name }}</span>
             <span class="text-[#6A6A6A]">Creado el</span>
             <span>{{ project.created_at }}</span>
-            <span class="text-[#6A6A6A]">Días hábiles</span>
-            <span>{{ project.hours_work/8 }}</span>
             <span class="text-[#6A6A6A]">Fecha de inicio</span>
             <span>{{ project.start_date }}</span>
             <span class="text-[#6A6A6A]">Fecha esperada de fin</span>
             <span>{{ project.estimated_date }}</span>
             <span class="text-[#6A6A6A]">Fecha final</span>
             <span>{{ project.finish_date ?? '-' }}</span>
+            <span class="text-[#6A6A6A]">Días hábiles</span>
+            <span>{{ project.total_work_days ?? '-' }}</span>
             <span class="text-[#6A6A6A]">Descripción</span>
             <span v-html="project.description"></span>
         </div>
 
-        <div class="grid grid-cols-2 text-left p-4 md:ml-10 items-center gap-y-3 self-start">
+        <div v-if="!project.internal_project" class="grid grid-cols-2 text-left p-4 md:ml-10 items-center gap-y-3 self-start">
             <p class="text-secondary font-bold col-span-2">Campos adicionales</p>
 
             <span class="text-[#6A6A6A] mt-2">Cliente</span>

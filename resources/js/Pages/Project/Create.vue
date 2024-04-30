@@ -27,9 +27,14 @@
           <InputError :message="$page.props?.errors.responsible_id" />
         </div>
 
-        <div class="mt-3 md:mt-0">
+        <div class="col-span-2 ml-6">
+            <el-checkbox v-model="form.internal_project" name="internal_project" label="Es proyecto interno"
+                size="small" />
+        </div>
+
+        <div v-if="!form.internal_project" class="mt-3 md:mt-0">
           <InputLabel value="Cliente*" class="ml-3 mb-1" />
-          <el-select class="w-full" v-model="form.client_id" clearable
+          <el-select @change="fetchClientQuotes" class="w-full" v-model="form.client_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
               <el-option v-for="client in clients" :key="client" :label="client.name" :value="client.id" />
@@ -37,23 +42,23 @@
           <InputError :message="$page.props?.errors.client_id" />
         </div>
 
-        <div class="mt-3 md:mt-0">
+        <div v-if="!form.internal_project" class="mt-3 md:mt-0">
           <InputLabel value="Cotización*" class="ml-3 mb-1" />
-          <el-select @change="getTotalDaysWork" class="w-full" v-model="form.quote_id" clearable
+          <el-select @change="getQuoteInfo" class="w-full" v-model="form.quote_id" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
               no-match-text="No se encontraron coincidencias">
-              <el-option v-for="quote in quotes" :key="quote" :label="quote.name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
+              <el-option v-for="quote in clientQuotes" :key="quote" :label="quote.name + '  -  $' + quote.total_cost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') " :value="quote.id" />
           </el-select>
           <InputError :message="$page.props?.errors.quote_id" />
         </div>
 
-        <div class="mt-3 md:mt-0">
+        <div v-if="!form.internal_project" class="mt-3 md:mt-0">
           <InputLabel value="Días hábiles de trabajo" class="ml-3 mb-1" />
           <el-input disabled v-model="form.total_work_days" placeholder="Días hábiles de trabajo" clearable />
           <InputError :message="$page.props?.errors.total_work_days" />
         </div>
 
-        <div class="mt-3 md:mt-0">
+        <div v-if="!form.internal_project" class="mt-3 md:mt-0">
           <InputLabel value="Condiciones de pago*" class="ml-3 mb-1" />
           <el-select class="w-full" v-model="form.payment_method" clearable
               placeholder="Seleccione" no-data-text="No hay opciones registradas"
@@ -81,14 +86,23 @@
         </div>
 
         <div class="mt-3 md:mt-0">
-          <label class="flex items-center">
-              <Checkbox v-model:checked="form.invoice" />
-              <span class="ml-2 text-sm text-gray-600">Requiere factura</span>
-          </label>
+          <div class="flex items-center space-x-2">
+          <InputLabel value="Precio del proyecto" class="ml-3 mb-1" />
+           <el-tooltip content="Inversión por parte de DTW" placement="right">
+              <i class="fa-regular fa-circle-question ml-2 text-primary text-xs"></i>
+            </el-tooltip>
+          </div>
+          <el-input v-model="form.price" placeholder="Precio del proyecto (opcional)" clearable />
+          <InputError :message="$page.props?.errors.price" class="mb-1" />
         </div>
 
         <div class="mt-3 md:mt-0">
-          <InputLabel value="Horas de trabajo*" class="ml-3 mb-1" />
+          <div class="flex items-center space-x-2">
+            <InputLabel value="Horas de trabajo*" class="ml-3 mb-1" />
+            <el-tooltip content="Dias de trabajo * 3 (trabajadores) * 6 horas por día" placement="right">
+              <i class="fa-regular fa-circle-question ml-2 text-primary text-xs"></i>
+            </el-tooltip>
+          </div>
           <el-input
             v-model="form.hours_work"
             class=""
@@ -99,17 +113,16 @@
           <InputError :message="$page.props?.errors.hours_work" class="mb-1" />
         </div>
 
-        <div class="mt-3 md:mt-0">
-          <InputLabel value="Precio del proyecto*" class="ml-3 mb-1" />
-          <el-input v-model="form.price" placeholder="Precio" clearable />
-          <InputError :message="$page.props?.errors.price" class="mb-1" />
+        <div v-if="!form.internal_project" class="mt-3 md:mt-0">
+            <el-checkbox v-model="form.invoice" name="invoice" label="Requiere factura"
+                size="small" />
         </div>
 
         <div class="col-span-full mt-3">
-          <InputLabel value="Descripción" class="text-sm ml-2 !text-gray-400" />
+          <InputLabel value="Descripción" class="text-sm ml-2" />
           <el-input v-model="form.description"
             :autosize="{ minRows: 3, maxRows: 5 }" type="textarea" placeholder="Escribe una descripción (opcional)"
-            :maxlength="200" show-word-limit clearable />
+            :maxlength="255" show-word-limit clearable />
         </div>
 
         <div class="ml-2 mt-3 md:mt-0 col-span-full">
@@ -134,11 +147,13 @@ import InputError from "@/Components/InputError.vue";
 import FileUploader from "@/Components/MyComponents/FileUploader.vue";
 import Back from "@/Components/MyComponents/Back.vue";
 import { useForm } from "@inertiajs/vue3";
+import axios from 'axios';
 
 export default {
   data() {
     const form = useForm({
       name: null,
+      internal_project: false, //indica si es proyecto interno
       responsible_id: null, //nuevo agregado
       client_id: null, //nuevo agregado
       quote_id: null, //nuevo agregado
@@ -157,8 +172,8 @@ export default {
     });
     return {
       form,
+      clientQuotes: null, //cotizaciones del cliente seleccionado
       duration: null, //rango de fechas. separar y guardar en start_date y estimated_date
-      payment_methods: ['Al contado', '2 pagos (50% al inicio y 50% a la entrega del proyecto)', '3 pagos ( 30% al inicio, 40 al desarrollo y 30% a la entrega)'],
       categories: ['Página web', 'Tienda en linea', 'Punto de venta', 'ERP (Planificación de recursos empresariales)',
                 'CRM (Gestión de relaciones con los clientes)', 'PMS (Planificación de recursos empresariales)', 'CMS (Gestión de contenido)',
                 'LMS (Sistema de gestión del aprendizaje)', 'BI (Inteligencia de negocios)', 'Otro'],
@@ -176,7 +191,6 @@ export default {
   },
   props: {
     users: Array,
-    quotes: Array,
     clients: Array
   },
   methods: {
@@ -195,9 +209,24 @@ export default {
       this.form.start_date = this.duration[0];
       this.form.estimated_date = this.duration[1];
     },
-    getTotalDaysWork() {
-      const quote = this.quotes.find(quote => quote.id === this.form.quote_id);
+    async fetchClientQuotes() {
+      try {
+        const response = await axios.get(route('clients.fetch-quotes', this.form.client_id));
+        if ( response.status === 200 ) {
+          this.clientQuotes = response.data.quotes;
+          console.log(this.clientQuotes);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getQuoteInfo() {
+      const quote = this.clientQuotes.find(quote => quote.id === this.form.quote_id);
+      console.log(quote);
       this.form.total_work_days = quote.total_work_days;
+      this.form.payment_method = quote.payment_type;
+      this.form.hours_work = quote.total_work_days * 3 * 6;
+      this.form.description = quote.description;
     }
   },
 };
