@@ -4,7 +4,7 @@
   <div class="text-sm rounded-[10px] px-12 py-4 relative min-h-screen">
     <div class="absolute w-full top-0 left-0">
       <figure
-        class="w-full bg-cover h-32 py-6 pl-6 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/header.png')]">
+        class="w-full bg-cover h-32 py-6 pl-6 bg-no-repeat bg-[url('@/../../public/assets/images/header.png')]">
         <img src="@/../../public/assets/images/black_logo.png" class="h-20">
       </figure>
     </div>
@@ -131,7 +131,7 @@
     </main>
     <footer v-if="quote.show_bank_info" class="w-full absolute bottom-0 right-0">
       <section
-        class="w-[60%] bg-cover ml-auto h-28 pl-[15%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/quoteTemplate/footer.png')]">
+        class="w-[60%] bg-cover ml-auto h-28 pl-[15%] py-2 bg-no-repeat bg-[url('@/../../public/assets/images/footer.png')]">
         <article class="text-[#6d6d6d] text-xs">
           <h2 class="font-bold text-center mb-1">Datos para la realización de pagos</h2>
           <p>Nombre del beneficiario: <span class="text-black">Miguel Osvaldo Vázquez Rodríguez</span></p>
