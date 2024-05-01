@@ -94,7 +94,8 @@ onMounted(() => {
                                         'inline-flex': showingNavigationDropdown,
                                     }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg> -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="36" height="36" viewBox="0 0 256 256" xml:space="preserve">
+                                    <i v-show="showingNavigationDropdown" class="fa-solid fa-x"></i>
+                                    <svg v-show="!showingNavigationDropdown" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="36" height="36" viewBox="0 0 256 256" xml:space="preserve">
                                         <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
                                             <path d="M 90 43.813 c 0 -3.427 -2.559 -6.262 -5.864 -6.712 v -3.034 c 0 -11.459 -9.323 -20.783 -20.782 -20.783 H 26.646 c -11.459 0 -20.783 9.323 -20.783 20.783 v 3.034 C 2.558 37.552 0 40.386 0 43.813 c 0 1.864 0.757 3.555 1.978 4.782 C 0.757 49.822 0 51.513 0 53.377 c 0 3.427 2.558 6.262 5.864 6.713 v 2.961 c 0 7.535 6.13 13.665 13.665 13.665 h 50.942 c 7.535 0 13.665 -6.13 13.665 -13.665 V 60.09 C 87.441 59.639 90 56.804 90 53.377 c 0 -1.864 -0.757 -3.555 -1.979 -4.782 C 89.243 47.368 90 45.677 90 43.813 z M 9.864 34.067 c 0 -9.254 7.529 -16.783 16.783 -16.783 h 36.707 c 9.254 0 16.782 7.529 16.782 16.783 v 2.964 H 9.864 V 34.067 z M 6.782 41.031 h 1.082 h 74.272 h 1.082 c 1.534 0 2.782 1.248 2.782 2.782 s -1.248 2.782 -2.782 2.782 H 6.782 C 5.248 46.595 4 45.347 4 43.813 S 5.248 41.031 6.782 41.031 z M 70.471 72.716 H 19.529 c -5.329 0 -9.665 -4.336 -9.665 -9.665 v -2.892 h 38.008 c 0.321 3.441 3.225 6.144 6.748 6.144 c 1.029 0 2.006 -0.23 2.88 -0.643 c 0.559 3.179 3.34 5.602 6.676 5.602 c 3.737 0 6.778 -3.04 6.778 -6.777 v -4.325 h 9.182 v 2.892 C 80.136 68.38 75.8 72.716 70.471 72.716 z M 83.218 56.159 H 68.954 c -1.104 0 -2 0.896 -2 2 v 6.325 c 0 1.531 -1.246 2.777 -2.778 2.777 c -1.531 0 -2.777 -1.246 -2.777 -2.777 v -4.96 c 0 -1.104 -0.896 -2 -2 -2 s -2 0.896 -2 2 c 0 1.532 -1.246 2.778 -2.778 2.778 c -1.531 0 -2.777 -1.246 -2.777 -2.778 v -1.365 c 0 -1.104 -0.896 -2 -2 -2 H 6.782 C 5.248 56.159 4 54.911 4 53.377 s 1.248 -2.782 2.782 -2.782 h 76.436 c 1.534 0 2.782 1.248 2.782 2.782 S 84.752 56.159 83.218 56.159 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
                                             <path d="M 45 31.035 c -1.104 0 -2 -0.896 -2 -2 v -2.117 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 2.117 C 47 30.139 46.104 31.035 45 31.035 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
@@ -104,6 +105,7 @@ onMounted(() => {
                                             <path d="M 19.737 31.035 c -1.104 0 -2 -0.896 -2 -2 v -2.117 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 2.117 C 21.737 30.139 20.842 31.035 19.737 31.035 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
                                         </g>
                                     </svg>
+                                    
                                 </button>
                             </div>
                         </div>
@@ -223,7 +225,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <div class="overflow-y-auto h-[calc(100vh-9.1rem)] lg:h-[calc(100vh-3.2rem)] bg-white">
+                <div class="overflow-y-auto h-[calc(100vh-3.2rem)] bg-white">
                     <slot />
                 </div>
 

@@ -13,7 +13,7 @@ class QuoteController extends Controller
 {
     public function index()
     {
-        $quotes = Quote::with(['user', 'client', 'contact', 'prospect'])->latest()->get()->take(15);
+        $quotes = Quote::with(['user', 'client', 'contact', 'prospect'])->latest()->get()->take(30);
         $total_items = Quote::all()->count();
 
         return inertia('Quote/Index', compact('quotes', 'total_items'));
@@ -99,11 +99,11 @@ class QuoteController extends Controller
     // APIs
     public function getItemsByPage($currentPage)
     {
-        $offset = $currentPage * 15;
+        $offset = $currentPage * 30;
         $quotes = Quote::latest()
             ->with(['user', 'client', 'contact', 'prospect'])
             ->skip($offset)
-            ->take(15)
+            ->take(30)
             ->get();
 
         return response()->json(['items' => $quotes]);
@@ -136,6 +136,21 @@ class QuoteController extends Controller
             $quote->sent_at = $now;
         }
         $quote->authorized_at = $now;
+        $quote->rejected_at = null;
+        $quote->save();
+        
+        return response()->json(['prop' => $now]);
+    }
+    
+    public function markAsRejected(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        // si se rechaza sin haber mandado al cliente, se marca tambien como enviado
+        if ($quote->sent_at === null) {
+            $quote->sent_at = $now;
+        }
+        $quote->authorized_at = null;
+        $quote->rejected_at = $now;
         $quote->save();
 
         return response()->json(['prop' => $now]);
