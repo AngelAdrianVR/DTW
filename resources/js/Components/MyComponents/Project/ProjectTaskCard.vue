@@ -22,9 +22,9 @@
     <div class="flex items-center justify-between p-3">
       <p class="text-sm w-11/12 truncate" :title="taskComponentLocal?.title">{{ taskComponentLocal?.title }}</p>
       <div class="flex items-center">
-        <el-tooltip content="Tienes una tarea por cumplir antes de poder comenzar" placement="top">
+        <!-- <el-tooltip content="Tienes una tarea por cumplir antes de poder comenzar" placement="top">
             <i @click.stop="" class="fa-solid fa-hourglass cursor-default mr-3"></i>
-        </el-tooltip>
+        </el-tooltip> -->
         <el-tooltip v-if="taskComponentLocal?.media?.length" content="Archivos adjunto" placement="top">
           <i @click.stop="" class="fa-solid fa-paperclip rounded-full p-2"></i>
         </el-tooltip>
@@ -228,11 +228,11 @@
           <!-- ---------------- tab 3 historial ends  -------------->
         </section>
       </div>
-      <div class="flex justify-end space-x-3 pt-5 pb-1">
+      <div class="flex justify-end space-x-1 pt-5 pb-1">
         <CancelButton @click="!canEdit ? taskInformationModal = false : canEdit = false">
           {{ !canEdit ? 'Cancelar' : 'Cancelar edición' }}
         </CancelButton>
-        <div>
+        <!-- <div>
           <el-dropdown v-if="canEdit" split-button type="primary" @click="update" class="custom-dropdown rounded-lg">
             <span>Guardar cambios</span>
             <template #dropdown>
@@ -249,7 +249,7 @@
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-        </div>
+        </div> -->
         <div>
           <PrimaryButton @click="update" v-if="canEdit">Guardar cambios</PrimaryButton>
           <PrimaryButton @click="canEdit = true" v-else>Editar</PrimaryButton>

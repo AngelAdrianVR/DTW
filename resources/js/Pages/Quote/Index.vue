@@ -22,128 +22,150 @@
             <main>
                 <Loading v-if="loading" class="mt-20" />
                 <article v-else-if="localItems.length" class="w-full mt-7">
-                    <div class="flex items-center space-x-9 mb-4">
-                        <p class="text-gray66 text-right text-[11px]">
+                    <div class="mb-4">
+                        <p class="text-gray66 text-[11px]">
                             {{ localItems.length }} de {{ localTotalItems }} elementos
                         </p>
                     </div>
-                    <table class="w-full">
-                        <thead>
-                            <tr class="*:text-left *:pb-2 *:px-4 *:text-sm">
-                                <th>Folio</th>
-                                <th>Nombre</th>
-                                <th>Cliente / prospecto</th>
-                                <th>Contacto</th>
-                                <th>Creado por</th>
-                                <th>Creado el</th>
-                                <th>Costo</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr @click="$inertia.visit(route('quotes.show', item))" v-for="item in localItems"
-                                :key="item.id" class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
-                                <td class="rounded-s-full">
-                                    <p class=" flex items-center space-x-1">
-                                        <el-tooltip v-if="item.sent_at && !item.authorized_at" placement="top"
-                                            :content="'Enviado al cliente el ' + formatDateTime(item.sent_at)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor"
-                                                class="size-[14px] text-yellow-600">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                            </svg>
+                    <div class="overflow-auto h-full">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="*:text-left *:pb-2 *:px-4 *:text-sm">
+                                    <th>Folio</th>
+                                    <th>Nombre</th>
+                                    <th>Cliente / prospecto</th>
+                                    <th>Contacto</th>
+                                    <th>Creado por</th>
+                                    <th>Creado el</th>
+                                    <th>Costo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr @click="$inertia.visit(route('quotes.show', item))" v-for="item in localItems"
+                                    :key="item.id" class="*:text-xs *:py-2 *:px-4 hover:bg-primarylight cursor-pointer">
+                                    <td class="rounded-s-full">
+                                        <p class=" flex items-center space-x-1">
+                                            <el-tooltip v-if="item.rejected_at" placement="top"
+                                                :content="'Rechazado por cliente el ' + formatDateTime(item.sent_at)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor"
+                                                    class="size-[14px] text-red-700">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18 18 6M6 6l12 12" />
+                                                </svg>
+                                            </el-tooltip>
+                                            <el-tooltip v-else-if="item.authorized_at" placement="top"
+                                                :content="'Autorizado por cliente el ' + formatDateTime(item.sent_at)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor"
+                                                    class="size-[14px] text-green-600">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="m4.5 12.75 6 6 9-13.5" />
+                                                </svg>
+                                            </el-tooltip>
+                                            <el-tooltip v-else-if="item.sent_at" placement="top"
+                                                :content="'Enviado al cliente el ' + formatDateTime(item.sent_at)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor"
+                                                    class="size-[14px] text-yellow-600">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                </svg>
+                                            </el-tooltip>
+                                            <el-tooltip v-else placement="top"
+                                                content="Sin enviar a cliente / prospecto">
+                                                <i class="fa-solid fa-question size-[14px] text-red-600"></i>
+                                            </el-tooltip>
+                                            <span>{{ 'C-' + String(item.id).padStart(3, '0') }}</span>
+                                        </p>
+                                    </td>
+                                    <td>{{ item.name }}</td>
+                                    <td v-if="item.client_id !== null" class="flex items-center space-x-1">
+                                        <el-tooltip content="Cliente" placement="left">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-circle text-green-600 text-[7px]"></i>
+                                                <span>{{ item.client.name }}</span>
+                                            </div>
                                         </el-tooltip>
-                                        <el-tooltip v-else-if="item.authorized_at" placement="top"
-                                            :content="'Autorizado por cliente el ' + formatDateTime(item.sent_at)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor"
-                                                class="size-[14px] text-green-600">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m4.5 12.75 6 6 9-13.5" />
-                                            </svg>
+                                    </td>
+                                    <td v-else class="flex items-center space-x-1">
+                                        <el-tooltip content="Prospecto" placement="left">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-circle text-blue-600 text-[7px]"></i>
+                                                <span>{{ item.prospect.name }}</span>
+                                            </div>
                                         </el-tooltip>
-                                        <el-tooltip v-else placement="top" content="Sin enviar a cliente / prospecto">
-                                            <i class="fa-solid fa-question size-[14px] text-red-600"></i>
-                                        </el-tooltip>
-                                        <span>{{ 'C-' + String(item.id).padStart(3, '0') }}</span>
-                                    </p>
-                                </td>
-                                <td>{{ item.name }}</td>
-                                <td v-if="item.client_id !== null" class="flex items-center space-x-1">
-                                    <el-tooltip content="Cliente" placement="left">
-                                        <div class="flex items-center space-x-1">
-                                            <i class="fa-solid fa-circle text-green-600 text-[7px]"></i>
-                                            <span>{{ item.client.name }}</span>
-                                        </div>
-                                    </el-tooltip>
-                                </td>
-                                <td v-else class="flex items-center space-x-1">
-                                    <el-tooltip content="Prospecto" placement="left">
-                                        <div class="flex items-center space-x-1">
-                                            <i class="fa-solid fa-circle text-blue-600 text-[7px]"></i>
-                                            <span>{{ item.prospect.name }}</span>
-                                        </div>
-                                    </el-tooltip>
-                                </td>
-                                <td v-if="item.client_id !== null">{{ item.contact.name }}</td>
-                                <td v-else>{{ item.contact.name }}</td>
-                                <td>{{ item.user.name }}</td>
-                                <td>{{ formatDateTime(item.created_at) }}</td>
-                                <td>${{ item.total_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
-                                <td class="rounded-e-full text-end">
-                                    <el-dropdown trigger="click" @command="handleCommand">
-                                        <button @click.stop
-                                            class="el-dropdown-link justify-center items-center size-6 hover:bg-primary hover:text-primarylight rounded-full text-primary transition-all duration-200 ease-in-out">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </button>
-                                        <template #dropdown>
-                                            <el-dropdown-menu>
-                                                <el-dropdown-item :command="'edit-' + item.id">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-[14px] mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                                    </svg>
-                                                    <span class="text-xs">Editar</span>
-                                                </el-dropdown-item>
-                                                <el-dropdown-item v-if="!item.sent_at && !item.authorized_at"
-                                                    :command="'sent-' + item.id">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-[14px] mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    <span class="text-xs">Esperando respuesta</span>
-                                                </el-dropdown-item>
-                                                <el-dropdown-item v-if="!item.authorized_at"
-                                                    :command="'auth-' + item.id">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-[14px] mr-2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m4.5 12.75 6 6 9-13.5" />
-                                                    </svg>
-                                                    <span class="text-xs">Autorizado</span>
-                                                </el-dropdown-item>
-                                                <el-dropdown-item :command="'delete-' + item.id">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="size-[14px] mr-2 text-red-600">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                    </svg>
-                                                    <span class="text-xs text-red-600">Eliminar</span>
-                                                </el-dropdown-item>
-                                            </el-dropdown-menu>
-                                        </template>
-                                    </el-dropdown>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td v-if="item.client_id !== null">{{ item.contact.name }}</td>
+                                    <td v-else>{{ item.contact.name }}</td>
+                                    <td>{{ item.user.name }}</td>
+                                    <td>{{ formatDateTime(item.created_at) }}</td>
+                                    <td>${{ item.total_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
+                                    <td class="rounded-e-full text-end">
+                                        <el-dropdown trigger="click" @command="handleCommand">
+                                            <button @click.stop
+                                                class="el-dropdown-link justify-center items-center size-6 hover:bg-primary hover:text-primarylight rounded-full text-primary transition-all duration-200 ease-in-out">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <template #dropdown>
+                                                <el-dropdown-menu>
+                                                    <el-dropdown-item :command="'edit-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-[14px] mr-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                                        </svg>
+                                                        <span class="text-xs">Editar</span>
+                                                    </el-dropdown-item>
+                                                    <el-dropdown-item v-if="!item.sent_at && !item.authorized_at"
+                                                        :command="'sent-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-[14px] mr-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        </svg>
+                                                        <span class="text-xs">Esperando respuesta</span>
+                                                    </el-dropdown-item>
+                                                    <el-dropdown-item v-if="!item.authorized_at"
+                                                        :command="'auth-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-[14px] mr-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m4.5 12.75 6 6 9-13.5" />
+                                                        </svg>
+                                                        <span class="text-xs">Autorizado</span>
+                                                    </el-dropdown-item>
+                                                    <el-dropdown-item v-if="!item.rejected_at"
+                                                        :command="'reje-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-[14px] mr-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M6 18 18 6M6 6l12 12" />
+                                                        </svg>
+                                                        <span class="text-xs">Rechazado</span>
+                                                    </el-dropdown-item>
+                                                    <el-dropdown-item :command="'delete-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="size-[14px] mr-2 text-red-600">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                        <span class="text-xs text-red-600">Eliminar</span>
+                                                    </el-dropdown-item>
+                                                </el-dropdown-menu>
+                                            </template>
+                                        </el-dropdown>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p class="text-gray66 text-left mt-4 text-[11px]">
                         {{ localItems.length }} de {{ localTotalItems }} elementos
                     </p>
@@ -151,7 +173,7 @@
                         Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-secondary"></i>
                     </p>
                     <button
-                        v-else-if="localItems.length && !search && (localTotalItems > 15 && localItems.length < localTotalItems)"
+                        v-else-if="localItems.length && !search && (localTotalItems > 30 && localItems.length < localTotalItems)"
                         @click="fetchItemsByPage" class="w-full text-secondary my-4 text-xs mx-auto underline ml-6">
                         Cargar más elementos
                     </button>
@@ -234,6 +256,8 @@ export default {
                 this.markAsSent(itemId);
             } else if (commandName == 'auth') {
                 this.markAsAuthorized(itemId);
+            } else if (commandName == 'reje') {
+                this.markAsRejected(itemId);
             } else {
                 this.showDeleteConfirm = true;
                 this.itemIdToDelete = itemId;
@@ -263,7 +287,7 @@ export default {
                 const response = await axios.put(route('quotes.mark-as-sent', itemId));
 
                 if (response.status === 200) {
-                    this.quotes.find(item => item.id == itemId).sent_at = response.data.prop;
+                    this.localItems.find(item => item.id == itemId).sent_at = response.data.prop;
                     this.$notify({
                         title: "Correcto",
                         message: "",
@@ -284,7 +308,32 @@ export default {
                 const response = await axios.put(route('quotes.mark-as-authorized', itemId));
 
                 if (response.status === 200) {
-                    this.quotes.find(item => item.id == itemId).authorized_at = response.data.prop;
+                    let localItem = this.localItems.find(item => item.id == itemId);
+                    localItem.authorized_at = response.data.prop;
+                    localItem.rejected_at = null;
+                    this.$notify({
+                        title: "Correcto",
+                        message: "",
+                        type: "success",
+                    });
+                }
+            } catch (error) {
+                this.$notify({
+                    title: "No se pudo completar la solicitud",
+                    message: "El servidor no pudo procesar la petición, inténtalo más tarde",
+                    type: "error",
+                });
+                console.log(error)
+            }
+        },
+        async markAsRejected(itemId) {
+            try {
+                const response = await axios.put(route('quotes.mark-as-rejected', itemId));
+
+                if (response.status === 200) {
+                    let localItem = this.localItems.find(item => item.id == itemId);
+                    localItem.rejected_at = response.data.prop;
+                    localItem.authorized_at = null;
                     this.$notify({
                         title: "Correcto",
                         message: "",

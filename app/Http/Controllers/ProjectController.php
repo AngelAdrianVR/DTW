@@ -14,10 +14,9 @@ class ProjectController extends Controller
     
     public function index()
     {
-        $projects = ProjectResource::collection(Project::with(['client', 'tasks'])->latest()->get()->take(20));
+        $projects = ProjectResource::collection(Project::with(['client', 'tasks'])->latest()->get()->take(30));
         $total_projects = Project::all()->count();
 
-        // return $projects;
         return inertia('Project/Index', compact('projects', 'total_projects'));
     }
 
@@ -38,7 +37,7 @@ class ProjectController extends Controller
             'internal_project' => 'boolean',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
-            'price' => 'required|numeric|min:1',
+            'price' => 'nullable|numeric|min:1',
             'estimated_date' => 'nullable|date',
             'start_date' => 'required|date',
             'finish_date' => 'nullable|date',
@@ -79,7 +78,6 @@ class ProjectController extends Controller
         $quotes = Quote::all(['id', 'name', 'total_cost', 'total_work_days']);
         $clients = Client::all(['id', 'name']);
 
-        // return $project;
         return inertia('Project/Edit', compact('project', 'users', 'quotes', 'clients'));
     }
 
@@ -90,7 +88,7 @@ class ProjectController extends Controller
             'name' => 'required',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
-            'price' => 'required|numeric|min:1',
+            'price' => 'nullable|numeric|min:1',
             'start_date' => 'required|date',
             'finish_date' => 'nullable|date',
             'payment_method' => 'required|string|max:100',
@@ -104,7 +102,7 @@ class ProjectController extends Controller
 
         $project->update($request->all());
 
-        return to_route('projects.index');
+        return to_route('projects.show', $project->id);
     }
 
 
@@ -114,7 +112,7 @@ class ProjectController extends Controller
             'name' => 'required',
             'client_info.phone' => 'nullable|min:10|max:10',
             'hours_work' => 'required|numeric|min:1',
-            'price' => 'required|numeric|min:1',
+            'price' => 'nullable|numeric|min:1',
             'start_date' => 'required|date',
             'finish_date' => 'nullable|date|after:tomorrow',
             'payment_method' => 'required|string|max:100',
@@ -134,7 +132,7 @@ class ProjectController extends Controller
             $project->addMediaFromRequest('media')->toMediaCollection('media');
         }
 
-        return to_route('projects.index');
+        return to_route('projects.show', $project->id);
     }
 
     
@@ -149,16 +147,15 @@ class ProjectController extends Controller
         $project->update([
             'finish_date' => now()
         ]);
-
     }
 
 
     public function getItemsByPage($currentPage)
     {
-        $offset = $currentPage * 20;
+        $offset = $currentPage * 30;
         $projects = ProjectResource::collection(Project::latest()
             ->skip($offset)
-            ->take(20)
+            ->take(30)
             ->get());
 
         return response()->json(['items' => $projects]);
