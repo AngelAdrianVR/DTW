@@ -28,15 +28,15 @@
 
     <!-- Tabla de proyectos -->
     <Loading v-if="loading" class="mt-20" />
-      <div v-else class="lg:w-11/12 mx-auto">
-          <p v-if="localProjects.length" class="text-gray66 text-[11px]">{{ localProjects.length }} de {{
+      <div v-else>
+          <p v-if="localProjects.length" class="text-gray66 text-[11px] mx-12">{{ localProjects.length }} de {{
               total_projects }} elementos
           </p>
           <ProjectsTable :projects="filteredTableData" />
           <p v-if="loadingItems" class="text-xs my-4 text-center">
               Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-primary"></i>
           </p>
-          <button v-else-if="total_projects > 20 && localProjects.length < total_projects && localProjects.length"
+          <button v-else-if="total_projects > 30 && localProjects.length < total_projects && localProjects.length"
               @click="fetchItemsByPage" class="w-full text-primary my-4 text-xs mx-auto underline ml-6">
               Cargar más elementos
           </button>
@@ -49,7 +49,6 @@ import ProjectsTable from "@/Components/MyComponents/Project/ProjectsTable.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Loading from '@/Components/MyComponents/Loading.vue';
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { useToast } from "vue-toastification";
 import axios from 'axios';
 
 export default {
@@ -59,7 +58,6 @@ export default {
       localProjects: this.projects.data,
       loadingItems: false, //para paginación
       currentPage: 1, //para paginación
-      toast: null,
       inputSearch: "", //buscador
       search: null, //buscador
     };
@@ -108,8 +106,5 @@ export default {
       }
     },
   },
-  mounted() {
-        this.toast = useToast();
-    }
 };
 </script>

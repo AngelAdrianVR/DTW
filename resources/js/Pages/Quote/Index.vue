@@ -22,8 +22,8 @@
             <main>
                 <Loading v-if="loading" class="mt-20" />
                 <article v-else-if="localItems.length" class="w-full mt-7">
-                    <div class="flex items-center space-x-9 mb-4">
-                        <p class="text-gray66 text-right text-[11px]">
+                    <div class="mb-4">
+                        <p class="text-gray66 text-[11px]">
                             {{ localItems.length }} de {{ localTotalItems }} elementos
                         </p>
                     </div>
@@ -249,7 +249,7 @@ export default {
         handleCommand(command) {
             const commandName = command.split('-')[0];
             const itemId = command.split('-')[1];
-            console.log(itemId)
+
             if (commandName == 'edit') {
                 this.$inertia.get(route('quotes.edit', itemId));
             } else if (commandName == 'sent') {
