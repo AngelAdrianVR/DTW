@@ -204,15 +204,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Estilo para el hover de las opciones */
-.el-select-dropdown .el-select-dropdown__item:hover {
-  background-color: #D8D0E1;
-  /* Color de fondo al hacer hover */
-  /* color: black; */
-  /* Color del texto al hacer hover */
-  border-radius: 20px;
-  /* Redondeo */
-}
-</style>

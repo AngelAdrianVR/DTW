@@ -8,15 +8,15 @@
             </Link>
         </div>
 
-        <div class="flex justify-between items-center mt-5 mx-2 lg:mx-14">
-            <div class="mr-2 w-40">
+        <div class="flex justify-between items-center space-x-5 mt-5 mx-2 lg:mx-14">
+            <div class="w-1/3">
                 <el-select @change="$inertia.get(route('projects.show', selectedProject))" v-model="selectedProject" clearable filterable placeholder="Buscar proyecto"
                 no-data-text="No hay proyectos registrados" no-match-text="No se encontraron coincidencias">
                 <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id" />
                 </el-select>
             </div>
-            <h1 class="font-bold">{{ project.data.name }}</h1>
-            <div class="flex">
+            <h1 class="w-1/3 text-center font-bold">{{ project.data.name }}</h1>
+            <div class="w-1/3 flex">
                 <div v-if="activeTab == 1" class="flex space-x-2 w-full justify-end">
                     <PrimaryButton @click="$inertia.get(route('projects.create'))">Crear proyecto</PrimaryButton>
                     <button @click="$inertia.get(route('projects.edit', project.data.id))" class="w-9 h-9 rounded-full bg-[#D9D9D9]">

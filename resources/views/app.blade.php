@@ -14,7 +14,7 @@
     rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {{-- favicon --}}
-    <link rel="icon" href="assets/images/dtw_logo.png" type="image/png">
+    {{-- <link rel="icon" href="assets/images/dtw_logo.png" type="image/png"> --}}
     <!-- Taildwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
