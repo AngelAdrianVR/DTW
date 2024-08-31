@@ -1,6 +1,6 @@
 <template>
   <Head title="Us" />
-  <div class="relative">
+  <div class="relative selection:bg-primarylight">
     <!-- whatsapp button -->
     <a
       class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"

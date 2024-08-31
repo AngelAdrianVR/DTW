@@ -55,7 +55,7 @@
                                                         d="M6 18 18 6M6 6l12 12" />
                                                 </svg>
                                             </el-tooltip>
-                                            <el-tooltip v-else-if="item.authorized_at" placement="top"
+                                            <el-tooltip v-else-if="item.authorized_at && !item.paid_at" placement="top"
                                                 :content="'Autorizado por cliente el ' + formatDateTime(item.sent_at)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor"
@@ -63,6 +63,13 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="m4.5 12.75 6 6 9-13.5" />
                                                 </svg>
+                                            </el-tooltip>
+                                            <el-tooltip v-else-if="item.paid_at" placement="top"
+                                                :content="'Cotización pagada el ' + formatDateTime(item.paid_at)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-[14px] text-green-800">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                                                </svg>
+
                                             </el-tooltip>
                                             <el-tooltip v-else-if="item.sent_at" placement="top"
                                                 :content="'Enviado al cliente el ' + formatDateTime(item.sent_at)">
@@ -139,7 +146,7 @@
                                                         </svg>
                                                         <span class="text-xs">Autorizado</span>
                                                     </el-dropdown-item>
-                                                    <el-dropdown-item v-if="!item.rejected_at"
+                                                    <el-dropdown-item v-if="!item.rejected_at && !item.paid_at"
                                                         :command="'reje-' + item.id">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -148,6 +155,13 @@
                                                                 d="M6 18 18 6M6 6l12 12" />
                                                         </svg>
                                                         <span class="text-xs">Rechazado</span>
+                                                    </el-dropdown-item>
+                                                    <el-dropdown-item v-if="!item.rejected_at && item.authorized_at && !item.paid_at"
+                                                        :command="'paid-' + item.id">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-[14px] mr-2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                                                        </svg>
+                                                        <span class="text-xs">Pagado</span>
                                                     </el-dropdown-item>
                                                     <el-dropdown-item :command="'delete-' + item.id">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -195,6 +209,22 @@
                     </div>
                 </template>
             </ConfirmationModal>
+
+            <!-- Confirmacion de creacion de proyecto -->
+            <ConfirmationModal :show="showCreateProjectConfirm" @close="showCreateProjectConfirm = false">
+                <template #title>
+                    <h1>Crear proyecto de catización</h1>
+                </template>
+                <template #content>
+                    <p>Se creará automáticamente el proyecto con fecha de inicio de hoy. ¿Deseas crearlo?</p>
+                </template>
+                <template #footer>
+                    <div class="flex items-center space-x-1">
+                        <CancelButton @click="showCreateProjectConfirm = false; markAsAuthorized(itemIdToAuthorize, 0)">No crear</CancelButton>
+                        <DangerButton class="!bg-green-600" @click="markAsAuthorized(itemIdToAuthorize, 1)">Crear</DangerButton>
+                    </div>
+                </template>
+            </ConfirmationModal>
         </div>
     </AppLayout>
 </template>
@@ -215,9 +245,11 @@ export default {
         return {
             loading: false,
             showDeleteConfirm: false,
+            showCreateProjectConfirm: false,
             localItems: this.quotes,
             localTotalItems: this.total_items,
             itemIdToDelete: null,
+            itemIdToAuthorize: null,
             // paginacion dinamica
             currentPage: 1,
             loadingItems: false,
@@ -255,9 +287,13 @@ export default {
             } else if (commandName == 'sent') {
                 this.markAsSent(itemId);
             } else if (commandName == 'auth') {
-                this.markAsAuthorized(itemId);
+                this.showCreateProjectConfirm = true;
+                this.itemIdToAuthorize = itemId;
+                // this.markAsAuthorized(itemId);
             } else if (commandName == 'reje') {
                 this.markAsRejected(itemId);
+            } else if (commandName == 'paid') {
+                this.markAsPaid(itemId);
             } else {
                 this.showDeleteConfirm = true;
                 this.itemIdToDelete = itemId;
@@ -303,9 +339,9 @@ export default {
                 console.log(error)
             }
         },
-        async markAsAuthorized(itemId) {
+        async markAsAuthorized(itemId, create_project) {
             try {
-                const response = await axios.put(route('quotes.mark-as-authorized', itemId));
+                const response = await axios.put(route('quotes.mark-as-authorized', itemId), { create_project: create_project });
 
                 if (response.status === 200) {
                     let localItem = this.localItems.find(item => item.id == itemId);
@@ -316,6 +352,8 @@ export default {
                         message: "",
                         type: "success",
                     });
+
+                    this.showCreateProjectConfirm = false;
                 }
             } catch (error) {
                 this.$notify({
@@ -334,6 +372,28 @@ export default {
                     let localItem = this.localItems.find(item => item.id == itemId);
                     localItem.rejected_at = response.data.prop;
                     localItem.authorized_at = null;
+                    this.$notify({
+                        title: "Correcto",
+                        message: "",
+                        type: "success",
+                    });
+                }
+            } catch (error) {
+                this.$notify({
+                    title: "No se pudo completar la solicitud",
+                    message: "El servidor no pudo procesar la petición, inténtalo más tarde",
+                    type: "error",
+                });
+                console.log(error)
+            }
+        },
+        async markAsPaid(itemId) {
+            try {
+                const response = await axios.put(route('quotes.mark-as-paid', itemId));
+
+                if (response.status === 200) {
+                    let localItem = this.localItems.find(item => item.id == itemId);
+                    localItem.paid_at = response.data.prop;
                     this.$notify({
                         title: "Correcto",
                         message: "",

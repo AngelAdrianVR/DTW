@@ -1,18 +1,18 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectTaskController;
 use App\Http\Controllers\ProspectController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteRequestController;
-use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SuscriptionProjectController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -64,9 +64,6 @@ Route::get('packages-En', function () {
 })->name('packages-en');
 
 
-// Admin view routes ---------------------------------------
-Route::resource('settings', SettingController::class)->middleware('auth');
-
 
 // quotes routes -------------------------------------------------------------
 Route::resource('quotes', QuoteController::class)->middleware('auth');
@@ -75,6 +72,7 @@ Route::get('quotes-get-by-page/{currentPage}', [QuoteController::class, 'getItem
 Route::put('quotes-mark-as-authorized/{quote}', [QuoteController::class, 'markAsAuthorized'])->name('quotes.mark-as-authorized')->middleware('auth');
 Route::put('quotes-mark-as-rejected/{quote}', [QuoteController::class, 'markAsRejected'])->name('quotes.mark-as-rejected')->middleware('auth');
 Route::put('quotes-mark-as-sent/{quote}', [QuoteController::class, 'markAsSent'])->name('quotes.mark-as-sent')->middleware('auth');
+Route::put('quotes-mark-as-paid/{quote}', [QuoteController::class, 'markAsPaid'])->name('quotes.mark-as-paid')->middleware('auth');
 
 
 // clients routes-------------------------------------------------------------
@@ -124,7 +122,7 @@ Route::put('project-tasks-{project_task}-update-status', [ProjectTaskController:
 Route::get('project-tasks-late-tasks', [ProjectTaskController::class, 'getLateTasks'])->middleware('auth')->name('project-tasks.get-late-tasks');
 
 
-// ** Quote request routes ** ---------------------------------------------
+// Quote request routes ---------------------------------------------
 Route::resource('quote-request', QuoteRequestController::class)->middleware('auth')->except(['edit', 'update', 'destroy']);
 Route::get('create-quote-en', [QuoteRequestController::class, 'createEnglish'])->name('create-quote-en.create');
 Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteRequestController::class, 'changeDispatchedStatus'])->middleware('auth')->name('quote-request.change-dispatched-status');
@@ -143,6 +141,18 @@ Route::get('users-get-notifications', [UserController::class, 'getNotifications'
 Route::post('users-read-notifications', [UserController::class, 'readNotifications'])->middleware('auth')->name('users.read-user-notifications');
 Route::post('users-delete-notifications', [UserController::class, 'deleteNotifications'])->middleware('auth')->name('users.delete-user-notifications');
 Route::get('users-get-by-page/{currentPage}', [UserController::class, 'getItemsByPage'])->name('users.get-by-page')->middleware('auth');
+
+
+// finances routes ---------------------------------------------------------------
+Route::resource('finances', FinanceController::class)->middleware('auth');
+
+
+// purchases routes ---------------------------------------------------------------
+Route::resource('purchases', PurchaseController::class)->middleware('auth');
+
+
+// Admin view routes ---------------------------------------
+Route::resource('settings', SettingController::class)->middleware('auth');
 
 
 //PDF routes ----------------------------------------------------
