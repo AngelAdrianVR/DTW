@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuoteResource;
 use App\Models\Client;
+use App\Models\Project;
 use App\Models\Prospect;
 use App\Models\Quote;
-use App\Models\QuoteRequest;
 use Illuminate\Http\Request;
 
 class QuoteController extends Controller
@@ -138,6 +137,11 @@ class QuoteController extends Controller
         $quote->authorized_at = $now;
         $quote->rejected_at = null;
         $quote->save();
+
+        //Se crea un proyecto para esa cotización
+        Project::create([
+            
+        ]);
         
         return response()->json(['prop' => $now]);
     }
@@ -160,6 +164,15 @@ class QuoteController extends Controller
     {
         $now = now()->toDateTimeString();
         $quote->sent_at = $now;
+        $quote->save();
+
+        return response()->json(['prop' => $now]);
+    }
+
+    public function markAsPaid(Quote $quote)
+    {
+        $now = now()->toDateTimeString();
+        $quote->paid_at = $now;
         $quote->save();
 
         return response()->json(['prop' => $now]);

@@ -27,12 +27,14 @@ class Quote extends Model
         'user_id',
         'sent_at',
         'authorized_at',
+        'paid_at',
         'rejected_at',
     ];
 
     protected $cast = [
         'sent_at' => 'datetime',
         'authorized_at' => 'datetime',
+        'paid_at' => 'datetime',
         'rejected_at' => 'datetime',
     ];
 
