@@ -209,6 +209,22 @@
                     </div>
                 </template>
             </ConfirmationModal>
+
+            <!-- Confirmacion de creacion de proyecto -->
+            <ConfirmationModal :show="showCreateProjectConfirm" @close="showCreateProjectConfirm = false">
+                <template #title>
+                    <h1>Crear proyecto de catización</h1>
+                </template>
+                <template #content>
+                    <p>Se creará automáticamente el proyecto con fecha de inicio de hoy. ¿Deseas crearlo?</p>
+                </template>
+                <template #footer>
+                    <div class="flex items-center space-x-1">
+                        <CancelButton @click="showCreateProjectConfirm = false; markAsAuthorized(itemIdToAuthorize, 0)">No crear</CancelButton>
+                        <DangerButton class="!bg-green-600" @click="markAsAuthorized(itemIdToAuthorize, 1)">Crear</DangerButton>
+                    </div>
+                </template>
+            </ConfirmationModal>
         </div>
     </AppLayout>
 </template>
@@ -229,9 +245,11 @@ export default {
         return {
             loading: false,
             showDeleteConfirm: false,
+            showCreateProjectConfirm: false,
             localItems: this.quotes,
             localTotalItems: this.total_items,
             itemIdToDelete: null,
+            itemIdToAuthorize: null,
             // paginacion dinamica
             currentPage: 1,
             loadingItems: false,
@@ -269,7 +287,9 @@ export default {
             } else if (commandName == 'sent') {
                 this.markAsSent(itemId);
             } else if (commandName == 'auth') {
-                this.markAsAuthorized(itemId);
+                this.showCreateProjectConfirm = true;
+                this.itemIdToAuthorize = itemId;
+                // this.markAsAuthorized(itemId);
             } else if (commandName == 'reje') {
                 this.markAsRejected(itemId);
             } else if (commandName == 'paid') {
@@ -319,9 +339,9 @@ export default {
                 console.log(error)
             }
         },
-        async markAsAuthorized(itemId) {
+        async markAsAuthorized(itemId, create_project) {
             try {
-                const response = await axios.put(route('quotes.mark-as-authorized', itemId));
+                const response = await axios.put(route('quotes.mark-as-authorized', itemId), { create_project: create_project });
 
                 if (response.status === 200) {
                     let localItem = this.localItems.find(item => item.id == itemId);
@@ -332,6 +352,8 @@ export default {
                         message: "",
                         type: "success",
                     });
+
+                    this.showCreateProjectConfirm = false;
                 }
             } catch (error) {
                 this.$notify({
