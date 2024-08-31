@@ -127,7 +127,7 @@ class QuoteController extends Controller
         return response()->json(['items' => $quotes]);
     }
 
-    public function markAsAuthorized(Quote $quote)
+    public function markAsAuthorized(Request $request, Quote $quote)
     {
         $now = now()->toDateTimeString();
         // si se autoriza sin haber mandado al cliente, se marca tambien como enviado
@@ -138,10 +138,59 @@ class QuoteController extends Controller
         $quote->rejected_at = null;
         $quote->save();
 
-        //Se crea un proyecto para esa cotización
-        Project::create([
-            
-        ]);
+        //si se indica que se cree el proyecto desde la vista
+        if ( $request->create_project ) {
+            //si la cotizacion es para un prospecto se convierte a cliente
+            if ( $quote->prospect_id ) {
+
+                //recuperar al prospecto
+                $prospect = Prospect::find($quote->prospect_id);
+                
+                // crear nuevo cliente
+                $client_data = [
+                    'name' => $prospect->name,
+                    'rfc' => 'RFC No especificado de prospecto ' . $prospect->id,
+                    'address' => $prospect->address ?? 'No especificado',
+                    'state' => $prospect->state,
+                    'responsible_id' => $prospect->responsible_id ?? auth()->id(),
+                ];
+
+                $client = Client::create($client_data + ['user_id' => auth()->id()]);
+                
+                // cambiar contacto a modelo de cliente
+                $prospect->contact->update([
+                    'contactable_type' => Client::class,
+                    'contactable_id' => $client->id,
+                ]);
+                
+                // pasar sus contizaciones a "cliente"
+                $prospect->quotes->each(function ($quote) use ($client) {
+                    $quote->update(['client_id' => $client->id, 'prospect_id' => null]);
+                });
+
+                // eliminar prospecto
+                $prospect->delete();
+            }
+
+            //Se crea un proyecto para esa cotización
+            Project::create([
+                'name' => $quote->name,
+                'internal_project' => $quote->client_id ?? $quote->prospect_id ?? 1,
+                'payment_method' => $quote->payment_type,
+                'category' => 'Sin especificar. Creado automáticamente',
+                'description' => $quote->description,
+                'hours_work' => $quote->total_work_days * 3 * 6,
+                'total_work_days' => $quote->total_work_days,
+                'start_date' => now(),
+                'estimated_date' => now()->addDays($quote->total_work_days + (int)($quote->total_work_days / 5) * 2), //sumar días habiles a fecha de inicio
+                'state' => 'En revisión',
+                'price' => $quote->total_cost,
+                'user_id' => auth()->id(),
+                'responsible_id' =>auth()->id(),
+                'client_id' => $quote->client_id ?? $client->id, //si la cotización fue hecha para un cliente, si no, se convierte a cliente el prospecto 
+                'quote_id' => $quote->id,
+            ]);
+        }
         
         return response()->json(['prop' => $now]);
     }
@@ -156,6 +205,14 @@ class QuoteController extends Controller
         $quote->authorized_at = null;
         $quote->rejected_at = $now;
         $quote->save();
+        
+        //recupera el proyecto que posiblemente se haya creado
+        $project = Project::where('quote_id', $quote->id)->first();
+
+        //si se encuetra el proyecto se elimina
+        if ( $project ) {
+            $project->delete();
+        }
 
         return response()->json(['prop' => $now]);
     }
