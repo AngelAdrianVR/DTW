@@ -73,6 +73,7 @@ Route::put('quotes-mark-as-authorized/{quote}', [QuoteController::class, 'markAs
 Route::put('quotes-mark-as-rejected/{quote}', [QuoteController::class, 'markAsRejected'])->name('quotes.mark-as-rejected')->middleware('auth');
 Route::put('quotes-mark-as-sent/{quote}', [QuoteController::class, 'markAsSent'])->name('quotes.mark-as-sent')->middleware('auth');
 Route::put('quotes-mark-as-paid/{quote}', [QuoteController::class, 'markAsPaid'])->name('quotes.mark-as-paid')->middleware('auth');
+Route::get('quotes-fetch-all-info', [QuoteController::class, 'fetchAllInfo'])->name('quotes.fetch-all-info')->middleware('auth');
 
 
 // clients routes-------------------------------------------------------------

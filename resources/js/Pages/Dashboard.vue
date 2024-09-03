@@ -1,22 +1,57 @@
-<script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
-</script>
-
 <template>
     <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
+        <main class="py-5 px-16">
+            <h1 class="font-bold">Dashboard</h1>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome />
+            <body class="mt-9">
+                <div class="flex space-x-5">
+                    <QuotePanel :items="quotes" :loading="loading" />                
+                    <QuotePaymentPanel :items="quotes" :loading="loading" />                
                 </div>
-            </div>
-        </div>
+            </body>
+        </main>
     </AppLayout>
 </template>
+
+<script>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import QuotePanel from '@/Components/MyComponents/Dashboard/QuotePanel.vue';
+import QuotePaymentPanel from '@/Components/MyComponents/Dashboard/QuotePaymentPanel.vue';
+
+export default {
+data() {
+    return {
+        loading: false,
+        quotes: [],
+    }
+},
+components:{
+    AppLayout,
+    QuotePanel,
+    QuotePaymentPanel
+},
+props:{
+
+},
+methods:{
+    async fetchQuotesInfo() {
+        this.loading = true;
+        try {
+            const response = await axios.get(route('quotes.fetch-all-info'));
+            if (response.status === 200) {
+                this.quotes = response.data.quotes;
+            }
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            this.loading = false;
+        }
+    }
+},
+mounted() {
+        this.fetchQuotesInfo();
+    }
+
+};
+</script>
