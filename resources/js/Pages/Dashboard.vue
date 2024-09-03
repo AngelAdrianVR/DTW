@@ -5,7 +5,7 @@
 
             <body class="mt-9">
                 <!-- Indicadores -->
-                <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-5">
+                <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                     <article class="rounded-lg bg-[#F2F2F2] p-2 text-center">
                         <p>Prospectos</p>
                         <div class="flex space-x-3 justify-center my-4">
