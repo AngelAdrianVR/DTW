@@ -12,6 +12,9 @@ use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SuscriptionProjectController;
 use App\Http\Controllers\UserController;
+use App\Models\Client;
+use App\Models\Project;
+use App\Models\Prospect;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +43,16 @@ Route::middleware([
         $authenticated_user = User::find(auth()->id());
         $authenticated_user->last_access = now();
         $authenticated_user->save();
-        return inertia('Dashboard');
+
+        $total_prospects = Prospect::all()->count();
+        $total_clients = Client::all()->count();
+        $total_projects = Project::all()->count();
+
+        return inertia('Dashboard', [
+            'total_prospects' => $total_prospects,
+            'total_clients' => $total_clients,
+            'total_projects' => $total_projects
+        ]);
     })->name('dashboard');
 });
 

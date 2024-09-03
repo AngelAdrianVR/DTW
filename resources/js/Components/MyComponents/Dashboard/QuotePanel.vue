@@ -1,5 +1,5 @@
 <template>
-    <main class="rounded-[20px] border border-grayD9 p-4 w-1/2 h-60">
+    <main class="rounded-[20px] border border-grayD9 p-4 lg:w-1/2 h-60">
         <div v-if="loading" class="text-xs my-4 text-center">
             Cargando <i class="fa-sharp fa-solid fa-circle-notch fa-spin ml-2 text-primary"></i>
         </div>
@@ -27,7 +27,7 @@ export default {
                     breakpoint: 480,
                     options: {
                         chart: {
-                            width: 400
+                            width: 280
                         },
                         legend: {
                             position: 'bottom'
