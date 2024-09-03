@@ -237,7 +237,7 @@ class QuoteController extends Controller
 
     public function fetchAllInfo()
     {
-        $quotes = Quote::all(['id', 'authorized_at', 'rejected_at', 'sent_at']);
+        $quotes = Quote::all(['id', 'authorized_at', 'rejected_at', 'sent_at', 'paid_at', 'total_cost']);
 
         return response()->json(compact('quotes'));
     }

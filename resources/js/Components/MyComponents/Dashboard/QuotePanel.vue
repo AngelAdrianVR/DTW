@@ -17,11 +17,9 @@ import SimpleDonut from '@/Components/MyComponents/Charts/Pie/SimpleDonut.vue';
 export default {
     data() {
         return {
-            loading: false, //estado de carga
-            items: [], //informacion de cotizaciones recuperadas 
             chartOptions: {
-                labels: ["Aceptadas", "Rechazadas", 'Esperando respuesta'],
-                colors: ["#17A281", "#FF0000", "#F48B0F"],
+                labels: ["Aceptadas", "Rechazadas", 'Esperando respuesta', 'Sin enviar'],
+                colors: ["#17A281", "#FF0000", "#F48B0F", "#B0B0B0"],
                 chart: {
                     type: 'donut',
                 },
@@ -56,42 +54,25 @@ export default {
         SimpleDonut
     },
     props: {
-        // items: {
-        //     default: [],
-        //     required: true,
-        //     type: Array,
-        // },
+        items: {
+            default: [],
+            required: true,
+            type: Array,
+        },
+        loading: Boolean,
     },
     computed: {
         getQuotesSeries() {
             const counts = this.items.reduce((acc, item) => {
                 if (item.authorized_at) acc.authorized += 1;
                 if (item.rejected_at) acc.rejected += 1;
-                if (item.sent_at) acc.waiting += 1;
+                if (item.sent_at && !item.rejected_at && !item.authorized_at) acc.waiting += 1;
+                if (!item.sent_at && !item.rejected_at && !item.authorized_at) acc.notSent += 1;
                 return acc;
-            }, { authorized: 0, rejected: 0, waiting: 0 });
+            }, { authorized: 0, rejected: 0, waiting: 0, notSent: 0 });
 
-            return [counts.authorized, counts.rejected, counts.waiting];
+            return [counts.authorized, counts.rejected, counts.waiting, counts.notSent];
         }
     },
-    methods:{
-        async fetchQuotesInfo() {
-            this.loading = true;
-            try {
-                const response = await axios.get(route('quotes.fetch-all-info'));
-                if (response.status === 200) {
-                    this.items = response.data.quotes;
-                }
-
-            } catch (error) {
-                console.log(error)
-            } finally {
-                this.loading = false;
-            }
-        }
-    },
-    mounted() {
-        this.fetchQuotesInfo();
-    }
 };
 </script>
