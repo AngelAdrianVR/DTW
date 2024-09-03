@@ -6,6 +6,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import VueApexCharts from 'vue3-apexcharts';
 import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
@@ -29,6 +30,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(Toast, options)
             .use(ElementPlus)
+            .use(VueApexCharts)
             .use(CKEditor)
             .mount(el);
     },
