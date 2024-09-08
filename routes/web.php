@@ -136,7 +136,7 @@ Route::get('project-tasks-late-tasks', [ProjectTaskController::class, 'getLateTa
 
 
 // Quote request routes ---------------------------------------------
-Route::resource('quote-request', QuoteRequestController::class)->middleware('auth')->except(['edit', 'update', 'destroy']);
+Route::resource('quote-request', QuoteRequestController::class)->except(['edit', 'update', 'destroy']);
 Route::get('create-quote-en', [QuoteRequestController::class, 'createEnglish'])->name('create-quote-en.create');
 Route::put('quote-request/change-dispatched-status/{quoteRequest}', [QuoteRequestController::class, 'changeDispatchedStatus'])->middleware('auth')->name('quote-request.change-dispatched-status');
 

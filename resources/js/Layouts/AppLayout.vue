@@ -62,7 +62,7 @@ onMounted(() => {
                                 <div class="shrink-0 flex items-center lg:hidden">
                                     <Link :href="route('dashboard')">
                                     <figure class="">
-                                        <img class="w-8" src="@/../../public/assets/images/dtw_logo.png" alt="logo">
+                                        <img class="w-20" src="@/../../public/assets/images/black_logo.png" alt="logo">
                                     </figure>
                                     </Link>
                                 </div>
@@ -73,7 +73,7 @@ onMounted(() => {
                             </div>
 
                             <!-- Hamburger -->
-                            <div class="-me-2 flex items-center sm:hidden">
+                            <div class="-me-2 flex items-center lg:hidden">
                                 <button class="
                                     inline-flex
                                     items-center
@@ -114,7 +114,7 @@ onMounted(() => {
 
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" 
-                    class="sm:hidden z-40 rounded-tl-[6px] rounded-bl-[6px] bg-white w-4/6 absolute right-0 top-14 min-h-[30%] max-h-[90%] overflow-y-scroll overflow-x-hidden shadow-lg border pt-4">
+                    class="lg:hidden z-40 rounded-tl-[6px] rounded-bl-[6px] bg-white w-4/6 absolute right-0 top-14 min-h-[30%] max-h-[90%] overflow-y-scroll overflow-x-hidden shadow-lg border pt-4">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
                             Perfil
@@ -140,13 +140,13 @@ onMounted(() => {
                         <ResponsiveNavLink :href="route('users.index')" :active="route().current('users.*')">
                             Usuarios
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('finances.index')" :active="route().current('finances.*')">
                             Finanzas
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('purchases.index')" :active="route().current('purchases.*')">
                             Compras
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('settings.index')" :active="route().current('settings.*')">
                             Configuraciones
                         </ResponsiveNavLink>
                     </div>

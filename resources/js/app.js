@@ -11,7 +11,10 @@ import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 
+//CKEditor
 import CKEditor from '@ckeditor/ckeditor5-vue';
+
+//Element plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 

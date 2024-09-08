@@ -1,93 +1,46 @@
 <template>
-    <div class="relative selection:bg-primarylight">
+    <Head title="Welcome" />
+    <div class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+            href="https://api.whatsapp.com/send?phone=523312155731&text=Hello!%20I%20saw%20your%20webpage%20DTW,%20i'm%20interesting%20on%20a%20service!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
 
-        <!-- mobile menu (hamburger) -->
-        <div v-if="showMobileMenu"
-            class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Inicio')">Home</button>
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Services</button>
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contact</button>
-            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">More <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
-            <ul v-if="showMore" class="text-center p-3 my-2">
-                <li @click="$inertia.get(route('us-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">About us</li>
-                <li @click="$inertia.get(route('create-quote-en.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Quote</li>
-                <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">Sowtare packages</li>
-             </ul>
-            <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] mt-3">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
-             </button>
-
-        </div>
-
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
-            class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
-            <div class="flex space-x-2 items-center">
-                <img src="@/../../public/assets/images/black_logo.png" class="h-12 cursor-pointer" alt="logo" />
-            </div>
-            <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div class="mr-12 hidden lg:inline">
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Inicio')">Home</button> |
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Services</button> |
-                <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contact</button> |
-                <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">More <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
-                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">ES</span></Link>
-             </button>
-             <ul v-if="showMore" class="absolute right-24 p-3 bg-white">
-                <li @click="$inertia.get(route('us-en'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">About us</li>
-                <li @click="$inertia.get(route('create-quote-en.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Quote</li>
-                <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Software packages</li>
-             </ul>
-            </div>
+            class="!bg-black flex items-center justify-between py-4 lg:px-10 px-6 w-full text-white">
+            <EnglishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-20">
+        <main class="pt-24">
             <!-- first section desktop -->
-            <section class="hidden lg:grid grid-cols-2 gap-x-10 h-96 mx-14" id="Inicio">
-                <figure>
-                    <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
-                </figure>
+            <section class="md:grid grid-cols-2 gap-x-10 md:mx-14 mx-2 p-8 border border-white rounded-xl" id="Inicio">
                 <div class="flex-col justify-center py-14">
                     <h1 class="font-bold lg:text-7xl text-lg text-center">Custom web design</h1>
                     <p class="mt-9">
                         We create customized websites, unique and personalized according to your
-                         needs, from corporate sites, online stores,
-                         informative.
+                        needs, from corporate sites, online stores,
+                        informative.
                     </p>
-                    <button @click="$inertia.get(route('create-quote-en.create'))"
+                </div>
+
+                <figure>
+                    <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
+                    <button @click="$inertia.get(route('quote-request.create'))"
                         class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Quote my site
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
-                </div>
-            </section>
-            <!-- first section mobile -->
-            <section class="h-96 mx-14 mb-24 lg:hidden" id="Inicio">
-                <h1 class="font-bold lg:text-7xl text-lg text-center">Custom web design</h1>
-                <figure>
-                    <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
                 </figure>
-                <button
-                    class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                    Quote my site
-                    <i class="fa-solid fa-chevron-right ml-6"></i>
-                </button>
-                <p class="mt-9 text-justify">
-                    We create customized websites, unique and personalized according to your
-                     needs, from corporate sites, online stores,
-                     informative.
-                </p>
+            </section>
+
+            <!-- Poryectos y portafolio -->
+            <section class="mt-10">
+                <div class="custom-style text-center">
+                    <el-segmented v-model="filterProjects" :options="projectsFilter" />
+                </div>
             </section>
 
             <section class="mt-10">
@@ -122,11 +75,6 @@
 
             <!-- landing 3 desktop -->
             <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
-                <!-- bg decorations -->
-                <img class="absolute top-0 -left-14 -z-10" src="@/../../public/assets/images/decoration.png" />
-                <img class="absolute top-72 -right-0 -z-10 rotate-180" src="@/../../public/assets/images/decoration.png" />
-                <img class="absolute bottom-0 -left-14 -z-10" src="@/../../public/assets/images/decoration.png" />
-                <!-- end decorations -->
 
                 <div class="text-center" id="Servicios">
                     <h2 class="font-bold mb-3 text-xl">SERVICES</h2>
@@ -486,9 +434,9 @@
 </template>
 
 <script>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
-import InputError from "@/Components/InputError.vue";
+import EnglishNav from "@/Components/MyComponents/Landing/EnglishNav.vue";
 import e3dtest from '@/../../public/assets/images/e3dtest.png';
 import churrotest from '@/../../public/assets/images/churrotest.png';
 import profibratest from '@/../../public/assets/images/profibratest.png';
@@ -510,6 +458,13 @@ export default {
             lastScrollY: 0,
             showMobileMenu: false,
             showMore: false,
+            filterProjects: 'Todo', //filtro de proyectos
+            projectsFilter: [
+                'Todo',
+                'Sistemas ERP',
+                'Tiendas en línea',
+                'Sitios web',
+            ],
             testimonies: [
                 {
                     imgPath: e3dtest,
@@ -569,6 +524,8 @@ export default {
     },
     components:{
       Link,
+      Head,
+      EnglishNav
     }
 };
 </script>
@@ -581,14 +538,19 @@ export default {
     background-color: #ffffff;
     opacity: 0.9;
 }
-
 .fixed-navbar {
     position: fixed;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
 }
-
 html {
     scroll-behavior: smooth;
+}
+.custom-style .el-segmented {
+  --el-segmented-bg-color: #818181;
+  --el-segmented-color: #FFFFFF;
+  --el-segmented-item-selected-color: #7F659C;
+  --el-segmented-item-selected-bg-color: #a1a1a1;
+  --el-border-radius-base: 16px;
 }
 </style>
