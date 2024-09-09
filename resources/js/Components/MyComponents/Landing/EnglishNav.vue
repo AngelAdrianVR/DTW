@@ -1,10 +1,10 @@
 <template>
-    <a href="/En" class="flex space-x-2 items-center !cursor-default mr-7">
+    <a href="/login" class="flex space-x-2 items-center !cursor-default mr-7">
         <img src="@/../../public/assets/images/white_logo.png" class="md:h-14 h-10" alt="logo" />
     </a>
     <section class="hidden md:block w-full rounded-full bg-[#757575] p-[6px] text-right">
         <div class="mr-12 hidden md:inline relative">
-            <button class="mx-4 hover:text-black" @click="scrollToSection('Inicio')">Home</button>
+            <button class="mx-4 hover:text-black" @click="$inertia.get(route('dtw-en'))">Home</button>
             <button class="mx-4 hover:text-black" @click="scrollToSection('Servicios')">Services</button>
             <button class="mx-4 hover:text-black" @click="scrollToSection('Contacto')">Contact</button>
             <button class="mx-4 hover:text-black" @click="showMore = !showMore">
@@ -56,7 +56,7 @@
     <!-- mobile menu (hamburger) -->
     <div v-if="showMobileMenu"
         class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white md:hidden">
-        <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Inicio')">Home</button>
+        <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.get(route('dtw-en'))">Home</button>
         <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Services</button>
         <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contact</button>
         <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">More <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>

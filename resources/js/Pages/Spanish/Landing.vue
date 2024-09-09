@@ -2,10 +2,10 @@
     <Head title="Bienvenido" />
     <main class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
-        <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
+        <a class="z-50 w-14 h-14 rounded-full bg-green-600 shadow-sm shadow-green-400/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
             href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
+            <i class="fa-brands fa-beat fa-whatsapp text-2xl text-gray-100"></i>
         </a>
 
         <!-- navbar -->
@@ -23,6 +23,8 @@
                         Creamos sitios web a la medida, único y personalizado según tus
                         necesidades, desde sitios corporativos, tiendas en línea,
                         informativos.
+                        <br>
+                        Transformamos tus ideas en soluciones digitales que impulsan el crecimiento empresarial
                     </p>
                 </div>
 
@@ -37,190 +39,16 @@
             </section>
 
             <!-- Poryectos y portafolio -->
-            <section class="mt-10">
+            <section class="my-14">
+                <h2 class="text-center font-bold text-xl mt-40 mb-7">PROYECTOS / PORTAFOLIO</h2>
                 <div class="custom-style text-center">
                     <el-segmented v-model="filterProjects" :options="projectsFilter" />
                 </div>
-            </section>
 
-            <!-- landing 3 desktop -->
-            <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
-                <!-- bg decorations -->
-                <img class="absolute top-0 -left-14 -z-10" src="@/../../public/assets/images/decoration.png" />
-                <img class="absolute top-72 -right-0 -z-10 rotate-180" src="@/../../public/assets/images/decoration.png" />
-                <img class="absolute bottom-0 -left-14 -z-10" src="@/../../public/assets/images/decoration.png" />
-                <!-- end decorations -->
-
-                <div class="text-center" id="Servicios">
-                    <h2 class="font-bold mb-3 text-xl">SERVICIOS</h2>
-                    <p>
-                        Creamos diseños, programación y funcionalidad única para tu marca.
-                    </p>
-                </div>
-
-                <div class="lg:grid grid-cols-2 gap-x-10">
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing2.png" alt="computer" />
-                    </figure>
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">
-                            Diseño y desarrollo de página web a la medida
-                        </h1>
-                        <p class="mt-9 text-center">
-                            Creamos diseños únicos y exclusivos para cada cliente, experiencia
-                            de usuario (UI/UX), responsividad y compatibilidad en diferentes
-                            dispositivos, desarrollo de código fuente (SEO) para un
-                            posicionamiento adecuado en buscadores y mucho más...
-                        </p>
-                    </div>
-
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">
-                            Mantenimiento y actualización de páginas web
-                        </h1>
-                        <p class="mt-9 text-center">
-                            Actualización de contenido y sofware, mejoras del diseño de la
-                            página, soporte técnico, optimización de rendimiento,
-                            mantenimiento de rutina sobre el front y back end y más...
-                        </p>
-                    </div>
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing3.png" alt="computer" />
-                    </figure>
-
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing4.png" alt="computer" />
-                    </figure>
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">
-                            Desarrollo Back end - Front end
-                        </h1>
-                        <p class="mt-9 text-center">
-                            Implementamos tecnología para eficientizar procesos, como ERP, CRM
-                            CMS y mucho más...
-                        </p>
-                    </div>
-
-                    <div class="flex-col justify-center py-14">
-                        <h1 class="font-bold text-lg text-center">Marketing digital</h1>
-                        <p class="mt-9 text-center">
-                            Incrementa tus ventas, amplia tu mercado y potencializa tu
-                            negocio. Creamos publicidad digital mediante redes sociales y
-                            más...
-                        </p>
-                    </div>
-                    <figure>
-                        <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing5.png" alt="computer" />
-                    </figure>
-                </div>
-
-                <div class="text-center">
-                    <h3>Una web a la medida, con garantía de funcionamiento</h3>
-                    <button @click="$inertia.get(route('quote-request.create'))"
-                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                        Solicita tu cotizacion sin compromiso
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
-                </div>
-            </section>
-
-            <!-- landing 3 mobile -->
-            <section class="lg:hidden lg:mx-24 mx-1 mt-9 relative">
-                <div class="text-center" id="Servicios">
-                    <h2 class="font-bold mb-3 text-xl">SERVICIOS</h2>
-                    <p>
-                        Creamos diseños, programación y funcionalidad única para tu marca.
-                    </p>
-                </div>
-
-                <div class="lg:grid grid-cols-2 gap-x-10">
-                    <article class="mt-6 mx-8">
-                        <h1 class="font-bold text-lg text-center">
-                            Diseño y desarrollo de página web a la medida
-                        </h1>
-                        <figure>
-                            <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing2.png" alt="computer" />
-                        </figure>
-                        <p class="mt-6 text-justify">
-                            Creamos diseños únicos y exclusivos para cada cliente, experiencia
-                            de usuario (UI/UX), responsividad y compatibilidad en diferentes
-                            dispositivos, desarrollo de código fuente (SEO) para un
-                            posicionamiento adecuado en buscadores y mucho más...
-                        </p>
-                    </article>
-
-                    <article class="mt-6 mx-8">
-                        <h1 class="font-bold text-lg text-center">
-                            Mantenimiento y actualización de páginas web
-                        </h1>
-                        <figure>
-                            <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing3.png" alt="computer" />
-                        </figure>
-                        <p class="mt-6 text-justify">
-                            Actualización de contenido y sofware, mejoras del diseño de la
-                            página, soporte técnico, optimización de rendimiento,
-                            mantenimiento de rutina sobre el front y back end y más...
-                        </p>
-                    </article>
-
-                    <article class="mt-6 mx-8">
-                        <h1 class="font-bold text-lg text-center">
-                            Desarrollo Back end - Front end
-                        </h1>
-                        <figure>
-                            <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing4.png" alt="computer" />
-                        </figure>
-                        <p class="mt-6 text-justify">
-                            Implementamos tecnología para eficientizar procesos, como ERP, CRM
-                            CMS y mucho más...
-                        </p>
-                    </article>
-
-                    <article class="mt-6 mx-8">
-                        <h1 class="font-bold text-lg text-center">
-                            Marketing digital
-                        </h1>
-                        <figure>
-                            <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing5.png" alt="computer" />
-                        </figure>
-                        <p class="mt-6 text-justify">
-                            Incrementa tus ventas, amplia tu mercado y potencializa tu
-                            negocio. Creamos publicidad digital mediante redes sociales y
-                            más...
-                        </p>
-                    </article>
-                </div>
-
-                <div class="text-center">
-                    <h3>Una web a la medida, con garantía de funcionamiento</h3>
-                    <button @click="$inertia.get(route('quote-request.create'))"
-                        class="mx-auto mt-2 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                        Solicita tu cotizacion sin compromiso
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
-                </div>
-            </section>
-
-            <section class="mt-10">
-                <div class="bg-[#262626] lg:grid grid-cols-2 items-center justify-center px-14 py-2">
-                    <figure class="h-72">
-                        <img class="h-full" src="@/../../public/assets/images/landing6.png" />
-                    </figure>
-                    <div class="text-center text-white">
-                        <h2 class="font-bold">
-                            Sitios web responsivos que se ven perfecto en cualquier
-                            dispositivo
-                        </h2>
-                        <p>
-                            Desde smartphones y tables, hasta computadoras de escritorio,
-                            nuestros diseños se ajustan perfectamente para brindar una
-                            experiencia de usuario óptima en cualquier pantalla.
-                        </p>
-                    </div>
-                </div>
-                <h1 class="w-full text-center text-white lg:text-3xl text-sm py-6 bg-[#1A1A1A]">
-                    Dejanos saber que necesitas y lo haremos posible
-                </h1>
+                <!-- proyectos segun el filtro seleccionado -->
+                <article class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-14 mx-5 lg:w-[65%] lg:mx-auto">
+                    <SpanishProjects :filterProjects="filterProjects" />
+                </article>
             </section>
 
             <!-- testimonies desktop -->
@@ -346,58 +174,11 @@
                             Tu navegador no soporta el elemento de video.
                         </video>
                     </div>
-                    <!-- <figure class="rounded-[20px] hidden lg:block">
-                        <img class="rounded-[20px]" src="@/../../public/assets/images/contact.png" />
-                    </figure> -->
                 </div>
             </section>
-
-            <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative overflow-auto">
-                <figure class="w-full">
-                    <img class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
-                </figure>
-                <div class="md:grid grid-cols-3 h-28">
-                    <div class="border-r border-white flex justify-center items-cente">
-                        <p class="text-lg">"Liberando tu potencial en linea"</p>
-                    </div>
-
-                    <div class="border-r border-white flex justify-center items-center">
-                        <div class="flex flex-col">
-                            <h2 class="text-center mb-5 text-xl">Contacto</h2>
-                            <div>
-                                <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
-                                <p>
-                                    <i class="fa-solid fa-envelope mr-2"></i>contacto@dtw.com.mx
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center items-center">
-                        <div class="flex flex-col justify-center items-center">
-                            <h2 class="text-center mb-5 text-xl">Síguenos</h2>
-                            <div>
-                                <a href="https://www.facebook.com/profile.php?id=100094614796876" target="_blank"><i
-                                        class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"></i></a>
-                                <a href="https://instagram.com/digital_tw?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
-                                    target="_blank"><i
-                                        class="fa-brands fa-instagram text-2xl border border-white rounded-full px-3 py-2 cursor-pointer"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a class="hidden md:block" href="">
-                    <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
-                        Política de privacidad - Plítica de cookies
-                    </p>
-                </a>
-                <a class="hidden md:block" href="">
-                    <p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
-                        Copyright | 2023 | Todos los derechos reservados por Digital TW S.A
-                        de C.V.
-                    </p>
-                </a>
-            </footer>
+            
+            <!-- Footer -->
+            <SpanishFooter />
         </main>
     </main>
 </template>
@@ -406,10 +187,11 @@
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
+import SpanishFooter from "@/Components/MyComponents/Landing/SpanishFooter.vue";
+import SpanishProjects from "@/Components/MyComponents/Landing/SpanishProjects.vue";
 import e3dtest from '@/../../public/assets/images/e3dtest.png';
 import churrotest from '@/../../public/assets/images/churrotest.png';
 import profibratest from '@/../../public/assets/images/profibratest.png';
-
 export default {
     data() {
         const form = useForm({
@@ -428,7 +210,7 @@ export default {
             filterProjects: 'Todo', //filtro de proyectos
             projectsFilter: [
                 'Todo',
-                'Sistemas ERP',
+                'Sistemas de gestión',
                 'Tiendas en línea',
                 'Sitios web',
             ],
@@ -452,16 +234,11 @@ export default {
         };
     },
     components: {
+        SpanishProjects,
+        SpanishFooter,
         SpanishNav,
         Head,
         Link,
-    },
-    mounted() {
-        window.addEventListener('scroll', this.handleScroll);
-        this.toast = useToast();
-    },
-    beforeDestroy() {
-        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         handleScroll() {
@@ -494,6 +271,13 @@ export default {
             });
         },
     },
+    mounted() {
+        window.addEventListener('scroll', this.handleScroll);
+        this.toast = useToast();
+    },
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
 };
 </script>
 
@@ -515,8 +299,8 @@ html {
 }
 .custom-style .el-segmented {
   --el-segmented-bg-color: #818181;
-  --el-segmented-color: #FFFFFF;
-  --el-segmented-item-selected-color: #7F659C;
+  --el-segmented-color: #000;
+  --el-segmented-item-selected-color: #FFFFFF;
   --el-segmented-item-selected-bg-color: #a1a1a1;
   --el-border-radius-base: 16px;
 }
