@@ -16,6 +16,7 @@ import ingenieriaZafiro from '@/../../public/assets/images/ingenieriaZafiro.png'
 import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
 import Nala from '@/../../public/assets/images/Nala.png';
+import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
 
 export default {
 data() {
@@ -49,6 +50,12 @@ data() {
                 name: 'PÁGINA WEB NALA JEWELRY',
                 img: Nala,
                 category: ['Sitios web', 'Tiendas en línea', 'Todo'],
+                url: 'https://nala.dtw.com.mx/',
+            },
+            {
+                name: 'REPORTEO ADTI',
+                img: ReporteoADTI,
+                category: ['Sistemas de gestión', 'Todo'],
                 url: 'https://nala.dtw.com.mx/',
             },
             
