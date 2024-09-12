@@ -51,64 +51,27 @@
                 </article>
             </section>
 
-            <!-- testimonies desktop -->
+            <!-- Clients -->
+            <section class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-40 mx-5 lg:w-[60%] lg:mx-auto">
+                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
+                    Algunos de nuestros clientes
+                </h2>
+                <Clients />
+            </section>
+            
+            <!-- Proyectos propios -->
+            <section class="mt-40 mx-5 lg:w-[60%] lg:mx-auto">
+                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
+                    Proyectos propios
+                </h2>
+
+            </section>
+
+            <!-- testimonies -->
             <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
-                <h2 class="font-bold mb-3 text-xl text-center">
-                    Nuestros clientes hablan por nosotros
-                </h2>
-
-                <div class="lg:grid grid-cols-2 gap-9">
-                    <div v-for="(testimony, index) in testimonies" :key="index"
-                        class="bg-[#262626] rounded-[30px] px-8 py-16 mt-2">
-                        <div class="grid grid-cols-4 gap-x-2 text-white">
-                            <div class="flex-col space-y-2 items-center justify-center">
-                                <figure class="rounded-full w-16 h-16">
-                                    <img :src="testimony.imgPath" />
-                                </figure>
-                                <span>{{ testimony.name }}</span>
-                            </div>
-                            <div class="col-span-3">
-                                <p>{{ testimony.text }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <SpanishTestimonies />
             </section>
 
-            <!-- testimonies mobil -->
-            <section class="lg:hidden lg:mx-24 mx-1 mt-9 relative">
-                <h2 class="font-bold mb-3 text-xl text-center">
-                    Nuestros clientes hablan por nosotros
-                </h2>
-
-                <div class="lg:grid grid-cols-2 gap-9">
-                    <div class="bg-[#262626] rounded-[30px] px-8 py-16 mt-2 flex text-white">
-                        <div @click="currentTestimony = currentTestimony == 0 ? (testimonies.length - 1) : currentTestimony - 1"
-                            class="w-8 mr-2 flex justify-center items-center">
-                            <button>
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </button>
-                        </div>
-                        <div class="w-full">
-                            <div class="flex-col space-y-2 items-center justify-center mb-3">
-                                <figure class="rounded-full w-16 h-16 mx-auto">
-                                    <img :src="testimonies[currentTestimony].imgPath" />
-                                </figure>
-                                <p class="text-center">{{ testimonies[currentTestimony].name }}</p>
-                            </div>
-                            <div class="col-span-3 text-justify">
-                                <p>{{ testimonies[currentTestimony].text }}</p>
-                            </div>
-                        </div>
-                        <div @click="currentTestimony = currentTestimony == (testimonies.length - 1) ? 0 : currentTestimony + 1"
-                            class="w-8 ml-2 flex justify-center items-center">
-                            <button>
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <section class="lg:mx-24 mx-1 mt-9 relative" id="Contacto">
                 <h2 class="font-bold mb-3 text-xl text-center">Cuentanos tu idea</h2>
@@ -186,12 +149,12 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import Clients from "@/Components/MyComponents/Landing/Clients.vue";
 import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
 import SpanishFooter from "@/Components/MyComponents/Landing/SpanishFooter.vue";
 import SpanishProjects from "@/Components/MyComponents/Landing/SpanishProjects.vue";
-import e3dtest from '@/../../public/assets/images/e3dtest.png';
-import churrotest from '@/../../public/assets/images/churrotest.png';
-import profibratest from '@/../../public/assets/images/profibratest.png';
+import SpanishTestimonies from "@/Components/MyComponents/Landing/SpanishTestimonies.vue";
+
 export default {
     data() {
         const form = useForm({
@@ -214,29 +177,14 @@ export default {
                 'Tiendas en línea',
                 'Sitios web',
             ],
-            testimonies: [
-                {
-                    imgPath: e3dtest,
-                    name: 'J. Sherman',
-                    text: 'El sistema ERP desarrollado por DTW ha transformado por completo la forma en que gestionamos nuestro negocio. La solución personalizada se adaptó perfectamente a nuestras operaciones y nos ha permitido optimizar nuestros procesos, mejorar la visibilidad y tomar decisiones informadas en tiempo real.'
-                },
-                {
-                    imgPath: churrotest,
-                    name: 'Rocio R.',
-                    text: 'Quiero agradecer al equipo de DTW por su creatividad y profesionalismo al crear mi sitio web. Han logrado plasmar perfectamente la visión que tenía en mente y han superado mis expectativas.'
-                },
-                {
-                    imgPath: profibratest,
-                    name: 'Jose Ricardo',
-                    text: 'Recomiendo ampliamente el trabajo de DTW, se adapta a lo que necesites e inclusive recomienda mejoras, siempre atententos a todas las dudas que se tenga, y también a cualquier cambio que necesites. Ampliamente recomendado.'
-                },
-            ],
         };
     },
     components: {
+        SpanishTestimonies,
         SpanishProjects,
         SpanishFooter,
         SpanishNav,
+        Clients,
         Head,
         Link,
     },
