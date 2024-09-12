@@ -17,6 +17,9 @@ import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
 import Nala from '@/../../public/assets/images/Nala.png';
 import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
+import PuroChurro from '@/../../public/assets/images/PuroChurro.png';
+import ADTI from '@/../../public/assets/images/ADTI.png';
+import SuitesAcuario from '@/../../public/assets/images/SuitesAcuario.png';
 
 export default {
 data() {
@@ -56,7 +59,25 @@ data() {
                 name: 'REPORTEO ADTI',
                 img: ReporteoADTI,
                 category: ['Sistemas de gestión', 'Todo'],
-                url: 'https://nala.dtw.com.mx/',
+                url: 'https://reporteo.dtw.com.mx/',
+            },
+            {
+                name: 'ERP PURO CHURRO',
+                img: PuroChurro,
+                category: ['Sistemas de gestión', 'Todo'],
+                url: 'https://purochurro.dtw.com.mx/',
+            },
+            {
+                name: 'ADTI',
+                img: ADTI,
+                category: ['Sistemas de gestión', 'Todo'],
+                url: 'https://app.adti.com.mx/',
+            },
+            {
+                name: 'Página web Suites Acuario',
+                img: SuitesAcuario,
+                category: ['Sitios web', 'Todo'],
+                url: 'https://suitesacuariomazatlan.dtw.com.mx/',
             },
             
         ],

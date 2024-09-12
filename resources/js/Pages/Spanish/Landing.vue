@@ -51,7 +51,23 @@
                 </article>
             </section>
 
-            <!-- testimonies desktop -->
+            <!-- Clients -->
+            <section class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-40 mx-5 lg:w-[60%] lg:mx-auto">
+                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
+                    Algunos de nuestros clientes
+                </h2>
+                <Clients />
+            </section>
+            
+            <!-- Proyectos propios -->
+            <section class="mt-40 mx-5 lg:w-[60%] lg:mx-auto">
+                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
+                    Proyectos propios
+                </h2>
+
+            </section>
+
+            <!-- testimonies -->
             <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
                 <SpanishTestimonies />
             </section>
@@ -133,6 +149,7 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import Clients from "@/Components/MyComponents/Landing/Clients.vue";
 import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
 import SpanishFooter from "@/Components/MyComponents/Landing/SpanishFooter.vue";
 import SpanishProjects from "@/Components/MyComponents/Landing/SpanishProjects.vue";
@@ -167,6 +184,7 @@ export default {
         SpanishProjects,
         SpanishFooter,
         SpanishNav,
+        Clients,
         Head,
         Link,
     },
