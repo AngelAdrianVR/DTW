@@ -1,5 +1,5 @@
 <template>
-    <a href="/login" class="flex space-x-2 items-center !cursor-default mr-7">
+    <a href="/" class="flex space-x-2 items-center !cursor-default mr-7">
         <img src="@/../../public/assets/images/white_logo.png" class="md:h-14 h-10" alt="logo" />
     </a>
     <section class="hidden md:block w-full rounded-full bg-[#757575] p-[6px] text-right">

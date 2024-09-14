@@ -14,11 +14,11 @@
             <EnglishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-28 lg:px-28">
-            <div class="lg:grid grid-cols-3 gap-x-8">
-                <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Request quote</h1>
-                <figure>
-                    <img @click="$inertia.visit('/')" src="@/../../public/assets/images/quote-image.png">
+        <main class="pt-28 lg:px-10 mx-5">
+            <div class="lg:grid grid-cols-3 lg:gap-x-5">
+                <h1 class="text-white text-xl text-center font-bold col-start-2 col-span-full mb-7 ml-3">Request quote</h1>
+                <figure class="hidden lg:block mb-5">
+                    <img class="mx-auto" src="@/../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
@@ -157,9 +157,9 @@
                                 <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" selected disabled>-- Estimated budget --</option>
                                     <option value="100 - 500 $USD">100 - 500 $USD </option>
-                                    <option value="500 - 1,500 $USD">500 - 1,500 $USD</option>
-                                    <option value="1,500 - 3,000 $USD">1,500 - 3,000 $USD</option>
-                                    <option value="+ 3,000 $USD">+ 3,000 $USD</option>
+                                    <option value="500 - 1,500 $USD">500 - 2,000 $USD</option>
+                                    <option value="1,500 - 3,000 $USD">2,000 - 5,000 $USD</option>
+                                    <option value="+ 3,000 $USD">+ 5,000 $USD</option>
                                 </select>
                             </div>
                         </div>
