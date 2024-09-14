@@ -1,63 +1,24 @@
 <template>
-    <Head title="Bienvenido" />
-    <div class="relative">
+    <Head title="Cotiza tu servicio" />
+    <div class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+            href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
 
-        <!-- mobile menu (hamburger) -->
-        <div v-if="showMobileMenu"
-            class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/')">Inicio</button>
-            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button> -->
-            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button> -->
-            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
-            <ul v-if="showMore" class="text-center p-3">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
-             </ul>
-            <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
-             </button>
-        </div>
-
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
-            class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
-            <div class="flex space-x-2 items-center">
-                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/dtw_logo.png" class="h-10 cursor-pointer" alt="logo" />
-                <span>Digital TW</span>
-            </div>
-            <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div class="mr-12 hidden lg:inline relative">
-                <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/')">Inicio</button> |
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> | -->
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> | -->
-                <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
-                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
-             </button>
-             <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
-             </ul>
-            </div>
+            class="!bg-black flex items-center justify-between py-4 lg:px-10 px-6 w-full text-white">
+            <SpanishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-28 lg:px-28">
-            <div class="lg:grid grid-cols-3 gap-x-8">
-                <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Solicitar cotización</h1>
-                <figure>
-                    <img @click="$inertia.visit('/')" src="@/../../public/assets/images/quote-image.png">
+        <main class="pt-28 lg:px-10 mx-5">
+            <div class="lg:grid grid-cols-3 lg:gap-x-5">
+                <h1 class="text-white text-xl text-center font-bold col-start-2 col-span-full mb-7 ml-3">Solicitar cotización</h1>
+                <figure class="hidden lg:block mb-5">
+                    <img src="@/../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
@@ -65,7 +26,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.name || focusName }"
                                 >
                                     Nombre *
@@ -82,7 +43,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.email || focusEmail }"
                                 >
                                     Correo electrónico *
@@ -99,7 +60,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.phone || focusPhone }"
                                 >
                                     Teléfono *
@@ -116,7 +77,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.business_name || focusBusinessName }"
                                 >
                                     Nombre de tu empresa o negocio
@@ -134,7 +95,7 @@
                             <div class="lg:w-full relative">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.related_sites || focusrelated_sites }"
                                 >
                                     Referencias o URL relevantes
@@ -158,7 +119,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.business_type || focusBusinessType }"
                                 >
                                     Tipo de indistria o negocio
@@ -195,11 +156,11 @@
                             <div class="lg:w-full">
                                 <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" disabled>-- Presupuesto estimado --</option>
-                                    <option value="2,000 - 6,000 $MXN">2,000 - 6,000 $MXN</option>
-                                    <option value="6,000 - 12,000 $MXN">6,000 - 12,000 $MXN</option>
-                                    <option value="12,000 - 25,000 $MXN">12,000 - 25,000 $MXN</option>
-                                    <option value="25,000 - 50,000 $MXN">25,000 - 50,000 $MXN</option>
-                                    <option value="+ 50,000 $MXN">+ 50,000 $MXN</option>
+                                    <option value="2,000 - 6,000 $MXN">2,000 - 10,000 $MXN</option>
+                                    <option value="6,000 - 12,000 $MXN">10,000 - 20,000 $MXN</option>
+                                    <option value="12,000 - 25,000 $MXN">20,000 - 40,000 $MXN</option>
+                                    <option value="25,000 - 50,000 $MXN">40,000 - 100,000 $MXN</option>
+                                    <option value="+ 50,000 $MXN">+ 100,000 $MXN</option>
                                 </select>
                             </div>
                         </div>
@@ -215,7 +176,7 @@
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
-                                    class="input-placeholder text-gray-500 bg-white px-2 rounded-sm text-sm"
+                                    class="input-placeholder text-gray-500 bg-black px-2 rounded-sm text-sm"
                                     :class="{ 'active': form.way_of_knowing || focusHowFoundUs }"
                                 >
                                     ¿Cómo nos encontraste?
@@ -237,9 +198,11 @@
                 </div>
             </div>
         </main>
+
+        <!-- footer -->
         <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
             <figure>
-                <img class="md:w-[3%] w-[7%]" src="@/../../public/assets/images/dtw_logo.png" alt="site logo" />
+                <img class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
             </figure>
             <div class="md:grid grid-cols-3 h-28">
                 <div class="border-r border-white flex justify-center items-cente">
@@ -289,6 +252,7 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
 
 export default {
     data() {
@@ -309,10 +273,8 @@ export default {
         return {
             form,
             isNavbarFixed: false,
-            showMore:false,
             currentTestimony: 0,
             lastScrollY: 0,
-            showMobileMenu: false,
             focusName: false,
             focusEmail: false,
             focusPhone: false,
@@ -323,6 +285,7 @@ export default {
         };
     },
     components: {
+        SpanishNav,
         Head,
         Link,
     },
@@ -350,7 +313,6 @@ export default {
         scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             section.scrollIntoView({ behavior: 'smooth' });
-            this.showMobileMenu = false;
         },
         store() {
             this.form.post(route("quote-request.store"), {
@@ -365,9 +327,6 @@ export default {
             });
         },
     },
-    components: {
-        Link,
-    }
 };
 </script>
 
@@ -379,17 +338,14 @@ export default {
     background-color: #ffffff;
     opacity: 0.9;
 }
-
 .fixed-navbar {
     position: fixed;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
 }
-
 html {
     scroll-behavior: smooth;
 }
-
 .input-container {
   position: relative;
 }
@@ -405,7 +361,6 @@ html {
   transform: translateY(-150%) scale(0.75);
   color: #7F659C;
 }
-
 select option:checked {
   background-color: #7F659C; /* Cambia este color al que desees */
   color: white; /* Cambia el color del texto si es necesario */

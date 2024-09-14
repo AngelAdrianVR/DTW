@@ -1,60 +1,24 @@
 <template>
     <Head title="Paquetes" />
-    <main class="relative selection:bg-primarylight">
+    <main class="relative selection:bg-primarylight selection:text-primary bg-black min-h-screen text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+            href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
 
-        <!-- mobile menu (hamburger) -->
-        <div v-if="showMobileMenu"
-            class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white">
-            <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.visit('/')">Inicio</button>
-            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button> -->
-            <!-- <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button> -->
-            <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
-            <ul v-if="showMore" class="text-center p-3">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
-             </ul>
-            <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
-             </button>
-        </div>
-
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
-            class="flex items-center justify-between py-4 lg:px-10 px-6 w-full">
-            <div class="flex space-x-2 items-center">
-                <img @click="$inertia.visit('/')" src="@/../../public/assets/images/black_logo.png" class="h-12 cursor-pointer" alt="logo" />
-            </div>
-            <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
-            <div class="mr-12 hidden lg:inline relative">
-                <button class="mx-2 hover:text-[#7F659C]" @click="$inertia.visit('/')">Inicio</button> |
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Servicios')">Servicios</button> | -->
-                <!-- <button class="mx-2 hover:text-[#7F659C]" @click="scrollToSection('Contacto')">Contacto</button> | -->
-                <button class="mx-2 hover:text-[#7F659C]" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button> |
-                <button class="mx-2"> <Link :href="route('dtw-en')"><span :class="route().current('dtw-en') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C]">EN</span></Link>
-             / 
-             <Link :href="route('dtw')"><span :class="route().current('dtw') ? 'text-[#7F659C] font-bold' : '' " class="hover:text-[#7F659C] font-bold text-[#7F659C]">ES</span></Link>
-             </button>
-             <ul v-if="showMore" class="absolute right-0 p-3 bg-white">
-                <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Nosotros</li>
-                <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Cotizar</li>
-                <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] hover:text-white cursor-pointer p-1">Paquetes programación</li>
-             </ul>
-            </div>
+            class="!bg-black flex items-center justify-between py-4 lg:px-10 px-6 w-full text-white">
+            <SpanishNav @scrolling="scrollToSection($event)" />
         </nav>
 
         <main class="pt-28 lg:px-28">
             
         </main>
+
+        <!-- Footter -->
         <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
             <figure>
                 <img @click="$inertia.visit('/')" class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
@@ -108,6 +72,7 @@
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import InputWithPlaceholder from "@/Components/MyComponents/InputWithPlaceholder.vue";
+import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
 
 export default {
     data() {
@@ -121,17 +86,16 @@ export default {
         });
         return {
             form,
-            showMore:false,
             isNavbarFixed: false,
             currentTestimony: 0,
             lastScrollY: 0,
-            showMobileMenu: false,
         };
     },
     components: {
+        InputWithPlaceholder,
+        SpanishNav,
         Head,
         Link,
-        InputWithPlaceholder,
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
@@ -171,9 +135,6 @@ export default {
             });
         },
     },
-    components: {
-        Link,
-    }
 };
 </script>
 
