@@ -3,7 +3,7 @@
     <div class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+            href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
@@ -14,11 +14,11 @@
             <SpanishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-28 lg:px-28">
-            <div class="lg:grid grid-cols-3 gap-x-8">
-                <h1 class="text-[#7F659C] text-xl col-start-2 col-span-full mb-4 ml-3">Solicitar cotización</h1>
-                <figure>
-                    <img @click="$inertia.visit('/')" src="@/../../public/assets/images/quote-image.png">
+        <main class="pt-28 lg:px-10 mx-5">
+            <div class="lg:grid grid-cols-3 lg:gap-x-5">
+                <h1 class="text-white text-xl text-center font-bold col-start-2 col-span-full mb-7 ml-3">Solicitar cotización</h1>
+                <figure class="hidden lg:block mb-5">
+                    <img src="@/../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
@@ -156,11 +156,11 @@
                             <div class="lg:w-full">
                                 <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" disabled>-- Presupuesto estimado --</option>
-                                    <option value="2,000 - 6,000 $MXN">2,000 - 6,000 $MXN</option>
-                                    <option value="6,000 - 12,000 $MXN">6,000 - 12,000 $MXN</option>
-                                    <option value="12,000 - 25,000 $MXN">12,000 - 25,000 $MXN</option>
-                                    <option value="25,000 - 50,000 $MXN">25,000 - 50,000 $MXN</option>
-                                    <option value="+ 50,000 $MXN">+ 50,000 $MXN</option>
+                                    <option value="2,000 - 6,000 $MXN">2,000 - 10,000 $MXN</option>
+                                    <option value="6,000 - 12,000 $MXN">10,000 - 20,000 $MXN</option>
+                                    <option value="12,000 - 25,000 $MXN">20,000 - 40,000 $MXN</option>
+                                    <option value="25,000 - 50,000 $MXN">40,000 - 100,000 $MXN</option>
+                                    <option value="+ 50,000 $MXN">+ 100,000 $MXN</option>
                                 </select>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 <template>
-    <a href="/login" class="flex space-x-2 items-center !cursor-default mr-7">
+    <a href="/" class="flex space-x-2 items-center !cursor-default mr-7">
         <img src="@/../../public/assets/images/white_logo.png" class="md:h-14 h-10" alt="logo" />
     </a>
     <section class="hidden md:block w-full rounded-full bg-[#757575] p-[6px] text-right">
@@ -18,9 +18,9 @@
                         <el-dropdown-item @click="$inertia.get(route('quote-request.create'))">
                             Cotizar
                         </el-dropdown-item>                        
-                        <el-dropdown-item @click="$inertia.get(route('packages'))">
+                        <!-- <el-dropdown-item @click="$inertia.get(route('packages'))">
                             Paquetes de programación
-                        </el-dropdown-item>                        
+                        </el-dropdown-item>                         -->
                     </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -64,7 +64,7 @@
         <ul v-if="showMore" class="text-center p-3">
             <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
             <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
-            <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li>
+            <!-- <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li> -->
         </ul>
         <button class="mx-2"> 
             <el-dropdown trigger="click">

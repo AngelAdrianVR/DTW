@@ -33,7 +33,7 @@
                 <p>{{ selectedProject.description }}</p>
             </body>
             <div class="text-right bg-gray-700 p-3">
-                <PrimaryButton @click="showProjectInfoModal = false">Cerrar</PrimaryButton>
+                <PrimaryButton @click="showProjectInfoModal = false">Close</PrimaryButton>
             </div>
         </main>
     </Modal>
@@ -59,74 +59,74 @@ data() {
         showProjectInfoModal: false, //abre el modal de informacion de proyecto seleccionado
         projects: [
             {
-                name: 'SISTEMA DE TICKETS - PADCOLOR',
+                name: 'TICKETS SISTEM- PADCOLOR',
                 img: padColor,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://www.padcolor.dtw.com.mx/login',
                 images: [padColor, padColor, padColor]
             },
             {
-                name: 'PÁGINA WEB INGENIERÍA ZAFIRO',
+                name: 'WEB SITE INGENIERÍA ZAFIRO',
                 img: ingenieriaZafiro,
-                category: ['Sitios web', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Web sites', 'All'],
+                description: "Project's description",
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
                 images: [ingenieriaZafiro, ingenieriaZafiro, ingenieriaZafiro,]
             },
             {
-                name: 'ERP EMBLEMAS 3D USA',
+                name: 'ERP EMBLEMS 3D USA',
                 img: Emblems3dUSA,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
                 images: [Emblems3dUSA, Emblems3dUSA, Emblems3dUSA]
             },
             {
                 name: 'CRM Y PMS CONSTRUMAX DE OCCIDENTE',
                 img: Construmax,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
                 images: [Construmax, Construmax, Construmax]
             },
             {
-                name: 'PÁGINA WEB NALA JEWELRY',
+                name: 'WEB SITE NALA JEWELRY',
                 img: Nala,
-                category: ['Sitios web', 'Tiendas en línea', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Web sites', 'Online stores', 'All'],
+                description: "Project's description",
                 url: 'https://nala.dtw.com.mx/',
                 images: [Nala, Nala, Nala]
             },
             {
-                name: 'REPORTEO ADTI',
+                name: 'REPORTING ADTI',
                 img: ReporteoADTI,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://reporteo.dtw.com.mx/',
                 images: [ReporteoADTI, ReporteoADTI, ReporteoADTI]
             },
             {
                 name: 'ERP PURO CHURRO',
                 img: PuroChurro,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://purochurro.dtw.com.mx/',
                 images: [PuroChurro, PuroChurro, PuroChurro]
             },
             {
                 name: 'ADTI',
                 img: ADTI,
-                category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Management systems', 'All'],
+                description: "Project's description",
                 url: 'https://app.adti.com.mx/',
                 images: [ADTI, ADTI, ADTI]
             },
             {
-                name: 'Página web Suites Acuario',
+                name: 'WEB SITE SUITES ACUARIO MAZATLAN',
                 img: SuitesAcuario,
-                category: ['Sitios web', 'Todo'],
-                description: 'Descripción del proyecto',
+                category: ['Web sites', 'All'],
+                description: "Project's description",
                 url: 'https://suitesacuariomazatlan.dtw.com.mx/',
                 images: [SuitesAcuario, SuitesAcuario, SuitesAcuario]
             },
@@ -136,7 +136,7 @@ data() {
 },
 computed: {
     filteredProjects() {
-        if (this.filterProjects === 'Todo') {
+        if (this.filterProjects === 'All') {
             return this.projects;
         }
         return this.projects.filter(item => 

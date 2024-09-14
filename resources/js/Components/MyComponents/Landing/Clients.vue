@@ -1,5 +1,5 @@
 <template>
-    <img v-for="client in clients" :key="client" :src="client" :alt="client">
+    <img class="mx-auto my-5" v-for="client in clients" :key="client" :src="client" :alt="client">
 </template>
 
 <script>

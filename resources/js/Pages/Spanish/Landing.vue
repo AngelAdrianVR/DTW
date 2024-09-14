@@ -3,7 +3,7 @@
     <main class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 rounded-full bg-green-600 shadow-sm shadow-green-400/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
+            href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl text-gray-100"></i>
         </a>
@@ -38,9 +38,15 @@
                 </figure>
             </section>
 
+            <!-- Servicios -->
+            <section id="Servicios" class="lg:mx-32 mx-5">
+                <h2 class="text-center font-bold text-2xl mt-40 mb-7">SERVICIOS</h2>
+                <Services />
+            </section>
+
             <!-- Poryectos y portafolio -->
             <section class="my-14">
-                <h2 class="text-center font-bold text-xl mt-40 mb-7">PROYECTOS / PORTAFOLIO</h2>
+                <h2 class="text-center font-bold text-2xl mt-40 mb-7">PROYECTOS / PORTAFOLIO</h2>
                 <div class="custom-style text-center">
                     <el-segmented v-model="filterProjects" :options="projectsFilter" />
                 </div>
@@ -53,54 +59,57 @@
 
             <!-- Clients -->
             <section class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-40 mx-5 lg:w-[60%] lg:mx-auto">
-                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
-                    Algunos de nuestros clientes
+                <h2 class="font-bold mb-9 text-2xl text-center col-span-full">
+                    ALGUNOS DE NUESTROS CLIENTES
                 </h2>
                 <Clients />
             </section>
             
             <!-- Proyectos propios -->
-            <section class="mt-40 mx-5 lg:w-[60%] lg:mx-auto">
-                <h2 class="font-bold mb-7 text-2xl text-center col-span-full">
-                    Proyectos propios
+            <section class="mt-40 mx-5 xl:w-[80%] xl:mx-auto">
+                <h2 class="font-bold mb-14 text-2xl text-center col-span-full">
+                    PROYECTOS PROPIOS
                 </h2>
-
+                <OwnProjects />
             </section>
 
             <!-- testimonies -->
-            <section class="hidden lg:block lg:mx-24 mx-1 mt-9 relative">
-                <SpanishTestimonies />
+            <section class="block lg:mx-24 mx-3 my-28 relative">
+                <h2 class="font-bold mb-10 text-xl text-center">
+                    NUESTROS CLIENTES HABLAN POR NOSOTROS
+                </h2>
+                <Testimonies />
             </section>
 
 
-            <section class="lg:mx-24 mx-1 mt-9 relative" id="Contacto">
-                <h2 class="font-bold mb-3 text-xl text-center">Cuentanos tu idea</h2>
+            <section class="lg:mx-24 mx-4 mt-9 relative" id="Contacto">
+                <h2 class="font-bold mb-7    text-xl text-center">CUÉNTANOS TU IDEA</h2>
 
                 <div class="lg:grid grid-cols-2 gap-9 mb-6">
                     <form @submit.prevent="store">
                         <div class="mb-5">
-                            <label for="name">Nombre <span class="text-red-500">*</span></label>
+                            <label class="ml-2" for="name">Nombre <span class="text-red-500">*</span></label>
                             <input v-model="form.name" type="text" id="name" required
                                 class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
                                 placeholder="Escribe tu nombre" />
                             <p class="text-red-600 text-xs" v-if="form.errors?.name">{{ form.errors?.name }}</p>
                         </div>
                         <div class="mb-5">
-                            <label for="email">Correo <span class="text-red-500">*</span></label>
+                            <label class="ml-2" for="email">Correo <span class="text-red-500">*</span></label>
                             <input v-model="form.email" type="email" id="email" required
                                 class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
                                 placeholder="Escribe tu correo" />
                             <p class="text-red-600 text-xs" v-if="form.errors?.mail">{{ form.errors?.mail }}</p>
                         </div>
                         <div class="mb-5">
-                            <label for="phone">Teléfono</label>
+                            <label class="ml-2" for="phone">Teléfono</label>
                             <input v-model="form.phone" type="text" id="phone"
                                 class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
                                 placeholder="Escribe tu telefono" />
                             <p class="text-red-600 text-xs" v-if="form.errors?.phone">{{ form.errors?.phone }}</p>
                         </div>
                         <div class="mb-5">
-                            <label for="service">Servicio</label>
+                            <label class="ml-2" for="service">Servicio</label>
                             <select v-model="form.service" id="service"
                                 class="active:ring-0 focus:ring-0 border-none outline-none bg-[#D9D9D9] block w-full text-[#808080] rounded-[10px] h-9"
                                 placeholder="Selecciona el servicio">
@@ -150,10 +159,12 @@
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import Clients from "@/Components/MyComponents/Landing/Clients.vue";
+import Services from "@/Components/MyComponents/Landing/Services.vue";
 import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
+import OwnProjects from "@/Components/MyComponents/Landing/OwnProjects.vue";
+import Testimonies from "@/Components/MyComponents/Landing/Testimonies.vue";
 import SpanishFooter from "@/Components/MyComponents/Landing/SpanishFooter.vue";
 import SpanishProjects from "@/Components/MyComponents/Landing/SpanishProjects.vue";
-import SpanishTestimonies from "@/Components/MyComponents/Landing/SpanishTestimonies.vue";
 
 export default {
     data() {
@@ -180,10 +191,12 @@ export default {
         };
     },
     components: {
-        SpanishTestimonies,
         SpanishProjects,
         SpanishFooter,
+        Testimonies,
+        OwnProjects,
         SpanishNav,
+        Services,
         Clients,
         Head,
         Link,
