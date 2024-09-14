@@ -18,9 +18,9 @@
                         <el-dropdown-item @click="$inertia.get(route('create-quote-en.create'))">
                             Quote
                         </el-dropdown-item>                        
-                        <el-dropdown-item @click="$inertia.get(route('packages-en'))">
+                        <!-- <el-dropdown-item @click="$inertia.get(route('packages-en'))">
                             Packages
-                        </el-dropdown-item>                        
+                        </el-dropdown-item>                         -->
                     </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -63,7 +63,7 @@
         <ul v-if="showMore" class="text-center p-3">
             <li @click="$inertia.get(route('us-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">Us</li>
             <li @click="$inertia.get(route('create-quote-en.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Quote</li>
-            <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">Packages</li>
+            <!-- <li @click="$inertia.get(route('packages-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">Packages</li> -->
         </ul>
         <button class="mx-2"> 
             <el-dropdown trigger="click">

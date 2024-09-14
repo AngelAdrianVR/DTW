@@ -3,7 +3,7 @@
     <div class="relative selection:bg-primarylight selection:text-primary bg-black min-h-screen text-white">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
-            href="https://api.whatsapp.com/send?phone=523312155731&text=Hello!%20I%20saw%20your%20webpage%20DTW,%20i'm%20interesting%20on%20a%20service!"
+            href="https://api.whatsapp.com/send?phone=523322268824&text=Hello!%20I%20saw%20your%20webpage%20DTW,%20i'm%20interesting%20on%20a%20service!"
             target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-beat fa-whatsapp text-2xl lg:text-4xl text-gray-100"></i>
         </a>
