@@ -1,7 +1,7 @@
 <template>
     <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative overflow-auto">
         <figure>
-            <img class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
+            <img class="md:w-[9%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
         </figure>
         <div class="md:grid grid-cols-3 h-28">
             <div class="border-r border-white flex justify-center items-cente">

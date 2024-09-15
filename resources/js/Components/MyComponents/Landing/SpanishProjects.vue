@@ -22,9 +22,9 @@
 
                 <!-- imagenes -->
                 <section>
-                    <el-carousel :interval="4000" type="card" height="350px">
+                    <el-carousel :interval="3000" type="card" :height="carouselHeight">
                         <el-carousel-item v-for="item in selectedProject.images" :key="item">
-                            <img class="mx-auto mt-4 w-[90%]" :src="selectedProject.img" alt="">
+                            <img class="mx-auto mt-4 w-[90%] object-contain" :src="item" alt="">
                         </el-carousel-item>
                     </el-carousel>
                 </section>
@@ -32,8 +32,10 @@
                 <p class="font-bold mt-9 mb-4">{{ selectedProject.name }}</p>
                 <p>{{ selectedProject.description }}</p>
             </body>
-            <div class="text-right bg-gray-700 p-3">
-                <PrimaryButton @click="showProjectInfoModal = false">Cerrar</PrimaryButton>
+            <div class="flex items-center justify-end space-x-5 bg-gray-700 p-3">
+                <a class="cursor-pointer" @click="showProjectInfoModal = false">Cerrar</a>
+                <a :href="selectedProject.url" target="_blank"
+                class="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-full text-xs text-white tracking-widest active:bg-primarydark transition-all ease-in-out duration-100 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">Visitar sitio</a>
             </div>
         </main>
     </Modal>
@@ -43,6 +45,8 @@
 import padColor from '@/../../public/assets/images/padColor.png';
 import ingenieriaZafiro from '@/../../public/assets/images/ingenieriaZafiro.png';
 import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
+import Emblems3dUSA01 from '@/../../public/assets/images/Emblems3dUSA01.png';
+import Emblems3dUSA02 from '@/../../public/assets/images/Emblems3dUSA02.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
 import Nala from '@/../../public/assets/images/Nala.png';
 import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
@@ -57,12 +61,13 @@ data() {
     return {
         selectedProject: null, //Informacion del proyecto seleccionado
         showProjectInfoModal: false, //abre el modal de informacion de proyecto seleccionado
+        carouselHeight: '350px', //cambia el tamaño del carusel dependiendo del tamaño del dispositivo
         projects: [
             {
                 name: 'SISTEMA DE TICKETS - PADCOLOR',
                 img: padColor,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Sistema de tickets para su atención oportuna, registrar tiempos de resolución y reportar estadísticas de conclusión de problemas sucitados en todas las sucursales de la empresa.',
                 url: 'https://www.padcolor.dtw.com.mx/login',
                 images: [padColor, padColor, padColor]
             },
@@ -70,7 +75,7 @@ data() {
                 name: 'PÁGINA WEB INGENIERÍA ZAFIRO',
                 img: ingenieriaZafiro,
                 category: ['Sitios web', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Nuestro cliente se especializa en la industria de la construcción, destacándose en el diseño, elaboración de planos geográficos, y más. A través de estas vistas, podrá conocer su experiencia, los servicios que ofrece y los proyectos que ha llevado a cabo con éxito. Su objetivo principal es conectar con nuevos clientes y dar a conocer el valor que puede aportar a cada proyecto.',
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
                 images: [ingenieriaZafiro, ingenieriaZafiro, ingenieriaZafiro,]
             },
@@ -78,15 +83,15 @@ data() {
                 name: 'ERP EMBLEMAS 3D USA',
                 img: Emblems3dUSA,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Sistema ERP completo: gestión integral de clientes desde prospección, catálogo de productos, seguimientos de producción, asignación de tareas, seguimiento de proyectos, gestión integral de nóminas, cotizaciónes, almacenes y compras. Ademas cuenta con un módulo de analisis definanzas el cual muestra productos mas vendidos, historial de ventas de cada producto y margen de cualquier periodo de tiempo',
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Emblems3dUSA, Emblems3dUSA, Emblems3dUSA]
+                images: [Emblems3dUSA, Emblems3dUSA01, Emblems3dUSA02]
             },
             {
                 name: 'CRM Y PMS CONSTRUMAX DE OCCIDENTE',
                 img: Construmax,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Sistemas CRM y PMS para la gestión integral de clientes desde prospección hasta la conversión en cliente. Módulo de oportunidades de venta con asignación de tareas para el seguimiento y flujo hasta ganar la oportunidad. Sistema PMS que da seguimiento al proyecto de la oportunidad ganada, diagrama de gantt con tiempos, estatus y tareas para completar proyecto. Además cuenta son envío automatico de correos y whatsApp que notifica a los empleados sobre nuevas tareas asignadas',
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
                 images: [Construmax, Construmax, Construmax]
             },
@@ -94,7 +99,7 @@ data() {
                 name: 'PÁGINA WEB NALA JEWELRY',
                 img: Nala,
                 category: ['Sitios web', 'Tiendas en línea', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Página web promocional que muestra catálogo deproductos de una tienda de joyas con boton para contactar directamente a whatsApp',
                 url: 'https://nala.dtw.com.mx/',
                 images: [Nala, Nala, Nala]
             },
@@ -102,7 +107,7 @@ data() {
                 name: 'REPORTEO ADTI',
                 img: ReporteoADTI,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Sistema de reporteo de producción y estatus de trabajo de la maquinaria en tiempo real a través de conexión modbus TCPIP, conexión a base de datos y correos automáticos con intervalos de tiempo configurables. Visualización de producción desde cualquier dispositivo con conexión a internet desde cualquier parte del mundo',
                 url: 'https://reporteo.dtw.com.mx/',
                 images: [ReporteoADTI, ReporteoADTI, ReporteoADTI]
             },
@@ -110,7 +115,7 @@ data() {
                 name: 'ERP PURO CHURRO',
                 img: PuroChurro,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Sistema ERP que gestiona nóminas, productos, estock y almacén, historial de ventas y egresos para obtención de margen y cuenta con un punto de venta con conexión a escaner de codigo qr y de barras para agilizar la venta.',
                 url: 'https://purochurro.dtw.com.mx/',
                 images: [PuroChurro, PuroChurro, PuroChurro]
             },
@@ -118,7 +123,7 @@ data() {
                 name: 'ADTI',
                 img: ADTI,
                 category: ['Sistemas de gestión', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Empresa de diseño y automatización industrial. Gestión de almacén y organización de piezas e insumos para la construcción de sus máquinas por categorías y subcategorías. Además cuenta con codigo interno estandarizado para su correcta gestión en otros procesos.',
                 url: 'https://app.adti.com.mx/',
                 images: [ADTI, ADTI, ADTI]
             },
@@ -126,7 +131,7 @@ data() {
                 name: 'Página web Suites Acuario',
                 img: SuitesAcuario,
                 category: ['Sitios web', 'Todo'],
-                description: 'Descripción del proyecto',
+                description: 'Página web promocional de suites de lujo en Mazatlán Sinaloa',
                 url: 'https://suitesacuariomazatlan.dtw.com.mx/',
                 images: [SuitesAcuario, SuitesAcuario, SuitesAcuario]
             },
@@ -155,8 +160,25 @@ methods:{
     handleProjectSelection(project) {
         this.selectedProject = project;
         this.showProjectInfoModal = true;
-    }
-}
+    },
+    updateCarouselHeight() {
+      const width = window.innerWidth;
+      if (width < 430) {
+        this.carouselHeight = '200px';
+      } else if (width >= 430 && width < 1024) {
+        this.carouselHeight = '300px';
+      } else if (width >= 1024 && width < 1350) {
+        this.carouselHeight = '350px';
+      }
+    },
+},
+mounted() {
+    this.updateCarouselHeight();
+    window.addEventListener('resize', this.updateCarouselHeight);
+},
+beforeUnmount() {
+    window.removeEventListener('resize', this.updateCarouselHeight);
+},
 }
 </script>
 

@@ -22,9 +22,9 @@
 
                 <!-- imagenes -->
                 <section>
-                    <el-carousel :interval="4000" type="card" height="350px">
+                    <el-carousel :interval="3000" type="card" :height="carouselHeight">
                         <el-carousel-item v-for="item in selectedProject.images" :key="item">
-                            <img class="mx-auto mt-4 w-[90%]" :src="selectedProject.img" alt="">
+                            <img class="mx-auto mt-4 w-[90%] object-contain" :src="item" alt="">
                         </el-carousel-item>
                     </el-carousel>
                 </section>
@@ -32,8 +32,10 @@
                 <p class="font-bold mt-9 mb-4">{{ selectedProject.name }}</p>
                 <p>{{ selectedProject.description }}</p>
             </body>
-            <div class="text-right bg-gray-700 p-3">
-                <PrimaryButton @click="showProjectInfoModal = false">Close</PrimaryButton>
+            <div class="flex items-center justify-end space-x-5 bg-gray-700 p-3">
+                <a class="cursor-pointer" @click="showProjectInfoModal = false">Close</a>
+                <a :href="selectedProject.url" target="_blank"
+                class="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-full text-xs text-white tracking-widest active:bg-primarydark transition-all ease-in-out duration-100 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">Visit site</a>
             </div>
         </main>
     </Modal>
@@ -43,6 +45,8 @@
 import padColor from '@/../../public/assets/images/padColor.png';
 import ingenieriaZafiro from '@/../../public/assets/images/ingenieriaZafiro.png';
 import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
+import Emblems3dUSA01 from '@/../../public/assets/images/Emblems3dUSA01.png';
+import Emblems3dUSA02 from '@/../../public/assets/images/Emblems3dUSA02.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
 import Nala from '@/../../public/assets/images/Nala.png';
 import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
@@ -57,12 +61,13 @@ data() {
     return {
         selectedProject: null, //Informacion del proyecto seleccionado
         showProjectInfoModal: false, //abre el modal de informacion de proyecto seleccionado
+        carouselHeight: '350px', //cambia el tamaño del carusel dependiendo del tamaño del dispositivo
         projects: [
             {
                 name: 'TICKETS SISTEM- PADCOLOR',
                 img: padColor,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "Ticket system for timely attention, recording resolution times and reporting statistics on the resolution of problems that have arisen in all company branches.",
                 url: 'https://www.padcolor.dtw.com.mx/login',
                 images: [padColor, padColor, padColor]
             },
@@ -70,7 +75,7 @@ data() {
                 name: 'WEB SITE INGENIERÍA ZAFIRO',
                 img: ingenieriaZafiro,
                 category: ['Web sites', 'All'],
-                description: "Project's description",
+                description: "Our client specializes in the construction industry, excelling in design, geographic mapping, and more. Through these views, you will be able to learn about their experience, the services they offer, and the projects they have successfully completed. Their main goal is to connect with new clients and make them aware of the value they can bring to each project.",
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
                 images: [ingenieriaZafiro, ingenieriaZafiro, ingenieriaZafiro,]
             },
@@ -78,15 +83,15 @@ data() {
                 name: 'ERP EMBLEMS 3D USA',
                 img: Emblems3dUSA,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "Complete ERP system: comprehensive customer management from prospecting, product catalog, production monitoring, task assignment, project monitoring, comprehensive payroll management, quotes, warehouses and purchases. It also has a financial analysis module which shows best-selling products, sales history of each product and margin for any period of time.",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Emblems3dUSA, Emblems3dUSA, Emblems3dUSA]
+                images: [Emblems3dUSA, Emblems3dUSA01, Emblems3dUSA02]
             },
             {
                 name: 'CRM Y PMS CONSTRUMAX DE OCCIDENTE',
                 img: Construmax,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "CRM and PMS systems for comprehensive customer management from prospecting to conversion into a client. Sales opportunities module with task assignment for follow-up and flow until the opportunity is won. PMS system that tracks the project of the won opportunity, Gantt chart with times, status and tasks to complete the project. It also has automatic sending of emails and WhatsApp that notifies employees about new assigned tasks.",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
                 images: [Construmax, Construmax, Construmax]
             },
@@ -94,7 +99,7 @@ data() {
                 name: 'WEB SITE NALA JEWELRY',
                 img: Nala,
                 category: ['Web sites', 'Online stores', 'All'],
-                description: "Project's description",
+                description: "Promotional web page showing a jewelry store's product catalog with a button to contact them directly on WhatsApp",
                 url: 'https://nala.dtw.com.mx/',
                 images: [Nala, Nala, Nala]
             },
@@ -102,7 +107,7 @@ data() {
                 name: 'REPORTING ADTI',
                 img: ReporteoADTI,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "Production reporting system and real-time working status of machinery through Modbus TCPIP connection, database connection and automatic emails with configurable time intervals. Production visualization from any device with an Internet connection from anywhere in the world',",
                 url: 'https://reporteo.dtw.com.mx/',
                 images: [ReporteoADTI, ReporteoADTI, ReporteoADTI]
             },
@@ -110,7 +115,7 @@ data() {
                 name: 'ERP PURO CHURRO',
                 img: PuroChurro,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "ERP system that manages payrolls, products, stock and warehouse, sales and expenditure history to obtain margin and has a point of sale with connection to QR code and barcode scanner to speed up sales.",
                 url: 'https://purochurro.dtw.com.mx/',
                 images: [PuroChurro, PuroChurro, PuroChurro]
             },
@@ -118,7 +123,7 @@ data() {
                 name: 'ADTI',
                 img: ADTI,
                 category: ['Management systems', 'All'],
-                description: "Project's description",
+                description: "Industrial design and automation company. Warehouse management and organization of parts and supplies for the construction of your machines by categories and subcategories. It also has a standardized internal code for correct management in other processes.",
                 url: 'https://app.adti.com.mx/',
                 images: [ADTI, ADTI, ADTI]
             },
@@ -126,7 +131,7 @@ data() {
                 name: 'WEB SITE SUITES ACUARIO MAZATLAN',
                 img: SuitesAcuario,
                 category: ['Web sites', 'All'],
-                description: "Project's description",
+                description: "Promotional website for luxury suites in Mazatlan Sinaloa",
                 url: 'https://suitesacuariomazatlan.dtw.com.mx/',
                 images: [SuitesAcuario, SuitesAcuario, SuitesAcuario]
             },
@@ -155,8 +160,25 @@ methods:{
     handleProjectSelection(project) {
         this.selectedProject = project;
         this.showProjectInfoModal = true;
-    }
-}
+    },
+    updateCarouselHeight() {
+      const width = window.innerWidth;
+      if (width < 430) {
+        this.carouselHeight = '200px';
+      } else if (width >= 430 && width < 1024) {
+        this.carouselHeight = '300px';
+      } else if (width >= 1024 && width < 1350) {
+        this.carouselHeight = '350px';
+      }
+    },
+},
+mounted() {
+    this.updateCarouselHeight();
+    window.addEventListener('resize', this.updateCarouselHeight);
+},
+beforeUnmount() {
+    window.removeEventListener('resize', this.updateCarouselHeight);
+},
 }
 </script>
 

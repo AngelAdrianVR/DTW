@@ -14,15 +14,15 @@
             <EnglishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-28 lg:px-10 mx-5">
+        <main class="pt-28 lg:px-10 mx-7">
             <div class="lg:grid grid-cols-3 lg:gap-x-5">
                 <h1 class="text-white text-xl text-center font-bold col-start-2 col-span-full mb-7 ml-3">Request quote</h1>
                 <figure class="hidden lg:block mb-5">
                     <img class="mx-auto" src="@/../../public/assets/images/quote-image.png">
                 </figure>
                 <div class="col-span-2">
-                    <form @submit.prevent="store" class="grid grid-cols-2 gap-4">
-                        <div class="mr-5">
+                    <form @submit.prevent="store" class="md:grid grid-cols-2 md:gap-5 space-y-4 md:space-y-0">
+                        <div class="md:mr-5">
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
@@ -34,7 +34,7 @@
                                 <input v-model="form.name"
                                     @focus="focusName = true"
                                     @blur="focusName = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.name">{{ form.errors?.name }}</p>
@@ -51,12 +51,12 @@
                                 <input v-model="form.email"
                                     @focus="focusEmail = true"
                                     @blur="focusEmail = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.email">{{ form.errors?.email }}</p>
                         </div>
-                        <div class="mr-5">
+                        <div class="md:mr-5">
                             <div class="lg:w-full">
                                 <div class="input-container">
                                 <label
@@ -68,7 +68,7 @@
                                 <input v-model="form.phone"
                                     @focus="focusPhone = true"
                                     @blur="focusPhone = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.phone">{{ form.errors?.phone }}</p>
@@ -85,13 +85,13 @@
                                 <input v-model="form.business_name"
                                     @focus="focusBusinessName = true"
                                     @blur="focusBusinessName = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                             <p class="text-red-600 text-xs" v-if="form.errors?.business_name">{{ form.errors?.business_name
                             }}</p>
                         </div>
-                        <div class="mr-5">
+                        <div class="md:mr-5">
                             <div class="lg:w-full relative">
                                 <div class="input-container">
                                 <label
@@ -103,7 +103,7 @@
                                 <input v-model="form.related_sites"
                                     @focus="focusrelated_sites = true"
                                     @blur="focusrelated_sites = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                                 <el-tooltip
                                 class="box-item"
@@ -127,13 +127,13 @@
                                 <input v-model="form.business_type"
                                     @focus="focusBusinessType = true"
                                     @blur="focusBusinessType = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                         </div>
-                        <div class="mr-5">
+                        <div class="md:mr-5">
                             <div class="lg:w-full relative">
-                                <select v-model="form.project_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                <select v-model="form.project_type" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option class="hover:bg-[#7F659C]" value="Tipo de proyecto" disabled>-- Type of project --</option>
                                     <option class="hover:bg-[#7F659C]" value="Custom website">Custom website</option>
                                     <option class="hover:bg-[#7F659C]" value="Online store">Online store</option>
@@ -154,7 +154,7 @@
                         </div>
                         <div>
                             <div class="lg:w-full">
-                                <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
+                                <select v-model="form.estimate" class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] text-[#9a9a9a] outline-none bg-transparent block w-full rounded-[10px] h-11 px-5">
                                     <option value="Presupuesto estimado" selected disabled>-- Estimated budget --</option>
                                     <option value="100 - 500 $USD">100 - 500 $USD </option>
                                     <option value="500 - 1,500 $USD">500 - 2,000 $USD</option>
@@ -166,7 +166,7 @@
                         <div class="col-span-full mt-3">
                             <h2 class="text-[#7F659C] text-lg mb-2 ml-3">Describe us your idea</h2>
                             <textarea v-model="form.project_description"
-                                class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px]"
+                                class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px]"
                                 rows="5"
                                 placeholder="Please provide additional details or specific requirements for your project if necessary."></textarea>
                         </div>
@@ -183,7 +183,7 @@
                                 <input v-model="form.way_of_knowing"
                                     @focus="focusWay_of_knowing = true"
                                     @blur="focusWay_of_knowing = false"
-                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
+                                    class="active:ring-0 focus:ring-0 border border-[#9A9A9A] placeholder:text-sm placeholder:text-[#9A9A9A] focus:border-[#7F659C] outline-none bg-transparent block w-full rounded-[10px] h-9 px-5" />
                                 </div>
                             </div>
                         </div>
@@ -197,52 +197,9 @@
                 </div>
             </div>
         </main>
-        <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative">
-            <figure>
-                <img class="md:w-[6%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="site logo" />
-            </figure>
-            <div class="md:grid grid-cols-3 h-28">
-                <div class="border-r border-white flex justify-center items-cente">
-                    <p class="text-lg">"Unlocking your potential online"</p>
-                </div>
 
-                <div class="border-r border-white flex justify-center items-center">
-                    <div class="flex flex-col">
-                        <h2 class="text-center mb-5 text-xl">Contact</h2>
-                        <div>
-                            <p><i class="fa-solid fa-phone mr-2 mb-3"></i>3322268824</p>
-                            <p>
-                                <i class="fa-solid fa-envelope mr-2"></i>contacto@dtw.com.mx
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center items-center">
-                    <div class="flex flex-col justify-center items-center">
-                        <h2 class="text-center mb-5 text-xl">Follow us!</h2>
-                        <div>
-                            <a href="https://www.facebook.com/profile.php?id=100094614796876" target="_blank"><i
-                                    class="fa-brands fa-facebook text-2xl border border-white rounded-full px-3 py-2 cursor-pointer mr-5"></i></a>
-                            <a href="https://instagram.com/digital_tw?utm_source=qr&igshid=NGExMmI2YTkyZg%3D%3D"
-                                target="_blank"><i
-                                    class="fa-brands fa-instagram text-2xl border border-white rounded-full px-3 py-2 cursor-pointer"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="hidden md:block" href="">
-                <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
-                    Privacy policy - Cookies policy
-                </p>
-            </a>
-            <a class="hidden md:block" href="">
-                <p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
-                    Copyright | 2023 | Todos los derechos reservados por Digital TW S.A
-                    de C.V.
-                </p>
-            </a>
-        </footer>
+        <!-- Footer -->
+        <EnglishFooter />
     </div>
 </template>
 
@@ -250,6 +207,7 @@
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import EnglishNav from "@/Components/MyComponents/Landing/EnglishNav.vue";
+import EnglishFooter from "@/Components/MyComponents/Landing/EnglishFooter.vue";
 
 export default {
     data() {
@@ -282,6 +240,7 @@ export default {
         };
     },
     components: {
+        EnglishFooter,
         EnglishNav,
         Head,
         Link,
