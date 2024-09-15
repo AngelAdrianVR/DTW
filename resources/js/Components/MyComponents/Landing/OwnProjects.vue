@@ -35,12 +35,12 @@
             <p class="text-center mt-4">{{ language == 'english' ? 'Find us in our website' : 'Encuéntranos en nuestro sitio'}}</p>
             <p class="text-center mb-10 underline">ezyventas.com</p>
             
-            <div class="bg-[#4B4B4B] rounded-full flex items-center justify-between p-1">
+            <a href="https://ezyventas.com/" target="_blank" class="bg-[#4B4B4B] rounded-full flex items-center justify-between p-1">
                 <p class="w-[95%] text-center">{{ language == 'english' ? 'Visit' : 'Visitar' }}</p>
-                <a href="https://ezyventas.com/" target="_blank" class="flex items-center justify-center rounded-full size-7 bg-[#D9D9D9]">
+                <button href="https://ezyventas.com/" target="_blank" class="flex items-center justify-center rounded-full size-7 bg-[#D9D9D9]">
                     <i class="fa-solid fa-arrow-right text-[#4B4B4B]"></i>
-                </a>
-            </div>
+                </button>
+            </a>
         </section>
     </main>
 </template>
@@ -52,7 +52,6 @@ import EzyVentas2 from '@/../../public/assets/images/EzyVentas2.png';
 export default {
 data() {
     return {
-        windowWidth: window.innerWidth,
         carouselHeight: '600px',
         images: [
             {
