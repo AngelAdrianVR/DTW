@@ -4,7 +4,11 @@
     : 'Desarrollamos soluciones de diseño, programación y funcionalidad exclusivas, adaptadas a la identidad y necesidades únicas de tu marca.' }}
   </p>
 
-  <section class="lg:flex justify-between items-center lg:space-x-16 mt-36">
+  <div class="pt-10">
+    <el-divider content-position="left">Managent</el-divider>
+  </div>
+
+  <section class="lg:flex justify-between items-center lg:space-x-16 mt-24">
     <figure class="border-2 border-white rounded-lg h-40 lg:w-1/2 md:w-2/3 mx-auto mb-10 p-3"></figure>
 
     <div class="lg:w-1/2 text-center lg:text-left">
@@ -19,8 +23,12 @@
     </div>
   </section>
 
+  <div class="pt-16">
+    <el-divider>IoT</el-divider>
+  </div>
+
   <!-- ioT -->
-  <section class="lg:flex justify-between items-center space-x-16 mt-20">
+  <section class="lg:flex justify-between items-center lg:space-x-16 mt-20">
     <div class="lg:w-1/2 text-center lg:text-left">
       <h1 class="text-xl font-bold mb-7">
         {{ language == 'english' ? 'IoT solutions for efficient management.' 
@@ -32,14 +40,18 @@
       </p>
     </div>
 
-    <figure class="lg:w-1/2 md:w-2/3 mb-10 p-3 flex">
+    <figure class="lg:w-1/2 md:w-2/3 w-full mb-10 p-3 flex">
       <img src="@/../../public/assets/images/IoT.png" alt="" />
     </figure>
   </section>
 
+  <div class="pt-5">
+    <el-divider content-position="right">Branding</el-divider>
+  </div>
+
   <!-- Branding -->
-  <section class="lg:flex justify-between items-center space-x-16 mt-20">
-    <figure class="w-2/3 mx-auto mb-10">
+  <section class="lg:flex justify-between items-center lg:space-x-16 mt-20">
+    <figure class="lg:w-2/3 mx-auto mb-10">
       <img src="@/../../public/assets/images/branding.png" alt="" />
     </figure>
 
