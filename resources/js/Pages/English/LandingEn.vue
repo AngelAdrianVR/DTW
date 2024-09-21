@@ -16,8 +16,11 @@
 
         <main class="pt-24">
             <!-- first section desktop -->
-            <section class="md:grid grid-cols-2 gap-x-10 md:mx-14 mx-2 p-8 border border-white rounded-xl" id="Inicio">
-                <div class="flex-col justify-center py-14">
+            <section class="rounded-xl" id="Inicio">
+                <figure>
+                    <img class="mx-auto" src="@/../../public/assets/images/main_landing.png" alt="">
+                </figure>
+                <!-- <div class="flex-col justify-center py-14">
                     <h1 class="font-bold lg:text-7xl text-lg text-center">Custom web design</h1>
                     <p class="mt-9">
                         We create customized websites, unique and personalized according to your
@@ -33,7 +36,7 @@
                         Quote my site
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
-                </figure>
+                </figure> -->
             </section>
 
             <!-- Servicios -->

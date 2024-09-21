@@ -14,10 +14,13 @@
             <SpanishNav @scrolling="scrollToSection($event)" />
         </nav>
 
-        <main class="pt-24">
+        <main class="pt-32">
             <!-- first section desktop -->
-            <section class="md:grid grid-cols-2 gap-x-10 md:mx-14 mx-2 p-8 border border-white rounded-xl" id="Inicio">
-                <div class="flex-col justify-center py-14">
+            <section class="rounded-xl" id="Inicio">
+                <figure>
+                    <img class="mx-auto" src="@/../../public/assets/images/main_landing.png" alt="">
+                </figure>
+                <!-- <div class="flex-col justify-center py-14">
                     <h1 class="font-bold lg:text-7xl text-lg text-center">Diseño web a la medida</h1>
                     <p class="mt-9">
                         Creamos sitios web a la medida, único y personalizado según tus
@@ -26,16 +29,16 @@
                         <br>
                         Transformamos tus ideas en soluciones digitales que impulsan el crecimiento empresarial
                     </p>
-                </div>
+                </div> -->
 
-                <figure>
+                <!-- <figure>
                     <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
                     <button @click="$inertia.get(route('quote-request.create'))"
                         class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
                         Cotizar mi sitio
                         <i class="fa-solid fa-chevron-right ml-6"></i>
                     </button>
-                </figure>
+                </figure> -->
             </section>
 
             <!-- Servicios -->
@@ -158,6 +161,7 @@
 <script>
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Clients from "@/Components/MyComponents/Landing/Clients.vue";
 import Services from "@/Components/MyComponents/Landing/Services.vue";
 import SpanishNav from "@/Components/MyComponents/Landing/SpanishNav.vue";
@@ -193,6 +197,7 @@ export default {
     components: {
         SpanishProjects,
         SpanishFooter,
+        PrimaryButton,
         Testimonies,
         OwnProjects,
         SpanishNav,
