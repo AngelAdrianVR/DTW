@@ -5,7 +5,7 @@
     <section class="hidden md:block w-full rounded-full bg-[#757575] p-[6px] text-right">
         <div class="mr-12 hidden md:inline relative">
             <button class="mx-4 hover:text-black" @click="$inertia.get(route('dtw'))">Inicio</button>
-            <button class="mx-4 hover:text-black" @click="scrollToSection('Servicios')">Servicios</button>
+            <button class="mx-4 hover:text-black" @click="route().current('dtw') ? scrollToSection('Servicios') : $inertia.get(route('dtw'))">Servicios</button>
             <button class="mx-4 hover:text-black" @click="scrollToSection('Contacto')">Contacto</button>
             <button class="mx-4 hover:text-black" @click="showMore = !showMore">
                 <el-dropdown trigger="click">
@@ -58,7 +58,7 @@
     <div v-if="showMobileMenu"
         class="flex flex-col z-30 w-2/3 bg-[#262626] rounded-xl fixed top-20 right-1 border-white border py-1 text-white md:hidden">
         <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="$inertia.get(route('dtw'))">Inicio</button>
-        <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Servicios')">Servicios</button>
+        <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="route().current('dtw') ? scrollToSection('Servicios') : $inertia.get(route('dtw'))">Servicios</button>
         <button class="mx-1 py-2 hover:bg-[#7F659C] rounded-lg" @click="scrollToSection('Contacto')">Contacto</button>
         <button class="mx-2 py-2 hover:bg-[#7F659C] rounded-lg" @click="showMore = !showMore">Más <i class="fa-solid fa-angle-down ml-1 text-sm"></i></button>
         <ul v-if="showMore" class="text-center p-3">
