@@ -17,28 +17,11 @@
         <main class="pt-32">
             <!-- first section desktop -->
             <section class="rounded-xl" id="Inicio">
-                <figure>
+                <figure class="relative lg:w-[75%] mx-auto">
                     <img class="mx-auto" src="@/../../public/assets/images/main_landing.png" alt="">
+                    <h1 class="text-lg md:text-xl lg:text-4xl text-white font-bold absolute left-2 md:left-16 top-5 md:top-10 lg:top-16">Diseño web a la medida</h1>
+                    <p class="text-white text-sm md:text-base lg:text-lg w-40 md:w-72 lg:w-96 absolute left-2 md:left-16 top-16 md:top-24 lg:top-40">Transformamos tus ideas en soluciones digitales que impulsan el crecimiento empresarial</p>
                 </figure>
-                <!-- <div class="flex-col justify-center py-14">
-                    <h1 class="font-bold lg:text-7xl text-lg text-center">Diseño web a la medida</h1>
-                    <p class="mt-9">
-                        Creamos sitios web a la medida, único y personalizado según tus
-                        necesidades, desde sitios corporativos, tiendas en línea,
-                        informativos.
-                        <br>
-                        Transformamos tus ideas en soluciones digitales que impulsan el crecimiento empresarial
-                    </p>
-                </div> -->
-
-                <!-- <figure>
-                    <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
-                    <button @click="$inertia.get(route('quote-request.create'))"
-                        class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                        Cotizar mi sitio
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
-                </figure> -->
             </section>
 
             <!-- Servicios -->
