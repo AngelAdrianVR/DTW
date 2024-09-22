@@ -16,24 +16,14 @@
 
         <main class="pt-24">
             <!-- first section desktop -->
-            <section class="md:grid grid-cols-2 gap-x-10 md:mx-14 mx-2 p-8 border border-white rounded-xl" id="Inicio">
-                <div class="flex-col justify-center py-14">
-                    <h1 class="font-bold lg:text-7xl text-lg text-center">Custom web design</h1>
-                    <p class="mt-9">
-                        We create customized websites, unique and personalized according to your
-                        needs, from corporate sites, online stores,
-                        informative.
-                    </p>
-                </div>
-
-                <figure>
-                    <img class="h-5/6 mx-auto" src="@/../../public/assets/images/landing1.png" alt="computer" />
-                    <button @click="$inertia.get(route('quote-request.create'))"
-                        class="ml-auto mt-5 rounded-full border-2 border-[#7F659C] text-[#7F659C] flex justify-between items-center py-1 px-5 hover:text-white hover:bg-[#7F659C] transition-all">
-                        Quote my site
-                        <i class="fa-solid fa-chevron-right ml-6"></i>
-                    </button>
+            <section class="rounded-xl" id="Inicio">
+                <section class="rounded-xl" id="Inicio">
+                <figure class="relative lg:w-[75%] mx-auto">
+                    <img class="mx-auto" src="@/../../public/assets/images/main_landing.png" alt="">
+                    <h1 class="text-lg md:text-xl lg:text-4xl text-white font-bold absolute left-2 md:left-16 top-5 md:top-10 lg:top-16">Custom web design</h1>
+                    <p class="text-white text-sm md:text-base lg:text-lg w-40 md:w-72 lg:w-96 absolute left-2 md:left-16 top-16 md:top-24 lg:top-40">We transform your ideas into digital solutions that drive business growth</p>
                 </figure>
+            </section>
             </section>
 
             <!-- Servicios -->
