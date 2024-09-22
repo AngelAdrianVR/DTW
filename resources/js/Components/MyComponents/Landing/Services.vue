@@ -5,7 +5,7 @@
   </p>
 
   <div class="pt-10">
-    <el-divider content-position="left">Managent</el-divider>
+    <el-divider content-position="left">{{ language == 'english' ? 'Management' : 'Gestión' }}</el-divider>
   </div>
 
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-24">
@@ -43,7 +43,7 @@
   </section>
 
   <div class="pt-16">
-    <el-divider>IoT</el-divider>
+    <el-divider>{{ language == 'english' ? 'Enterprise IoT' : 'IoT Empresarial' }}</el-divider>
   </div>
 
   <!-- ioT -->
@@ -69,7 +69,7 @@
   </section>
 
   <div class="pt-5">
-    <el-divider content-position="right">Branding</el-divider>
+    <el-divider content-position="right">{{ language == 'english' ? 'Branding' : 'Marca' }}</el-divider>
   </div>
 
   <!-- Branding -->
@@ -90,7 +90,7 @@
   </section>
 
   <div class="pt-5">
-    <el-divider content-position="center">Home IoT</el-divider>
+    <el-divider content-position="center">{{ language == 'english' ? 'Home IoT' : 'IoT Doméstico' }}</el-divider>
   </div>
 
   <!-- Home IoT -->
