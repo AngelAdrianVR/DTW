@@ -17,10 +17,8 @@
         <main class="pt-32">
             <!-- first section desktop -->
             <section class="rounded-xl" id="Inicio">
-                <figure class="relative lg:w-[75%] mx-auto">
-                    <img class="mx-auto" src="@/../../public/assets/images/main_landing.png" alt="">
-                    <h1 class="text-lg md:text-xl lg:text-4xl text-white font-bold absolute left-2 md:left-16 top-5 md:top-10 lg:top-16">Diseño web a la medida</h1>
-                    <p class="text-white text-sm md:text-base lg:text-lg w-40 md:w-72 lg:w-96 absolute left-2 md:left-16 top-16 md:top-24 lg:top-40">Transformamos tus ideas en soluciones digitales que impulsan el crecimiento empresarial</p>
+                <figure class="mx-auto">
+                    <img class="mx-auto w-[85%]" src="@/../../public/assets/images/main_landing.png" alt="">
                 </figure>
             </section>
 
@@ -171,7 +169,7 @@ export default {
             filterProjects: 'Todo', //filtro de proyectos
             projectsFilter: [
                 'Todo',
-                'Sistemas de gestión',
+                'Gestión',
                 'Tiendas en línea',
                 'Sitios web',
             ],
