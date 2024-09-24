@@ -18,7 +18,8 @@
             <!-- first section desktop -->
             <section class="rounded-xl" id="Inicio">
                 <figure class="mx-auto">
-                    <img class="mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.png" alt="">
+                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.png" alt="">
+                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing_en.png" alt="">
                 </figure>
             </section>
 
