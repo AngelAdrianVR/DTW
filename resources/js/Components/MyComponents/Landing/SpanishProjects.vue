@@ -43,9 +43,15 @@
 
 <script>
 import padColor from '@/../../public/assets/images/padColor.png';
+import padColor1 from '@/../../public/assets/images/padColor1.png';
+import padColor2 from '@/../../public/assets/images/padColor2.png';
+import padColor3 from '@/../../public/assets/images/padColor3.png';
 import ingenieriaZafiro from '@/../../public/assets/images/ingenieriaZafiro.png';
+import ingenieriaZafiro1 from '@/../../public/assets/images/ingenieriaZafiro1.png';
+import ingenieriaZafiro2 from '@/../../public/assets/images/ingenieriaZafiro2.png';
+import ingenieriaZafiro3 from '@/../../public/assets/images/ingenieriaZafiro3.png';
 import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
-import Emblems3dUSA01 from '@/../../public/assets/images/Emblems3dUSA01.png';
+import Emblems3dUSA1 from '@/../../public/assets/images/Emblems3dUSA1.png';
 import Emblems3dUSA02 from '@/../../public/assets/images/Emblems3dUSA02.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
 import Nala from '@/../../public/assets/images/Nala.png';
@@ -69,7 +75,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Sistema de tickets para su atención oportuna, registrar tiempos de resolución y reportar estadísticas de conclusión de problemas sucitados en todas las sucursales de la empresa.',
                 url: 'https://www.padcolor.dtw.com.mx/login',
-                images: [padColor, padColor, padColor],
+                images: [padColor1, padColor2, padColor3],
                 canVisitSite: false
             },
             {
@@ -78,7 +84,7 @@ data() {
                 category: ['Sitios web', 'Todo'],
                 description: 'Nuestro cliente se especializa en la industria de la construcción, destacándose en el diseño, elaboración de planos geográficos, y más. A través de estas vistas, podrá conocer su experiencia, los servicios que ofrece y los proyectos que ha llevado a cabo con éxito. Su objetivo principal es conectar con nuevos clientes y dar a conocer el valor que puede aportar a cada proyecto.',
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
-                images: [ingenieriaZafiro, ingenieriaZafiro, ingenieriaZafiro,],
+                images: [ingenieriaZafiro1, ingenieriaZafiro2, ingenieriaZafiro3,],
                 canVisitSite: true
             },
             {
@@ -87,7 +93,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Sistema ERP completo: gestión integral de clientes desde prospección, catálogo de productos, seguimientos de producción, asignación de tareas, seguimiento de proyectos, gestión integral de nóminas, cotizaciónes, almacenes y compras. Ademas cuenta con un módulo de analisis definanzas el cual muestra productos mas vendidos, historial de ventas de cada producto y margen de cualquier periodo de tiempo',
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Emblems3dUSA, Emblems3dUSA01, Emblems3dUSA02],
+                images: [Emblems3dUSA, Emblems3dUSA1, Emblems3dUSA02],
                 canVisitSite: false
             },
             {
