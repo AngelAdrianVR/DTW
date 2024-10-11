@@ -42,6 +42,7 @@
 </template>
 
 <script>
+//imagenes
 import padColor from '@/../../public/assets/images/padColor.png';
 import padColor1 from '@/../../public/assets/images/padColor1.png';
 import padColor2 from '@/../../public/assets/images/padColor2.png';
@@ -54,11 +55,32 @@ import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
 import Emblems3dUSA1 from '@/../../public/assets/images/Emblems3dUSA1.png';
 import Emblems3dUSA02 from '@/../../public/assets/images/Emblems3dUSA02.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
+import Construmax1 from '@/../../public/assets/images/Construmax1.png';
+import Construmax2 from '@/../../public/assets/images/Construmax2.png';
+import Construmax3 from '@/../../public/assets/images/Construmax3.png';
 import Nala from '@/../../public/assets/images/Nala.png';
+import Nala1 from '@/../../public/assets/images/Nala1.png';
+import Nala2 from '@/../../public/assets/images/Nala2.png';
+import Nala3 from '@/../../public/assets/images/Nala3.png';
 import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
+import ReporteoADTI1 from '@/../../public/assets/images/ReporteoADTI1.png';
+import ReporteoADTI2 from '@/../../public/assets/images/ReporteoADTI2.png';
 import PuroChurro from '@/../../public/assets/images/PuroChurro.png';
+import PuroChurro1 from '@/../../public/assets/images/PuroChurro1.png';
+import PuroChurro2 from '@/../../public/assets/images/PuroChurro2.png';
 import ADTI from '@/../../public/assets/images/ADTI.png';
+import ADTI1 from '@/../../public/assets/images/ADTI1.png';
+import ADTI2 from '@/../../public/assets/images/ADTI2.png';
+import ADTI3 from '@/../../public/assets/images/ADTI3.png';
 import SuitesAcuario from '@/../../public/assets/images/SuitesAcuario.png';
+import SuitesAcuario1 from '@/../../public/assets/images/SuitesAcuario1.png';
+import SuitesAcuario2 from '@/../../public/assets/images/SuitesAcuario2.png';
+import MudanzasMantenimiento from '@/../../public/assets/images/MudanzasMantenimiento.png';
+import MudanzasMantenimiento1 from '@/../../public/assets/images/MudanzasMantenimiento1.png';
+import MudanzasMantenimiento2 from '@/../../public/assets/images/MudanzasMantenimiento2.png';
+import MudanzasMantenimiento3 from '@/../../public/assets/images/MudanzasMantenimiento3.png';
+
+//General
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
@@ -84,7 +106,7 @@ data() {
                 category: ['Sitios web', 'Todo'],
                 description: 'Nuestro cliente se especializa en la industria de la construcción, destacándose en el diseño, elaboración de planos geográficos, y más. A través de estas vistas, podrá conocer su experiencia, los servicios que ofrece y los proyectos que ha llevado a cabo con éxito. Su objetivo principal es conectar con nuevos clientes y dar a conocer el valor que puede aportar a cada proyecto.',
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
-                images: [ingenieriaZafiro1, ingenieriaZafiro2, ingenieriaZafiro3,],
+                images: [ingenieriaZafiro1, ingenieriaZafiro2, ingenieriaZafiro3],
                 canVisitSite: true
             },
             {
@@ -102,7 +124,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Sistemas CRM y PMS para la gestión integral de clientes desde prospección hasta la conversión en cliente. Módulo de oportunidades de venta con asignación de tareas para el seguimiento y flujo hasta ganar la oportunidad. Sistema PMS que da seguimiento al proyecto de la oportunidad ganada, diagrama de gantt con tiempos, estatus y tareas para completar proyecto. Además cuenta son envío automatico de correos y whatsApp que notifica a los empleados sobre nuevas tareas asignadas',
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Construmax, Construmax, Construmax],
+                images: [Construmax, Construmax1, Construmax2, Construmax3],
                 canVisitSite: false
             },
             {
@@ -111,7 +133,7 @@ data() {
                 category: ['Sitios web', 'Tiendas en línea', 'Todo'],
                 description: 'Página web promocional que muestra catálogo deproductos de una tienda de joyas con boton para contactar directamente a whatsApp',
                 url: 'https://nala.dtw.com.mx/',
-                images: [Nala, Nala, Nala],
+                images: [Nala, Nala1, Nala2, Nala3],
                 canVisitSite: true
             },
             {
@@ -120,7 +142,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Sistema de reporteo de producción y estatus de trabajo de la maquinaria en tiempo real a través de conexión modbus TCPIP, conexión a base de datos y correos automáticos con intervalos de tiempo configurables. Visualización de producción desde cualquier dispositivo con conexión a internet desde cualquier parte del mundo',
                 url: 'https://reporteo.dtw.com.mx/',
-                images: [ReporteoADTI, ReporteoADTI, ReporteoADTI],
+                images: [ReporteoADTI, ReporteoADTI1, ReporteoADTI2],
                 canVisitSite: false
             },
             {
@@ -129,7 +151,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Sistema ERP que gestiona nóminas, productos, estock y almacén, historial de ventas y egresos para obtención de margen y cuenta con un punto de venta con conexión a escaner de codigo qr y de barras para agilizar la venta.',
                 url: 'https://purochurro.dtw.com.mx/',
-                images: [PuroChurro, PuroChurro, PuroChurro],
+                images: [PuroChurro, PuroChurro1, PuroChurro2],
                 canVisitSite: false
             },
             {
@@ -138,7 +160,7 @@ data() {
                 category: ['Gestión', 'Todo'],
                 description: 'Empresa de diseño y automatización industrial. Gestión de almacén y organización de piezas e insumos para la construcción de sus máquinas por categorías y subcategorías. Además cuenta con codigo interno estandarizado para su correcta gestión en otros procesos.',
                 url: 'https://app.adti.com.mx/',
-                images: [ADTI, ADTI, ADTI],
+                images: [ADTI, ADTI1, ADTI2, ADTI3],
                 canVisitSite: true
             },
             {
@@ -147,7 +169,16 @@ data() {
                 category: ['Sitios web', 'Todo'],
                 description: 'Página web promocional de suites de lujo en Mazatlán Sinaloa',
                 url: 'https://suitesacuariomazatlan.dtw.com.mx/',
-                images: [SuitesAcuario, SuitesAcuario, SuitesAcuario],
+                images: [SuitesAcuario, SuitesAcuario1, SuitesAcuario2],
+                canVisitSite: true
+            },
+            {
+                name: 'Página web Mudanzas y Reparaciones',
+                img: MudanzasMantenimiento,
+                category: ['Sitios web', 'Todo'],
+                description: 'Página web promocional de negocio multiservicios de mudanzas, fletes, mantenimiento y reparación de linea blanca y electrónica',
+                url: 'http://mudanzasymantenimiento.dtw.com.mx/',
+                images: [MudanzasMantenimiento, MudanzasMantenimiento1, MudanzasMantenimiento2, MudanzasMantenimiento3],
                 canVisitSite: true
             },
             
