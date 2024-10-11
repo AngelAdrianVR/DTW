@@ -42,17 +42,45 @@
 </template>
 
 <script>
+//imagenes
 import padColor from '@/../../public/assets/images/padColor.png';
+import padColor1 from '@/../../public/assets/images/padColor1.png';
+import padColor2 from '@/../../public/assets/images/padColor2.png';
+import padColor3 from '@/../../public/assets/images/padColor3.png';
 import ingenieriaZafiro from '@/../../public/assets/images/ingenieriaZafiro.png';
+import ingenieriaZafiro1 from '@/../../public/assets/images/ingenieriaZafiro1.png';
+import ingenieriaZafiro2 from '@/../../public/assets/images/ingenieriaZafiro2.png';
+import ingenieriaZafiro3 from '@/../../public/assets/images/ingenieriaZafiro3.png';
 import Emblems3dUSA from '@/../../public/assets/images/Emblems3dUSA.png';
-import Emblems3dUSA01 from '@/../../public/assets/images/Emblems3dUSA01.png';
+import Emblems3dUSA1 from '@/../../public/assets/images/Emblems3dUSA1.png';
 import Emblems3dUSA02 from '@/../../public/assets/images/Emblems3dUSA02.png';
 import Construmax from '@/../../public/assets/images/Construmax.png';
+import Construmax1 from '@/../../public/assets/images/Construmax1.png';
+import Construmax2 from '@/../../public/assets/images/Construmax2.png';
+import Construmax3 from '@/../../public/assets/images/Construmax3.png';
 import Nala from '@/../../public/assets/images/Nala.png';
+import Nala1 from '@/../../public/assets/images/Nala1.png';
+import Nala2 from '@/../../public/assets/images/Nala2.png';
+import Nala3 from '@/../../public/assets/images/Nala3.png';
 import ReporteoADTI from '@/../../public/assets/images/ReporteoADTI.png';
+import ReporteoADTI1 from '@/../../public/assets/images/ReporteoADTI1.png';
+import ReporteoADTI2 from '@/../../public/assets/images/ReporteoADTI2.png';
 import PuroChurro from '@/../../public/assets/images/PuroChurro.png';
+import PuroChurro1 from '@/../../public/assets/images/PuroChurro1.png';
+import PuroChurro2 from '@/../../public/assets/images/PuroChurro2.png';
 import ADTI from '@/../../public/assets/images/ADTI.png';
+import ADTI1 from '@/../../public/assets/images/ADTI1.png';
+import ADTI2 from '@/../../public/assets/images/ADTI2.png';
+import ADTI3 from '@/../../public/assets/images/ADTI3.png';
 import SuitesAcuario from '@/../../public/assets/images/SuitesAcuario.png';
+import SuitesAcuario1 from '@/../../public/assets/images/SuitesAcuario1.png';
+import SuitesAcuario2 from '@/../../public/assets/images/SuitesAcuario2.png';
+import MudanzasMantenimiento from '@/../../public/assets/images/MudanzasMantenimiento.png';
+import MudanzasMantenimiento1 from '@/../../public/assets/images/MudanzasMantenimiento1.png';
+import MudanzasMantenimiento2 from '@/../../public/assets/images/MudanzasMantenimiento2.png';
+import MudanzasMantenimiento3 from '@/../../public/assets/images/MudanzasMantenimiento3.png';
+
+//General
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
@@ -69,7 +97,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "Ticket system for timely attention, recording resolution times and reporting statistics on the resolution of problems that have arisen in all company branches.",
                 url: 'https://www.padcolor.dtw.com.mx/login',
-                images: [padColor, padColor, padColor],
+                images: [padColor1, padColor2, padColor3],
                 canVisitSite: false
             },
             {
@@ -78,7 +106,7 @@ data() {
                 category: ['Web sites', 'All'],
                 description: "Our client specializes in the construction industry, excelling in design, geographic mapping, and more. Through these views, you will be able to learn about their experience, the services they offer, and the projects they have successfully completed. Their main goal is to connect with new clients and make them aware of the value they can bring to each project.",
                 url: 'https://ingenieriazafiro.dtw.com.mx/',
-                images: [ingenieriaZafiro, ingenieriaZafiro, ingenieriaZafiro,],
+                images: [ingenieriaZafiro1, ingenieriaZafiro2, ingenieriaZafiro3],
                 canVisitSite: true
             },
             {
@@ -87,7 +115,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "Complete ERP system: comprehensive customer management from prospecting, product catalog, production monitoring, task assignment, project monitoring, comprehensive payroll management, quotes, warehouses and purchases. It also has a financial analysis module which shows best-selling products, sales history of each product and margin for any period of time.",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Emblems3dUSA, Emblems3dUSA01, Emblems3dUSA02],
+                images: [Emblems3dUSA, Emblems3dUSA1, Emblems3dUSA02],
                 canVisitSite: false
             },
             {
@@ -96,7 +124,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "CRM and PMS systems for comprehensive customer management from prospecting to conversion into a client. Sales opportunities module with task assignment for follow-up and flow until the opportunity is won. PMS system that tracks the project of the won opportunity, Gantt chart with times, status and tasks to complete the project. It also has automatic sending of emails and WhatsApp that notifies employees about new assigned tasks.",
                 url: 'https://www.intranetemblems3d.dtw.com.mx/login',
-                images: [Construmax, Construmax, Construmax],
+                images: [Construmax, Construmax1, Construmax2, Construmax3],
                 canVisitSite: false
             },
             {
@@ -105,7 +133,7 @@ data() {
                 category: ['Web sites', 'Online stores', 'All'],
                 description: "Promotional web page showing a jewelry store's product catalog with a button to contact them directly on WhatsApp",
                 url: 'https://nala.dtw.com.mx/',
-                images: [Nala, Nala, Nala],
+                images: [Nala, Nala1, Nala2, Nala3],
                 canVisitSite: true
             },
             {
@@ -114,7 +142,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "Production reporting system and real-time working status of machinery through Modbus TCPIP connection, database connection and automatic emails with configurable time intervals. Production visualization from any device with an Internet connection from anywhere in the world',",
                 url: 'https://reporteo.dtw.com.mx/',
-                images: [ReporteoADTI, ReporteoADTI, ReporteoADTI],
+                images: [ReporteoADTI, ReporteoADTI1, ReporteoADTI2],
                 canVisitSite: false
             },
             {
@@ -123,7 +151,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "ERP system that manages payrolls, products, stock and warehouse, sales and expenditure history to obtain margin and has a point of sale with connection to QR code and barcode scanner to speed up sales.",
                 url: 'https://purochurro.dtw.com.mx/',
-                images: [PuroChurro, PuroChurro, PuroChurro],
+                images: [PuroChurro, PuroChurro1, PuroChurro2],
                 canVisitSite: false
             },
             {
@@ -132,7 +160,7 @@ data() {
                 category: ['Management systems', 'All'],
                 description: "Industrial design and automation company. Warehouse management and organization of parts and supplies for the construction of your machines by categories and subcategories. It also has a standardized internal code for correct management in other processes.",
                 url: 'https://app.adti.com.mx/',
-                images: [ADTI, ADTI, ADTI],
+                images: [ADTI, ADTI1, ADTI2, ADTI3],
                 canVisitSite: true
             },
             {
@@ -141,7 +169,16 @@ data() {
                 category: ['Web sites', 'All'],
                 description: "Promotional website for luxury suites in Mazatlan Sinaloa",
                 url: 'https://suitesacuariomazatlan.dtw.com.mx/',
-                images: [SuitesAcuario, SuitesAcuario, SuitesAcuario],
+                images: [SuitesAcuario, SuitesAcuario1, SuitesAcuario2],
+                canVisitSite: true
+            },
+            {
+                name: 'WEB SITE SUITES MOVING AND REPAIRS',
+                img: MudanzasMantenimiento,
+                category: ['Sitios web', 'Todo'],
+                description: 'Promotional website for a multi-service business for moving, freight, maintenance and repair of white goods and electronics',
+                url: 'http://mudanzasymantenimiento.dtw.com.mx/',
+                images: [MudanzasMantenimiento, MudanzasMantenimiento1, MudanzasMantenimiento2, MudanzasMantenimiento3],
                 canVisitSite: true
             },
             
