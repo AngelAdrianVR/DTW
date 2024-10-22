@@ -1,19 +1,19 @@
 <template>
-  <p class="text-center">
+  <p class="text-center" data-aos="flip-up" data-aos-duration="1200" data-aos-offset="400">
     {{ language == 'english' ? 'We develop exclusive design, programming and functionality solutions, adapted to the identity and unique needs of your brand.' 
     : 'Desarrollamos soluciones de diseño, programación y funcionalidad exclusivas, adaptadas a la identidad y necesidades únicas de tu marca.' }}
   </p>
 
-  <div class="pt-10">
+  <div class="pt-10" data-aos="fade-left" data-aos-duration="1200" data-aos-offset="400" data-aos-anchor-placement="center-bottom">
     <el-divider content-position="left">{{ language == 'english' ? 'Management' : 'Gestión' }}</el-divider>
   </div>
 
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-24">
-    <figure class="lg:w-2/3 w-full mb-10 p-3 flex">
+    <figure class="lg:w-2/3 w-full mb-10 p-3 flex" data-aos="flip-right" data-aos-duration="1200" data-aos-offset="400">
       <img src="@/../../public/assets/images/sistemas.png" alt="" />
     </figure>
 
-    <div class="lg:w-1/2 text-center lg:text-left">
+    <div class="lg:w-1/2 text-center lg:text-left" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
       <h1 class="text-xl font-bold mb-7">
         {{ language == 'english' ? 'We transform your data into intelligent solutions' 
         : 'Transformamos tus datos en soluciones inteligentes' }}
@@ -42,13 +42,13 @@
     </div>
   </section>
 
-  <div class="pt-16">
+  <div class="pt-16" data-aos="fade-down" data-aos-duration="1200" data-aos-offset="400">
     <el-divider>{{ language == 'english' ? 'Enterprise IoT' : 'IoT Empresarial' }}</el-divider>
   </div>
 
   <!-- ioT -->
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-20">
-    <div class="lg:w-1/2 text-center lg:text-left">
+    <div class="lg:w-1/2 text-center lg:text-left" data-aos="flip-rigt" data-aos-duration="1200" data-aos-offset="400">
       <h1 class="text-xl font-bold mb-7">
         {{ language == 'english' ? 'IoT solutions for efficient management.' 
         : 'Soluciones de IoT para una gestión eficiente.' }}
@@ -63,22 +63,22 @@
       </p>
     </div>
 
-    <figure class="lg:w-1/2 md:w-2/3 w-full mb-10 p-3 flex">
+    <figure class="lg:w-1/2 md:w-2/3 w-full mb-10 p-3 flex" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
       <img src="@/../../public/assets/images/IoT.png" alt="" />
     </figure>
   </section>
 
-  <div class="pt-5">
+  <div class="pt-5" data-aos="fade-left" data-aos-duration="1200" data-aos-offset="400">
     <el-divider content-position="right">{{ language == 'english' ? 'Branding' : 'Marca' }}</el-divider>
   </div>
 
   <!-- Branding -->
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-20">
-    <figure class="lg:w-2/3 mx-auto mb-10">
+    <figure class="lg:w-2/3 mx-auto mb-10" data-aos="flip-right" data-aos-duration="1200" data-aos-offset="400">
       <img src="@/../../public/assets/images/branding.png" alt="" />
     </figure>
 
-    <div class="lg:w-1/3 text-center lg:text-left">
+    <div class="lg:w-1/3 text-center lg:text-left" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
       <h1 class="text-xl font-bold mb-7">Branding</h1>
       <p>{{ language == 'english' ? 'We build brands that connect with our customers.' 
         : 'Construimos marcas que conectan con nuestros clientes.' }}</p>
@@ -89,7 +89,7 @@
     </div>
   </section>
 
-  <div class="pt-5">
+  <div class="pt-5" data-aos="fade-down" data-aos-duration="1200" data-aos-offset="400">
     <el-divider content-position="center">{{ language == 'english' ? 'Home IoT' : 'IoT Doméstico' }}</el-divider>
   </div>
 
