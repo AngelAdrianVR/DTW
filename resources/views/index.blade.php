@@ -512,7 +512,7 @@ https://templatemo.com/tm-579-cyborg-gaming
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <p>Copyright © 2023 <a href="#">DigitalTW</a> Company. Todos los derechos reservados.
+          <p>Copyright © 2024 <a href="#">DTW</a> Company. Todos los derechos reservados.
             </p>
         </div>
       </div>

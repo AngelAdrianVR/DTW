@@ -1,4 +1,5 @@
 <template>
+
     <Head title="Welcome" />
     <div class="relative selection:bg-primarylight selection:text-primary bg-black text-white">
         <!-- whatsapp button -->
@@ -10,28 +11,38 @@
 
         <!-- navbar -->
         <nav :class="['navbar', { 'fixed-navbar': isNavbarFixed }]"
-            class="!bg-black flex items-center justify-between py-4 lg:px-10 px-6 w-full text-white">
+            class="!bg-black flex items-center justify-between py-4 lg:px-10 px-6 w-full text-white reveal">
             <EnglishNav @scrolling="scrollToSection($event)" />
         </nav>
 
         <main class="pt-24">
             <!-- first section desktop -->
-            <section class="rounded-xl" id="Inicio">
+            <section class="rounded-xl relative" id="Inicio">
                 <figure class="mx-auto">
-                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.png" alt="">
-                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing_en.png" alt="">
+                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.png"
+                        alt="">
+                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing_en.png"
+                        alt="">
                 </figure>
+                <div class="flex justify-end mx-5 md:mx-0 md:absolute top-1/2 left-[13%]">
+                    <a class="inline-flex items-center px-8 py-2 bg-primary border border-transparent rounded-full text-xs text-white tracking-widest active:bg-primarydark transition-all ease-in-out duration-100 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+                        as="button"
+                        href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20tu%20servicio!"
+                        target="_blank" rel="noopener noreferrer">
+                        Contact us
+                    </a>
+                </div>
             </section>
 
             <!-- Servicios -->
             <section id="Servicios" class="lg:mx-32 mx-5">
-                <h2 class="text-center font-bold text-2xl mt-40 mb-7">Services</h2>
+                <h2 class="text-center font-bold text-2xl mt-40 mb-7 reveal">Services</h2>
                 <Services :language="'english'" />
             </section>
 
             <!-- Poryectos y portafolio -->
             <section class="mt-10">
-                <h2 class="text-center font-bold text-2xl mt-40 mb-7">PROJECTS / PORTFOLIO</h2>
+                <h2 class="text-center font-bold text-2xl mt-40 mb-7 reveal">PROJECTS / PORTFOLIO</h2>
                 <div class="custom-style text-center">
                     <el-segmented v-model="filterProjects" :options="projectsFilter" />
                 </div>
@@ -42,7 +53,7 @@
                 </article>
             </section>
 
-             <!-- Clients -->
+            <!-- Clients -->
             <section class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-40 mx-5 lg:w-[60%] lg:mx-auto">
                 <h2 class="font-bold mb-9 text-2xl text-center col-span-full">
                     SOME OF OUR CLIENTS
@@ -149,6 +160,7 @@ import OwnProjects from "@/Components/MyComponents/Landing/OwnProjects.vue";
 import EnglishFooter from "@/Components/MyComponents/Landing/EnglishFooter.vue";
 import EnglishProjects from "@/Components/MyComponents/Landing/EnglishProjects.vue";
 import Testimonies from "@/Components/MyComponents/Landing/Testimonies.vue";
+import ScrollReveal from 'scrollreveal';
 
 export default {
     data() {
@@ -178,6 +190,11 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         this.toast = useToast();
+        ScrollReveal().reveal('.reveal', {
+            duration: 1000,
+            distance: '50px',
+            origin: 'bottom'
+        });
     },
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -213,7 +230,7 @@ export default {
             });
         },
     },
-    components:{
+    components: {
         EnglishProjects,
         EnglishFooter,
         Testimonies,
@@ -235,19 +252,22 @@ export default {
     background-color: #ffffff;
     opacity: 0.9;
 }
+
 .fixed-navbar {
     position: fixed;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 .custom-style .el-segmented {
-  --el-segmented-bg-color: #818181;
-  --el-segmented-color: #FFFFFF;
-  --el-segmented-item-selected-color: #7F659C;
-  --el-segmented-item-selected-bg-color: #a1a1a1;
-  --el-border-radius-base: 16px;
+    --el-segmented-bg-color: #818181;
+    --el-segmented-color: #FFFFFF;
+    --el-segmented-item-selected-color: #7F659C;
+    --el-segmented-item-selected-bg-color: #a1a1a1;
+    --el-border-radius-base: 16px;
 }
 </style>

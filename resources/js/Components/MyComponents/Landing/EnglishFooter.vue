@@ -1,5 +1,5 @@
 <template>
-    <footer class="p-4 text-white bg-[#1A1A1A] h-72 md:h-52 mt-24 md:relative overflow-auto">
+    <footer class="p-4 text-white bg-[#1A1A1A] h-72 min-h-72 mt-24 md:relative overflow-auto">
         <figure>
             <img class="md:w-[9%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
         </figure>
@@ -33,17 +33,18 @@
                 </div>
             </div>
         </div>
-        <a class="hidden md:block" href="">
-            <p class="text-xs mt-3 md:absolute bottom-2 left-5 hover:underline">
-                Privacy Policy - Cookie Policy
-            </p>
-        </a>
-        <a class="hidden md:block" href="">
-            <p class="text-xs mt-3 md:absolute bottom-2 left-96 hover:underline">
-                Copyright | 2023 | All rights reserved by Digital TW S.A
-                    de C.V.
-            </p>
-        </a>
+        <div>
+            <a class="hidden md:block" href="">
+                <p class="text-xs mt-3 hover:underline">
+                    Privacy Policy - Cookie Policy
+                </p>
+            </a>
+            <a class="hidden md:block" href="">
+                <p class="text-xs mt-3 hover:underline">
+                    Copyright | 2024 All rights reserved by DTW S.A de C.V.
+                </p>
+            </a>
+        </div>
     </footer>
 </template>
 
