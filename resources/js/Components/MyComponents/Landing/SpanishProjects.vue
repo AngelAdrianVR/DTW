@@ -232,7 +232,7 @@ beforeUnmount() {
 
 <style>
 .el-carousel__item h3 {
-    color: #475669;
+    color: transparent;
     opacity: 0.75;
     line-height: 200px;
     margin: 0;
@@ -240,17 +240,12 @@ beforeUnmount() {
 }
 
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+  background-color: transparent;
+  border-radius: 10px;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-.el-carousel__item:nth-child(2n) {
-  background-color: #232323;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #232323;
+    background-color: transparent;
+    border-radius: 10px;
 }
 </style>
