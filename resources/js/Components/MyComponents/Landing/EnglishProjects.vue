@@ -234,3 +234,23 @@ export default {
     },
 }
 </script>
+
+<style>
+.el-carousel__item h3 {
+    color: transparent;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+    text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+    background-color: transparent;
+    border-radius: 10px;
+}
+</style>
