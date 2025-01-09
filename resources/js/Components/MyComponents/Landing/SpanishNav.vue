@@ -27,7 +27,6 @@
             </button>
             <button class="mx-4 rounded-full px-4 py-[2px] bg-[#2F2F2F]">
                 <div class="flex items-center space-x-2">
-
                     <el-dropdown trigger="click">
                         <div class="flex items-center space-x-2">
                             <img src="@/../../public/assets/images/mexico.png" class="h-3" alt="Español" />

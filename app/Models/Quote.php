@@ -21,6 +21,7 @@ class Quote extends Model
         'show_process',
         'show_benefits',
         'show_bank_info',
+        'show_hosting_info',
         'client_id',
         'contact_id',
         'prospect_id',

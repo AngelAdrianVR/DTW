@@ -1,22 +1,22 @@
 <template>
   <div @click="
     taskInformationModal = true;
-    itemToShow = taskComponentLocal;" :class="taskComponentLocal?.priority?.color_border"
+  itemToShow = taskComponentLocal;" :class="taskComponentLocal?.priority?.color_border"
     class="shadow-md shadow-gray-400/100 border border-t-[#d9d9d9] border-r-[#d9d9d9] border-b-[#d9d9d9] h-36 rounded-r-md border-l-4 py-2 px-3 cursor-pointer my-3">
     <!-- ------------ top ------------------ -->
     <el-tooltip :content="'Prioridad: ' + taskComponentLocal?.priority?.label" placement="top">
-    <div class="flex justify-between items-center">
-      <div @click.stop="" class="rounded-full px-2 cursor-move">
-        <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
-        <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+      <div class="flex justify-between items-center">
+        <div @click.stop="" class="rounded-full px-2 cursor-move">
+          <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+          <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+        </div>
+        <div @click.stop="" class="flex cursor-default">
+          <p v-if="taskComponentLocal?.is_paused" class="mr-4 rounded-full text-orange-500 bg-orange-200 px-2">
+            {{ "Pausado" }}
+          </p>
+          <p class="mr-5">{{ taskComponentLocal?.created_at }}</p>
+        </div>
       </div>
-      <div @click.stop="" class="flex cursor-default">
-        <p v-if="taskComponentLocal?.is_paused" class="mr-4 rounded-full text-orange-500 bg-orange-200 px-2">
-          {{ "Pausado" }}
-        </p>
-        <p class="mr-5">{{ taskComponentLocal?.created_at }}</p>
-      </div>
-    </div>
     </el-tooltip>
     <!-- ------------ body -------------------------- -->
     <div class="flex items-center justify-between p-3">
@@ -99,53 +99,47 @@
         <InputError :message="form.errors.status" />
       </div>
       <h2 class="font-bold">Información de la tarea</h2>
-      <div>
-        <div class="flex space-x-2 justify-between items-center">
-          <label>Proyecto</label>
-          <input v-model="form.project_name" disabled class="input w-[78%]" type="text" />
+      <div class="grid grid-cols-4 gap-2 items-center">
+        <label>Proyecto</label>
+        <div class="col-span-3">
+          <el-input v-model="form.project_name" disabled type="text" />
           <InputError :message="form.errors.project_name" />
         </div>
-        <div class="flex space-x-2 justify-between items-center mt-2">
-          <label>Nombre de tarea</label>
-          <input v-model="form.title" :disabled="!canEdit" class="input w-[78%]" type="text" />
-          <InputError :message="form.errors.title" />
-        </div>
-        <div class="flex space-x-2 justify-between items-center mt-2">
-          <label>Creado por</label>
-          <input v-model="form.user" disabled class="input w-[78%]" type="text" />
+        <label>Creado por</label>
+        <div class="col-span-3">
+          <el-input v-model="form.user" disabled type="text" />
           <InputError :message="form.errors.user" />
         </div>
-        <div class="flex space-x-2 justify-between items-center mt-2">
-          <label>Departamento</label>
-          <el-select class="!w-[78%]" v-model="form.department" clearable filterable :disabled="!canEdit"
+        <label>Nombre de tarea</label>
+        <div class="col-span-3">
+          <el-input v-model="form.title" type="text" />
+          <InputError :message="form.errors.title" />
+        </div>
+        <label>Departamento</label>
+        <div class="col-span-3">
+          <el-select v-model="form.department" clearable filterable
             placeholder="Seleccionar departamento" no-data-text="No hay departamentos registrados"
             no-match-text="No se encontraron coincidencias">
             <el-option v-for="item in departments" :key="item" :label="item" :value="item" />
           </el-select>
           <InputError :message="form.errors.department" />
         </div>
-        <div class="flex space-x-2 justify-between items-center mt-2">
-          <label>Agregar participantes</label> <br>
-          <el-select class="!w-[95%]" v-model="form.participants" clearable filterable multiple :disabled="!canEdit"
+        <label>Agregar participantes</label>
+        <div class="col-span-3">
+          <el-select v-model="form.participants" clearable filterable multiple
             placeholder="Seleccionar participantes" no-data-text="No hay usuarios registrados"
             no-match-text="No se encontraron coincidencias">
             <el-option v-for="user in users" :key="user.id" :label="user.name" :value="user.id" />
           </el-select>
           <InputError :message="form.errors.participants" />
         </div>
-        <div class="mt-2">
-          <label>Descripción</label>
-          <RichText v-if="canEdit" @content="updateDescription($event)" :defaultValue="form.description" />
-          <div v-else class="rounded-[10px] bg-grayD9 px-3 py-2 min-h-[100px] text-sm">{{ form.description }}</div>
-          <InputError :message="form.errors.description" />
-        </div>
-        <div class="mt-3 relative">
-          <label>
-            Prioridad
-            <i :class="getColorPriority(form.priority)" class="fa-solid fa-circle text-xs ml-1"></i>
-          </label>
+        <label>
+          Prioridad
+          <i :class="getColorPriority(form.priority)" class="fa-solid fa-circle text-xs ml-1"></i>
+        </label>
+        <div class="col-span-3">
           <el-select class="w-full" v-model="form.priority" clearable filterable placeholder="Seleccionar prioridad"
-            :disabled="!canEdit" no-data-text="No hay registros" no-match-text="No se encontraron coincidencias">
+            no-data-text="No hay registros" no-match-text="No se encontraron coincidencias">
             <el-option v-for="item in priorities" :key="item" :label="item.label" :value="item.label">
               <span style="float: left"><i :class="item.color" class="fa-solid fa-circle"></i></span>
               <span style="float: center; margin-left: 5px; font-size: 13px">{{
@@ -155,20 +149,20 @@
           </el-select>
           <InputError :message="form.errors.priority" />
         </div>
-        <div class="pt-1">
-          <label class="block">Duración *</label>
-          <el-date-picker @change="handleDateRange" v-model="range" type="daterange" range-separator="A"
+        <label class="block">Duración *</label>
+        <div class="col-span-3">
+          <el-date-picker @change="handleDateRange" v-model="range" class="!w-full" type="daterange" range-separator="A"
             start-placeholder="Fecha de inicio" end-placeholder="Fecha límite" value-format="YYYY-MM-DD" />
           <InputError :message="form.errors.start_date" />
           <InputError :message="form.errors.limit_date" />
         </div>
-        <!-- <div class="w-1/2 mt-3">
-          <label>Recordatorio</label>
-          <textarea v-model="form.reminder" disabled class="textarea w-full"> </textarea>
-          <InputError :message="form.errors.reminder" />
-        </div> -->
+        <div class="col-span-full">
+        <label>Descripción</label>
+          <RichText @content="updateDescription($event)" :defaultValue="form.description" />
+          <InputError :message="form.errors.description" />
+        </div>
         <!-- --------------------- TABS -------------------- -->
-        <section class="mt-9">
+        <!-- <section class="mt-9">
           <div class="flex items-center justify-center">
             <p @click="tabs = 1" :class="tabs == 1 ? 'border-b-2 border-primary text-primary' : ''"
               class="h-8 p-1 cursor-pointer ml-5 transition duration-300 ease-in-out text-xs md:text-base">
@@ -185,7 +179,6 @@
               Historial
             </p>
           </div>
-          <!-- -------------- Tab 1 comentarios starts ----------------->
           <div v-if="tabs == 1" class="mt-7 min-h-[170px]">
             <div>
               <figure class="flex space-x-2 mt-4" v-for="comment in taskComponentLocal?.comments" :key="comment">
@@ -208,9 +201,6 @@
               </div>
             </div>
           </div>
-          <!-- ---------------- tab 1 comentarios ends  -------------->
-
-          <!-- -------------- Tab 2 documentos starts ----------------->
           <div v-if="tabs == 2" class="mt-7 min-h-[170px]">
             <a :href="file?.original_url" target="_blank" v-for="file in taskComponentLocal?.media" :key="file"
               class="flex justify-between items-center cursor-pointer">
@@ -221,38 +211,15 @@
               <i class="fa-solid fa-download text-right text-sm text-[#9a9a9a]"></i>
             </a>
           </div>
-          <!-- ---------------- tab 2 documentos ends  -------------->
-
-          <!-- -------------- Tab 3 historial starts ----------------->
           <div v-if="tabs == 3" class="mt-7 min-h-[170px]"></div>
-          <!-- ---------------- tab 3 historial ends  -------------->
-        </section>
+        </section> -->
       </div>
       <div class="flex justify-end space-x-1 pt-5 pb-1">
-        <CancelButton @click="!canEdit ? taskInformationModal = false : canEdit = false">
-          {{ !canEdit ? 'Cancelar' : 'Cancelar edición' }}
+        <CancelButton @click="closeEditModal">
+          Cancelar
         </CancelButton>
-        <!-- <div>
-          <el-dropdown v-if="canEdit" split-button type="primary" @click="update" class="custom-dropdown rounded-lg">
-            <span>Guardar cambios</span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="showConfirmModal = true">Eliminar</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <el-dropdown v-else split-button type="primary" @click="canEdit = true" class="custom-dropdown rounded-lg">
-            <span>Editar</span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="showConfirmModal = true">Eliminar</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div> -->
         <div>
-          <PrimaryButton @click="update" v-if="canEdit">Guardar cambios</PrimaryButton>
-          <PrimaryButton @click="canEdit = true" v-else>Editar</PrimaryButton>
+          <PrimaryButton @click="update">Guardar cambios</PrimaryButton>
         </div>
       </div>
     </div>
@@ -340,7 +307,7 @@ export default {
           color: "text-red-600",
         },
       ],
-      departments: ["Marketing", "Ventas", "Produccion", "Diseño"],
+      departments: ["Ventas", "Programación", "Diseño", "Marketing"],
     };
   },
   components: {
@@ -376,6 +343,11 @@ export default {
     }
   },
   methods: {
+    closeEditModal() {
+      this.taskInformationModal = false;
+      this.form.reset();
+      this.form.participants = this.taskComponent.participants.map(user => user.id);
+    },
     handleDateRange(range) {
       this.form.start_date = range[0];
       this.form.limit_date = range[1];
@@ -460,7 +432,7 @@ export default {
             type: "success",
           });
           this.taskComponentLocal = response.data.item;
-          this.taskInformationModal = false;
+          // this.taskInformationModal = false;
           this.$emit('updated-status', this.taskComponentLocal);
         }
       } catch (error) {
@@ -532,7 +504,7 @@ export default {
   },
   mounted() {
     this.taskComponentLocal = this.taskComponent;
-    // this.form.participants = this.taskComponent.participants.map(user => user.id);
+    this.form.participants = this.taskComponent.participants.map(user => user.id);
 
     // inicializar fechas en range
     this.range = [this.taskComponentLocal.start_date_raw, this.taskComponentLocal.end_date_raw];
