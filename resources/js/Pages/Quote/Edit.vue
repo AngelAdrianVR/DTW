@@ -99,6 +99,7 @@
             <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
             <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
             <el-checkbox v-model="form.show_bank_info" label="Mostrar datos bancarios" size="small" />
+            <el-checkbox v-model="form.show_hosting_info" label="Mostrar requerimiento de hosting" size="small" />
           </div>
           <div class="mt-2 flex justify-end">
             <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Actualizar cotización
@@ -165,7 +166,7 @@
               Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
               significativos en el alcance del proyecto.
             </p>
-            <p class="text-xs mt-1">
+            <p v-if="form.show_hosting_info" class="text-xs mt-1">
               Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra
               por la adquisición de los mismo.
             </p>
@@ -279,9 +280,10 @@ export default {
       percentage_discount: this.quote.percentage_discount,
       total_work_days: this.quote.total_work_days,
       offer_validity_days: this.quote.offer_validity_days,
-      show_process: Boolean(this.quote.show_process),
-      show_benefits: Boolean(this.quote.show_benefits),
-      show_bank_info: Boolean(this.quote.show_bank_info),
+      show_process: !! this.quote.show_process,
+      show_benefits: !! this.quote.show_benefits,
+      show_bank_info: !! this.quote.show_bank_info,
+      show_hosting_info: !! this.quote.show_hosting_info,
     });
     return {
       // ckEditor 5
@@ -291,7 +293,7 @@ export default {
       },
       form,
       contacts: [],
-      isClient: Boolean(this.quote.client_id),
+      isClient: !! this.quote.client_id,
       paymentTypes: [
         'Pago en una sola exhibición',
         '2 pagos (50% al inicio y 50% a la entrega del proyecto)',

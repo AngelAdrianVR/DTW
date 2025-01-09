@@ -25,17 +25,17 @@
             Proyección de ventas y gastos para anticipar necesidades futuras.
           </p>
         </div>
-        <div class="w-full mt-7">
+        <div class="w-full mt-28">
           <el-carousel trigger="click" :height="carouselHeight">
-            <el-carousel-item v-for="item in images" :key="item">
-              <img class="mx-auto" :src="item.url" alt="">
+            <el-carousel-item v-for="item in imagesEzy" :key="item">
+              <img class="mx-auto" :src="item.url">
             </el-carousel-item>
           </el-carousel>
         </div>
       </article>
       <!-- lado derecho -->
       <article class="rounded-2xl border border-white px-4 py-3 lg:w-1/3 mt-5 lg:mt-0 self-start">
-        <img class="mx-auto" src="@/../../public/assets/images/logo_ezy_white.png" alt="">
+        <img class="mx-auto" src="@/../../public/assets/images/logo_ezy_white.png">
         <p class="text-center mt-7">{{ language == 'english' ? 'Sales point' : 'Punto de venta' }}</p>
         <p class="text-center mt-4">
           {{ language == 'english'
@@ -86,17 +86,17 @@
             ingresos vs. gastos, cuánto debes y cuánto te deben.
           </p>
         </div>
-        <div class="w-full mt-7">
+        <div class="w-full mt-28">
           <el-carousel trigger="click" :height="carouselHeight">
-            <el-carousel-item v-for="item in images" :key="item">
-              <img class="mx-auto" :src="item.url" alt="">
+            <el-carousel-item v-for="item in imagesFinanzas" :key="item">
+              <img class="mx-auto" :src="item.url">
             </el-carousel-item>
           </el-carousel>
         </div>
       </article>
       <!-- lado derecho -->
       <article class="rounded-2xl border border-white px-4 py-3 lg:w-1/3 mt-5 lg:mt-0 self-start">
-        <img class="mx-auto" src="@/../../public/assets/images/finanzas_logo.png" alt="">
+        <img class="mx-auto" src="@/../../public/assets/images/finanzas_logo.png">
         <p class="text-center mt-7">{{ language == 'english' ? 'Financial control' : 'Control de finanzas' }}</p>
         <p class="text-center mt-4">
           {{ language == 'english'
@@ -120,19 +120,29 @@
 <script>
 import EzyVentas1 from '@/../../public/assets/images/EzyVentas1.png';
 import EzyVentas2 from '@/../../public/assets/images/EzyVentas2.png';
+import finanzas1 from '@/../../public/assets/images/finanzas1.png';
+import finanzas2 from '@/../../public/assets/images/finanzas2.png';
 
 export default {
   data() {
     return {
-      carouselHeight: '600px',
-      images: [
+      carouselHeight: '200px',
+      imagesEzy: [
         {
           url: EzyVentas1
         },
         {
           url: EzyVentas2
         },
-      ]
+      ],
+      imagesFinanzas: [
+        {
+          url: finanzas1
+        },
+        {
+          url: finanzas2
+        },
+      ],
     }
   },
   props: {
