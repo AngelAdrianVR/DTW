@@ -59,7 +59,7 @@
         Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
         significativos en el alcance del proyecto.
       </p>
-      <p class="text-xs mt-1">
+      <p v-if="quote.show_hosting_info" class="text-xs mt-1">
         Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra
         por la adquisición de los mismo.
       </p>

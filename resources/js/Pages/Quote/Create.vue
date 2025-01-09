@@ -99,6 +99,7 @@
             <el-checkbox v-model="form.show_process" label="Mostrar procesos" size="small" />
             <el-checkbox v-model="form.show_benefits" label="Mostrar beneficios" size="small" />
             <el-checkbox v-model="form.show_bank_info" label="Mostrar datos bancarios" size="small" />
+            <el-checkbox v-model="form.show_hosting_info" label="Mostrar requerimiento de hosting" size="small" />
           </div>
           <div class="mt-2 flex justify-end">
             <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Crear cotización</PrimaryButton>
@@ -163,7 +164,7 @@
               Esta cotización no incluye costos adicionales que puedan surgir debido a cambios
               significativos en el alcance del proyecto.
             </p>
-            <p class="text-xs mt-1">
+            <p v-if="form.show_hosting_info" class="text-xs mt-1">
               Si se requiere adicional Dominio y Hosting, se puede solicitar con un costo extra
               por la adquisición de los mismo.
             </p>
@@ -280,6 +281,7 @@ export default {
       show_process: false,
       show_benefits: false,
       show_bank_info: false,
+      show_hosting_info: false,
     });
     return {
       // ckEditor 5

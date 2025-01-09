@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('show_process')->default(false);
             $table->boolean('show_benefits')->default(false);
             $table->boolean('show_bank_info')->default(false);
+            $table->boolean('show_hosting_info')->default(false);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('client_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
