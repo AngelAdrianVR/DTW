@@ -19,14 +19,14 @@
             </div>
             <h1 class="w-1/3 text-center font-bold">{{ project.data.name }}</h1>
             <div class="w-1/3 flex">
-                <div v-if="activeTab == 1" class="flex space-x-2 w-full justify-end">
+                <div v-if="activeTab == 2" class="flex space-x-2 w-full justify-end">
                     <PrimaryButton @click="$inertia.get(route('projects.create'))">Crear proyecto</PrimaryButton>
                     <button @click="$inertia.get(route('projects.edit', project.data.id))"
                         class="w-9 h-9 rounded-full bg-[#D9D9D9]">
                         <i class="fa-solid fa-pen text-sm text-gray-600"></i>
                     </button>
                 </div>
-                <div v-if="(activeTab == 2 || activeTab == 3)" class="flex space-x-2 w-full justify-end">
+                <div v-if="(activeTab == 1 || activeTab == 3)" class="flex space-x-2 w-full justify-end">
                     <PrimaryButton @click="$inertia.get(route('project-tasks.create', { projectId: project.data.id }))">
                         Crear tarea</PrimaryButton>
                 </div>
