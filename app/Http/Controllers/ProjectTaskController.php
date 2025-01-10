@@ -17,7 +17,6 @@ class ProjectTaskController extends Controller
         //
     }
 
-    
     public function create(Request $request)
     {
         $projects = Project::with(['user'])->latest()->get();
@@ -27,7 +26,6 @@ class ProjectTaskController extends Controller
         return inertia('ProjectTask/Create', compact('projects', 'users', 'parent_id'));
     }
 
-    
     public function store(Request $request)
     {
         $request->validate([
@@ -52,20 +50,17 @@ class ProjectTaskController extends Controller
 
         return to_route('projects.show', ['project' => $request->project_id]);
     }
-
     
     public function show(ProjectTask $project_task)
     {
         //
     }
 
-    
     public function edit(ProjectTask $project_task)
     {
         //
     }
 
-   
     public function update(Request $request, ProjectTask $project_task)
     {
         
@@ -98,13 +93,11 @@ class ProjectTaskController extends Controller
         return response()->json(['item' => ProjectTaskResource::make($project_task->fresh(['participants', 'project', 'user', 'comments.user', 'media']))]);
     }
 
-    
     public function destroy(ProjectTask $project_task)
     {
         $project_task->comments()->delete();
         $project_task->delete();
     }
-
 
     public function comment(Request $request, ProjectTask $project_task)
     {

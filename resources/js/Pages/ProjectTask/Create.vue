@@ -24,13 +24,11 @@
           </el-select>
           <InputError :message="form.errors.project_id" />
         </div>
-
         <div>
           <InputLabel value="Nombre de la tarea*" class="ml-3" />
           <el-input v-model="form.title" type="text" placeholder="Escribe el nombre" clearable />
           <InputError :message="form.errors.title" />
         </div>
-
         <div>
           <InputLabel value="Departamento*" class="ml-3" />
           <el-select class="w-full mt-2" v-model="form.department" clearable filterable
@@ -40,12 +38,11 @@
           </el-select>
           <InputError :message="form.errors.department" />
         </div>
-
         <div class="mt-5 col-span-full">
           <InputLabel value="Descripción" class="ml-3" />
           <el-input v-model="form.description"
-            :autosize="{ minRows: 3, maxRows: 5 }" type="textarea" placeholder="Escribe una descripción (opcional)"
-            :maxlength="200" show-word-limit clearable />
+            :autosize="{ minRows: 3, maxRows: 8 }" type="textarea" placeholder="Escribe una descripción (opcional)"
+            :maxlength="1200" show-word-limit clearable />
         </div>
         <FileUploader @files-selected="this.form.media = $event" />
         <div>
