@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\FootController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectTaskController;
@@ -166,6 +167,10 @@ Route::resource('purchases', PurchaseController::class)->middleware('auth');
 
 // Admin view routes ---------------------------------------
 Route::resource('settings', SettingController::class)->middleware('auth');
+
+
+// TPSP view routes ---------------------------------------
+Route::resource('feet', FootController::class)->middleware('auth');
 
 
 //PDF routes ----------------------------------------------------

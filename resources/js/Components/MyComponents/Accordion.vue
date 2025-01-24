@@ -1,6 +1,6 @@
 <template>
     <button :id="`accordion-title-${id}`"
-        class="w-full text-start px-2 mb- flex justify-between items-center text-xs rounded-full py-1"
+        class="w-full text-start px-2 mt-4 flex justify-between items-center text-xs rounded-full py-1"
         :class="active ? 'font-bold text-primary bg-[#3E3D3F]' : ''" @click.prevent="accordionOpen = !accordionOpen"
         :aria-expanded="accordionOpen" :aria-controls="`accordion-text-${id}`" :title="title">
         <p class="flex items-center">
