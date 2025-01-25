@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\FootController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectTaskController;
@@ -166,6 +167,13 @@ Route::resource('purchases', PurchaseController::class)->middleware('auth');
 
 // Admin view routes ---------------------------------------
 Route::resource('settings', SettingController::class)->middleware('auth');
+
+
+// TPSP view routes ---------------------------------------
+Route::resource('tpsp', FootController::class)->middleware('auth');
+Route::post('tpsp/store-movement', [FootController::class, 'storeMovement'])->name('tpsp.store-movement')->middleware('auth');
+Route::post('tpsp/store-new-production', [FootController::class, 'storeNewProduction'])->name('tpsp.store-new-production')->middleware('auth');
+Route::get('tpsp-public-index', [FootController::class, 'publicIndex'])->name('tpsp.public-index');
 
 
 //PDF routes ----------------------------------------------------
