@@ -5,51 +5,46 @@
                 <h1 class="font-bold text-lg">
                     Gestión de inventario
                 </h1>
-                <PrimaryButton @click="showMovementModal = true">Movimientos</PrimaryButton>
+                 <el-dropdown trigger="click" split-button type="primary" @click="showMovementModal = true">
+                    Movimientos
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                        <el-dropdown-item @click="showNewProductionModal = true">Nueva producción</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
             </header>
-
             <body class="mt-7 md:mx-10">
-                <section class="border border-gray-200 rounded-xl p-5">
-                    <article class="flex items-center justify-between">
+                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7 ">
+                    <article class="md:flex items-center justify-between">
                         <div class="ml-5">
-                            <p class="font-bold">Meta: <span class="font-thin">{{ kits.kits.pedicureExpert.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span> kits</p>
-                            <p class="font-bold">Producción actual: <span class="font-thin">{{ kits.kits.pedicureExpert.current_production?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span> kits</p>
-                            <p class="font-bold">Tipo de kit: <span class="font-thin">{{ kits.kits.pedicureExpert.name }}</span></p>
+                            <p class="font-bold">Meta: <span class="font-thin">{{ kit.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} Kits</span></p>
+                            <p class="font-bold">Producción actual: <span class="font-thin">{{ kit.current_production?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} kits</span></p>
+                            <p class="font-bold">Tipo de kit: <span class="font-thin">{{ kit.name }}</span></p>
                         </div>
 
-                        <button @click="showNewProductionModal = true" class="button">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                viewBox="0 0 20 20"
-                                height="20"
-                                fill="none"
-                                class="svg-icon"
-                            >
-                                <g stroke-width="1.5" stroke-linecap="round" stroke="#435AA4">
-                                <path
-                                    d="m3.33337 10.8333c0 3.6819 2.98477 6.6667 6.66663 6.6667 3.682 0 6.6667-2.9848 6.6667-6.6667 0-3.68188-2.9847-6.66664-6.6667-6.66664-1.29938 0-2.51191.37174-3.5371 1.01468"
-                                ></path>
-                                <path
-                                    d="m7.69867 1.58163-1.44987 3.28435c-.18587.42104.00478.91303.42582 1.0989l3.28438 1.44986"
-                                ></path>
-                                </g>
-                            </svg>
-                            <span class="lable">Nueva producción</span>
-                        </button>
-
+                        <figure class="flex justify-center mt-2">
+                            <img v-if="kit.name === 'Pedicure Experto'" class="w-1/5 md:w-1/2" src="assets/images/pedicure_experto.png" alt="">
+                            <img v-if="kit.name === 'Manicure Experto'" class="w-1/5 md:w-1/2" src="assets/images/manicure_experto.png" alt="">
+                            <img v-if="kit.name === 'Masaje Antiestrés'" class="w-1/5 md:w-1/2" src="assets/images/masaje_antiestres.png" alt="">
+                            <img v-if="kit.name === 'Pedicure Correctivo'" class="w-1/5 md:w-1/2" src="assets/images/pedicure_correctivo.png" alt="">
+                            <img v-if="kit.name === 'Pedicure Infantil'" class="w-1/5 md:w-1/2" src="assets/images/pedicure_infantil.png" alt="">
+                        </figure>
                     </article>
 
+                    <!-- sección de stock -->
                     <article class="mt-7 grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                        <!-- tarjeta de producto -->
-                        <div v-for="product in kits.kits.pedicureExpert.products" :key="product" class="border border-[#D9D9D9] rounded-2xl p-2 text-center">
+                        <div v-for="product in kit.products" :key="product.name" class="border border-[#D9D9D9] rounded-2xl p-2 text-center">
                             <h2 class="mt-2">{{ product.name }}</h2>
                             <p class="text-sm text-[#373737] mt-3">Actual</p>
-                            <p class="text-lg font-bold mb-3">{{ product.quantity?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} pzas</p>
+                            <p class="text-lg font-bold mb-3">
+                                {{ product.quantity?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} pzas
+                            </p>
 
-                            <div :class="handleRemainingProduct(product) ? 'bg-[#D1FDC8]' : 'bg-[#FDC8C8]'" class="rounded-2xl h-[137px] text-center py-3 px-2">
-
-                                <div v-if="handleRemainingProduct(product)" class="flex flex-col justify-center items-center">
+                            <div :class="handleRemainingProduct(product, kit) ? 'bg-[#D1FDC8]' : 'bg-[#FDC8C8]'" 
+                                class="rounded-2xl h-[137px] text-center py-3 px-2">
+                                
+                                <div v-if="handleRemainingProduct(product, kit)" class="flex flex-col justify-center items-center">
                                     <p class="text-[#373737] my-2">Hay suficiente stock</p>
                                     <svg width="33" height="27" viewBox="0 0 33 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.78015 26.087C5.42528 19.3455 0.305954 13.9834 0.0163438 13.665C-0.273266 13.3465 3.31596 12.7419 8.40125 18.0127C18.0408 7.09938 27.3856 -0.029221 32.6243 0.000669781C32.8261 -0.0198912 33.1358 0.438406 32.9349 0.621774C21.3361 6.14443 14.9155 15.957 9.33291 26.087C9.29922 26.394 7.76682 26.333 7.78015 26.087Z" fill="#189203"/>
@@ -60,59 +55,33 @@
                                     <p class="text-[#373737] my-2">Piezas faltantes para meta</p>
                                     <p class="font-bold text-lg">
                                         {{ product.name === 'Bolsa grande empaque'
-                                            ? ((remainingProduction - (product.quantity * 50)) / 50)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                                            : (remainingProduction - product.quantity)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") 
+                                            ? ((getRemainingProduction(kit) - (product.quantity * 50)) / 50)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                            : (getRemainingProduction(kit) - product.quantity)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") 
                                         }} pzas
                                     </p>
 
                                     <figure class="flex justify-end items-center">
                                         <span class="mr-1">
-                                            <!-- Calcular empaques necesarios -->
                                             {{ 
                                                 product.name === 'Bolsa grande empaque' 
-                                                ? Math.ceil((remainingProduction - (product.quantity * 50)) / 50) 
-                                                : Math.ceil((remainingProduction - product.quantity) / product.package_units) 
+                                                ? Math.ceil((getRemainingProduction(kit) - (product.quantity * 50)) / 50) 
+                                                : Math.ceil((getRemainingProduction(kit) - product.quantity) / product.package_units) 
                                             }}
                                         </span>
 
-                                        <!-- Mostrar imágenes según el tipo de producto -->
-                                        <img 
-                                            v-if="product.name === 'Bálsamo' || product.name === 'Reblandecedor' || product.name === 'Loción'" 
-                                            src="assets/images/box.png" 
-                                            alt=""
-                                        >
-                                        <img 
-                                            v-if="product.name === 'Protector'" 
-                                            src="assets/images/bag.png" 
-                                            alt=""
-                                        >
-                                        <img 
-                                            v-if="product.name === 'Campo'" 
-                                            src="assets/images/campo_bag.png" 
-                                            alt=""
-                                        >
-                                        <img 
-                                            v-if="product.name === 'Navaja 2mm'" 
-                                            src="assets/images/knife_box.png" 
-                                            alt=""
-                                        >
-                                        <img 
-                                            v-if="product.name === 'Bolsa kit'" 
-                                            src="assets/images/kit_bag.png" 
-                                            alt=""
-                                        >
-                                        <img 
-                                            v-if="product.name === 'Bolsa grande empaque'" 
-                                            src="assets/images/bag_big.png" 
-                                            alt=""
-                                        >
+                                        <img v-if="['Bálsamo', 'Reblandecedor', 'Loción', 'Reblandecedor líquido'].includes(product.name)" src="assets/images/box.png" alt="">
+                                        <img v-else-if="product.name === 'Protector'" src="assets/images/bag.png" alt="">
+                                        <img v-else-if="product.name === 'Campo' || product.name === 'Algodón'" src="assets/images/campo_bag.png" alt="">
+                                        <img v-else-if="product.name === 'Navaja 20mm' || product.name === 'Navaja 15mm'" src="assets/images/knife_box.png" alt="">
+                                        <img v-else-if="product.name === 'Bolsa kit'" src="assets/images/kit_bag.png" alt="">
+                                        <img v-else-if="product.name === 'Bolsa grande empaque azúl'" src="assets/images/bag_big.png" alt="">
                                     </figure>
                                 </div>
-
                             </div>
                         </div>
                     </article>
                 </section>
+
             </body>
         </main>
 
@@ -131,10 +100,22 @@
             <template #content>
                 <section v-if="form.movementType !='Registrar producción'" class="pt-4 space-y-3">
                     <div>
+                        <InputLabel value="Tipo de kit" />
+                        <el-select v-model="form.kitType" placeholder="Selecciona el tipo de kit">
+                            <el-option
+                                v-for="item in Object.keys(kits.kits)"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            />
+                        </el-select>
+                        <InputError :message="form.errors.kitType" />
+                    </div>
+                    <div>
                         <InputLabel value="Producto" />
                         <el-select v-model="form.product" placeholder="Selecciona el producto">
                             <el-option
-                                v-for="item in kits.kits.pedicureExpert.products"
+                                v-for="item in kits.kits[form.kitType]?.products"
                                 :key="item"
                                 :label="item.name"
                                 :value="item.name"
@@ -154,25 +135,39 @@
                     </div>
                 </section>
 
-                <section v-else class="pt-4 mx-2 flex items-center space-x-3">
-                    <div class="w-1/2">
-                        <InputLabel value="Cantidad de bolsas" />
-                        <div class="flex items-center space-x-2">
-                            <el-input
-                                class="!w-40 md:!w-56"
-                                v-model="form.bagsQuantity"
-                                placeholder="Bolsas de empaque"
-                                :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                                :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+                <section v-else class="mx-2">
+                    <div>
+                        <InputLabel value="Tipo de kit" />
+                        <el-select v-model="form.kitType" placeholder="Selecciona el tipo de kit">
+                            <el-option
+                                v-for="item in Object.keys(kits.kits)"
+                                :key="item"
+                                :label="item"
+                                :value="item"
                             />
-                            <span>x50</span>
-                            <InputError :message="form.errors.bagsQuantity" />  
+                        </el-select>
+                        <InputError :message="form.errors.kitType" />
+                    </div>
+                    <article class="flex items-center space-x-3 pt-4">
+                        <div class="w-1/2">
+                            <InputLabel value="Cantidad de bolsas" />
+                            <div class="flex items-center space-x-2">
+                                <el-input
+                                    class="!w-40 md:!w-56"
+                                    v-model="form.bagsQuantity"
+                                    placeholder="Bolsas de empaque"
+                                    :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                                    :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+                                />
+                                <span>x50</span>
+                                <InputError :message="form.errors.bagsQuantity" />  
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-center w-1/2">
-                        <p>Total de kits</p>
-                        <span class="font-bold">{{ (form.bagsQuantity * 50)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
-                    </div>
+                        <div class="text-center w-1/2">
+                            <p>Total de kits</p>
+                            <span class="font-bold">{{ (form.bagsQuantity * 50)?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</span>
+                        </div>
+                    </article>
                 </section>
             </template>
 
@@ -194,6 +189,18 @@
 
             <template #content>
                 <section class="space-y-3">
+                    <div>
+                        <InputLabel value="Tipo de kit" />
+                        <el-select v-model="formNewProduction.kitType" placeholder="Selecciona el tipo de kit">
+                            <el-option
+                                v-for="item in Object.keys(kits.kits)"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            />
+                        </el-select>
+                        <InputError :message="formNewProduction.errors.kitType" />
+                    </div>
                     <div>
                         <InputLabel value="Cantidad meta de kits" />
                         <el-input
@@ -233,6 +240,7 @@ import { useForm } from "@inertiajs/vue3";
 export default {
 data() {
     const form = useForm({
+        kitType: null, //Tipo de kit seleccionado
         product: null, //producto seleccionado para movimiento
         quantity: null, //cantidad de producto
         bagsQuantity: null, //cantidad de bolsas de empaque
@@ -240,6 +248,7 @@ data() {
     });
 
     const formNewProduction = useForm({
+        kitType: null, //Tipo de kit seleccionado
         goal: null, //cantidad total de kits a producir
         current_production: 0, //cantidad total de kits producidos
     });
@@ -267,11 +276,17 @@ props:{
     kits: Object,
 },
 methods:{
-    handleRemainingProduct(product) {
-        if ( product.name === 'Bolsa grande empaque' ) {
-            return (product.quantity * 50) >= this.remainingProduction;
+    getRemainingProduction(kit) {
+        // if (!kit || !kit.goal || !kit.current_production) return 0;
+        return (Number(kit.goal) || 0) - (Number(kit.current_production) || 0);
+    },
+    handleRemainingProduct(product, kit) {
+        const remaining = this.getRemainingProduction(kit);
+
+        if (product.name === 'Bolsa grande empaque azúl' || product.name === 'Bolsa grande empaque transparente') {
+            return (product.quantity * 50) >= remaining;
         } else {
-            return product.quantity >= this.remainingProduction;
+            return product.quantity >= remaining;
         }
     },
     resetValues() {
@@ -305,61 +320,5 @@ methods:{
         });
     }   
 },
-computed:{
-    remainingProduction(){
-        return this.kits.kits.pedicureExpert.goal - this.kits.kits.pedicureExpert.current_production;
-    },
-}
 }
 </script>
-
-<style>
-.custom-style .el-segmented {
-  --el-segmented-item-selected-color: #000;
-  --el-segmented-bg-color: #F2F2F2;
-  --el-segmented-item-selected-bg-color: #fff;
-  --el-border-radius-base: 10px;
-  --el-segmented-item-selected-border-color: #D9D9D9;
-}
-
-/* From Uiverse.io by andrew-demchenk0 */ 
-.button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 12px;
-  gap: 8px;
-  height: 28px;
-  width: 200px;
-  border: none;
-  background: #9eb4fc;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.lable {
-  line-height: 20px;
-  font-size: 14px;
-  color: #435AA4;
-  letter-spacing: 1px;
-}
-
-.button:hover {
-  background: #c3d1ff;
-}
-
-.button:hover .svg-icon {
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-
-</style>
