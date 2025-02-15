@@ -134,6 +134,9 @@ onMounted(() => {
                         <ResponsiveNavLink :href="route('projects.index')" :active="route().current('projects.*')">
                             PMS
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('tpsp.index')" :active="route().current('tpsp.*')">
+                            TPSP
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('suscription-projects.index')" :active="route().current('suscription-projects.*')">
                             Suscripciones
                         </ResponsiveNavLink>
