@@ -155,6 +155,8 @@ Route::get('users-get-notifications', [UserController::class, 'getNotifications'
 Route::post('users-read-notifications', [UserController::class, 'readNotifications'])->middleware('auth')->name('users.read-user-notifications');
 Route::post('users-delete-notifications', [UserController::class, 'deleteNotifications'])->middleware('auth')->name('users.delete-user-notifications');
 Route::get('users-get-by-page/{currentPage}', [UserController::class, 'getItemsByPage'])->name('users.get-by-page')->middleware('auth');
+Route::get('users-fetch-info', [UserController::class, 'fetchDashboardInfo'])->middleware('auth')->name('users.fetch-info');
+
 
 
 // finances routes ---------------------------------------------------------------
