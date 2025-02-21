@@ -8,7 +8,7 @@
             </header>
 
             <body class="mt-7 md:mx-10">
-                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7 ">
+                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7">
                     <article class="md:flex items-center justify-between">
                         <div class="ml-5">
                             <p class="font-bold">Meta: <span class="font-thin">{{ kit.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} Kits</span></p>
@@ -26,8 +26,8 @@
                     </article>
 
                     <!-- sección de stock -->
-                    <article class="mt-7 grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                        <div v-for="product in kit.products" :key="product.name" class="border border-[#D9D9D9] rounded-2xl p-2 text-center">
+                    <article class="mt-7 flex overflow-x-auto md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                        <div v-for="product in kit.products" :key="product.name" class="border border-[#D9D9D9] rounded-2xl p-2 text-center shrink-0 w-52 md:w-auto">
                             <h2 class="mt-2">{{ product.name }}</h2>
                             <p class="text-sm text-[#373737] mt-3">Actual</p>
                             <p class="text-lg font-bold mb-3">
