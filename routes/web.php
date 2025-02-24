@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DeliveredProductionController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FootController;
 use App\Http\Controllers\MessageController;
@@ -178,5 +179,11 @@ Route::post('tpsp/store-new-production', [FootController::class, 'storeNewProduc
 Route::get('tpsp-public-index', [FootController::class, 'publicIndex'])->name('tpsp.public-index');
 
 
+// TPSP - deliveries view routes ---------------------------------------
+Route::resource('tpsp-deliveries', DeliveredProductionController::class)->middleware('auth');
+Route::get('tpsp-deliveries-fetch-data', [DeliveredProductionController::class, 'fetchDeliveryHistory'])->name('tpsp-deliveries.fetch-data')->middleware('auth');
+
+
+
 //PDF routes ----------------------------------------------------
-Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
+// Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
