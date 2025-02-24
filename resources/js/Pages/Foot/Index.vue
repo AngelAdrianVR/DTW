@@ -9,15 +9,19 @@
                     Movimientos
                     <template #dropdown>
                         <el-dropdown-menu>
-                        <el-dropdown-item @click="showNewProductionModal = true">Nueva producción</el-dropdown-item>
+                            <el-dropdown-item @click="showNewProductionModal = true">Nueva producción</el-dropdown-item>
+                            <el-dropdown-item @click="showDeliveryProductionModal = true">Registrar entrega</el-dropdown-item>
+                            <el-dropdown-item @click="handleDeliveryHistory()">Historial de entregas</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
             </header>
             <body class="mt-7 md:mx-10">
-                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7 ">
+                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border rounded-2xl shadow-lg p-5 mb-7" 
+                    :class="kit.goal > 0 ? 'border-blue-500' : 'border-gray-500'">
                     <article class="md:flex items-center justify-between">
                         <div class="ml-5">
+                            <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-right md:text-left font-bold">{{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}</p>
                             <p class="font-bold">Meta: <span class="font-thin">{{ kit.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} Kits</span></p>
                             <p class="font-bold">Producción actual: <span class="font-thin">{{ kit.current_production?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} kits</span></p>
                             <p class="font-bold">Tipo de kit: <span class="font-thin">{{ kit.name }}</span></p>
@@ -180,7 +184,7 @@
         <DialogModal :show="showNewProductionModal" @close="showNewProductionModal = false">
             <template #title>
                 <div class="flex justify-between items-center my-3">
-                    <h2 class="text-lg font-bold">comenzar nueva producción</h2>
+                    <h2 class="text-lg font-bold">Comenzar nueva producción</h2>
                     <button class="flex items-center justify-center cursor-default rounded-full size-7 hover:bg-gray-200 hover:text-red-600" @click="showNewProductionModal = false">
                         <i class="fa-solid fa-xmark text-sm"></i>
                     </button>
@@ -226,6 +230,187 @@
                 <PrimaryButton :disabled="!formNewProduction.goal" @click="storeNewProduction()">Comenzar producción</PrimaryButton>
             </template>
         </DialogModal>
+
+        <!-- Modal de entrega de producción -->
+        <DialogModal :show="showDeliveryProductionModal" @close="showDeliveryProductionModal = false">
+            <template #title>
+                <div class="flex justify-between items-center my-3">
+                    <h2 class="text-lg font-bold">Registrar entrega de producción semanal</h2>
+                    <button class="flex items-center justify-center cursor-default rounded-full size-7 hover:bg-gray-200 hover:text-red-600" @click="showDeliveryProductionModal = false">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+            </template>
+
+            <template #content>
+                <section class="grid grid-cols-2 gap-3">
+                    <div class="col-span-full">
+                        <InputLabel value="Tipo de kit" />
+                        <el-select v-model="deliveryKit.kitType" placeholder="Selecciona el tipo de kit">
+                            <el-option v-for="item in kitTypes" :key="item.label" :value="item.label">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-circle text-[9px]" :class="item.color"></i>
+                                    <span>{{ item.label }}</span>
+                                </div>
+                            </el-option>
+                        </el-select>
+                        <!-- <InputError :message="formDeliveryProduction.errors.kitType" /> -->
+                    </div>
+                    <div>
+                        <InputLabel value="Cantidad de kits entregados" />
+                        <el-input
+                            v-model="deliveryKit.amount"
+                            placeholder="Ej.10,000"
+                            :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                            :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+                        />
+                        <!-- <InputError :message="formDeliveryProduction.errors.amount" /> -->
+                    </div>
+                    <div>
+                        <InputLabel value="Precio por kit" />
+                        <el-input
+                            v-model="deliveryKit.price"
+                            placeholder="Ej.0.40"
+                            :formatter="(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                            :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+                        />
+                        <!-- <InputError :message="formDeliveryProduction.errors.price" /> -->
+                    </div>
+                    <section class="col-span-full my-2">
+                        <div class="flex justify-end">
+                            <button @click="addKitDelivery" :disabled="!deliveryKit.kitType || !deliveryKit.amount || !deliveryKit.price" 
+                                    class="rounded-md border px-4 py-2 text-sm disabled:cursor-not-allowed disabled:bg-gray-200 active:scale-95">
+                                {{ editIndex !== null ? 'Actualizar' : 'Agregar a lista' }}
+                            </button>
+                        </div>
+
+                        <ol v-if="formDeliveryProduction.deliveryKits?.length"
+                            class="rounded-lg bg-gray-200 px-5 py-3 col-span-full space-y-1 mt-3 divide-y-[1px]">
+                            <template v-for="(item, index) in formDeliveryProduction.deliveryKits" :key="index">
+                                <li class="flex justify-between border-[#999999] items-center py-1">
+                                    <p class="text-xs text-black">
+                                        <span class="text-primary">{{ index + 1 }}. </span>
+                                        <span>{{ item.kitType }} => </span>
+                                        <span>{{ item.amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} pzas. => </span>
+                                        <span>${{ item.price }} c/p</span>                                        
+                                    </p>
+                                    <div class="flex space-x-2 items-center">
+                                        <el-tag v-if="editIndex == index" @close="editIndex = null; resetKitDeliveryForm()" closable>
+                                            En edición
+                                        </el-tag>
+                                        <button @click="editKitDelivery(index)" type="button"
+                                            class="size-7 bg-indigo-100 border border-primary rounded-full flex items-center justify-center text-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                            </svg>
+                                        </button>
+                                        <el-popconfirm confirm-button-text="Si" cancel-button-text="No" icon-color="#0355B5"
+                                            title="¿Continuar?" @confirm="deleteKitDelivery(index)">
+                                            <template #reference>
+                                                <button type="button"
+                                                    class="size-7 bg-indigo-100 border border-primary rounded-full flex items-center justify-center text-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
+                                                </button>
+                                            </template>
+                                        </el-popconfirm>
+                                    </div>
+                                </li>
+                            </template>
+                        </ol>
+                    </section>
+                    <div>
+                        <InputLabel value="Fecha de entrega" />
+                        <el-date-picker
+                            v-model="formDeliveryProduction.delivered_at"
+                            type="date"
+                            placeholder="Selecciona la fecha en que se entregó"
+                        />
+                    </div>
+                    <div class="col-span-full">
+                        <InputLabel value="Notas" />
+                        <el-input
+                            v-model="formDeliveryProduction.notes"
+                            :rows="2"
+                            maxlength="255"
+                            show-word-limit
+                            type="textarea"
+                            placeholder="Notas de la entrega"
+                        />
+                    </div>
+                </section>
+            </template>
+
+            <template #footer>
+                <PrimaryButton :disabled="!formDeliveryProduction.deliveryKits.length" @click="storeDeliveryProduction()">Registrar entrega</PrimaryButton>
+            </template>
+        </DialogModal>
+
+        <!-- Modal de historial de entregas -->
+        <DialogModal :show="showDeliveryHistoryModal" @close="showDeliveryHistoryModal = false">
+            <template #title>
+                <div class="flex justify-between items-center my-3">
+                    <h2 class="text-lg font-bold">Historial de entregas</h2>
+                    <button class="flex items-center justify-center cursor-default rounded-full size-7 hover:bg-gray-200 hover:text-red-600"
+                        @click="showDeliveryHistoryModal = false">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+            </template>
+
+            <template #content>
+                <div class="max-h-[500px] overflow-auto" v-if="Object.keys(deliveryHistory).length > 0">
+                    <!-- Sección de totales de kits -->
+                    <div class="mt-5 p-4 bg-gray-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">Totales por tipo de kit</h3>
+                        <table class="w-full text-sm text-gray-600 mt-2">
+                            <thead>
+                                <tr class="text-left border-b">
+                                    <th class="py-2">Kit</th>
+                                    <th class="py-2">Cantidad Total</th>
+                                    <th class="py-2">Total en $</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(data, kit) in totalByKit" :key="kit" class="border-t">
+                                    <td class="py-2">{{ kit }}</td>
+                                    <td class="py-2">{{ data.total_amount.toLocaleString() }}</td>
+                                    <td class="py-2">${{ data.total_price.toFixed(2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-for="(deliveries, date) in deliveryHistory" :key="date" class="mb-5">
+                        <h3 class="text-lg font-semibold text-gray-700 border-b pb-2">{{ formatDate(date) }}</h3>
+                        <div class="bg-gray-100 rounded-lg p-3 mt-2">
+                            <table class="w-full text-sm text-gray-600">
+                                <thead>
+                                    <tr class="text-left">
+                                        <th class="py-2">Kit</th>
+                                        <th class="py-2">Cantidad</th>
+                                        <th class="py-2">Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(delivery, index) in deliveries" :key="index" class="border-t">
+                                        <td class="py-2">{{ delivery.kit_type }}</td>
+                                        <td class="py-2">{{ delivery.amount.toLocaleString() }}</td>
+                                        <td class="py-2">${{ delivery.price.toFixed(2) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p v-else class="text-gray-500 text-center">No hay entregas registradas.</p>
+            </template>
+        </DialogModal>
+
     </AppLayout>
 </template>
 
@@ -236,6 +421,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import DialogModal from '@/Components/DialogModal.vue';
 import { useForm } from "@inertiajs/vue3";
+import axios from 'axios';
 
 export default {
 data() {
@@ -252,16 +438,60 @@ data() {
         goal: null, //cantidad total de kits a producir
         current_production: 0, //cantidad total de kits producidos
     });
+    
+    const formDeliveryProduction = useForm({
+        deliveryKits: [], // informacion de cada tipo de kit
+        delivered_at: null, // fecha de entrega
+        notes: null, // Notas de la entrega
+    });
 
     return {
+        // Formularios
         form,
         formNewProduction,
+        formDeliveryProduction,
+
+        // formulario de registro de entrega
+        editIndex: null, //index de lista de entrega de kit
+        deliveryKit: {
+            kitType: null,
+            amount: null,
+            price: null,
+        },
+
+        //general
         showMovementModal: false, //modal de movimientos
         showNewProductionModal: false, //modal de producción nueva
+        showDeliveryProductionModal: false, //modal de entrega de producción
+        showDeliveryHistoryModal: false, //modal de historial de entregas
+        deliveryHistory: null, //historial de entregas
+        totalByKit: null, // totales de kits    
         options: [
             'Entrada de producto',
             'Salida de producto',
             'Registrar producción'
+        ],
+        kitTypes: [
+            {
+                label: 'Pedicure Experto',
+                color: 'text-[#00214c]',
+            },
+            {
+                label: 'Manicure Experto',
+                color: 'text-[#4f5052]',
+            },
+            {
+                label: 'Pedicure Correctivo',
+                color: 'text-[#0095ca]',
+            },
+            {
+                label: 'Pedicure Infantil',
+                color: 'text-[#cb3c02]',
+            },
+            {
+                label: 'Masaje Antiestrés',
+                color: 'text-[#009947]',
+            },
         ],
     };
 },
@@ -276,17 +506,52 @@ props:{
     kits: Object,
 },
 methods:{
+    async handleDeliveryHistory() {
+        if ( !this.deliveryHistory ) {
+           await this.fetchDeliveryHistory();
+        }
+        this.showDeliveryHistoryModal = true;
+    },
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }).format(date);
+    },
+    addKitDelivery() {
+        const kitType = { ...this.deliveryKit };
+
+        if (this.editIndex !== null) {
+            this.formDeliveryProduction.deliveryKits[this.editIndex] = kitType;
+            this.editIndex = null;
+        } else {
+            this.formDeliveryProduction.deliveryKits.push(kitType);
+        }
+
+        this.resetKitDeliveryForm();
+    },
+    deleteKitDelivery(index) {
+        this.formDeliveryProduction.deliveryKits.splice(index, 1);
+    },
+    editKitDelivery(index) {
+        const kitType = { ...this.formDeliveryProduction.deliveryKits[index] };
+        this.deliveryKit = kitType;
+        this.editIndex = index;
+    },
+    resetKitDeliveryForm() {
+        this.deliveryKit.kitType = null;
+        this.deliveryKit.amount = null;
+        this.deliveryKit.price = null;
+    },
     getRemainingProduction(kit) {
-        // if (!kit || !kit.goal || !kit.current_production) return 0;
         return (Number(kit.goal) || 0) - (Number(kit.current_production) || 0);
     },
     handleRemainingProduct(product, kit) {
         const remaining = this.getRemainingProduction(kit);
 
         if (product.name === 'Bolsa grande empaque azúl' || product.name === 'Bolsa grande empaque transparente') {
-            return (product.quantity * 50) >= remaining;
+            return ((product.quantity * 50) >= remaining) && product.quantity > 0;
         } else {
-            return product.quantity >= remaining;
+            // retorna true si hay mas cantidad de stock que la meta
+            return product.quantity >= remaining && product.quantity > 0;
         }
     },
     resetValues() {
@@ -318,7 +583,31 @@ methods:{
                 this.showNewProductionModal = false;
             }
         });
-    }   
+    },   
+    storeDeliveryProduction() {
+        this.formDeliveryProduction.post(route("tpsp-deliveries.store"), {
+            onSuccess: () => {
+                this.$notify({
+                    title: "Correcto",
+                    message: "",
+                    type: "success",
+                });
+                this.fetchDeliveryHistory();
+                this.showDeliveryProductionModal = false;
+            }
+        });
+    },
+    async fetchDeliveryHistory() {
+        try {
+            const response = await axios.get(route('tpsp-deliveries.fetch-data'));
+
+            // Guardamos los datos en las variables correspondientes
+            this.deliveryHistory = response.data.deliveries_by_date; // Historial de entregas agrupado por fecha
+            this.totalByKit = response.data.total_by_kit; // Totales de cada tipo de kit
+        } catch (error) {
+            console.error('Error al obtener el historial de entregas', error);
+        }
+    }
 },
 }
 </script>
