@@ -1,6 +1,10 @@
 <template>
     <AppLayout title="TPSP">
         <main class="mx-2 md:mx-12 mt-4">
+            <!-- Estado de carga -->
+            <div v-if="loadingDeliveryHistory" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div class="w-16 h-16 border-4 border-gray-300 border-t-4 border-t-white rounded-full animate-spin"></div>
+            </div>
             <header class="flex justify-between items-center">
                 <h1 class="font-bold text-lg">
                     Gestión de inventario
@@ -17,13 +21,33 @@
                 </el-dropdown>
             </header>
             <body class="mt-7 md:mx-10">
-                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border rounded-2xl shadow-lg p-5 mb-7" 
-                    :class="kit.goal > 0 ? 'border-blue-500' : 'border-gray-500'">
-                    <article class="md:flex items-center justify-between">
-                        <div class="ml-5">
-                            <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-right md:text-left font-bold">{{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}</p>
-                            <p class="font-bold">Meta: <span class="font-thin">{{ kit.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} Kits</span></p>
-                            <p class="font-bold">Producción actual: <span class="font-thin">{{ kit.current_production?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} kits</span></p>
+                <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border rounded-2xl shadow-lg p-5 mb-7">
+                    <article class="md:flex items-center justify-between bg-white shadow-md rounded-lg p-4">
+                        <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-center md:text-left font-bold md:hidden">
+                            {{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}
+                        </p>
+                        <div class="mt-2 w-full">
+                            <div v-if="kit.goal > 0" class="flex items-center justify-between space-x-3">
+                                <div class="w-full">
+                                    <div class="relative w-full h-5 bg-gray-200 rounded-full overflow-hidden border border-gray-300">
+                                        <div 
+                                            class="absolute top-0 left-0 h-full transition-all duration-500 rounded-full"
+                                            :class="{
+                                                'bg-red-400': getProgress(kit) < 50,
+                                                'bg-amber-400': getProgress(kit) >= 50 && getProgress(kit) < 80,
+                                                'bg-green-400': getProgress(kit) >= 80
+                                            }"
+                                            :style="{ width: getProgress(kit) + '%' }"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-700 text-right mt-1 font-bold">{{ getProgress(kit) }}%</p>
+                            </div>
+                            <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-center md:text-left font-bold hidden md:block">
+                                {{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}
+                            </p>
+                            <p class="font-bold mt-3">Meta: <span class="font-thin">{{ formattedNumber(kit.goal) }} Kits</span></p>
+                            <p class="font-bold">Producción actual: <span class="font-thin">{{ formattedNumber(kit.current_production) }} kits</span></p>
                             <p class="font-bold">Tipo de kit: <span class="font-thin">{{ kit.name }}</span></p>
                         </div>
 
@@ -176,7 +200,7 @@
             </template>
 
             <template #footer>
-                <PrimaryButton @click="storeMovement()">Registrar</PrimaryButton>
+                <PrimaryButton :disabled="form.processing" @click="storeMovement()">Registrar</PrimaryButton>
             </template>
         </DialogModal>
 
@@ -227,7 +251,7 @@
             </template>
 
             <template #footer>
-                <PrimaryButton :disabled="!formNewProduction.goal" @click="storeNewProduction()">Comenzar producción</PrimaryButton>
+                <PrimaryButton :disabled="!formNewProduction.goal || formNewProduction.processing" @click="storeNewProduction()">Comenzar producción</PrimaryButton>
             </template>
         </DialogModal>
 
@@ -331,6 +355,7 @@
                             type="date"
                             placeholder="Selecciona la fecha en que se entregó"
                         />
+                        <InputError :message="formDeliveryProduction.errors.delivered_at" />
                     </div>
                     <div class="col-span-full">
                         <InputLabel value="Notas" />
@@ -347,7 +372,7 @@
             </template>
 
             <template #footer>
-                <PrimaryButton :disabled="!formDeliveryProduction.deliveryKits.length" @click="storeDeliveryProduction()">Registrar entrega</PrimaryButton>
+                <PrimaryButton :disabled="!formDeliveryProduction.deliveryKits.length || formDeliveryProduction.processing" @click="storeDeliveryProduction()">Registrar entrega</PrimaryButton>
             </template>
         </DialogModal>
 
@@ -379,8 +404,8 @@
                             <tbody>
                                 <tr v-for="(data, kit) in totalByKit" :key="kit" class="border-t">
                                     <td class="py-2">{{ kit }}</td>
-                                    <td class="py-2">{{ data.total_amount.toLocaleString() }}</td>
-                                    <td class="py-2">${{ data.total_price.toFixed(2) }}</td>
+                                    <td class="py-2">{{ data.total_amount.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
+                                    <td class="py-2">${{ data.total_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -460,6 +485,7 @@ data() {
         },
 
         //general
+        loadingDeliveryHistory: false, // estado de carga 
         showMovementModal: false, //modal de movimientos
         showNewProductionModal: false, //modal de producción nueva
         showDeliveryProductionModal: false, //modal de entrega de producción
@@ -506,6 +532,12 @@ props:{
     kits: Object,
 },
 methods:{
+    getProgress(kit) {
+        return kit.goal > 0 ? Math.min(100, Math.round((kit.current_production / kit.goal) * 100)) : 0;
+    },
+    formattedNumber(num) {
+        return num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || "0";
+    },
     async handleDeliveryHistory() {
         if ( !this.deliveryHistory ) {
            await this.fetchDeliveryHistory();
@@ -599,6 +631,8 @@ methods:{
     },
     async fetchDeliveryHistory() {
         try {
+            this.loadingDeliveryHistory = true;
+
             const response = await axios.get(route('tpsp-deliveries.fetch-data'));
 
             // Guardamos los datos en las variables correspondientes
@@ -606,8 +640,10 @@ methods:{
             this.totalByKit = response.data.total_by_kit; // Totales de cada tipo de kit
         } catch (error) {
             console.error('Error al obtener el historial de entregas', error);
+        } finally {
+            this.loadingDeliveryHistory = false;
         }
     }
-},
+}
 }
 </script>
