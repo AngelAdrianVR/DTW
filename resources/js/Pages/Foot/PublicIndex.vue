@@ -1,6 +1,11 @@
 <template>
 <Head title="Inventario kits" />
     <main class="mx-2 md:mx-12 mt-4">
+        <!-- Estado de carga -->
+        <div v-if="loadingDeliveryHistory" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="w-16 h-16 border-4 border-gray-300 border-t-4 border-t-white rounded-full animate-spin"></div>
+        </div>
+
         <header class="flex justify-between items-center">
             <h1 class="font-bold text-lg">
                 Gestión de inventario
@@ -11,13 +16,33 @@
         </header>
 
         <body class="mt-7 md:mx-10">
-            <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7"
-                :class="kit.goal > 0 ? 'border-blue-500' : 'border-gray-500'">
-                <article class="md:flex items-center justify-between">
-                    <div class="ml-5">
-                        <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-right font-bold md:text-left">{{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}</p>
-                        <p class="font-bold">Meta: <span class="font-thin">{{ kit.goal?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} Kits</span></p>
-                        <p class="font-bold">Producción actual: <span class="font-thin">{{ kit.current_production?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} kits</span></p>
+            <section v-for="kit in Object.values(kits.kits)" :key="kit.name" class="border border-gray-200 rounded-2xl shadow-lg p-5 mb-7">
+                <article class="md:flex items-center justify-between bg-white shadow-md rounded-lg p-4">
+                    <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-center md:text-left font-bold md:hidden">
+                        {{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}
+                    </p>
+                    <div class="mt-2 w-full">
+                        <div v-if="kit.goal > 0" class="flex items-center justify-between space-x-3">
+                            <div class="w-full">
+                                <div class="relative w-full h-5 bg-gray-200 rounded-full overflow-hidden border border-gray-300">
+                                    <div 
+                                        class="absolute top-0 left-0 h-full transition-all duration-500 rounded-full"
+                                        :class="{
+                                            'bg-red-400': getProgress(kit) < 50,
+                                            'bg-amber-400': getProgress(kit) >= 50 && getProgress(kit) < 80,
+                                            'bg-green-400': getProgress(kit) >= 80
+                                        }"
+                                        :style="{ width: getProgress(kit) + '%' }"
+                                    ></div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 text-right mt-1 font-bold">{{ getProgress(kit) }}%</p>
+                        </div>
+                        <p :class="kit.goal > 0 ? 'text-blue-500' : 'text-gray-500'" class="text-center md:text-left font-bold hidden md:block">
+                            {{ kit.goal > 0 ? 'En curso' : 'Sin pedido' }}
+                        </p>
+                        <p class="font-bold mt-3">Meta: <span class="font-thin">{{ formattedNumber(kit.goal) }} Kits</span></p>
+                        <p class="font-bold">Producción actual: <span class="font-thin">{{ formattedNumber(kit.current_production) }} kits</span></p>
                         <p class="font-bold">Tipo de kit: <span class="font-thin">{{ kit.name }}</span></p>
                     </div>
 
@@ -110,7 +135,7 @@
                         <tbody>
                             <tr v-for="(data, kit) in totalByKit" :key="kit" class="border-t">
                                 <td class="py-2">{{ kit }}</td>
-                                <td class="py-2">{{ data.total_amount.toLocaleString() }}</td>
+                                <td class="py-2">{{ data.total_amount.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
                                 <!-- <td class="py-2">${{ data.total_price.toFixed(2) }}</td> -->
                             </tr>
                         </tbody>
@@ -154,6 +179,7 @@ data() {
         showDeliveryHistoryModal: false, //modal de historial de entregas
         deliveryHistory: null, //historial de entregas
         totalByKit: null, //total de kits
+        loadingDeliveryHistory: false // estado de carga
     }
 },
 components:{
@@ -164,6 +190,12 @@ props:{
     kits: Object,
 },
 methods:{
+    getProgress(kit) {
+        return kit.goal > 0 ? Math.min(100, Math.round((kit.current_production / kit.goal) * 100)) : 0;
+    },
+    formattedNumber(num) {
+        return num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || "0";
+    },
     getRemainingProduction(kit) {
         // if (!kit || !kit.goal || !kit.current_production) return 0;
         return (Number(kit.goal) || 0) - (Number(kit.current_production) || 0);
@@ -190,6 +222,8 @@ methods:{
     },
     async fetchDeliveryHistory() {
         try {
+            this.loadingDeliveryHistory = true;
+
             const response = await axios.get(route('tpsp-deliveries.fetch-data'));
 
             // Guardamos los datos en las variables correspondientes
@@ -197,6 +231,8 @@ methods:{
             this.totalByKit = response.data.total_by_kit; // Totales de cada tipo de kit
         } catch (error) {
             console.error('Error al obtener el historial de entregas', error);
+        } finally {
+            this.loadingDeliveryHistory = false;
         }
     }
 },
