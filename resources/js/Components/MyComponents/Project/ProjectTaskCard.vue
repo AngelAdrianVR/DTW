@@ -100,6 +100,10 @@
       </div>
       <h2 class="font-bold">Información de la tarea</h2>
       <div class="grid grid-cols-4 gap-2 items-center">
+        <label>Tiempo invertido</label>
+        <div class="col-span-3">
+          <span>{{ formatTime(taskComponentLocal.minutes) }}</span>
+        </div>
         <label>Proyecto</label>
         <div class="col-span-3">
           <el-input v-model="form.project_name" disabled type="text" />
@@ -117,18 +121,16 @@
         </div>
         <label>Departamento</label>
         <div class="col-span-3">
-          <el-select v-model="form.department" clearable filterable
-            placeholder="Seleccionar departamento" no-data-text="No hay departamentos registrados"
-            no-match-text="No se encontraron coincidencias">
+          <el-select v-model="form.department" clearable filterable placeholder="Seleccionar departamento"
+            no-data-text="No hay departamentos registrados" no-match-text="No se encontraron coincidencias">
             <el-option v-for="item in departments" :key="item" :label="item" :value="item" />
           </el-select>
           <InputError :message="form.errors.department" />
         </div>
         <label>Agregar participantes</label>
         <div class="col-span-3">
-          <el-select v-model="form.participants" clearable filterable multiple
-            placeholder="Seleccionar participantes" no-data-text="No hay usuarios registrados"
-            no-match-text="No se encontraron coincidencias">
+          <el-select v-model="form.participants" clearable filterable multiple placeholder="Seleccionar participantes"
+            no-data-text="No hay usuarios registrados" no-match-text="No se encontraron coincidencias">
             <el-option v-for="user in users" :key="user.id" :label="user.name" :value="user.id" />
           </el-select>
           <InputError :message="form.errors.participants" />
@@ -144,7 +146,7 @@
               <span style="float: left"><i :class="item.color" class="fa-solid fa-circle"></i></span>
               <span style="float: center; margin-left: 5px; font-size: 13px">{{
                 item.label
-              }}</span>
+                }}</span>
             </el-option>
           </el-select>
           <InputError :message="form.errors.priority" />
@@ -157,7 +159,7 @@
           <InputError :message="form.errors.limit_date" />
         </div>
         <div class="col-span-full">
-        <label>Descripción</label>
+          <label>Descripción</label>
           <RichText @content="updateDescription($event)" :defaultValue="form.description" />
           <InputError :message="form.errors.description" />
         </div>
@@ -343,6 +345,12 @@ export default {
     }
   },
   methods: {
+    formatTime(minutes) {
+      // convertir losd minutos a formato tipo 5h 23m
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      return `${hours}h ${remainingMinutes}m`;
+    },
     closeEditModal() {
       this.taskInformationModal = false;
       this.form.reset();

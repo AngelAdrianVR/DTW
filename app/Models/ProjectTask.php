@@ -24,12 +24,17 @@ class ProjectTask extends Model implements HasMedia
         'start_date',
         'end_date',
         'project_id',
+        'minutes',
         'user_id',
+        'started_at',
+        'paused_at',
     ];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
+        'started_at' => 'datetime',
+        'paused_at' => 'datetime',
     ];
 
     //relationships
