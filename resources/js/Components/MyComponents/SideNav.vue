@@ -1,9 +1,9 @@
 <template>
     <!-- sidebar -->
     <div class="h-screen hidden lg:block shadow-lg relative z-10">
-        <i @click="small = false" v-if="small"
+        <i @click="updateSideNavSize(false)" v-if="small"
             class="fa-solid fa-angle-right text-center text-xs pt-[2px] text-white rounded-full size-5 bg-primary absolute top-24 -right-3 cursor-pointer hover:scale-125 transition-transform ease-linear duration-150"></i>
-        <i @click="small = true" v-else
+        <i @click="updateSideNavSize(true)" v-else
             class="fa-solid fa-angle-left text-center text-xs pt-[2px] text-white rounded-full size-5 bg-primary absolute top-24 -right-3 cursor-pointer hover:scale-125 transition-transform ease-linear duration-150"></i>
         <div class="bg-secondary h-full overflow-auto px-1">
             <!-- Logo -->
@@ -43,7 +43,7 @@
                         </Accordion>
                         <button v-else-if="menu.show" @click="goToRoute(menu.route)" :active="menu.active"
                             :title="menu.label"
-                            class="w-full text-start px-2 mt-2 flex justify-between text-xs rounded-full py-1 transition ease-linear duration-150"
+                            class="w-full text-start px-2 mt-4 flex justify-between text-xs rounded-full py-1 transition ease-linear duration-150"
                             :class="menu.active ? 'bg-[#3E3D3F] text-primary' : 'hover:text-primary hover:bg-[#3E3D3F] text-white'">
                             <p class="w-full text-xs truncate flex items-center">
                                 <span class="mr-2" v-html="menu.icon"></span>
@@ -137,6 +137,15 @@ export default {
                     show: true,
                 },
                 {
+                    label: 'TPSP',
+                    icon: '<svg width="20" height="22" viewBox="0 0 16 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M10.728 10.2621C9.7486 7.23884 8.36383 5.12753 6.21435 2.68263C8.90193 4.24298 10.728 5.94849 11.4394 9.83631C11.8393 12.0218 12.5625 14.1849 13.4958 15.8403C12.1757 15.7125 11.0921 11.3862 10.728 10.2621Z" /><path d="M14.6569 16.4626C14.5139 16.3991 14.3387 16.3465 14.1345 16.3087C15.4545 16.3513 15.7526 16.9474 14.9435 17.6287C14.4642 18.0324 13.5356 18.1124 12.3035 17.8416C10.5151 17.4485 8.89698 16.0958 7.19372 13.6261C6.81049 13.0704 5.49046 11.5822 4.38334 11.5822C3.61688 11.5822 2.25415 11.497 1.82846 11.497C0.465917 11.4281 -0.598782 9.87889 0.380688 7.92015C1.10464 6.47238 1.50008 5.56644 1.87094 4.08782C2.18066 2.85296 1.62883 1.46312 0.380688 0H0.891549H1.20634C2.08346 1.06514 2.44628 1.81102 2.66226 3.662C2.66226 4.74215 2.33264 5.24898 1.20634 8.02838C0.784917 9.06833 0.95675 10.2812 1.82846 10.8154C2.09997 10.9818 3.15725 11.0722 4.38334 10.9818C5.60943 10.8915 8.30065 12.3537 11.1538 16.14C12.3495 17.1771 13.0402 17.4159 14.2622 17.3463C14.9378 17.2185 15.0698 16.7223 14.6569 16.4626Z" /></svg>',
+                    route: route('tpsp.index'),
+                    active: route().current('tpsp.*'),
+                    options: [],
+                    dropdown: false,
+                    show: true,
+                },
+                {
                     label: 'Suscripciones',
                     icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" height="18" width="18" id="Desktop-Dollar--Streamline-Core"><desc>Desktop Dollar Streamline Icon: https://streamlinehq.com</desc><g id="Desktop-Dollar--Streamline-Core"><path id="Vector" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M7.76062 2H1c-0.132608 0 -0.259785 0.05268 -0.353553 0.14645C0.552678 2.24021 0.5 2.36739 0.5 2.5v8c0 0.1326 0.052678 0.2598 0.146447 0.3536C0.740215 10.9473 0.867392 11 1 11h12c0.1326 0 0.2598 -0.0527 0.3536 -0.1464 0.0937 -0.0938 0.1464 -0.221 0.1464 -0.3536v-1" stroke-width="1"></path><path id="Vector_2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m6 11 -1 2.5" stroke-width="1"></path><path id="Vector_3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m8 11 1 2.5" stroke-width="1"></path><path id="Vector_4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M4 13.5h6" stroke-width="1"></path><path id="Vector 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M13.4241 2.72214c-0.0585 -0.16561 -0.1488 -0.3162 -0.2636 -0.44444 -0.2441 -0.27278 -0.5989 -0.44445 -0.9938 -0.44445h-1.0321c-0.6573 0 -1.19014 0.53286 -1.19014 1.19018 0 0.55931 0.38944 1.04316 0.93584 1.16268l1.5713 0.34373c0.6121 0.1339 1.0484 0.67634 1.0484 1.30292 0 0.73638 -0.5969 1.33383 -1.3333 1.33383h-0.8889c-0.5806 0 -1.0744 -0.37103 -1.2575 -0.88889" stroke-width="1"></path><path id="Vector 2489" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M11.7222 1.83333V0.5" stroke-width="1"></path><path id="Vector 2490" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M11.7222 8.50008V7.16675" stroke-width="1"></path></g></svg>',
                     route: route('suscription-projects.index'),
@@ -223,9 +232,17 @@ export default {
         },
         logout() {
             this.$inertia.post(route('logout'));
+        },
+        updateSideNavSize(is_small){
+            this.small = is_small;
+            localStorage.setItem('is_sidenav_small', is_small);
         }
     },
     mounted() {
+        const is_small = localStorage.getItem('is_sidenav_small');
+        if (is_small !== null) {
+            this.small = JSON.parse(is_small); // Convertirlo a booleano si es necesario
+        }
     }
 }
 </script>
