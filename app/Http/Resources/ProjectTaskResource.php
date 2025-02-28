@@ -48,6 +48,8 @@ class ProjectTaskResource extends JsonResource
             'media' => $this->getMedia('files')->all(),
             'start_date' => $this->start_date?->isoFormat('DD MMM YYYY'),
             'start_date_raw' => $this->start_date,
+            'minutes' => $this->minutes,
+            'started_at' => $this->started_at,
             // 'start_date_raw' => $this->start_date?->toDateString(),
             'end_date_raw' => $this->end_date?->toDateString(),
             'end_date' => $this->end_date?->isoFormat('DD MMM YYYY'),

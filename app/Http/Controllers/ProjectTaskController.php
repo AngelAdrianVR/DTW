@@ -136,7 +136,17 @@ class ProjectTaskController extends Controller
 
     public function updateStatus(ProjectTask $project_task, Request $request)
     {
-        $project_task->update(['status' => $request->status]);
+        if ($project_task->status === 'En curso' && $request->status !== 'En curso') {
+            $minutes = $project_task->minutes + now()->diffInMinutes($project_task->started_at);
+            $project_task->minutes = $minutes;
+            $project_task->started_at = null;
+        } else if ($request->status === 'En curso') {
+            $project_task->started_at = now();
+        }
+        
+        $project_task->status = $request->status;
+        $project_task->save();
+
         $this->handleUpdatedTaskStatus($project_task->project_id);
 
         return response()->json([]);

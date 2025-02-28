@@ -23,6 +23,9 @@ return new class extends Migration
             $table->date('end_date');
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->unsignedMediumInteger('minutes')->default(0);
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('paused_at')->nullable();
             $table->timestamps();
         });
     }
