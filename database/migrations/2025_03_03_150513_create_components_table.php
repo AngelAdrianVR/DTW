@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('components', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nombre del componente
+            $table->string('category'); // categoría del componente
             $table->unsignedInteger('views'); //clics que ha tenido el componente
             $table->text('html_code'); // Código HTML
             $table->text('css_code')->nullable(); // Clases de Tailwind o CSS puro

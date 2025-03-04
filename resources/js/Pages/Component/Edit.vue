@@ -1,11 +1,11 @@
 <template>
-    <AppLayout title="Crear componente">
+    <AppLayout title="Editar componente">
         <main class="mx-2 md:mx-12 mt-4">
             <Back />
 
             <section class="border border-grayD9 rounded-[10px] px-5 py-4 mx-2 md:mx-8 lg:mx-28 mt-10">
-                <h1 class="font-bold">Crear componente UI</h1>
-                <form @submit.prevent="store" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <h1 class="font-bold">Editar componente UI</h1>
+                <form @submit.prevent="update" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                         <InputLabel class="mb-1 ml-2" value="Nombre del componente*" />
                         <el-input v-model="form.name" placeholder="Ej. Botón de agregar" clearable />
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="md:col-span-full flex justify-end mt-3">
-                        <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Agregar componente</PrimaryButton>
+                        <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Guardar cambios</PrimaryButton>
                     </div>
                 </form>
             </section>
@@ -86,12 +86,12 @@ import { useForm } from "@inertiajs/vue3";
 export default {
 data() {
     const form = useForm({
-        name: null,
-        category: null,
-        views: 0,
-        html_code: null,
-        css_code: null,
-        js_code: null,
+        name: this.component.name,
+        category: this.component.category,
+        views: this.component.views,
+        html_code: this.component.html_code,
+        css_code: this.component.css_code,
+        js_code: this.component.js_code,
     });
 
     return {
@@ -107,11 +107,11 @@ AppLayout,
 Back,
 },
 props:{
-
+    component: Object
 },
 methods:{
-    store() {
-      this.form.post(route('components.store'), {
+    update() {
+      this.form.put(route('components.update', this.component.id), {
         onSuccess: () => {
           this.$notify({
             title: "Correcto",
