@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ComponentController;
 use App\Http\Controllers\DeliveredProductionController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FootController;
@@ -183,6 +184,10 @@ Route::get('tpsp-public-index', [FootController::class, 'publicIndex'])->name('t
 Route::resource('tpsp-deliveries', DeliveredProductionController::class)->middleware('auth');
 Route::get('tpsp-deliveries-fetch-data', [DeliveredProductionController::class, 'fetchDeliveryHistory'])->name('tpsp-deliveries.fetch-data')->middleware('auth');
 
+
+Route::get('components', [ComponentController::class, 'index'])->name('components.index')->middleware('auth');
+Route::post('components', [ComponentController::class, 'store'])->name('components.store')->middleware('auth');
+Route::get('components/{component}/show', [ComponentController::class, 'show'])->name('components.show');
 
 
 //PDF routes ----------------------------------------------------
