@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-200 transition hover:shadow-2xl group self-start">
+    <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-200 transition hover:shadow-2xl self-start">
         <!-- Nombre del componente -->
         <div class="flex items-center justify-between mx-2">
-            <h2 class="font-semibold text-gray-800 mb-2">{{ component.name }}</h2>
+            <h2 class="font-semibold text-gray-800 mb-2 truncate w-2/3">{{ component.name }}</h2>
             <div class="flex items-center space-x-2">
                 <i class="fa-brands fa-html5 text-orange-500 text-lg"></i>
                 <i v-if="component.css_code" class="fa-brands fa-css3-alt text-blue-600 text-lg"></i>
@@ -14,7 +14,7 @@
         </div>
 
         <!-- Vista previa del componente -->
-        <div class="border h-32 border-gray-300 rounded-lg overflow-hidden p-4 bg-gray-50 flex items-center justify-center">
+        <div class="border h-40 border-gray-300 rounded-lg overflow-hidden p-4 bg-gray-50 flex items-center justify-center">
             <div v-html="component.html_code"></div>
         </div>
 
@@ -29,14 +29,22 @@
                 </p>
 
             </div>
-            <div class="flex items-center space-x-3">
-                <button class="opacity-0 group-hover:opacity-100 transition ease-linear duration-100 text-gray-500 py-1 px-3 rounded-md hover:bg-gray-100 text-sm">
+
+            <!-- Acciones -->
+            <div class="flex items-center space-x-2">
+                <button @click="$inertia.get(route('components.show', component.id))" class="transition ease-linear duration-100 text-gray-500 py-1 px-3 rounded-md hover:bg-gray-100 text-sm">
                     <i class="fa-solid fa-code mr-1"></i> Código
                 </button>
 
-                <button @click="$inertia.get(route('componentr.edit', component.id))" v-if="$page.props.auth?.user" class="opacity-0 group-hover:opacity-100 transition ease-linear duration-100 text-gray-500 py-1 px-2 rounded-md hover:bg-gray-100 text-sm">
+                <button @click="$inertia.get(route('components.edit', component.id))" v-if="$page.props.auth?.user" class="transition ease-linear duration-100 text-gray-500 py-1 px-2 rounded-md hover:bg-gray-100 text-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    </svg>
+                </button>
+                
+                <button @click="confirmDelete" v-if="$page.props.auth?.user" class="transition ease-linear duration-100 text-red-500 py-1 px-2 rounded-md hover:bg-red-100 text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                     </svg>
                 </button>
             </div>
@@ -80,6 +88,7 @@ export default {
     props: {
         component: Object
     },
+    emits:['deleteComponent'],
     data() {
         return {
             activeTab: "html",
@@ -99,7 +108,7 @@ export default {
                     icon: '<i class="fa-brands fa-square-js"></i>',
                     color: 'text-yellow-400'
                 }, 
-            ]
+            ],
         };
     },
     mounted() {
@@ -121,7 +130,35 @@ export default {
             } else {
                 return views.toString();
             }
-        }
+        },
+        confirmDelete() {
+            ElMessageBox.confirm(
+                `¿Estás seguro de que quieres eliminar "${this.component.name}"? Esta acción no se puede deshacer.`,
+                "Confirmar eliminación",
+                {
+                    confirmButtonText: "Eliminar",
+                    cancelButtonText: "Cancelar",
+                    type: "warning",
+                }
+            )
+            .then(() => {
+                this.deleteComponent();
+            })
+            .catch(() => {
+                ElMessage.info("Eliminación cancelada");
+            });
+        },
+        deleteComponent() {
+            this.$inertia.delete(route("components.destroy", this.component.id), {
+                onSuccess: () => {
+                    ElMessage.success("Componente eliminado exitosamente");
+                    this.$emit('deleteComponent', this.component.id);
+                },
+                onError: () => {
+                    ElMessage.error("Error al eliminar el componente");
+                }
+            });
+        },
     }
 };
 </script>

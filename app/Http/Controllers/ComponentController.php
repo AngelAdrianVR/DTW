@@ -10,8 +10,9 @@ class ComponentController extends Controller
     public function index()
     {
         return inertia('Component/Index', [
-            'components' => Component::all()
+            'components' => Component::latest()->paginate(20)
         ]);
+        
     }
 
     public function create()
@@ -23,6 +24,8 @@ class ComponentController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'category' => 'nullable|string',
+            'views' => 'nullable|numeric',
             'html_code' => 'required',
             'css_code' => 'nullable',
             'js_code' => 'nullable',
@@ -30,28 +33,50 @@ class ComponentController extends Controller
 
         Component::create($request->all());
 
-        // return redirect()->back()->with('success', 'Componente guardado con éxito');
+        return to_route('components.index');
     }
 
     public function show(Component $component)
     {
         return inertia('Component/Show', [
-            'components' => Component::all()
+            'component' => $component
         ]);
     }
 
     public function edit(Component $component)
     {
-        //
+        return inertia('Component/Edit', compact('component'));
     }
 
     public function update(Request $request, Component $component)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'category' => 'nullable|string',
+            'views' => 'nullable|numeric',
+            'html_code' => 'required',
+            'css_code' => 'nullable',
+            'js_code' => 'nullable',
+        ]);
+
+        $component->update($request->all());
+
+        return to_route('components.index');
     }
 
     public function destroy(Component $component)
     {
-        //
+        $component->delete();
+    }
+
+    public function filterData(Request $request)
+    {
+        $components = Component::query();
+        
+        if ($request->has('category')) {
+            $components->where('category', $request->category);
+        }
+        
+        return response()->json($components->latest()->get());
     }
 }

@@ -9,5 +9,5 @@ class Component extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'views', 'html_code', 'css_code', 'js_code'];
+    protected $fillable = ['name', 'category', 'views', 'html_code', 'css_code', 'js_code'];
 }
