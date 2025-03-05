@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SuscriptionProjectController;
 use App\Http\Controllers\UserController;
 use App\Models\Client;
+use App\Models\Component;
 use App\Models\Project;
 use App\Models\Prospect;
 use App\Models\User;
@@ -64,9 +65,11 @@ Route::get('us', function () {
     return inertia('Spanish/Us');
 })->name('us');
 
-Route::get('packages', function () {
-    return inertia('Spanish/Package');
-})->name('packages');
+Route::get('UI-components', function () {
+    return inertia('Spanish/UIComponents', [
+        'components' => Component::latest()->paginate(20)
+    ]);
+})->name('UI-components');
 
 
 // ----- English -----
@@ -74,9 +77,11 @@ Route::get('us-En', function () {
     return inertia('English/UsEn');
 })->name('us-en');
 
-Route::get('packages-En', function () {
-    return inertia('English/PackageEn');
-})->name('packages-en');
+Route::get('UI-components-En', function () {
+    return inertia('English/UIComponentsEn', [
+        'components' => Component::latest()->paginate(20)
+    ]);
+})->name('UI-components-en');
 
 
 
@@ -186,9 +191,6 @@ Route::get('tpsp-deliveries-fetch-data', [DeliveredProductionController::class, 
 
 
 Route::resource('components', ComponentController::class)->except('show')->middleware('auth');
-// Route::get('components', [ComponentController::class, 'index'])->name('components.index')->middleware('auth');
-// Route::get('components/create', [ComponentController::class, 'create'])->name('components.create')->middleware('auth');
-// Route::post('components', [ComponentController::class, 'store'])->name('components.store')->middleware('auth');
 Route::get('components/{component}/show', [ComponentController::class, 'show'])->name('components.show');
 Route::get('components-filter-data', [ComponentController::class, 'filterData'])->name('components.filter-data');
 

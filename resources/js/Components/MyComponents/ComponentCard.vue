@@ -49,6 +49,7 @@
                 </button>
             </div>
         </div>
+            <p class="text-xs text-gray-400">Autor: {{ component.author ?? 'Desconocido' }}</p>
 
         <!-- Código con pestañas -->
         <!-- <details class="mt-4">

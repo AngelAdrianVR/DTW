@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Componentes UI">
-        <main class="container mx-auto p-6">
+        <main class="mx-auto p-6">
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold mb-6 text-gray-800">Componentes UI</h1>
                 <button
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Filtros -->
-            <div class="flex justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
+            <div class="flex md:justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
                 <button
                     v-for="category in categories"
                     :key="category"

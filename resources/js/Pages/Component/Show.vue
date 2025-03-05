@@ -1,29 +1,24 @@
 <template>
     <Head :title="component.name" />
-    <main class="bg-gray-800 p-2 md:p-5 lg:p-10 min-h-screen">
-        <div class="w-[80%] mx-auto mt-12">
+    <main class="bg-[#363636] p-2 md:p-5 lg:p-10 min-h-screen">
+        <div class="md:w-[100%] lg:w-[90%] xl:w-[80%] mx-auto mt-12">
             <div class="flex items-center justify-between mx-7">
-                <span></span>
-                <!-- <Back2 /> -->
-                <div class="flex items-center space-x-5">
-                    <span class="text-gray-100 font-bold text-lg">{{ component.name }}</span>
-                    <p class="text-gray-400 flex items-center space-x-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
-                        <span>{{ formatViews(component.views) }}</span>
-                    </p>
-                </div>
+                <button @click="goBack" class="size-8 text-white rounded-full flex items-center justify-center bg-gray-400 opacity-70 hover:scale-105">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <span class="text-gray-100 font-bold text-lg">{{ component.name }}</span>
+                <p class="text-gray-400 flex items-center space-x-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                    <span>{{ formatViews(component.views) }}</span>
+                </p>
             </div>
 
             <section class="flex m-2">
                 <!-- parte izquierda (componente) -->
                 <article :class="['w-1/2 rounded-l-3xl h-[600px] flex items-center justify-center relative', darkMode ? 'bg-black' : 'bg-['+ customColor + ']']">
-                    <button @click="goBack" class="absolute top-2 left-2 size-12 text-white rounded-full flex items-center justify-center bg-gray-400 opacity-70 hover:scale-105">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-
                     <!-- Vista previa del componente -->
                     <div v-html="component.html_code"></div>
 
@@ -43,15 +38,15 @@
                 </article>
 
                 <!-- Parte derecha (código) -->
-                <article class="bg-slate-900 w-1/2 rounded-r-3xl h-[600px] flex flex-col">
+                <article class="bg-[#232323] w-1/2 rounded-r-3xl h-[600px] flex flex-col">
                     <!-- Pestañas -->
-                    <div class="flex space-x-4 border-b border-gray-200 bg-gradient-to-t from-gray-600 to-gray-900">
+                    <div class="flex space-x-4 border-b border-[#4e4d4d] mx-3">
                     <button
                         v-for="tab in tabs"
                         :key="tab"
                         @click="selectedTab = tab"
                         :class="{
-                        'border-blue-500 text-blue-500': selectedTab === tab,
+                        'border-[#C08AFD] text-[#C08AFD]': selectedTab === tab,
                         'border-transparent text-gray-400 hover:text-gray-300': selectedTab !== tab
                         }"
                         class="py-2 px-4 border-b-2 font-medium text-sm focus:outline-none z-10"
@@ -68,7 +63,7 @@
                         </div>
 
                     <!-- Contenido de las pestañas -->
-                    <div v-if="selectedTab === 'HTML'" class="bg-gray-900 p-3 rounded-lg mt-7">
+                    <div v-if="selectedTab === 'HTML'" class="p-3 rounded-lg mt-7">
                         <div class="flex">
                         <!-- Números de línea -->
                         <div class="text-gray-500 pr-4 text-right select-none">
@@ -79,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div v-if="selectedTab === 'CSS'" class="bg-gray-900 p-3 rounded-lg">
+                    <div v-if="selectedTab === 'CSS'" class="p-3 rounded-lg mt-7">
                         <div class="flex">
                         <!-- Números de línea -->
                         <div class="text-gray-500 pr-4 text-right select-none">
@@ -90,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div v-if="selectedTab === 'JS'" class="bg-gray-900 p-3 rounded-lg">
+                    <div v-if="selectedTab === 'JS'" class="p-3 rounded-lg mt-7">
                         <div class="flex">
                         <!-- Números de línea -->
                         <div class="text-gray-500 pr-4 text-right select-none">
