@@ -71,7 +71,7 @@ data() {
     return {
         localComponents: [... this.components.data],
         selectedCategory: null,
-        categories: ["Botones", "Switches", "Estados de carga", "Otro"],
+        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
         loading: false
     }
 },

@@ -124,7 +124,7 @@ data() {
 
     return {
         form,
-        categories: ["Botones", "Switches", "Estados de carga", "Otro"],
+        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
         previewHtml: '', // Para almacenar el HTML de la vista previa
         componentId: Date.now(), // Identificador único para encapsular estilos
     }
