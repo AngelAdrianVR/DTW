@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nombre del componente
-            $table->string('category'); // categoría del componente
-            $table->unsignedInteger('views'); //clics que ha tenido el componente
+            $table->string('name')->nullable(); // Nombre del componente
+            $table->string('category')->nullable(); // categoría del componente
+            $table->string('bg_color')->nullable(); // color de fondo
+            $table->unsignedInteger('views')->nullable(); //clics que ha tenido el componente
             $table->text('html_code'); // Código HTML
             $table->text('css_code')->nullable(); // Clases de Tailwind o CSS puro
             $table->text('js_code')->nullable(); // Código JS si es necesario

@@ -5,9 +5,9 @@
 
             <section class="border border-grayD9 rounded-[10px] px-5 py-4 mx-2 md:mx-8 lg:mx-28 mt-10">
                 <h1 class="font-bold">Crear componente UI</h1>
-                <form @submit.prevent="store" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <InputLabel class="mb-1 ml-2" value="Nombre del componente*" />
+                        <InputLabel class="mb-1 ml-2" value="Nombre del componente" />
                         <el-input v-model="form.name" placeholder="Ej. Botón de agregar" clearable />
                         <InputError :message="form.errors.name" />
                     </div>
@@ -72,10 +72,27 @@
                         <InputError :message="form.errors.js_code" />
                     </div>
 
-                    <div class="md:col-span-full flex justify-end mt-3">
-                        <PrimaryButton :isLoading="form.processing" :disabled="form.processing">Agregar componente</PrimaryButton>
+                    <!-- Vista previa del componente -->
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        <div class="flex items-center justify-between">
+                            <h2 class="font-semibold text-lg mb-2">Vista Previa</h2>
+                            
+                            <!-- Selector de color -->
+                            <div class="flex items-center">
+                                <label for="colorPicker" class="text-gray-500 mr-2">Color de fondo</label>
+                                <input type="color" id="colorPicker" v-model="form.bg_color" class="cursor-pointer">
+                            </div>
+                        </div>
+                        <div :id="`preview-${componentId}`" class="border border-gray-200 rounded-lg p-4 flex items-center justify-center min-h-32" :class="'bg-['+ form.bg_color + ']'">
+                            <div v-html="previewHtml"></div>
+                        </div>
                     </div>
-                </form>
+
+                    <div class="md:col-span-full flex justify-end space-x-4 mt-3">
+                        <el-button type="primary" @click="renderPreview">Vista Previa</el-button>
+                        <PrimaryButton @click="store" :isLoading="form.processing" :disabled="form.processing">Agregar componente</PrimaryButton>
+                    </div>
+                </div>
             </section>
         </main>
     </AppLayout>
@@ -95,15 +112,18 @@ data() {
         name: null,
         category: null,
         views: 0,
-        author: 0,
+        author: null,
         html_code: null,
         css_code: null,
         js_code: null,
+        bg_color: '#f9fafb',
     });
 
     return {
         form,
-        categories: ["Botones", "Switches", "Estados de carga", "Otro"]
+        categories: ["Botones", "Switches", "Estados de carga", "Otro"],
+        previewHtml: '', // Para almacenar el HTML de la vista previa
+        componentId: Date.now(), // Identificador único para encapsular estilos
     }
 },
 components:{
@@ -117,6 +137,25 @@ props:{
 
 },
 methods:{
+    renderPreview() {
+        this.componentId = Date.now(); // Generar un nuevo ID único para evitar conflictos
+        this.previewHtml = this.form.html_code || '<p class="text-gray-400">No hay código HTML</p>';
+
+        // Eliminar estilos previos si existen
+        const styleId = `style-preview-${this.componentId}`;
+        let existingStyle = document.getElementById(styleId);
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+
+        // Inyectar el CSS en el head con el ID encapsulado
+        if (this.form.css_code) {
+            const styleTag = document.createElement("style");
+            styleTag.id = styleId;
+            styleTag.innerHTML = `#preview-${this.componentId} { ${this.form.css_code} }`;
+            document.head.appendChild(styleTag);
+        }
+    },
     store() {
       this.form.post(route('components.store'), {
         onSuccess: () => {

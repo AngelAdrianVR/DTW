@@ -14,7 +14,7 @@
         </div>
 
         <!-- Vista previa del componente -->
-        <div class="border h-40 border-gray-300 rounded-lg overflow-hidden p-4 bg-gray-50 flex items-center justify-center">
+        <div :id="`component-${component.id}`" class="border h-40 border-gray-300 rounded-lg overflow-hidden p-4 flex items-center justify-center" :class="'bg-['+ component.bg_color + ']'">
             <div v-html="component.html_code"></div>
         </div>
 
@@ -50,37 +50,6 @@
             </div>
         </div>
             <p class="text-xs text-gray-400">Autor: {{ component.author ?? 'Desconocido' }}</p>
-
-        <!-- Código con pestañas -->
-        <!-- <details class="mt-4">
-            <summary class="text-blue-600 cursor-pointer text-sm font-medium">Ver código</summary>
-
-            <div class="mt-2 bg-gray-100 rounded-lg p-3">
-                Pestañas
-                <div class="flex border-b border-gray-300">
-                    <button 
-                        v-for="tab in tabs" 
-                        :key="tab" 
-                        @click="activeTab = tab.label"
-                        class="px-4 py-2 text-sm font-medium"
-                        :class="{
-                            'bg-white border border-gray-300 border-b-transparent': activeTab === tab.label,
-                            'bg-gray-200': activeTab !== tab.label
-                        }"
-                    >
-                        <span :class="tab.color" v-html="tab.icon"></span>
-                        {{ tab.label.toUpperCase() }}
-                    </button>
-                </div>
-
-                Contenido de las pestañas
-                <pre class="bg-gray-900 text-white text-xs p-3 rounded mt-2 overflow-auto">
-                    <code v-if="activeTab === 'html'">{{ component.html_code }}</code>
-                    <code v-if="activeTab === 'css'">{{ component.css_code || 'No tiene código css' }}</code>
-                    <code v-if="activeTab === 'js'">{{ component.js_code || 'No tiene código JS' }}</code>
-                </pre>
-            </div>
-        </details> -->
     </div>
 </template>
 
@@ -118,9 +87,18 @@ export default {
     methods: {
         injectStyles() {
             if (this.component.css_code) {
-                const styleTag = document.createElement("style");
-                styleTag.innerHTML = this.component.css_code;
-                document.head.appendChild(styleTag);
+                const styleId = `component-style-${this.component.id}`;
+                let styleTag = document.getElementById(styleId);
+
+                if (!styleTag) {
+                    styleTag = document.createElement("style");
+                    styleTag.id = styleId;
+
+                    // Encapsulamos los estilos para que solo apliquen dentro del div con id `component-{id}`
+                    styleTag.innerHTML = `#component-${this.component.id} { ${this.component.css_code} }`;
+
+                    document.head.appendChild(styleTag);
+                }
             }
         },
         formatViews(views) {

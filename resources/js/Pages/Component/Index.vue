@@ -38,7 +38,7 @@
                 <button 
                     @click="resetFilter"
                     class="px-4 py-2 flex-shrink-0 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition">
-                    Limpiar filtro
+                    Todos
                 </button>
             </div>
 

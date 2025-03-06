@@ -23,8 +23,9 @@ class ComponentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'nullable|string',
             'category' => 'nullable|string',
+            'bg_color' => 'nullable|string',
             'views' => 'nullable|numeric',
             'author' => 'nullable|string',
             'html_code' => 'required',
@@ -39,6 +40,9 @@ class ComponentController extends Controller
 
     public function show(Component $component)
     {
+        //incrementar en uno las vistas
+        $component->increment('views');
+
         return inertia('Component/Show', [
             'component' => $component
         ]);
@@ -52,8 +56,9 @@ class ComponentController extends Controller
     public function update(Request $request, Component $component)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'nullable|string',
             'category' => 'nullable|string',
+            'bg_color' => 'nullable|string',
             'views' => 'nullable|numeric',
             'author' => 'nullable|string',
             'html_code' => 'required',

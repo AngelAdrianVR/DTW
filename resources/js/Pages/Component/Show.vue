@@ -18,9 +18,9 @@
 
             <section class="flex m-2">
                 <!-- parte izquierda (componente) -->
-                <article :class="['w-1/2 rounded-l-3xl h-[600px] flex items-center justify-center relative', darkMode ? 'bg-black' : 'bg-['+ customColor + ']']">
+                <article :id="`component-${component.id}`" :class="['w-1/2 rounded-l-3xl h-[600px] flex items-center justify-center relative', darkMode ? 'bg-black' : 'bg-['+ customColor + ']']">
                     <!-- Vista previa del componente -->
-                    <div v-html="component.html_code"></div>
+                        <div v-html="component.html_code"></div>
 
                     <div class="flex items-center space-x-3 absolute top-2 right-2 z-20 bg-gray-500 opacity-75 rounded-lg py-1 px-3">
                         <!-- Toggle para cambiar a modo oscuro -->
@@ -113,7 +113,7 @@ data() {
         tabs: ['HTML', 'CSS', 'JS'],
         selectedTab: 'HTML',
         darkMode: false, // Estado del modo oscuro
-        customColor: '#cfcfcf', // Color personalizado por el usuario
+        customColor: this.component.bg_color, // Color personalizado por el usuario
     }
 },
 components:{
@@ -154,6 +154,25 @@ methods:{
       // En este ejemplo, se utiliza la función history.back() para retroceder una página
       window.history.back();
     },
-}
+    injectStyles() {
+        if (this.component.css_code) {
+            const styleId = `component-style-${this.component.id}`;
+            let styleTag = document.getElementById(styleId);
+
+            if (!styleTag) {
+                styleTag = document.createElement("style");
+                styleTag.id = styleId;
+
+                // Encapsulamos los estilos para que solo apliquen dentro del div con id `component-{id}`
+                styleTag.innerHTML = `#component-${this.component.id} { ${this.component.css_code} }`;
+
+                document.head.appendChild(styleTag);
+            }
+        }
+    },
+},
+mounted() {
+    this.injectStyles();
+},
 }
 </script>
