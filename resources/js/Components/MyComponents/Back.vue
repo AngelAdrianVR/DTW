@@ -1,5 +1,5 @@
 <template>
-  <button v-if="route == null" @click="goBack" class="flex justify-center items-center rounded-full py-[9px] px-3 focus:outline-none bg-[#EDEDED]">
+  <button v-if="this.route == null" @click="goBack" class="flex justify-center items-center rounded-full py-[9px] px-3 focus:outline-none bg-[#EDEDED]">
         <i class="fa-solid fa-angle-left text-black"></i>
   </button>
 

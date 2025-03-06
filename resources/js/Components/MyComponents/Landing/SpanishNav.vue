@@ -18,9 +18,9 @@
                         <el-dropdown-item @click="$inertia.get(route('quote-request.create'))">
                             Cotizar
                         </el-dropdown-item>                        
-                        <!-- <el-dropdown-item @click="$inertia.get(route('packages'))">
-                            Paquetes de programación
-                        </el-dropdown-item>                         -->
+                        <el-dropdown-item @click="$inertia.get(route('UI-components'))">
+                            Componentes UI
+                        </el-dropdown-item>                        
                     </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -89,7 +89,7 @@
             <ul v-if="showMore" class="text-center p-3">
                 <li @click="$inertia.get(route('us'))" class="hover:bg-[#7F659C] rounded-lg p-1">Nosotros</li>
                 <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">Cotizar</li>
-                <!-- <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li> -->
+                <li @click="$inertia.get(route('UI-components'))" class="hover:bg-[#7F659C] rounded-lg p-1">Componentes UI</li>
             </ul>
             <!-- <button class="mx-2"> 
                 <el-dropdown trigger="click">
