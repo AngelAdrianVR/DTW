@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Componentes UI">
-        <main class="container mx-auto p-6">
+        <main class="mx-auto p-6">
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold mb-6 text-gray-800">Componentes UI</h1>
                 <button
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Filtros -->
-            <div class="flex justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
+            <div class="flex md:justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
                 <button
                     v-for="category in categories"
                     :key="category"
@@ -38,7 +38,7 @@
                 <button 
                     @click="resetFilter"
                     class="px-4 py-2 flex-shrink-0 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition">
-                    Limpiar filtro
+                    Todos
                 </button>
             </div>
 
@@ -71,7 +71,7 @@ data() {
     return {
         localComponents: [... this.components.data],
         selectedCategory: null,
-        categories: ["Botones", "Switches", "Estados de carga", "Otro"],
+        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
         loading: false
     }
 },
