@@ -114,7 +114,7 @@ class FootController extends Controller
     {
         $request->validate([
             'kitType' => 'required|string',
-            'goal' => 'required|numeric|min:1',
+            'goal' => 'required|numeric|min:0',
             'current_production' => 'required|numeric|min:0',
         ]);
 
