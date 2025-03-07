@@ -59,34 +59,68 @@
                     <!-- Contenedor del código con scroll y números de línea -->
                     <div class="flex-1 overflow-auto relative">
                         <!-- Botón de copiar -->
-                        <div v-if="(selectedTab === 'HTML' && component.html_code) || (selectedTab === 'CSS' && component.css_code) || (selectedTab === 'JS' && component.js_code)" class="flex justify-end absolute top-2 right-2">
+                        <div v-if="(selectedTab === 'HTML' && component.html_code) || (selectedTab === 'CSS' && component.css_code) || (selectedTab === 'JS' && component.js_code)" class="flex justify-between w-[95%] absolute top-2 right-2">
+                            <div class="flex items-center space-x-3">
+                                <label class="group flex items-center cursor-pointer">
+                                    <input class="hidden peer" type="checkbox" v-model="editMode" />
+                                    <span
+                                    class="relative w-5 h-5 flex justify-center items-center bg-gray-100 border-2 border-gray-400 rounded-md shadow-md transition-all duration-500 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-hover:scale-105"
+                                    >
+                                    <span
+                                        class="absolute inset-0 bg-gradient-to-br from-white/30 to-white/10 opacity-0 peer-checked:opacity-100 rounded-md transition-all duration-500 peer-checked:animate-pulse"
+                                    ></span>
+
+                                    <svg
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        class="hidden w-5 h-5 text-white peer-checked:block transition-transform duration-500 transform scale-50 peer-checked:scale-100"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                        clip-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+                                        fill-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    </span>
+
+                                    <span
+                                        class="ml-3 text-gray-500 group-hover:text-blue-500 font-medium transition-colors duration-300"
+                                        >
+                                        Editar
+                                    </span>
+                                </label>
+                            </div>
+
                             <CopyButton @click="copyToClipboard" />
                         </div>
 
                         <!-- Contenido de las pestañas -->
-                        <div v-if="selectedTab === 'HTML'" class="p-3 rounded-lg mt-7">
+                        <div v-if="selectedTab === 'HTML'" class="p-3 rounded-lg mt-9">
                             <div class="flex">
-                            <!-- Números de línea -->
-                            <div class="text-gray-500 pr-4 text-right select-none">
-                                <pre v-for="(line, index) in getLines(component.html_code)" :key="index" class="m-0">{{ index + 1 }}</pre>
-                            </div>
-                            <!-- Código -->
-                            <pre class="text-white flex-1 overflow-x-auto"><code>{{ component.html_code ?? 'No hay código html' }}</code></pre>
+                                <!-- Números de línea -->
+                                <div class="text-gray-500 pr-4 text-right select-none">
+                                    <pre v-for="(line, index) in getLines(component.html_code)" :key="index" class="m-0">{{ index + 1 }}</pre>
+                                </div>
+                                <!-- Código -->
+                                <textarea v-if="editMode" v-model="component.html_code" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="No hay código html"></textarea>
+                                <pre v-else class="text-white flex-1 overflow-x-auto"><code>{{ component.html_code ?? 'No hay código html' }}</code></pre>
                             </div>
                         </div>
 
-                        <div v-if="selectedTab === 'CSS'" class="p-3 rounded-lg mt-7">
+                        <div v-if="selectedTab === 'CSS'" class="p-3 rounded-lg mt-9">
                             <div class="flex">
                             <!-- Números de línea -->
                             <div class="text-gray-500 pr-4 text-right select-none">
                                 <pre v-for="(line, index) in getLines(component.css_code)" :key="index" class="m-0">{{ index + 1 }}</pre>
                             </div>
-                            <!-- Código -->
-                            <pre class="text-white flex-1 overflow-x-auto"><code>{{ component.css_code ?? 'No hay código CSS' }}</code></pre>
+                                <!-- Código -->
+                                <textarea @input="injectStyles" v-if="editMode" v-model="component.css_code" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="No hay código html"></textarea>
+                                <pre v-else class="text-white flex-1 overflow-x-auto"><code>{{ component.css_code ?? 'No hay código CSS' }}</code></pre>
                             </div>
                         </div>
 
-                        <div v-if="selectedTab === 'JS'" class="p-3 rounded-lg mt-7">
+                        <div v-if="selectedTab === 'JS'" class="p-3 rounded-lg mt-9">
                             <div class="flex">
                             <!-- Números de línea -->
                             <div class="text-gray-500 pr-4 text-right select-none">
@@ -115,6 +149,7 @@ data() {
         selectedTab: 'HTML',
         darkMode: false, // Estado del modo oscuro
         customColor: this.component.bg_color, // Color personalizado por el usuario
+        editMode: false, //modo de edicion de código
     }
 },
 components:{
@@ -151,25 +186,23 @@ methods:{
         }
     },
     goBack() {
-      // Puedes personalizar esta lógica según tus necesidades
-      // En este ejemplo, se utiliza la función history.back() para retroceder una página
       window.history.back();
     },
+     // Función para inyectar los estilos
     injectStyles() {
-        if (this.component.css_code) {
-            const styleId = `component-style-${this.component.id}`;
-            let styleTag = document.getElementById(styleId);
+      if (this.component.css_code) {
+        const styleId = `component-style-${this.component.id}`;
+        let styleTag = document.getElementById(styleId);
 
-            if (!styleTag) {
-                styleTag = document.createElement("style");
-                styleTag.id = styleId;
-
-                // Encapsulamos los estilos para que solo apliquen dentro del div con id `component-{id}`
-                styleTag.innerHTML = `#component-${this.component.id} { ${this.component.css_code} }`;
-
-                document.head.appendChild(styleTag);
-            }
+        if (!styleTag) {
+          styleTag = document.createElement("style");
+          styleTag.id = styleId;
+          document.head.appendChild(styleTag);
         }
+
+        // Actualizamos el contenido del styleTag
+        styleTag.innerHTML = `#component-${this.component.id} { ${this.component.css_code} }`;
+      }
     },
 },
 mounted() {

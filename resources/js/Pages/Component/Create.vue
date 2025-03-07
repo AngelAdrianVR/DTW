@@ -148,31 +148,12 @@ methods:{
             existingStyle.remove();
         }
 
-        // Crear una nueva etiqueta <style>
-        const styleTag = document.createElement("style");
-        styleTag.id = styleId;
-
+        // Inyectar el CSS en el head con el ID encapsulado
         if (this.form.css_code) {
-            // Separar las reglas @keyframes del resto del CSS
-            const keyframesRegex = /@keyframes\s+[^{]+\{[^}]+\}/g;
-            const keyframes = this.form.css_code.match(keyframesRegex) || [];
-            let cssWithoutKeyframes = this.form.css_code.replace(keyframesRegex, "");
-
-            // Asegurar que las clases sean encapsuladas
-            let scopedCSS = cssWithoutKeyframes.replace(/(\.?\w[\w-]*)/g, `#preview-${this.componentId} $1`);
-
-            // Agregar los estilos encapsulados al <style>
-            styleTag.innerHTML = scopedCSS;
-
-            // Inyectar el CSS en el <head>
+            const styleTag = document.createElement("style");
+            styleTag.id = styleId;
+            styleTag.innerHTML = `#preview-${this.componentId} { ${this.form.css_code} }`;
             document.head.appendChild(styleTag);
-
-            // Inyectar las reglas @keyframes de forma global
-            if (keyframes.length > 0) {
-                const keyframesTag = document.createElement("style");
-                keyframesTag.innerHTML = keyframes.join(" ");
-                document.head.appendChild(keyframesTag);
-            }
         }
     },
     store() {
