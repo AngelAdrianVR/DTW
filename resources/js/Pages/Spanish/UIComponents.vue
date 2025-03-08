@@ -1,6 +1,6 @@
 <template>
-    <Head title="Paquetes" />
-    <main class="relative selection:bg-primarylight selection:text-primary bg-black min-h-screen text-white">
+    <Head title="Componentes UI" />
+    <main class="relative selection:bg-primarylight selection:text-primary bg-black min-h-screen text-white p-6">
         <!-- whatsapp button -->
         <a class="z-50 w-14 h-14 lg:w-20 lg:h-20 rounded-full bg-green-600 shadow-md shadow-green-800/100 flex items-center justify-center fixed bottom-3 right-3 hover:scale-105"
             href="https://api.whatsapp.com/send?phone=523322268824&text=Hola!%20vi%20tu%20página%20DTW,%20me%20interesa%20su%20servicio!"
@@ -15,7 +15,41 @@
         </nav>
 
         <main class="pt-28 lg:px-28">
-            
+            <div class="flex items-center justify-between">
+                <h1 class="text-xl font-bold mb-6 text-gray-200">Componentes UI</h1>
+            </div>
+
+            <!-- Filtros -->
+            <div class="flex md:justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
+                <button
+                    v-for="category in categories"
+                    :key="category"
+                    @click="filterCategory(category)"
+                    :class="['px-4 py-2 flex-shrink-0 rounded-lg font-medium transition', 
+                        selectedCategory === category ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300']">
+                    {{ category }}
+                </button>
+                <button 
+                    @click="resetFilter"
+                    class="px-4 py-2 flex-shrink-0 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 transition">
+                    Todos
+                </button>
+            </div>
+
+
+            <Loading class="mt-20" v-if="loading" />
+
+            <div v-if="localComponents.length && !loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
+                <ComponentCard @deleteComponent="deleteComponent" v-for="component in localComponents" :key="component.id" :component="component" />
+            </div>
+
+            <div v-else-if="!loading" class="text-gray-500 text-center mt-10">No hay componentes disponibles.</div>
+
+            <section class="mt-7">
+                <div v-if="!selectedCategory">
+                    <PaginationWithNoMeta :pagination="components"/>
+                </div>
+            </section>
         </main>
 
         <!-- Footter -->
@@ -70,6 +104,10 @@
 </template>
 
 <script>
+import ComponentCard from "@/Components/MyComponents/ComponentCard.vue";
+import Loading from "@/Components/MyComponents/Loading.vue";
+import PaginationWithNoMeta from "@/Components/MyComponents/PaginationWithNoMeta.vue";
+
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import InputWithPlaceholder from "@/Components/MyComponents/InputWithPlaceholder.vue";
@@ -90,13 +128,28 @@ export default {
             isNavbarFixed: false,
             currentTestimony: 0,
             lastScrollY: 0,
+
+            //componentes
+            localComponents: [... this.components.data],
+            selectedCategory: null,
+            categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
+            loading: false
         };
     },
     components: {
         InputWithPlaceholder,
+        PaginationWithNoMeta,
+        ComponentCard,
         SpanishNav,
+        Loading,
         Head,
         Link,
+    },
+    props: {
+        components: {
+            type: Object,
+            required: true
+        },
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
@@ -106,6 +159,25 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        async fetchComponents(category = null) {
+            try {
+                this.loading = true;
+                const response = await axios.get(route('components.filter-data', { category }));
+                this.localComponents = response.data;
+            } catch (error) {
+                console.error("Error al cargar los componentes:", error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        filterCategory(category) {
+            this.selectedCategory = category;
+            this.fetchComponents(category);
+        },
+        resetFilter() {
+            this.selectedCategory = null;
+            this.fetchComponents();
+        },
         handleScroll() {
             const currentScrollY = window.scrollY;
 

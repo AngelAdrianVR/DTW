@@ -19,9 +19,9 @@
                             <el-dropdown-item @click="$inertia.get(route('quote-request.create'))">
                                 Quote
                             </el-dropdown-item>
-                            <!-- <el-dropdown-item @click="$inertia.get(route('packages'))">
-                            Paquetes de programación
-                        </el-dropdown-item>-->
+                            <el-dropdown-item @click="$inertia.get(route('UI-components-en'))">
+                            UI components
+                        </el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -96,7 +96,7 @@
                 <li @click="$inertia.get(route('quote-request.create'))" class="hover:bg-[#7F659C] rounded-lg p-1">
                     Quote
                 </li>
-                <!-- <li @click="$inertia.get(route('packages'))" class="hover:bg-[#7F659C] rounded-lg p-1">Paquetes programación</li> -->
+                <li @click="$inertia.get(route('UI-components-en'))" class="hover:bg-[#7F659C] rounded-lg p-1">UI components</li>
             </ul>
             <!-- <button class="mx-2"> 
                 <el-dropdown trigger="click">

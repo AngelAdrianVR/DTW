@@ -142,9 +142,10 @@ export default {
     };
   },
   components: {
-    AppLayout,
     PrimaryButton,
     InputLabel,
+    InputError,
+    AppLayout,
     Back,
   },
   props: {
