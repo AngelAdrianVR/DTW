@@ -50,7 +50,7 @@
                                     </div>
                                 </template>
                             </el-tooltip>
-                            <p class="text-xl">{{ user.project_tasks.filter(item => item.status === 'Terminada')?.length }}</p>
+                            <p class="text-xl">{{ user.assigned_tasks.filter(item => item.status === 'Terminada')?.length }}</p>
                         </div>
                         <div class="flex space-x-3 justify-center my-1 items-center text-gray-600">
                             <el-tooltip content="Tareas en curso" placement="left">
@@ -60,11 +60,11 @@
                                 <template #content>
                                     <div>
                                         <p class="text-center text-blue-300">Tareas en curso:</p>
-                                        <p v-for="task in user.project_tasks.filter(item => item.status === 'En curso')" :key="task">• {{ task.title }}. ID proyecto: {{ task.project_id }}</p>
+                                        <p v-for="task in user.assigned_tasks.filter(item => item.status === 'En curso')" :key="task">• {{ task.title }}. ID proyecto: {{ task.project_id }}</p>
                                     </div>
                                 </template>
                             </el-tooltip>
-                            <p class="text-xl">{{ user.project_tasks.filter(item => item.status === 'En curso')?.length }}</p>
+                            <p class="text-xl">{{ user.assigned_tasks.filter(item => item.status === 'En curso')?.length }}</p>
                         </div>
                         <div class="flex space-x-3 justify-center my-1 items-center text-gray-600">
                             <el-tooltip content="Tareas por hacer" placement="left">
@@ -74,11 +74,11 @@
                                 <template #content>
                                     <div>
                                         <p class="text-center text-orange-300">Tareas por hacer:</p>
-                                        <p v-for="task in user.project_tasks.filter(item => item.status === 'Por hacer')" :key="task">• {{ task.title }}. ID proyecto: {{ task.project_id }}</p>
+                                        <p v-for="task in user.assigned_tasks.filter(item => item.status === 'Por hacer')" :key="task">• {{ task.title }}. ID proyecto: {{ task.project_id }}</p>
                                     </div>
                                 </template>
                             </el-tooltip>
-                            <p class="text-xl">{{ user.project_tasks.filter(item => item.status === 'Por hacer')?.length }}</p>
+                            <p class="text-xl">{{ user.assigned_tasks.filter(item => item.status === 'Por hacer')?.length }}</p>
                         </div>
                     </article>
                 </section>

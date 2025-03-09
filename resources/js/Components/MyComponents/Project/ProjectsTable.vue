@@ -6,6 +6,7 @@
           <th class="font-bold pb-3 pl-2 text-left">ID</th>
           <th class="font-bold pb-3 text-left">Cliente</th>
           <th class="font-bold pb-3 text-left">Nombre del proyecto</th>
+          <th class="font-bold pb-3 text-left">Tiempo invertido</th>
           <th class="font-bold pb-3 text-left">Costo del proyecto</th>
           <th class="font-bold pb-3 text-left">Días</th>
           <th class="font-bold pb-3 text-left">F. inicio</th>
@@ -21,6 +22,7 @@
           <td class="text-left py-2 pr-2 pl-4 rounded-l-full">{{ project.id }}</td>
           <td class="text-left py-2">{{ project.client?.name ?? '-' }}</td>
           <td :title="project.name" class="text-left py-2 max-w-[220px] truncate pr-2">{{ project.name }}</td>
+          <td class="text-left py-2 truncate pr-2">{{ getTotalTime(project.tasks) }}</td>
           <td class="text-left py-2">{{ project.price?.formated ?? '0' }}</td>
           <td class="text-left py-2">{{ project.total_work_days ?? '-' }}</td>
           <td class="text-left py-2">{{ project.start_date }}</td>
@@ -124,6 +126,13 @@ export default {
     projects: Array
   },
   methods: {
+    getTotalTime(tasks) {
+      const totalMinutes = tasks.reduce((acc, task) => acc + task.minutes, 0);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      return `${hours}h ${minutes}m`;
+    },
     handleCommand(command) {
       const commandName = command.split('-')[0];
       const itemId = command.split('-')[1];
@@ -133,31 +142,6 @@ export default {
       } else {
         this.showDeleteConfirm = true;
         this.itemIdToDelete = itemId;
-      }
-    },
-    async deleteItem() {
-      try {
-        this.showDeleteConfirm = false;
-        const response = await axios.delete(route('projects.destroy', this.itemIdToDelete));
-
-        if (response.status === 200) {
-          const index = this.projects.findIndex(item => item.id == this.itemIdToDelete);
-          this.projects.splice(index, 1);
-          this.$notify({
-            title: "Correcto",
-            message: "Proyecto eliminado con éxito",
-            type: "success",
-          });
-        }
-      } catch (error) {
-        this.$notify({
-          title: "No se pudo completar la solicitud",
-          message: "El servidor no pudo procesar la petición, inténtalo más tarde",
-          type: "error",
-        });
-        console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     calculateProjectStatus(tasks) {
@@ -222,6 +206,31 @@ export default {
         return '#FD7708';
       } else {
         return '#9a9a9a';
+      }
+    },
+    async deleteItem() {
+      try {
+        this.showDeleteConfirm = false;
+        const response = await axios.delete(route('projects.destroy', this.itemIdToDelete));
+
+        if (response.status === 200) {
+          const index = this.projects.findIndex(item => item.id == this.itemIdToDelete);
+          this.projects.splice(index, 1);
+          this.$notify({
+            title: "Correcto",
+            message: "Proyecto eliminado con éxito",
+            type: "success",
+          });
+        }
+      } catch (error) {
+        this.$notify({
+          title: "No se pudo completar la solicitud",
+          message: "El servidor no pudo procesar la petición, inténtalo más tarde",
+          type: "error",
+        });
+        console.log(error);
+      } finally {
+        this.loading = false;
       }
     },
   }
