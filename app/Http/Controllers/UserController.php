@@ -119,7 +119,8 @@ class UserController extends Controller
 
     public function fetchDashboardInfo()
     {
-        $usersData = User::with('projectTasks:id,title,status,is_paused,user_id,project_id')->get(['id', 'name', 'employee_properties', 'last_access']);
+        $usersData = User::with('assignedTasks:id,title,status,is_paused,user_id,project_id')
+        ->get(['id', 'name', 'employee_properties', 'last_access']);
 
         return response()->json(compact('usersData'));
     }
