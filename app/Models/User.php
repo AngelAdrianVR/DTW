@@ -73,7 +73,7 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
-    public function projectTasks() :HasMany
+    public function projectTasks(): HasMany
     {
         return $this->hasMany(ProjectTask::class);
     }
@@ -83,5 +83,8 @@ class User extends Authenticatable
         return $this->hasMany(SuscriptionProject::class);
     }
 
-    
+    public function assignedTasks()
+    {
+        return $this->belongsToMany(ProjectTask::class, 'task_user', 'user_id', 'project_task_id');
+    }
 }

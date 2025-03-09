@@ -17,7 +17,10 @@
                         :value="project.id" />
                 </el-select>
             </div>
-            <h1 class="w-1/3 text-center font-bold">{{ project.data.name }}</h1>
+            <h1 class="w-1/3 text-center font-bold">
+                {{ project.data.name }} <br>
+                <span class="text-primary text-sm">{{ getTotalTime(project.data.tasks) }} invertido</span>
+            </h1>
             <div class="w-1/3 flex">
                 <div v-if="activeTab == 2" class="flex space-x-2 w-full justify-end">
                     <PrimaryButton @click="$inertia.get(route('projects.create'))">Crear proyecto</PrimaryButton>
@@ -79,6 +82,13 @@ export default {
         Link,
     },
     methods: {
+        getTotalTime(tasks) {
+            const totalMinutes = tasks.reduce((acc, task) => acc + task.minutes, 0);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+
+            return `${hours}h ${minutes}m`;
+        },
         handleClickInTab(tab) {
             // Agrega la variable currentTab=tab.props.name a la URL para mejorar la navegacion al actalizar o cambiar de pagina
             const currentURL = new URL(window.location.href);
