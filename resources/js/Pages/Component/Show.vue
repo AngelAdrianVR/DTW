@@ -28,7 +28,7 @@
 
                         <!-- Vista previa del componente -->
                         <!-- Si es un componente hecho con tailwind se ejecuta el div, si es css se ejectuta PreviewCOmponent para activar keyframes -->
-                        <PreviewComponent v-if="component.css_code" :htmlCode="component.html_code" :cssCode="component.css_code" />
+                        <PreviewComponent v-if="component.css_code" :htmlCode="component.html_code" :cssCode="component.css_code" :jsCode="component.js_code" />
                         <div v-else v-html="component.html_code"></div>
 
                         <div class="flex items-center space-x-3 absolute top-2 right-2 z-20 bg-gray-500 opacity-75 rounded-lg py-1 px-3">
@@ -53,7 +53,7 @@
                         <button
                             v-for="tab in tabs"
                             :key="tab"
-                            @click="selectedTab = tab"
+                            @click="selectedTab = tab; editMode = false"
                             :class="{
                             'border-[#C08AFD] text-[#C08AFD]': selectedTab === tab,
                             'border-transparent text-gray-400 hover:text-gray-300': selectedTab !== tab
@@ -123,7 +123,7 @@
                                     <pre v-for="(line, index) in getLines(component.css_code)" :key="index" class="m-0">{{ index + 1 }}</pre>
                                 </div>
                                     <!-- Código -->
-                                    <textarea @input="injectStyles" v-if="editMode" v-model="component.css_code" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="No hay código html"></textarea>
+                                    <textarea v-if="editMode" v-model="component.css_code" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="No hay código html"></textarea>
                                     <pre v-else class="text-white flex-1 overflow-x-auto"><code>{{ component.css_code ?? 'No hay código CSS' }}</code></pre>
                                 </div>
                             </div>
@@ -134,8 +134,9 @@
                                 <div class="text-gray-500 pr-4 text-right select-none">
                                     <pre v-for="(line, index) in getLines(component.js_code)" :key="index" class="m-0">{{ index + 1 }}</pre>
                                 </div>
-                                <!-- Código -->
-                                <pre class="text-white flex-1 overflow-x-auto"><code>{{ component.js_code ?? 'No hay código js' }}</code></pre>
+                                    <!-- Código -->
+                                    <textarea v-if="editMode" v-model="component.js_code" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="No hay código html"></textarea>
+                                    <pre v-else class="text-white flex-1 overflow-x-auto"><code>{{ component.js_code ?? 'No hay código JS' }}</code></pre>
                                 </div>
                             </div>
                         </div>
@@ -162,6 +163,7 @@ data() {
         darkMode: false, // Estado del modo oscuro
         customColor: this.component.bg_color, // Color personalizado por el usuario
         editMode: false, //modo de edicion de código
+        isNavbarFixed: false
     }
 },
 components:{
