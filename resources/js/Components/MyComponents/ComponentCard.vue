@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-2xl shadow-lg p-5 border border-gray-200 transition hover:shadow-2xl self-start">
+    <div class="bg-gray-200 rounded-2xl shadow-lg p-5 border border-gray-200 transition hover:shadow-2xl self-start">
         <!-- Nombre del componente -->
         <div class="flex items-center justify-between mx-2">
             <h2 class="font-semibold text-gray-800 mb-2 truncate w-2/3">{{ component.name }}</h2>
@@ -14,8 +14,10 @@
         </div>
 
         <!-- Vista previa del componente -->
-        <div :id="`component-${component.id}`" class="border h-40 border-gray-300 rounded-lg overflow-hidden p-4 flex items-center justify-center" :class="'bg-['+ component.bg_color + ']'">
-            <div v-html="component.html_code"></div>
+        <div :id="`component-${component.id}`" class="border h-48 border-gray-400/50 rounded-lg overflow-hidden p-4 flex items-center justify-center" :class="'bg-['+ component.bg_color + ']'">
+            <!-- Si es un componente hecho con tailwind se ejecuta el div, si es css se ejectuta PreviewCOmponent para activar keyframes -->
+            <PreviewComponent v-if="component.css_code" :htmlCode="component.html_code" :cssCode="component.css_code" />
+            <div v-else v-html="component.html_code"></div>
         </div>
 
         <div class="flex items-center justify-between mt-4 text-right mx-2">
@@ -54,9 +56,14 @@
 </template>
 
 <script>
+import PreviewComponent from "@/Components/MyComponents/PreviewComponent.vue";
+
 export default {
     props: {
         component: Object
+    },
+    components:{
+        PreviewComponent
     },
     emits:['deleteComponent'],
     data() {

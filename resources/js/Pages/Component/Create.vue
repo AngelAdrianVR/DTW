@@ -73,7 +73,7 @@
                     </div>
 
                     <!-- Vista previa del componente -->
-                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                    <div class="col-span-full border border-gray-300 rounded-lg p-4 bg-gray-50">
                         <div class="flex items-center justify-between">
                             <h2 class="font-semibold text-lg mb-2">Vista Previa</h2>
                             
@@ -83,8 +83,10 @@
                                 <input type="color" id="colorPicker" v-model="form.bg_color" class="cursor-pointer">
                             </div>
                         </div>
-                        <div :id="`preview-${componentId}`" class="border border-gray-200 rounded-lg p-4 flex items-center justify-center min-h-32" :class="'bg-['+ form.bg_color + ']'">
-                            <div v-html="previewHtml"></div>
+                        <div :id="`preview-${componentId}`" class="border border-gray-200 rounded-lg p-4 flex items-center justify-center min-h-56" :class="'bg-['+ form.bg_color + ']'">
+                            <!-- Si es un componente hecho con tailwind se ejecuta el div, si es css se ejectuta PreviewCOmponent para activar keyframes -->
+                            <PreviewComponent v-if="form.css_code" :htmlCode="form.html_code" :cssCode="form.css_code" />
+                            <div v-else v-html="form.html_code"></div>
                         </div>
                     </div>
 
@@ -99,6 +101,7 @@
 </template>
 
 <script>
+import PreviewComponent from "@/Components/MyComponents/PreviewComponent.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Back from "@/Components/MyComponents/Back.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -121,12 +124,13 @@ data() {
 
     return {
         form,
-        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
+        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Tooltips", "Otro"],
         previewHtml: '', // Para almacenar el HTML de la vista previa
         componentId: Date.now(), // Identificador único para encapsular estilos
     }
 },
 components:{
+PreviewComponent,
 PrimaryButton,
 InputError,
 InputLabel,

@@ -1,5 +1,5 @@
 <template>
-    <footer class="p-4 text-white bg-[#1A1A1A] h-72 min-h-72 mt-24 md:relative overflow-auto">
+    <footer class="p-4 text-white bg-[#1A1A1A] h-72 min-h-72 mt-24 md:relative overflow-auto rounded-2xl">
         <figure>
             <img class="md:w-[9%] w-[29%]" src="@/../../public/assets/images/white_logo.png" alt="" />
         </figure>
@@ -41,7 +41,7 @@
             </a>
             <a class="hidden md:block" href="">
                 <p class="text-xs mt-3 hover:underline">
-                    Copyright | 2024 All rights reserved by DTW S.A de C.V.
+                    Copyright | 2025 All rights reserved by DTW S.A de C.V.
                 </p>
             </a>
         </div>
