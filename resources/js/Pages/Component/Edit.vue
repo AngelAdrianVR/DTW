@@ -87,7 +87,7 @@
                             </div>
                             <div :id="`preview-${componentId}`" class="border border-gray-200 rounded-lg p-4 flex items-center justify-center min-h-56" :class="'bg-['+ form.bg_color + ']'">
                                 <!-- Si es un componente hecho con tailwind se ejecuta el div, si es css se ejectuta PreviewCOmponent para activar keyframes -->
-                                <PreviewComponent v-if="component.css_code" :htmlCode="component.html_code" :cssCode="component.css_code" />
+                                <PreviewComponent v-if="component.css_code" :htmlCode="component.html_code" :cssCode="component.css_code" :jsCode="component.js_code" />
                                 <div v-else v-html="component.html_code"></div>
                             </div>
                         </div>
@@ -144,25 +144,25 @@ props:{
     component: Object
 },
 methods:{
-    renderPreview() {
-        this.componentId = Date.now(); // Generar un nuevo ID único para evitar conflictos
-        this.previewHtml = this.form.html_code || '<p class="text-gray-400">No hay código HTML</p>';
+    // renderPreview() {
+    //     this.componentId = Date.now(); // Generar un nuevo ID único para evitar conflictos
+    //     this.previewHtml = this.form.html_code || '<p class="text-gray-400">No hay código HTML</p>';
 
-        // Eliminar estilos previos si existen
-        const styleId = `style-preview-${this.componentId}`;
-        let existingStyle = document.getElementById(styleId);
-        if (existingStyle) {
-            existingStyle.remove();
-        }
+    //     // Eliminar estilos previos si existen
+    //     const styleId = `style-preview-${this.componentId}`;
+    //     let existingStyle = document.getElementById(styleId);
+    //     if (existingStyle) {
+    //         existingStyle.remove();
+    //     }
 
-        // Inyectar el CSS en el head con el ID encapsulado
-        if (this.form.css_code) {
-            const styleTag = document.createElement("style");
-            styleTag.id = styleId;
-            styleTag.innerHTML = `#preview-${this.componentId} { ${this.form.css_code} }`;
-            document.head.appendChild(styleTag);
-        }
-    },
+    //     // Inyectar el CSS en el head con el ID encapsulado
+    //     if (this.form.css_code) {
+    //         const styleTag = document.createElement("style");
+    //         styleTag.id = styleId;
+    //         styleTag.innerHTML = `#preview-${this.componentId} { ${this.form.css_code} }`;
+    //         document.head.appendChild(styleTag);
+    //     }
+    // },
     update() {
       this.form.put(route('components.update', this.component.id), {
         onSuccess: () => {
@@ -176,7 +176,7 @@ methods:{
     },
 },
 mounted(){
-    this.renderPreview();
+    // this.renderPreview();
 }
 }
 </script>
