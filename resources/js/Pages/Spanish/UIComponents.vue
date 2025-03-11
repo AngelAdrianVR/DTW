@@ -17,6 +17,7 @@
         <main class="pt-28 lg:px-28">
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold mb-6 text-gray-200">Componentes UI</h1>
+                <!-- <GoogleAd /> -->
             </div>
 
             <!-- Filtros -->
@@ -40,7 +41,13 @@
             <Loading class="mt-20" v-if="loading" />
 
             <div v-if="localComponents.length && !loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5">
-                <ComponentCard @deleteComponent="deleteComponent" v-for="component in localComponents" :key="component.id" :component="component" />
+                <template v-for="(component, index) in localComponents" :key="component.id">
+                <!-- Tarjeta de componente -->
+                <ComponentCard @deleteComponent="deleteComponent" :component="component" />
+
+                <!-- Mostrar un anuncio cada 4 elementos -->
+                <GoogleAd v-if="(index + 1) % 8 === 0" :key="'ad-' + index" />
+                </template>
             </div>
 
             <div v-else-if="!loading" class="text-gray-500 text-center mt-10">No hay componentes disponibles.</div>
@@ -107,6 +114,7 @@
 import ComponentCard from "@/Components/MyComponents/ComponentCard.vue";
 import Loading from "@/Components/MyComponents/Loading.vue";
 import PaginationWithNoMeta from "@/Components/MyComponents/PaginationWithNoMeta.vue";
+import GoogleAd from "@/components/MyComponents/GoogleAd.vue"; // Anuncio de google
 
 import { useForm, Link, Head } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
@@ -141,6 +149,7 @@ export default {
         PaginationWithNoMeta,
         ComponentCard,
         SpanishNav,
+        GoogleAd, //anuncio de google
         Loading,
         Head,
         Link,
