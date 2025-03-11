@@ -20,6 +20,7 @@ use App\Models\Component;
 use App\Models\Project;
 use App\Models\Prospect;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -194,7 +195,11 @@ Route::resource('components', ComponentController::class)->except('show')->middl
 Route::get('components/{component}/show', [ComponentController::class, 'show'])->name('components.show');
 Route::get('components-filter-data', [ComponentController::class, 'filterData'])->name('components.filter-data');
 
-
+// artisan
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'linked!';
+});
 
 //PDF routes ----------------------------------------------------
 // Route::get('/generar-pdf/{id}', 'PDFController@generatePDF');
