@@ -26,7 +26,7 @@
             </div>
 
             <!-- Filtros -->
-            <div class="flex md:justify-end overflow-x-auto space-x-3 mb-6 text-sm scrollbar-hide mt-2">
+            <div class="flex md:justify-end overflow-x-auto space-x-2 mb-6 text-sm scrollbar-hide mt-2">
                 <button
                     v-for="category in categories"
                     :key="category"
@@ -71,7 +71,7 @@ data() {
     return {
         localComponents: [... this.components.data],
         selectedCategory: null,
-        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Otro"],
+        categories: ["Botones", "Switches", "Estados de carga", "Checkboxes", "Tooltips", "Barras de progreso", "Otro"],
         loading: false
     }
 },
