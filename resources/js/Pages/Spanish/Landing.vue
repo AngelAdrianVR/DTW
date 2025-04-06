@@ -21,8 +21,8 @@
             <section class="rounded-xl relative" id="Inicio" data-aos="fade-right" data-aos-easing="ease-in-sine"
                 data-aos-duration="1200">
                 <figure class="mx-auto">
-                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing.png">
-                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing.png">
+                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing.webp">
+                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing.webp">
                 </figure>
                 <div class="flex justify-end mx-5 md:mx-0 md:absolute top-1/2 left-[13%]">
                     <a class="inline-flex items-center px-8 py-2 bg-primary border border-transparent rounded-full text-xs text-white tracking-widest active:bg-primarydark transition-all ease-in-out duration-100 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed" as="button"

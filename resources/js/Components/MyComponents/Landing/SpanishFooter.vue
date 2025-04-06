@@ -41,7 +41,7 @@
             </a>
             <a class="hidden md:block" href="">
                 <p class="text-xs mt-3 hover:underline">
-                    Copyright | 2025 | Todos los derechos reservados por DTW
+                    Copyright &copy; {{ currentYear }} Todos los derechos reservados por DTW
                 </p>
             </a>
         </div>
@@ -50,6 +50,10 @@
 
 <script>
 export default {
-
+data() {
+    return {
+        currentYear: new Date().getFullYear(),
+    };
+}
 }
 </script>
