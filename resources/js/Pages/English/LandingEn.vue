@@ -19,9 +19,9 @@
             <!-- first section desktop -->
             <section class="rounded-xl relative" id="Inicio">
                 <figure class="mx-auto">
-                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.png"
+                    <img class="hidden md:block mx-auto w-[85%]" src="@/../../public/assets/images/main_landing_en.webp"
                         alt="">
-                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing_en.png"
+                    <img class="mx-auto md:hidden w-[95%]" src="@/../../public/assets/images/mobil_main_landing_en.webp"
                         alt="">
                 </figure>
                 <div class="flex justify-end mx-5 md:mx-0 md:absolute top-1/2 left-[13%]">
