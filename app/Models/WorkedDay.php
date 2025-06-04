@@ -12,8 +12,17 @@ class WorkedDay extends Model
     protected $fillable = [
         'start_time',
         'end_time',
-        'break_duration',
-        'notes',
+        'total_minutes',
         'user_id',
+        'tasks',
     ];
+
+    protected $casts = [
+        'tasks' => 'array',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
