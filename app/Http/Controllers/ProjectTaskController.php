@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Project;
 use App\Models\ProjectTask;
 use App\Models\User;
+use App\Models\WorkedDay;
 use Illuminate\Http\Request;
 
 class ProjectTaskController extends Controller
@@ -142,12 +143,12 @@ class ProjectTaskController extends Controller
 
             // obtener dia trabajado del usuario
             $worked_day = WorkedDay::whereDate('created_at', now()->toDateString())
-                ->where('user_id', auth()->id())
+                ->where('user_id', $project_task->user_id)
                 ->first();
 
             if (!$worked_day) {
                 $worked_day = WorkedDay::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $project_task->user_id,
                     'start_time' => $project_task->started_at->toTimeString(),
                     'end_time' => now()->toTimeString(),
                 ]);
@@ -168,6 +169,7 @@ class ProjectTaskController extends Controller
                 // si no existe, agregar nueva tarea
                 $tasks[] = [
                     'id' => $project_task->id,
+                    'project_id' => $project_task->project_id,
                     'title' => $project_task->title,
                     'minutes' => $minutes_in_task,
                 ];
@@ -181,6 +183,7 @@ class ProjectTaskController extends Controller
             // actualizar minutos de la tarea
             $project_task->minutes = $minutes;
             $project_task->started_at = null;
+
         } else if ($request->status === 'En curso') {
             $project_task->started_at = now();
         }
