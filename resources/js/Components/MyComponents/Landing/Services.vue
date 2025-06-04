@@ -10,7 +10,7 @@
 
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-24">
     <figure class="lg:w-2/3 w-full mb-10 p-3 flex" data-aos="flip-right" data-aos-duration="1200" data-aos-offset="400">
-      <img src="@/../../public/assets/images/sistemas.png" alt="" />
+      <img src="@/../../public/assets/images/sistemas.webp" alt="" />
     </figure>
 
     <div class="lg:w-1/2 text-center lg:text-left" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
@@ -64,7 +64,7 @@
     </div>
 
     <figure class="lg:w-1/2 md:w-2/3 w-full mb-10 p-3 flex" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
-      <img src="@/../../public/assets/images/IoT.png" alt="" />
+      <img src="@/../../public/assets/images/IoT.webp" alt="" />
     </figure>
   </section>
 
@@ -75,7 +75,7 @@
   <!-- Branding -->
   <section class="lg:flex justify-between items-center lg:space-x-16 mt-20">
     <figure class="lg:w-2/3 mx-auto mb-10" data-aos="flip-right" data-aos-duration="1200" data-aos-offset="400">
-      <img src="@/../../public/assets/images/branding.png" alt="" />
+      <img src="@/../../public/assets/images/branding.webp" alt="" />
     </figure>
 
     <div class="lg:w-1/3 text-center lg:text-left" data-aos="flip-left" data-aos-duration="1200" data-aos-offset="400">
@@ -119,7 +119,7 @@
     </div>
 
     <figure class="md:w-2/3 w-full mb-10 p-3 flex">
-      <img src="@/../../public/assets/images/home_iot.png" alt="" />
+      <img src="@/../../public/assets/images/home_iot.webp" alt="" />
     </figure>
   </section>
 

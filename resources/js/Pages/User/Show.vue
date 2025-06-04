@@ -1,7 +1,7 @@
 <template>
     <AppLayout :title="user.data.name">
         <figure class="relative">
-            <img class="md:h-36 h-20 w-screen" src="../../../../public/assets/images/show_user_bg.png" alt="">
+            <img class="md:h-36 h-20 w-screen" src="../../../../public/assets/images/show_user_bg.webp" alt="">
             <!-- imagen del usuario -->
             <img class="object-cover rounded-full absolute md:left-20 left-40 -bottom-16 md:-bottom-20 size-32 md:size-40" :src="user.data.profile_photo_url" alt="">
         </figure>

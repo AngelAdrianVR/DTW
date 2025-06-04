@@ -18,7 +18,7 @@
             <div class="lg:grid grid-cols-3 lg:gap-x-5">
                 <h1 class="text-white text-xl text-center font-bold col-start-2 col-span-full mb-7 ml-3">Solicitar cotización</h1>
                 <figure class="hidden lg:block mb-5">
-                    <img src="@/../../public/assets/images/quote-image.png">
+                    <img src="@/../../public/assets/images/quote-image.webp">
                 </figure>
                 <div class="col-span-2">
                     <form @submit.prevent="store" class="md:grid grid-cols-2 md:gap-5 space-y-4 md:space-y-0">
