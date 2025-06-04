@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ProjectTaskController extends Controller
 {
-    
+
     public function index()
     {
         //
@@ -46,11 +46,11 @@ class ProjectTaskController extends Controller
             $project_task->participants()->attach($user_id);
         }
 
-        $project_task->addAllMediaFromRequest('media')->each(fn ($file) => $file->toMediaCollection('files'));
+        $project_task->addAllMediaFromRequest('media')->each(fn($file) => $file->toMediaCollection('files'));
 
         return to_route('projects.show', ['project' => $request->project_id]);
     }
-    
+
     public function show(ProjectTask $project_task)
     {
         //
@@ -63,7 +63,7 @@ class ProjectTaskController extends Controller
 
     public function update(Request $request, ProjectTask $project_task)
     {
-        
+
         $validated = $request->validate([
             'status' => 'required|string|max:255',
             'description' => 'nullable',
@@ -114,7 +114,7 @@ class ProjectTaskController extends Controller
         //     $user = User::find($mention['id']);
         //     $user->notify(new MentionNotification($project_task, "", 'projects'));
         // }
-        
+
         return response()->json(['item' => $comment->fresh('user')]);
     }
 
@@ -137,13 +137,54 @@ class ProjectTaskController extends Controller
     public function updateStatus(ProjectTask $project_task, Request $request)
     {
         if ($project_task->status === 'En curso' && $request->status !== 'En curso') {
-            $minutes = $project_task->minutes + now()->diffInMinutes($project_task->started_at);
+            $minutes_in_task = now()->diffInMinutes($project_task->started_at);
+            $minutes = $project_task->minutes + $minutes_in_task;
+
+            // obtener dia trabajado del usuario
+            $work_day = WorkDay::whereDate('created_at', now()->toDateString())
+                ->where('user_id', auth()->id())
+                ->first();
+
+            if (!$work_day) {
+                $work_day = WorkDay::create([
+                    'user_id' => auth()->id(),
+                    'total_minutes' => 0, // dejarlo por defecto 0 en la migracion
+                    'tasks' => [], // dejarlo por defecto [] en la migracion
+                ]);
+            }
+
+            // obtener array de tareas del dia trabajado
+            $tasks = $work_day->tasks ?? [];
+
+            // revisar si existe una tarea con el mismo id
+            $existing_activity = collect($tasks)->first(function ($activity) use ($project_task) {
+                return $activity['id'] === $project_task->id;
+            });
+
+            // si existe, actualizar tiempo de la tarea
+            if ($existing_activity) {
+                $existing_activity['minutes'] += $minutes_in_task;
+            } else {
+                // si no existe, agregar nueva tarea
+                $tasks[] = [
+                    'id' => $project_task->id,
+                    'title' => $project_task->title,
+                    'minutes' => $minutes_in_task,
+                ];
+            }
+
+            // actualizar tareas del dia trabajado
+            $work_day->tasks = $tasks;
+            $work_day->total_minutes += $minutes_in_task;
+            $work_day->save();
+
+            // actualizar minutos de la tarea
             $project_task->minutes = $minutes;
             $project_task->started_at = null;
         } else if ($request->status === 'En curso') {
             $project_task->started_at = now();
         }
-        
+
         $project_task->status = $request->status;
         $project_task->save();
 
