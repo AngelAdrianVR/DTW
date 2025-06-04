@@ -141,20 +141,20 @@ class ProjectTaskController extends Controller
             $minutes = $project_task->minutes + $minutes_in_task;
 
             // obtener dia trabajado del usuario
-            $work_day = WorkDay::whereDate('created_at', now()->toDateString())
+            $worked_day = WorkedDay::whereDate('created_at', now()->toDateString())
                 ->where('user_id', auth()->id())
                 ->first();
 
-            if (!$work_day) {
-                $work_day = WorkDay::create([
+            if (!$worked_day) {
+                $worked_day = WorkedDay::create([
                     'user_id' => auth()->id(),
-                    'total_minutes' => 0, // dejarlo por defecto 0 en la migracion
-                    'tasks' => [], // dejarlo por defecto [] en la migracion
+                    'start_time' => $project_task->started_at->toTimeString(),
+                    'end_time' => now()->toTimeString(),
                 ]);
             }
 
             // obtener array de tareas del dia trabajado
-            $tasks = $work_day->tasks ?? [];
+            $tasks = $worked_day->tasks ?? [];
 
             // revisar si existe una tarea con el mismo id
             $existing_activity = collect($tasks)->first(function ($activity) use ($project_task) {
@@ -174,9 +174,9 @@ class ProjectTaskController extends Controller
             }
 
             // actualizar tareas del dia trabajado
-            $work_day->tasks = $tasks;
-            $work_day->total_minutes += $minutes_in_task;
-            $work_day->save();
+            $worked_day->tasks = $tasks;
+            $worked_day->total_minutes += $minutes_in_task;
+            $worked_day->save();
 
             // actualizar minutos de la tarea
             $project_task->minutes = $minutes;
