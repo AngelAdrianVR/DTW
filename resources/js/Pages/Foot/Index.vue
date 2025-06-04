@@ -518,6 +518,14 @@ data() {
                 label: 'Masaje Antiestrés',
                 color: 'text-[#009947]',
             },
+            {
+                label: 'Campo/Protector',
+                color: 'text-gray-300',
+            },
+            {
+                label: 'Campo',
+                color: 'text-gray-100',
+            },
         ],
     };
 },

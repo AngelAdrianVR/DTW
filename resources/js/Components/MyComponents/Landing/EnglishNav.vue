@@ -30,7 +30,7 @@
                 <div class="flex items-center space-x-2">
                     <el-dropdown trigger="click">
                         <div class="flex items-center space-x-2">
-                            <img src="@/../../public/assets/images/eua.png" class="h-3 w-6" alt="English" />
+                            <img src="@/../../public/assets/images/eua.webp" class="h-3 w-6" alt="English" />
                             <p class="text-white font-bold p-1">
                                 English <i class="fa-solid fa-angle-down text-white text-xs"></i>
                             </p>
@@ -67,7 +67,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item @click="$inertia.get(route('dtw-en'))">
                                 <p class="flex items-center space-x-3 px-4">
-                                    <img src="@/../../public/assets/images/eua.png" class="h-3 w-7 pr-2" alt="Inglés" />
+                                    <img src="@/../../public/assets/images/eua.webp" class="h-3 w-7 pr-2" alt="Inglés" />
                                     En
                                 </p>
                             </el-dropdown-item>
@@ -110,7 +110,7 @@
                     <el-dropdown-menu>                                
                         <el-dropdown-item @click="$inertia.get(route('dtw-en'))">
                             <p class="flex items-center space-x-3 px-4">
-                            <img src="@/../../public/assets/images/eua.png" class="h-3 w-7 pr-2" alt="Español" />
+                            <img src="@/../../public/assets/images/eua.webp" class="h-3 w-7 pr-2" alt="Español" />
                             Inglés
                             </p>
                         </el-dropdown-item>                        

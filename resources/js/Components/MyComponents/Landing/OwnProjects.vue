@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import EzyVentas1 from '@/../../public/assets/images/EzyVentas1.png';
-import EzyVentas2 from '@/../../public/assets/images/EzyVentas2.png';
-import finanzas1 from '@/../../public/assets/images/finanzas1.png';
-import finanzas2 from '@/../../public/assets/images/finanzas2.png';
+import EzyVentas1 from '@/../../public/assets/images/EzyVentas1.webp';
+import EzyVentas2 from '@/../../public/assets/images/EzyVentas2.webp';
+import finanzas1 from '@/../../public/assets/images/finanzas1.webp';
+import finanzas2 from '@/../../public/assets/images/finanzas2.webp';
 
 export default {
   data() {
