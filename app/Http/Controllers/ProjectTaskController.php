@@ -164,7 +164,10 @@ class ProjectTaskController extends Controller
 
             // si existe, actualizar tiempo de la tarea
             if ($existing_activity) {
-                $existing_activity['minutes'] += $minutes_in_task;
+                $index = array_search($existing_activity, $tasks);
+                if ($index !== false) {
+                    $tasks[$index]['minutes'] += $minutes_in_task;
+                }
             } else {
                 // si no existe, agregar nueva tarea
                 $tasks[] = [
@@ -183,7 +186,6 @@ class ProjectTaskController extends Controller
             // actualizar minutos de la tarea
             $project_task->minutes = $minutes;
             $project_task->started_at = null;
-
         } else if ($request->status === 'En curso') {
             $project_task->started_at = now();
         }
