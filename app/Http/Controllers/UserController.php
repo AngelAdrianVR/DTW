@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\WorkedDay;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -119,9 +121,45 @@ class UserController extends Controller
 
     public function fetchDashboardInfo()
     {
-        $usersData = User::with('assignedTasks:id,title,status,is_paused,user_id,project_id')
+        $usersData = User::with('assignedTasks:id,title,status,user_id,project_id')
         ->get(['id', 'name', 'employee_properties', 'last_access']);
 
         return response()->json(compact('usersData'));
+    }
+
+    
+    public function fetchWorkDays(Request $request, $userId)
+    {
+        $week = $request->input('week'); // formato: 'YYYY-MM-DD'
+
+        $startOfWeek = Carbon::parse($week)->startOfWeek(Carbon::MONDAY)->startOfDay();
+        $endOfWeek = Carbon::parse($week)->endOfWeek(Carbon::SUNDAY)->endOfDay();
+
+        // Obtener registros de worked_days del usuario en la semana seleccionada
+        $workedDays = WorkedDay::where('user_id', $userId)
+            ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function ($workDay) {
+                return Carbon::parse($workDay->created_at)->toDateString();
+            });
+
+        // Formatear datos para respuesta
+        $formattedDays = [];
+
+        foreach ($workedDays as $date => $entries) {
+            $formattedDays[$date] = $entries->map(function ($entry) {
+                return [
+                    'start_time' => $entry->start_time,
+                    'end_time' => $entry->end_time,
+                    'total_minutes' => $entry->total_minutes,
+                    'tasks' => $entry->tasks,
+                ];
+            });
+        }
+
+        return response()->json([
+            'workedDays' => $formattedDays,
+        ]);
     }
 }

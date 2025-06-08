@@ -164,6 +164,8 @@ Route::post('users-read-notifications', [UserController::class, 'readNotificatio
 Route::post('users-delete-notifications', [UserController::class, 'deleteNotifications'])->middleware('auth')->name('users.delete-user-notifications');
 Route::get('users-get-by-page/{currentPage}', [UserController::class, 'getItemsByPage'])->name('users.get-by-page')->middleware('auth');
 Route::get('users-fetch-info', [UserController::class, 'fetchDashboardInfo'])->middleware('auth')->name('users.fetch-info');
+Route::get('users-work-days/{userId}', [UserController::class, 'fetchWorkDays'])->name('users.fetch-work-days');
+
 
 
 
