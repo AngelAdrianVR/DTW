@@ -20,7 +20,7 @@ class UserController extends Controller
         return inertia('User/Index', compact('users', 'total_users'));
     }
 
-    
+
     public function create()
     {
         return inertia('User/Create');
@@ -43,23 +43,23 @@ class UserController extends Controller
         return to_route('users.show', $user->id);
     }
 
-    
+
     public function show($user_id)
-    {      
+    {
         $user = UserResource::make(User::find($user_id));
         $users = User::all(['id', 'name']);
 
         // return $user;
-        return inertia('User/Show', compact('user','users'));
+        return inertia('User/Show', compact('user', 'users'));
     }
 
-    
+
     public function edit(User $user)
     {
         return inertia('User/Edit', compact('user'));
     }
 
-    
+
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -122,12 +122,19 @@ class UserController extends Controller
     public function fetchDashboardInfo()
     {
         $usersData = User::with('assignedTasks:id,title,status,user_id,project_id')
-        ->get(['id', 'name', 'employee_properties', 'last_access']);
+            ->get(['id', 'name', 'employee_properties', 'last_access']);
+
+        $usersData->map(function ($user) {
+            $totalMinutes = WorkedDay::where('user_id', $user->id)->sum('total_minutes');
+            $hours = floor($totalMinutes / 60);
+            $minutes = $totalMinutes % 60;
+            $user->total_time_worked = "{$hours}hrs {$minutes}min";
+            return $user;
+        });
 
         return response()->json(compact('usersData'));
     }
 
-    
     public function fetchWorkDays(Request $request, $userId)
     {
         $week = $request->input('week'); // formato: 'YYYY-MM-DD'

@@ -42,7 +42,10 @@
                     <article v-for="(user) in usersData.slice(1)" :key="user" @click="handleSelectUser(user)"
                         :class="user.assigned_tasks.filter(item => item.status === 'En curso')?.length > 0 ? 'animated-border' : 'border-[#E8E8E8]'" 
                         class="rounded-2xl border-2 p-2 text-center hover:shadow-lg cursor-pointer transition-all duration-300">
-                        <p class="font-bold">{{ user.name }}</p>
+                        <p class="font-bold">
+                            {{ user.name }}
+                            ({{ user.total_time_worked }})
+                        </p>
                         <p class="text-sm text-gray-500">Último ingreso: {{ formatDate(user.last_access) }}</p>
                         <div class="px-5 flex space-x-3 justify-start my-1 items-center text-gray-600">
                             <el-tooltip content="Tareas terminadas" placement="right">
