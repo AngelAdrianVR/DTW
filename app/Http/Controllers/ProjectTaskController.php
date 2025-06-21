@@ -143,12 +143,12 @@ class ProjectTaskController extends Controller
 
             // obtener dia trabajado del usuario
             $worked_day = WorkedDay::whereDate('created_at', now()->toDateString())
-                ->where('user_id', $project_task->user_id)
+                ->where('user_id', $project_task->participants->first()->id)
                 ->first();
 
             if (!$worked_day) {
                 $worked_day = WorkedDay::create([
-                    'user_id' => $project_task->user_id,
+                    'user_id' => $project_task->participants->first()->id,
                     'start_time' => $project_task->started_at->toTimeString(),
                     'end_time' => now()->toTimeString(),
                 ]);
